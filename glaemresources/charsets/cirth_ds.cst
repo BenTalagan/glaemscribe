@@ -1,0 +1,205 @@
+\**
+
+Glǽmscribe (also written Glaemscribe) is a software dedicated to
+the transcription of texts between writing systems, and more 
+specifically dedicated to the transcription of J.R.R. Tolkien's 
+invented languages to some of his devised writing systems.
+
+Copyright (C) 2015 Benjamin Babut (Talagan).
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU Affero General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Affero General Public License for more details.
+
+You should have received a copy of the GNU Affero General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+**\
+
+
+\**   **\ \char 20 SPACE
+\** ! **\ \char 21 CIRTH_11
+\** " **\ \char 22 CIRTH_EREB_3
+\** # **\ \char 23 CIRTH_13
+\** $ **\ \char 24 CIRTH_14
+\** % **\ \char 25 CIRTH_15
+\** & **\ \char 26 CIRTH_EREB_4
+\** ' **\ \char 27 ?
+\** ( **\ \char 28 CIRTH_EREB_6
+\** ) **\ \char 29 CIRTH_EREB_7
+\** * **\ \char 2a CIRTH_EREB_5
+\** + **\ \char 2b CIRTH_NUMERAL_4
+\** , **\ \char 2c CIRTH_53
+\** - **\ \char 2d ?
+\** . **\ \char 2e CIRTH_54
+\** / **\ \char 2f CIRTH_55
+\** 0 **\ \char 30 CIRTH_10
+\** 1 **\ \char 31 CIRTH_1
+\** 2 **\ \char 32 CIRTH_2
+\** 3 **\ \char 33 CIRTH_3
+\** 4 **\ \char 34 CIRTH_4
+\** 5 **\ \char 35 CIRTH_5
+\** 6 **\ \char 36 CIRTH_6
+\** 7 **\ \char 37 CIRTH_7
+\** 8 **\ \char 38 CIRTH_8
+\** 9 **\ \char 39 CIRTH_9
+\** : **\ \char 3a CIRTH_EREB_2
+\** ; **\ \char 3b CIRTH_40
+\** < **\ \char 3c CIRTH_52_ALT
+\** = **\ \char 3d ?
+\** > **\ \char 3e CIRTH_55_ALT
+\** ? **\ \char 3f CIRTH_56_ALT
+\** @ **\ \char 40 CIRTH_12
+\** A **\ \char 41 CIRTH_41
+\** B **\ \char 42 CIRTH_60
+\** C **\ \char 43 CIRTH_58
+\** D **\ \char 44 CIRTH_43
+\** E **\ \char 45 CIRTH_28
+\** F **\ \char 46 CIRTH_44
+\** G **\ \char 47 CIRTH_45
+\** H **\ \char 48 ?
+\** I **\ \char 49 CIRTH_PUNCT_MID_DOT
+\** J **\ \char 4a CIRTH_38_ALT
+\** K **\ \char 4b CIRTH_EREB_1
+\** L **\ \char 4c CIRTH_45_ALT
+\** M **\ \char 4d CIRTH_51_ALT
+\** N **\ \char 4e CIRTH_SPACE
+\** O **\ \char 4f CIRTH_PUNCT_TWO_DOTS
+\** P **\ \char 50 CIRTH_PUNCT_THREE_DOTS
+\** Q **\ \char 51 CIRTH_26
+\** R **\ \char 52 CIRTH_29
+\** S **\ \char 53 CIRTH_42
+\** T **\ \char 54 CIRTH_30
+\** U **\ \char 55 CIRTH_PUNCT_STAR
+\** V **\ \char 56 CIRTH_59
+\** W **\ \char 57 CIRTH_27
+\** X **\ \char 58 CIRTH_57
+\** Y **\ \char 59 ?
+\** Z **\ \char 5a CIRTH_56
+\** [ **\ \char 5b ?
+\** \ **\ \char 5c CIRTH_PUNCT_DOT
+\** ] **\ \char 5d ?
+\** ^ **\ \char 5e ?
+\** _ **\ \char 5f ?
+\** ` **\ \char 60 CIRTH_SPACE_BIG
+\** a **\ \char 61 CIRTH_31
+\** b **\ \char 62 CIRTH_50
+\** c **\ \char 63 CIRTH_48
+\** d **\ \char 64 CIRTH_33
+\** e **\ \char 65 CIRTH_18
+\** f **\ \char 66 CIRTH_34
+\** g **\ \char 67 CIRTH_35
+\** h **\ \char 68 CIRTH_36
+\** i **\ \char 69 CIRTH_23
+\** j **\ \char 6a CIRTH_37
+\** k **\ \char 6b CIRTH_38
+\** l **\ \char 6c CIRTH_39
+\** m **\ \char 6d CIRTH_52
+\** n **\ \char 6e CIRTH_51
+\** o **\ \char 6f CIRTH_24
+\** p **\ \char 70 CIRTH_25
+\** q **\ \char 71 CIRTH_16
+\** r **\ \char 72 CIRTH_19
+\** s **\ \char 73 CIRTH_32
+\** t **\ \char 74 CIRTH_20
+\** u **\ \char 75 CIRTH_22
+\** v **\ \char 76 CIRTH_49
+\** w **\ \char 77 CIRTH_17
+\** x **\ \char 78 CIRTH_47
+\** y **\ \char 79 CIRTH_21
+\** z **\ \char 7a CIRTH_46
+\** { **\ \char 7b CIRTH_PUNCT_THREE_DOTS_L
+\** | **\ \char 7c CIRTH_PUNCT_DOUBLE_VBAR
+\** } **\ \char 7d CIRTH_PUNCT_FOUR_DOTS
+\** ~ **\ \char 7e ?
+\**  **\ \char 80 ?
+\**   **\ \char a0 ?
+\** ¤ **\ \char a4 ?
+\** § **\ \char a7 ?
+\** © **\ \char a9 ?
+\** « **\ \char ab ?
+\** ® **\ \char ae ?
+\** ¶ **\ \char b6 ?
+\** » **\ \char bb ?
+\** ¼ **\ \char bc ?
+\** ½ **\ \char bd ?
+\** ¾ **\ \char be ?
+\** ¿ **\ \char bf ?
+\** À **\ \char c0 ?
+\** Á **\ \char c1 ?
+\** Â **\ \char c2 ?
+\** Ã **\ \char c3 ?
+\** Ä **\ \char c4 ?
+\** Å **\ \char c5 ?
+\** Æ **\ \char c6 ?
+\** Ç **\ \char c7 ?
+\** È **\ \char c8 ?
+\** É **\ \char c9 ?
+\** Ê **\ \char ca ?
+\** Ë **\ \char cb ?
+\** Ì **\ \char cc ?
+\** Í **\ \char cd ?
+\** Î **\ \char ce ?
+\** Ï **\ \char cf ?
+\** Ð **\ \char d0 ?
+\** Ñ **\ \char d1 ?
+\** Ò **\ \char d2 ?
+\** Ó **\ \char d3 ?
+\** Ô **\ \char d4 ?
+\** Õ **\ \char d5 ?
+\** Ö **\ \char d6 ?
+\** × **\ \char d7 ?
+\** Ø **\ \char d8 ?
+\** Ù **\ \char d9 ?
+\** Ú **\ \char da ?
+\** Û **\ \char db ?
+\** Ü **\ \char dc ?
+\** Ý **\ \char dd ?
+\** Þ **\ \char de ?
+\** ß **\ \char df ?
+\** à **\ \char e0 ?
+\** á **\ \char e1 ?
+\** â **\ \char e2 ?
+\** ã **\ \char e3 ?
+\** ä **\ \char e4 ?
+\** å **\ \char e5 ?
+\** æ **\ \char e6 ?
+\** ç **\ \char e7 ?
+\** è **\ \char e8 ?
+\** é **\ \char e9 ?
+\** ê **\ \char ea ?
+\** ë **\ \char eb ?
+\** ì **\ \char ec ?
+\** í **\ \char ed ?
+\** î **\ \char ee ?
+\** ï **\ \char ef ?
+\** ð **\ \char f0 ?
+\** ñ **\ \char f1 ?
+\** ò **\ \char f2 ?
+\** ó **\ \char f3 ?
+\** ô **\ \char f4 ?
+\** õ **\ \char f5 ?
+\** ö **\ \char f6 ?
+\** ÷ **\ \char f7 ?
+\** ø **\ \char f8 ?
+\** ù **\ \char f9 ?
+\** ú **\ \char fa ?
+\** û **\ \char fb ?
+\** ü **\ \char fc ?
+\** ý **\ \char fd ?
+\** þ **\ \char fe ?
+\** ÿ **\ \char ff ?
+\** ‘ **\ \char 2018 ?
+\** • **\ \char 2022 ?
+\** … **\ \char 2026 ?
+\** ‹ **\ \char 2039 ?
+\** › **\ \char 203a ?
+\** ∙ **\ \char 2219 ?
+\** ◼ **\ \char 25fc ?
+

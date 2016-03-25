@@ -1,0 +1,285 @@
+\**
+
+Glǽmscribe (also written Glaemscribe) is a software dedicated to
+the transcription of texts between writing systems, and more 
+specifically dedicated to the transcription of J.R.R. Tolkien's 
+invented languages to some of his devised writing systems.
+
+Copyright (C) 2015 Benjamin Babut (Talagan).
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU Affero General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Affero General Public License for more details.
+
+You should have received a copy of the GNU Affero General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+**\
+
+\** Sindarin Beleriand mode 0.5 for jrrtranscribe (MAY BE INCOMPLETE) **\
+
+\language "Sindarin"
+\writing  "Tengwar"
+\mode     "Beleriand"
+\version  "0.0.1"
+\authors  "Talagan (Benjamin Babut)"
+
+\charset  tengwar_ds true
+
+\beg      options
+  \option reverse_numbers true
+  \beg option numbers_base BASE_12
+    \value    BASE_10 10
+    \value    BASE_12 12
+  \end
+\end
+
+\beg      preprocessor
+  \** Work exclusively downcase **\
+  \downcase
+  
+  \** Simplify trema vowels **\
+  \substitute ä a
+  \substitute ë e
+  \substitute ï i
+  \substitute ö o
+  \substitute ü u
+  \substitute ÿ y
+
+  \** We should do better for that one (todo) **\
+  \substitute œ e
+
+  \** Dis-ambiguate long vowels **\
+  \rxsubstitute "(ā|â|aa)" "á"
+  \rxsubstitute "(ē|ê|ee)" "é"
+  \rxsubstitute "(ī|î|ii)" "í"
+  \rxsubstitute "(ō|ô|oo)" "ó"
+  \rxsubstitute "(ū|û|uu)" "ú"
+  \rxsubstitute "(ȳ|ŷ|yy)" "ý"
+  
+  \** Special case of starting 'i' before vowels, replace i by j **\     
+  \rxsubstitute "\\bi([aeouyáāâéēêíīîóōôúūûýȳŷ])" "j\\1"
+  
+  \** Preprocess numbers **\
+  \elvish_numbers "\\eval numbers_base" "\\eval reverse_numbers"
+\end
+
+\beg      processor
+
+  \beg    rules litteral
+    {A}                 === a
+    {AA}                === á
+    {E}                 === e
+    {EE}                === é
+    {I}                 === i
+    {II}                === í
+    {O}                 === o
+    {OO}                === ó
+    {U}                 === u
+    {UU}                === ú
+    {Y}                 === y
+    {YY}                === ý
+    
+    {AE}                === {A}{E}
+    {AI}                === {A}{I}
+    {AU}                === {A}{U}
+    {AW}                === {A}w
+    {EI}                === {E}{I}
+    {UI}                === {U}{I}
+    {OE}                === {O}{E}
+             
+    {K}                 === (c,k)
+
+    \** RULES **\
+    {A}                 --> OSSE
+    {E}                 --> YANTA
+    {I}                 --> TELCO
+    {O}                 --> ANNA
+    {U}                 --> URE
+    
+    {Y}                 --> SILME_NUQUERNA_ALT
+
+    {AA}                --> OSSE  E_TEHTA_S
+    {EE}                --> YANTA E_TEHTA_S
+    {II}                --> TELCO E_TEHTA_XS
+    {OO}                --> ANNA  E_TEHTA_S
+    {UU}                --> URE   E_TEHTA_S
+    {YY}                --> SILME_NUQUERNA_ALT E_TEHTA_S
+
+    {AE}                --> OSSE YANTA  \** Should chose between OSSE YANTA and OSSE THSUP_TICK_INV_L. Old tengscribe had second one, amanye tenceli has first one. **\ 
+    {AI}                --> OSSE THSUP_DDOT_L
+    {AU}                --> OSSE THSUP_SEV_L 
+    {AW}                --> OSSE THSUP_SEV_L
+    {EI}                --> YANTA THSUP_DDOT_L
+    {UI}                --> URE THSUP_DDOT_L
+    {OE}                --> ANNA YANTA
+
+    \** ======== **\
+    \** 1ST LINE **\
+    \** ======== **\
+    {LINE_1ST_KER_1}        === t     * p 
+    {LINE_1ST_IMG_1}        === TINCO * PARMA
+    {LINE_1ST_KER_2}        === {K}
+    {LINE_1ST_IMG_2}        === CALMA
+
+    [{LINE_1ST_KER_1}]       --> [{LINE_1ST_IMG_1}]
+    [{LINE_1ST_KER_2}]       --> [{LINE_1ST_IMG_2}]
+
+    nt   --> TINCO DASH_SUP_S
+    mp   --> PARMA DASH_SUP_S
+    n{K} --> CALMA DASH_SUP_S
+
+    \** ======== **\
+    \** 2ND LINE **\
+    \** ======== **\
+    {LINE_2ND_KER}        === d     * b     * g 
+    {LINE_2ND_IMG}        === ANDO  * UMBAR * ANGA 
+
+    [{LINE_2ND_KER}] --> [{LINE_2ND_IMG}]
+
+    mb   --> UMBAR  DASH_SUP_L
+    nd   --> ANDO   DASH_SUP_L
+
+    \** ======== **\
+    \** 3RD LINE **\
+    \** ======== **\
+    {LINE_3RD_KER_1} === th   * (f,ph,ff)
+    {LINE_3RD_IMG_1} === SULE * FORMEN
+    {LINE_3RD_KER_2} === ch 
+    {LINE_3RD_IMG_2} === AHA
+
+    [{LINE_3RD_KER_1}]  --> [{LINE_3RD_IMG_1}]
+    [{LINE_3RD_KER_2}]  --> [{LINE_3RD_IMG_2}] 
+
+    nth   --> SULE    DASH_SUP_S
+    mph   --> FORMEN  DASH_SUP_S
+    nf    --> FORMEN  DASH_SUP_S
+    nch   --> AHA     DASH_SUP_S
+
+    \** ======== **\
+    \** 4TH LINE **\
+    \** ======== **\
+    {LINE_4TH_KER}        === (ð,ðh,dh) * (v,bh,f_) 
+    {LINE_4TH_IMG}        === ANTO  * AMPA 
+
+    [{LINE_4TH_KER}] --> [{LINE_4TH_IMG}]
+
+    \** ======== **\
+    \** 5TH LINE **\
+    \** ======== **\
+    {LINE_5TH_KER}        === nn    * mm    * ng
+    {LINE_5TH_IMG}        === NUMEN * MALTA * NOLDO 
+
+    [{LINE_5TH_KER}] --> [{LINE_5TH_IMG}]
+
+    \** ======== **\
+    \** 6TH LINE **\
+    \** ======== **\
+    {LINE_6TH_KER}        === n   * m     * w     * _mh 
+    {LINE_6TH_IMG}        === ORE * VALA  * VILYA * MALTA_W_HOOK  
+
+    [{LINE_6TH_KER}] --> [{LINE_6TH_IMG}]
+
+    \** ======== **\
+    \** R/L LINE **\
+    \** ======== **\
+    {LINE_L_KER}        === r     * _rh   * l     * _lh
+    {LINE_L_IMG}        === ROMEN * ARDA  * LAMBE  * ALDA 
+
+    [{LINE_L_KER}] --> [{LINE_L_IMG}]
+
+    \** ======== **\
+    \** S/Z LINE **\
+    \** ======== **\
+    {LINE_8TH_KER}        === s
+    {LINE_8TH_IMG}        === SILME 
+
+    [{LINE_8TH_KER}] --> [{LINE_8TH_IMG}]
+
+    ns --> SILME_NUQUERNA DASH_SUP_S
+
+    \** ======== **\
+    \** OTHERS **\
+    \** ======== **\
+
+    j --> ARA
+
+    h --> HYARMEN
+
+    hw   --> HWESTA_SINDARINWA
+    gw   --> ANGA THSUP_SEV_XL
+    dw   --> ANDO THSUP_SEV_XL
+    nw   --> ORE THSUP_SEV_L
+    rw   --> ROMEN THSUP_SEV_L 
+  \end
+  
+  \beg    rules punctuation
+    . --> PUNCT_DDOT
+    .. --> PUNCT_DOT PUNCT_DDOT PUNCT_DOT
+    ... --> PUNCT_TILD
+    …   --> PUNCT_TILD
+    .... --> PUNCT_TILD
+    ..... --> PUNCT_TILD
+    ...... --> PUNCT_TILD
+    ....... --> PUNCT_TILD
+
+    , --> PUNCT_DOT
+    : --> PUNCT_DOT
+    ; --> PUNCT_DOT
+    ! --> PUNCT_EXCLAM
+    ? --> PUNCT_INTERR
+    · --> {NULL}
+
+    - --> {NULL}
+    – --> PUNCT_TILD  
+    — --> PUNCT_TILD
+
+    \** Apostrophe **\
+
+    ' --> {NULL}
+    ’ --> {NULL}
+
+    \** Quotes **\
+
+    “ --> DQUOT_OPEN
+    ” --> DQUOT_CLOSE
+    « --> DQUOT_OPEN 
+    » --> DQUOT_CLOSE 
+
+    [ --> PUNCT_PAREN_L
+    ] --> PUNCT_PAREN_R
+    ( --> PUNCT_PAREN_L
+    ) --> PUNCT_PAREN_R
+    { --> PUNCT_PAREN_L
+    } --> PUNCT_PAREN_R
+    < --> PUNCT_PAREN_L
+    > --> PUNCT_PAREN_R
+
+    \** Not universal between fonts ... **\
+    $ --> BOOKMARK_SIGN
+    ≤ --> RING_MARK_L \** Ring inscription left beautiful stuff **\
+    ≥ --> RING_MARK_R \** Ring inscription right beautiful stuff **\
+  \end
+
+  \beg    rules  numbers
+    0 --> NUM_0
+    1 --> NUM_1
+    2 --> NUM_2
+    3 --> NUM_3
+    4 --> NUM_4
+    5 --> NUM_5
+    6 --> NUM_6
+    7 --> NUM_7
+    8 --> NUM_8
+    9 --> NUM_9
+    A --> NUM_10
+    B --> NUM_11      
+  \end
+  
+\end

@@ -1,0 +1,318 @@
+\**
+
+Glǽmscribe (also written Glaemscribe) is a software dedicated to
+the transcription of texts between writing systems, and more 
+specifically dedicated to the transcription of J.R.R. Tolkien's 
+invented languages to some of his devised writing systems.
+
+Copyright (C) 2015 Benjamin Babut (Talagan).
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU Affero General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Affero General Public License for more details.
+
+You should have received a copy of the GNU Affero General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+**\
+
+\** Charset for Dan Smith layout based fonts **\ 
+
+\**  **\ \char 20 SPACE              
+\** ! **\ \char 21 TW_EXT_11            
+\** " **\ \char 22 DASH_INF_L            
+\** # **\ \char 23 A_TEHTA_XL          
+\** $ **\ \char 24 E_TEHTA_XL   
+\** % **\ \char 25 I_TEHTA_XL     
+\** & **\ \char 26 U_TEHTA_XL        
+\** ' **\ \char 27 DASH_INF_S            
+\** ( **\ \char 28 ?                
+\** ) **\ \char 29 TILD_XSUP_L           
+\** * **\ \char 2a ?                
+\** + **\ \char 2b SHOOK_RIGHT_L          
+\** , **\ \char 2c TW_84 ESSE_NUQUERNA       
+\** - **\ \char 2d PUNCT_DDOT            
+\** . **\ \char 2e TW_94 URE            
+\** / **\ \char 2f TILD_XINF_S           
+\** 0 **\ \char 30 TILD_XSUP_S           
+\** 1 **\ \char 31 TW_11 TINCO           
+\** 2 **\ \char 32 TW_21 ANDO           
+\** 3 **\ \char 33 TW_31 SULE THULE        
+\** 4 **\ \char 34 TW_41 ANTO           
+\** 5 **\ \char 35 TW_51 NUMEN           
+\** 6 **\ \char 36 TW_61 ORE            
+\** 7 **\ \char 37 TW_71 ROMEN           
+\** 8 **\ \char 38 TW_81 SILME           
+\** 9 **\ \char 39 TW_91 HYARMEN          
+\** : **\ \char 3a TILD_INF_L            
+\** ; **\ \char 3b TILD_INF_S            
+\** < **\ \char 3c ?  \** Does not look compliant between DS and Annatar **\
+\** = **\ \char 3d PUNCT_DOT            
+\** > **\ \char 3e ?                
+\** ? **\ \char 3f TILD_XINF_L           
+\** @ **\ \char 40 TW_EXT_21 ANDO_EXT ANTO_EXT            
+\** A **\ \char 41 TW_EXT_13 CALMA_EXT AHA_EXT            
+\** B **\ \char 42 I_TEHTA_XS     
+\** C **\ \char 43 A_TEHTA_XS          
+\** D **\ \char 44 A_TEHTA_S           
+\** E **\ \char 45 A_TEHTA_L           
+\** F **\ \char 46 E_TEHTA_S    
+\** G **\ \char 47 I_TEHTA_S           
+\** H **\ \char 48 O_TEHTA_S           
+\** I **\ \char 49 SILME_NUQUERNA_ALT \** Used for y in s. beleriand **\                
+\** J **\ \char 4a U_TEHTA_S         
+\** K **\ \char 4b ?                
+\** L **\ \char 4c ?                
+\** M **\ \char 4d U_TEHTA_XS        
+\** N **\ \char 4e O_TEHTA_XS          
+\** O **\ \char 4f ?                
+\** P **\ \char 50 TILD_SUP_L            
+\** Q **\ \char 51 TW_EXT_12 PARMA_EXT FORMEN_EXT            
+\** R **\ \char 52 E_TEHTA_L          
+\** S **\ \char 53 TW_EXT_23 ANGA_EXT ANCA_EXT            
+\** T **\ \char 54 I_TEHTA_L           
+\** U **\ \char 55 U_TEHTA_L         
+\** V **\ \char 56 E_TEHTA_XS         
+\** W **\ \char 57 TW_EXT_22 UMBAR_EXT AMPA_EXT            
+\** X **\ \char 58 TW_EXT_24 UNQUE_EXT UNGWE_EXT            
+\** Y **\ \char 59 O_TEHTA_L           
+\** Z **\ \char 5a TW_EXT_14 QUESSE_EXT HWESTA_EXT            
+\** [ **\ \char 5b DASH_SUP_S            
+\** \ **\ \char 5c TILD_L              
+\** ] **\ \char 5d OSSE               
+\** ^ **\ \char 5e O_TEHTA_XL          
+\** _ **\ \char 5f SHOOOK_RIGHT_S          
+\** ` **\ \char 60 TELCO              
+\** a **\ \char 61 TW_13 CALMA          
+\** b **\ \char 62 TW_54 NWALME          
+\** c **\ \char 63 TW_34 HWESTA          
+\** d **\ \char 64 TW_33 AHA           
+\** e **\ \char 65 TW_32 FORMEN          
+\** f **\ \char 66 TW_43 ANCA           
+\** g **\ \char 67 TW_53 NOLDO          
+\** h **\ \char 68 TW_63 ANNA           
+\** i **\ \char 69 TW_82 SILME_NUQUERNA      
+\** j **\ \char 6a TW_73 LAMBE          
+\** k **\ \char 6b TW_83 ESSE           
+\** l **\ \char 6c TW_93 YANTA          
+\** m **\ \char 6d TW_74 ALDA           
+\** n **\ \char 6e TW_64 VILYA          
+\** o **\ \char 6f TW_92 HWESTA_SINDARINWA    
+\** p **\ \char 70 TILD_SUP_S           
+\** q **\ \char 71 TW_12 PARMA          
+\** r **\ \char 72 TW_42 AMPA           
+\** s **\ \char 73 TW_23 ANGA           
+\** t **\ \char 74 TW_52 MALTA          
+\** u **\ \char 75 TW_72 ARDA           
+\** v **\ \char 76 TW_44 UNQUE          
+\** w **\ \char 77 TW_22 UMBAR          
+\** x **\ \char 78 TW_24 UNGWE          
+\** y **\ \char 79 TW_62 VALA           
+\** z **\ \char 7a TW_14 QUESSE          
+\** { **\ \char 7b DASH_SUP_L           
+\** | **\ \char 7c SHOOK_LEFT_L          
+\** } **\ \char 7d SHOOK_LEFT_S          
+\** ~ **\ \char 7e ARA               
+\** ¡ **\ \char a1 ?                
+\** ¢ **\ \char a2 ?                
+\** £ **\ \char a3 SHOOK_BEAUTIFUL                
+\** ¥ **\ \char a5 ?                
+\** ¦ **\ \char a6 HWESTA_TINCO                
+\** § **\ \char a7 AHA_TINCO                
+\** ¨ **\ \char a8 TH_SUB_CIRC_S          
+\** © **\ \char a9 TH_SUB_CIRC_XS          
+\** ª **\ \char aa A_TEHTA_INV_XL        
+\** « **\ \char ab DQUOT_OPEN            
+\** ¬ **\ \char ac WAVE_MED_DOUBLE              
+\** ­ **\ \char ad A_TEHTA_INV_L         
+\** ® **\ \char ae ?                
+\** ¯ **\ \char af A_TEHTA_INV_S         
+\** ° **\ \char b0 WAVE_MED_SIMPLE                
+\** ± **\ \char b1 SQUOT_OPEN            
+\** ² **\ \char b2 SQUOT_CLOSE           
+\** ³ **\ \char b3 ?                
+\** ´ **\ \char b4 LAMBE_MARK_DDOT         
+\** µ **\ \char b5 A_TEHTA_INV_XS        
+\** · **\ \char b7 ?                
+\** ¸ **\ \char b8 LAMBE_MARK_TILD         
+\** ¹ **\ \char b9 ?                
+\** º **\ \char ba ?                
+\** » **\ \char bb DQUOT_CLOSE           
+\** ¼ **\ \char bc ?                
+\** ½ **\ \char bd HALLA              
+\** ¾ **\ \char be ?                
+\** ¿ **\ \char bf ?                
+\** À **\ \char c0 PUNCT_INTERR           
+\** Á **\ \char c1 PUNCT_EXCLAM           
+\** Â **\ \char c2 PUNCT_TILD            
+\** Ã **\ \char c3 ?                
+\** Ä **\ \char c4 ?                
+\** Å **\ \char c5 ?                
+\** Æ **\ \char c6 ?                
+\** Ç **\ \char c7 ?                
+\** È **\ \char c8 THINF_DOT_XL           
+\** É **\ \char c9 THINF_DOT_L           
+\** Ê **\ \char ca THINF_DOT_S           
+\** Ë **\ \char cb THINF_DOT_XS           
+\** Ì **\ \char cc THINF_DDOT_XL          
+\** Í **\ \char cd THINF_DDOT_L           
+\** Î **\ \char ce THINF_DDOT_S           
+\** Ï **\ \char cf THINF_DDOT_XS          
+\** Ð **\ \char d0 THINF_TDOT_XL          
+\** Ñ **\ \char d1 THINF_TDOT_L           
+\** Ò **\ \char d2 THINF_TDOT_S           
+\** Ó **\ \char d3 THINF_TDOT_XS          
+\** Ô **\ \char d4 THSUP_DDOT_XL Y_TEHTA_XL          
+\** Õ **\ \char d5 THSUP_DDOT_L Y_TEHTA_L           
+\** Ö **\ \char d6 THSUP_DDOT_S Y_TEHTA_S           
+\** × **\ \char d7 THSUP_DDOT_XS Y_TEHTA_XS          
+\** Ø **\ \char d8 THSUP_TICK_XL          
+\** Ù **\ \char d9 THSUP_TICK_L           
+\** Ú **\ \char da THSUP_TICK_S           
+\** Û **\ \char db THSUP_TICK_XS          
+\** Ü **\ \char dc THSUP_TICK_INV_XL        
+\** Ý **\ \char dd THSUP_TICK_INV_L         
+\** Þ **\ \char de THSUP_TICK_INV_S         
+\** ß **\ \char df THSUP_TICK_INV_XS        
+\** à **\ \char e0 THSUP_LAMBDA_XL         
+\** á **\ \char e1 THSUP_LAMBDA_L          
+\** â **\ \char e2 THSUP_LAMBDA_S          
+\** ã **\ \char e3 THSUP_LAMBDA_XS         
+\** ä **\ \char e4 THINF_CURL_XL          
+\** å **\ \char e5 THINF_CURL_L           
+\** æ **\ \char e6 THINF_CURL_S           
+\** ç **\ \char e7 THINF_CURL_XS          
+\** è **\ \char e8 THSUP_SEV_XL           
+\** é **\ \char e9 THSUP_SEV_L           
+\** ê **\ \char ea THSUP_SEV_S           
+\** ë **\ \char eb THSUP_SEV_XS           
+\** ì **\ \char ec ?                                 
+\** í **\ \char ed ?                                 
+\** î **\ \char ee ?                                 
+\** ï **\ \char ef ?                                 
+\** ð **\ \char f0 NUM_0                               
+\** ñ **\ \char f1 NUM_1                               
+\** ò **\ \char f2 NUM_2                               
+\** ó **\ \char f3 NUM_3                               
+\** ô **\ \char f4 NUM_4                               
+\** õ **\ \char f5 NUM_5                               
+\** ö **\ \char f6 NUM_6                               
+\** ÷ **\ \char f7 NUM_7                               
+\** ø **\ \char f8 NUM_8                               
+\** ù **\ \char f9 NUM_9                               
+\** ú **\ \char fa NUM_10                               
+\** û **\ \char fb NUM_11                               
+\** ü **\ \char fc THINF_STROKE_XL                                 
+\** ý **\ \char fd THINF_STROKE_L                                 
+\** þ **\ \char fe THINF_STROKE_S                                 
+\** ÿ **\ \char ff THINF_STROKE_XS                                 
+\** Œ **\ \char 152 PUNCT_PAREN_L                           
+\** œ **\ \char 153 PUNCT_PAREN_R                           
+\** Š **\ \char 160 THINF_ACCENT_L                                 
+\** š **\ \char 161 MALTA_W_HOOK                                 
+\** Ÿ **\ \char 178 THINF_ACCENT_XS                                 
+\** ƒ **\ \char 192 THINF_DSTROKE_XL                                 
+\** ˆ **\ \char 2c6 ?                                 
+\** ˜ **\ \char 2dc TH_SUB_CIRC_XL                                 
+\** – **\ \char 2013 ANCA_CLOSED                                
+\** — **\ \char 2014 OLD_ENGLISH_AND                                
+\** ‘ **\ \char 2018 THINF_CURL_INV_XL                                
+\** ’ **\ \char 2019 THINF_CURL_INV_L                                
+\** ‚ **\ \char 201a THINF_DSTROKE_FOR_LAMBE                                
+\** “ **\ \char 201c THINF_CURL_INV_S                                
+\** ” **\ \char 201d THINF_CURL_INV_XS                                
+\** „ **\ \char 201e THINF_DSTROKE_L                                
+\** † **\ \char 2020 THINF_DSTROKE_XS                                
+\** ‡ **\ \char 2021 ?                                
+\** • **\ \char 2022 HARP_SHAPED                                
+\** … **\ \char 2026 THINF_DSTROKE_S                                
+\** ‰ **\ \char 2030 THINF_ACCENT_XL                                
+\** ‹ **\ \char 2039 THINF_ACCENT_S                                
+\** › **\ \char 203a BOOKMARK_SIGN                                
+\** ™ **\ \char 2122 TH_SUB_CIRC_L                                
+\** 〠 **\ \char 3020 ?                                
+\** 〡 **\ \char 3021 ?                                
+\** 〣 **\ \char 3023 A_TEHTA_DOUBLE_XL                                
+\** 〤 **\ \char 3024 E_TEHTA_DOUBLE_XL                                
+\** 〦 **\ \char 3026 U_TEHTA_DOUBLE_XL                                
+\** **\ \char 302e ?                                
+\** 〰 **\ \char 3030 ?                                
+\** 〱 **\ \char 3031 ?                                
+\** 〲 **\ \char 3032 ?                                
+\** 〳 **\ \char 3033 ?                                
+\** 〴 **\ \char 3034 ?                                
+\** 〵 **\ \char 3035 ?                                
+\** 〶 **\ \char 3036 ?                                
+\** 〷 **\ \char 3037 ?                                
+\** 〸 **\ \char 3038 ?                                
+\** 〹 **\ \char 3039 ?                                
+\** 〼 **\ \char 303c ?                                
+\** ぀ **\ \char 3040 ?                                
+\** ぃ **\ \char 3043 A_TEHTA_DOUBLE_XS                                
+\** い **\ \char 3044 A_TEHTA_DOUBLE_S                                
+\** ぅ **\ \char 3045 A_TEHTA_DOUBLE_L                                
+\** う **\ \char 3046 E_TEHTA_DOUBLE_XS                                
+\** え **\ \char 3048 O_TEHTA_DOUBLE_S                                
+\** お **\ \char 304a U_TEHTA_DOUBLE_S                                
+\** き **\ \char 304d U_TEHTA_DOUBLE_XS                                
+\** ぎ **\ \char 304e O_TEHTA_DOUBLE_XS                                
+\** け **\ \char 3051 ?                                
+\** げ **\ \char 3052 E_TEHTA_DOUBLE_L                                
+\** さ **\ \char 3055 U_TEHTA_DOUBLE_L                                
+\** ざ **\ \char 3056 E_TEHTA_DOUBLE_S                                
+\** し **\ \char 3057 ?                                
+\** す **\ \char 3059 O_TEHTA_DOUBLE_L                                
+\** ぞ **\ \char 305e O_TEHTA_DOUBLE_XL                                
+\** ぢ **\ \char 3062 ?                                
+\** づ **\ \char 3065 ?                                
+\** と **\ \char 3068 ?                                
+\** な **\ \char 306a LAMBE_LIG                                
+\** の **\ \char 306e ?                                
+\** ぱ **\ \char 3071 ?                                
+\** ひ **\ \char 3072 ?                                
+\** ぴ **\ \char 3074 ?                                
+\** ふ **\ \char 3075 ?                                
+\** ぷ **\ \char 3077 ?                                
+\** へ **\ \char 3078 ?                                
+\** べ **\ \char 3079 ?                                
+\** ぺ **\ \char 307a ?                                
+\** ア **\ \char 30a2 ?                                
+\** カ **\ \char 30ab RING_MARK_R                                
+\** ギ **\ \char 30ae ?                                
+\** セ **\ \char 30bb RING_MARK_L                                
+\** タ **\ \char 30bf ?                                
+\** ツ **\ \char 30c4 ?                                
+\** テ **\ \char 30c6 ?                                
+\** デ **\ \char 30c7 ?                                
+\** ヘ **\ \char 30d8 ?                                
+\** ベ **\ \char 30d9 ?                                
+\** ペ **\ \char 30da ?                                
+\** ホ **\ \char 30db ?                                
+\** ム **\ \char 30e0 ?                                
+\** メ **\ \char 30e1 ?                                
+\** モ **\ \char 30e2 ?                                
+\** ャ **\ \char 30e3 ?                                
+\** ヨ **\ \char 30e8 ?                                
+\** ラ **\ \char 30e9 ?                                
+\** リ **\ \char 30ea ?                                
+\** ル **\ \char 30eb ? 
+\** **\ \char 3152 PUNCT_PAREN_L_ALT                                
+\** **\ \char 3153 PUNCT_PAREN_R_ALT                                                               
+\** ㅠ **\ \char 3160 ?                                
+\** ㅡ **\ \char 3161 ?                                
+\** ㅸ **\ \char 3178 ?                                
+\** ㆒ **\ \char 3192 ?                                
+\** 倚 **\ \char 501a ?                                
+\** 倞 **\ \char 501e ?                                
+\** 倠 **\ \char 5020 ?                                
+\** 倢 **\ \char 5022 ?                                
+\** 倦 **\ \char 5026 ?                                
+\** 倰 **\ \char 5030 ?                                
+\** 倹 **\ \char 5039 ?   
+             

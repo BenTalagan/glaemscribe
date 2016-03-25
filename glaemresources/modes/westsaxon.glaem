@@ -1,0 +1,342 @@
+\**
+
+Glǽmscribe (also written Glaemscribe) is a software dedicated to
+the transcription of texts between writing systems, and more 
+specifically dedicated to the transcription of J.R.R. Tolkien's 
+invented languages to some of his devised writing systems.
+
+Copyright (C) 2015 Benjamin Babut (Talagan).
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU Affero General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Affero General Public License for more details.
+
+You should have received a copy of the GNU Affero General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+**\
+
+\language "Old English"
+\writing  "Tengwar"
+\mode     "West Saxon"
+\version  "0.0.1"
+\authors  "Talagan (Benjamin Babut)"
+
+\charset  tengwar_ds true
+
+\beg      preprocessor
+  \** Work exclusively downcase **\
+  \downcase
+  
+  \** Simplify trema vowels **\
+  \substitute ä a
+  \substitute ë e
+  \substitute ï i
+  \substitute ö o
+  \substitute ü u
+  \substitute ÿ y
+
+  \substitute "ae"  "æ"
+  \substitute "ea"  "æa"
+  \substitute "éa"  "ǽa"
+  \substitute "7"   "⁊"
+  
+  \** Dis-ambiguate long vowels **\
+  \rxsubstitute "(ā|â|aa)" "á"
+  \rxsubstitute "(ē|ê|ee)" "é"
+  \rxsubstitute "(ī|î|ii)" "í"
+  \rxsubstitute "(ō|ô|oo)" "ó"
+  \rxsubstitute "(ū|û|uu)" "ú"
+  \rxsubstitute "(ȳ|ŷ|yy)" "ý"
+  
+  \up_down_tehta_split "æ,ǽ,a,ä,á,e,ë,é,i,ï,í,o,ö,ó,u,ü,ú,y,ÿ,ý,ø,ǿ,œ,œ́" "t,p,ċ,c,d,b,ġ,g,þ,f,ç,χ,ħ,ð,v,j,ȝ,n,m,r,ĭ,w,l,ld,s,z,h,x,sċ,hw,çt,χt,ħt"
+\end
+
+\beg      processor
+
+  \beg rules litteral
+    {A}   === a
+    {AA}  === á
+    {E}   === e
+    {EE}  === é
+    {I}   === i
+    {II}  === í
+    {O}   === o
+    {OO}  === ó
+    {U}   === u
+    {UU}  === ú
+    {Y}   === y
+    {YY}  === ý
+
+    {AE}    === (æ,ae)
+    {AEAE}  === (ǽ,ǣ)
+
+    {OE}    === (ø,œ)
+    {OEOE}  === (ǿ,œ́)
+
+    \** Diphtongs are always splitted, so consider we don't have any. **\
+    \** @ is the phantom vowel **\
+
+    {S_VOWELS_NP}   === {A} * {AE} * {OE} * {E} * {I}   * {O} * {U} * {Y} * {A}_
+    {S_VOWELS}      === {S_VOWELS_NP} * @ 
+    
+    \** UP TEHTAS **\    
+    {UTEHTA_NP_XS}  === E_TEHTA_XS    * A_TEHTA_XS    * E_TEHTA_DOUBLE_XS   * Y_TEHTA_XS      * I_TEHTA_XS    * O_TEHTA_XS    * U_TEHTA_XS    * THSUP_SEV_XS   * VILYA    
+    {UTEHTA_NP__S}  === E_TEHTA_S     * A_TEHTA_S     * E_TEHTA_DOUBLE_S    * Y_TEHTA_S       * I_TEHTA_S     * O_TEHTA_S     * U_TEHTA_S     * THSUP_SEV_S    * VILYA 
+    {UTEHTA_NP__L}  === E_TEHTA_L     * A_TEHTA_L     * E_TEHTA_DOUBLE_L    * Y_TEHTA_L       * I_TEHTA_L     * O_TEHTA_L     * U_TEHTA_L     * THSUP_SEV_L    * VILYA  
+    {UTEHTA_NP_XL}  === E_TEHTA_XL    * A_TEHTA_XL    * E_TEHTA_DOUBLE_XL   * Y_TEHTA_XL      * I_TEHTA_XL    * O_TEHTA_XL    * U_TEHTA_XL    * THSUP_SEV_XL   * VILYA  
+    {UTEHTA_XS}     === {UTEHTA_NP_XS}  * {NULL}
+    {UTEHTA__S}     === {UTEHTA_NP__S}  * {NULL}  
+    {UTEHTA__L}     === {UTEHTA_NP__L}  * {NULL}  
+    {UTEHTA_XL}     === {UTEHTA_NP_XL}  * {NULL}
+
+    \** FOR LONG VOWELS **\
+    {L_VOWELS}      === {AA}              * {AEAE}          * {OEOE}                * {EE}            * {II}            * {OO}              * {UU}            * {YY}  
+    {L_PTEHTAS}     === ARA E_TEHTA_XS    * ARA A_TEHTA_XS  * ARA E_TEHTA_DOUBLE_XS * ARA Y_TEHTA_XS  * ARA I_TEHTA_XS  * ARA O_TEHTA_XS    * ARA U_TEHTA_XS  * ARA THSUP_SEV_XS    
+
+    \** DOWN TEHTAS **\
+    {DTEHTA_XS}     === THINF_ACCENT_XS   * THINF_TDOT_XS   * TH_SUB_CIRC_XS    * THINF_DDOT_XS    * THINF_DOT_XS   * TELCO O_TEHTA_XS  * TELCO U_TEHTA_XS  * THINF_STROKE_XS   * VILYA * {NULL}
+    {DTEHTA__S}     === THINF_ACCENT_S    * THINF_TDOT_S    * TH_SUB_CIRC_S     * THINF_DDOT_S     * THINF_DOT_S    * TELCO O_TEHTA_XS  * TELCO U_TEHTA_XS  * THINF_STROKE_S    * VILYA * {NULL}  
+    {DTEHTA__L}     === THINF_ACCENT_L    * THINF_TDOT_L    * TH_SUB_CIRC_L     * THINF_DDOT_L     * THINF_DOT_L    * TELCO O_TEHTA_XS  * TELCO U_TEHTA_XS  * THINF_STROKE_L    * VILYA * {NULL}  
+    {DTEHTA_XL}     === THINF_ACCENT_XL   * THINF_TDOT_XL   * TH_SUB_CIRC_XL    * THINF_DDOT_XL    * THINF_DOT_XL   * TELCO O_TEHTA_XS  * TELCO U_TEHTA_XS  * THINF_STROKE_XL   * VILYA * {NULL}  
+    
+    {S_VOWELS_NP_KER}       === [ {S_VOWELS_NP} ]
+    {S_VOWELS_NP_KER_WN}    === [ {S_VOWELS_NP} * {NULL} ]
+    {S_VOWELS_KER}          === [ {S_VOWELS} ]
+    {S_VOWELS_KER_WN}       === [ {S_VOWELS} * {NULL} ]
+
+    \**  Img bundles for all vowels **\
+    {SU_VOWELS_IMG_XS}        === [ {UTEHTA_XS} ]
+    {SU_VOWELS_IMG__S}        === [ {UTEHTA__S} ]
+    {SU_VOWELS_IMG__L}        === [ {UTEHTA__L} ]
+    {SU_VOWELS_IMG_XL}        === [ {UTEHTA_XL} ]
+    {SD_VOWELS_IMG_XS}        === [ {DTEHTA_XS} ]
+    {SD_VOWELS_IMG__S}        === [ {DTEHTA__S} ]
+    {SD_VOWELS_IMG__L}        === [ {DTEHTA__L} ]
+    {SD_VOWELS_IMG_XL}        === [ {DTEHTA_XL} ]
+
+    {SU_VOWELS_IMG_XS_WN}     === [ {UTEHTA_XS} * {NULL} ]
+    {SU_VOWELS_IMG__S_WN}     === [ {UTEHTA__S} * {NULL} ]
+    {SU_VOWELS_IMG__L_WN}     === [ {UTEHTA__L} * {NULL} ]
+    {SU_VOWELS_IMG_XL_WN}     === [ {UTEHTA_XL} * {NULL} ]
+    {SD_VOWELS_IMG_XS_WN}     === [ {DTEHTA_XS} * {NULL} ]
+    {SD_VOWELS_IMG__S_WN}     === [ {DTEHTA__S} * {NULL} ]
+    {SD_VOWELS_IMG__L_WN}     === [ {DTEHTA__L} * {NULL} ]
+    {SD_VOWELS_IMG_XL_WN}     === [ {DTEHTA_XL} * {NULL} ]
+
+    \**  Rule for long vowels **\
+    [ {L_VOWELS} ]  --> [ {L_PTEHTAS} ] 
+    {UU}            --> VALA U_TEHTA_L \** # Special treatment **\
+
+    \**  Fallback rule for short vowels **\
+    @                   --> {NULL}                            \** # If found alone, put nothing **\
+    [ {S_VOWELS_NP} ]   --> TELCO [ {UTEHTA_NP_XS} ]  
+    {A}_                --> VILYA                                 \** # We don't want a short carrier for a_ **\
+    (w,u)_              --> VALA                                 \** # Only resolved after vowels **\
+
+    \** ############# **\
+    \**  CONSONANTS # **\
+    \** ############# **\
+
+    \** ## 1st Line (Voiceless occlusives) **\
+    \** ## Short upper dash for nasalisation **\
+    {L1_KER_1}      === t     * p 
+    {L1_IMG_1}      === TINCO * PARMA 
+    {L1_KER_2}      === ċ     * c       * k
+    {L1_IMG_2}      === CALMA * QUESSE  * QUESSE
+        
+    {L1_KER_1_GEMS} === tt                      * pp   
+    {L1_IMG_1_GEMS} === TINCO THINF_DSTROKE_XS  * PARMA THINF_DSTROKE_XS
+    {L1_KER_2_GEMS} === ċċ                      * cc                      * kk 
+    {L1_IMG_2_GEMS} === CALMA THINF_DSTROKE_XL  * QUESSE THINF_DSTROKE_XL * QUESSE THINF_DSTROKE_XL
+
+  
+    {S_VOWELS_KER_WN}[{L1_KER_1}]{S_VOWELS_KER_WN}  --> 2,1,3 --> [{L1_IMG_1}]{SU_VOWELS_IMG__L_WN}{SD_VOWELS_IMG__S_WN}
+    {S_VOWELS_KER_WN}[{L1_KER_1_GEMS}]              --> 2,1   --> [{L1_IMG_1_GEMS}]{SU_VOWELS_IMG__L_WN}
+    {S_VOWELS_KER_WN}[{L1_KER_2}]{S_VOWELS_KER_WN}  --> 2,1,3 --> [{L1_IMG_2}]{SU_VOWELS_IMG__L_WN}{SD_VOWELS_IMG_XL_WN}
+    {S_VOWELS_KER_WN}[{L1_KER_2_GEMS}]              --> 2,1   --> [{L1_IMG_2_GEMS}]{SU_VOWELS_IMG__L_WN}
+
+    {S_VOWELS_KER_WN}[ nt * mp ]{S_VOWELS_KER_WN}   --> 2,1,3 -->  [ TINCO TILD_SUP_S * PARMA TILD_SUP_S  ]{SU_VOWELS_IMG__L_WN}{SD_VOWELS_IMG__S_WN}
+    {S_VOWELS_KER_WN}[ nċ * nc ]{S_VOWELS_KER_WN}   --> 2,1,3 -->  [ CALMA TILD_SUP_S * QUESSE TILD_SUP_S ]{SU_VOWELS_IMG__L_WN}{SD_VOWELS_IMG_XL_WN}
+
+
+    \** ## 2nd Line (Voiced occlusives) **\
+    \** ## Long upper dash for nasalisation **\
+    {L2_KER}        === d     * b     * ġ     * g
+    {L2_IMG}        === ANDO  * UMBAR * ANGA  * UNGWE
+                    
+    {L2_KER_GEMS}   === dd                    * bb                    * (ċġ,ġġ)               * (cg,gg)
+    {L2_IMG_GEMS}   === ANDO THINF_DSTROKE_L  * UMBAR THINF_DSTROKE_L * ANGA THINF_DSTROKE_L  * UNGWE THINF_DSTROKE_L
+    
+
+    {S_VOWELS_KER_WN}[{L2_KER}]{S_VOWELS_KER_WN}            --> 2,1,3 --> [{L2_IMG}]{SU_VOWELS_IMG_XL_WN}{SD_VOWELS_IMG_XL_WN}
+    {S_VOWELS_KER_WN}[{L2_KER_GEMS}]                        --> 2,1   --> [{L2_IMG_GEMS}]{SU_VOWELS_IMG_XL_WN}
+
+    {S_VOWELS_KER_WN}[ nd * mb * nġ * ng ]{S_VOWELS_KER_WN} --> 2,1,3 -->  [ ANDO TILD_SUP_L * UMBAR TILD_SUP_L * ANGA TILD_SUP_L * UNGWE TILD_SUP_L ]{SU_VOWELS_IMG_XL_WN}{SD_VOWELS_IMG_XL_WN}
+
+
+    \** ## 3rd Line (Voiceless fricatives) **\
+    \** ## Short upper dash for nasalisation **\
+    {L3_KER_1}      === þ     * f
+    {L3_IMG_1}      === SULE  * FORMEN    
+    {L3_KER_2}      === ç     * (χ,ħ)
+    {L3_IMG_2}      === AHA   * HWESTA
+    
+    {L3_KER_1_GEMS} === þþ                    * ff
+    {L3_IMG_1_GEMS} === SULE THINF_DSTROKE_XS * FORMEN THINF_DSTROKE_XS   
+    {L3_KER_2_GEMS} === çç                    * (χχ,ħħ)
+    {L3_IMG_2_GEMS} === AHA THINF_DSTROKE_XS  * HWESTA THINF_DSTROKE_XS
+
+    {S_VOWELS_KER_WN}[{L3_KER_1}]{S_VOWELS_KER_WN}  --> 2,1,3 --> [{L3_IMG_1}]{SU_VOWELS_IMG__S_WN}{SD_VOWELS_IMG__L_WN}
+    {S_VOWELS_KER_WN}[{L3_KER_1_GEMS}]              --> 2,1   --> [{L3_IMG_1_GEMS}]{SU_VOWELS_IMG__S_WN}
+    {S_VOWELS_KER_WN}[{L3_KER_2}]{S_VOWELS_KER_WN}  --> 2,1,3 --> [{L3_IMG_2}]{SU_VOWELS_IMG__L_WN}{SD_VOWELS_IMG_XL_WN}
+    {S_VOWELS_KER_WN}[{L3_KER_2_GEMS}]              --> 2,1   --> [{L3_IMG_2_GEMS}]{SU_VOWELS_IMG__L_WN}
+
+  
+    \** ## 4th Line (Voiced fricatives) **\
+    \** ## Long upper dash for nasalisation **\
+    
+    {L4_KER}        === ð     * v     * j     * ȝ
+    {L4_IMG}        === ANTO  * AMPA  * ANCA  * UNQUE
+    
+    {L4_KER_GEMS}   === ðð                    * vv                    * jj                    * ȝȝ
+    {L4_IMG_GEMS}   === ANTO THINF_DSTROKE_L  * AMPA THINF_DSTROKE_L  * ANCA THINF_DSTROKE_L  * UNQUE THINF_DSTROKE_L
+    
+
+    {S_VOWELS_KER_WN}[{L4_KER}]{S_VOWELS_KER_WN}  --> 2,1,3 --> [{L4_IMG}]{SU_VOWELS_IMG_XL_WN}{SD_VOWELS_IMG_XL_WN}
+    {S_VOWELS_KER_WN}[{L4_KER_GEMS}]              --> 2,1   --> [{L4_IMG_GEMS}]{SU_VOWELS_IMG_XL_WN}
+
+
+    \** ## 5th Line (Nasals) **\
+    \** ## Long upper dash for nasalisation (wins on gemination) **\
+
+    {L5_KER}        === n * m
+    {L5_IMG}        === NUMEN * MALTA
+
+    {S_VOWELS_KER_WN}[{L5_KER}]{S_VOWELS_KER_WN}  --> 2,1,3 --> [{L5_IMG}]{SU_VOWELS_IMG_XL_WN}{SD_VOWELS_IMG_XL_WN}
+    {S_VOWELS_KER_WN}[ nn * mm ]{S_VOWELS_KER_WN}       --> 2,1,3 --> [ NUMEN TILD_SUP_L * MALTA TILD_SUP_L ]{SU_VOWELS_IMG_XL_WN}{SD_VOWELS_IMG_XL_WN}
+
+
+    \** ## 6th Line (Approximants == fr : Spirantes) **\
+    \** ## Short upper dash for nasalisation **\
+
+    {L6_KER}        === r * ĭ
+    {L6_IMG}        === ORE * ANNA
+    {L6_KER_GEMS}   === rr * ĭĭ
+    {L6_IMG_GEMS}   === ORE THINF_DSTROKE_XS * ANNA THINF_DSTROKE_XS
+
+    {S_VOWELS_KER_WN}[{L6_KER}]{S_VOWELS_KER_WN}  --> 2,1,3 --> [{L6_IMG}]{SU_VOWELS_IMG__S_WN}{SD_VOWELS_IMG__L_WN}
+    {S_VOWELS_KER_WN}[{L6_KER_GEMS}]              --> 2,1   --> [{L6_IMG_GEMS}]{SU_VOWELS_IMG__S_WN}
+
+
+    \** ## Liquids **\
+    \** ## **\
+
+    {S_VOWELS_KER_WN}w{S_VOWELS_KER_WN}   --> 2,1,3 --> ROMEN {SU_VOWELS_IMG__L_WN}{SD_VOWELS_IMG_XS_WN}
+    {S_VOWELS_KER_WN}ww                   --> 2,1   --> ROMEN THINF_DSTROKE_XS {SU_VOWELS_IMG__L_WN}
+    {S_VOWELS_KER_WN}[l * ll]             --> 2,1   --> [LAMBE * LAMBE THINF_DSTROKE_FOR_LAMBE]{SU_VOWELS_IMG__L_WN}
+    {S_VOWELS_KER_WN}ld                   --> 2,1   --> ALDA {SU_VOWELS_IMG__L_WN}
+
+
+    \** ## Alveolar (sifflantes) **\
+    \** ## **\
+    {L8_KER}      ===  s * z 
+    {L8_IMG}      ===  SILME_NUQUERNA * ESSE_NUQUERNA 
+    {L8_KER_GEMS} ===  ss * zz 
+    {L8_IMG_GEMS} ===  SILME_NUQUERNA THINF_DSTROKE_XS * ESSE_NUQUERNA THINF_DSTROKE_L
+    
+    {S_VOWELS_KER_WN}[{L8_KER}]{S_VOWELS_KER_WN}  --> 2,1,3 --> [{L8_IMG}]{SU_VOWELS_IMG__S_WN}{SD_VOWELS_IMG__S_WN}
+    {S_VOWELS_KER_WN}[{L8_KER_GEMS}]              --> 2,1   --> [{L8_IMG_GEMS}]{SU_VOWELS_IMG__S_WN}
+
+
+    \** ## FINAL S (Challenging!) **\
+    {S_VOWELS_KER_WN}s_                       --> SHOOK_BEAUTIFUL {SU_VOWELS_IMG_XL_WN} \** # Final rule for s **\
+    _{S_VOWELS_KER_WN}s_                      --> SILME_NUQUERNA {SU_VOWELS_IMG__S_WN} \** # Rule _es_ **\
+    [{L_VOWELS} * _ ]{S_VOWELS_KER_WN}s_      --> 2,1,3     --> [{L_PTEHTAS} * {NULL} ] SILME_NUQUERNA {SU_VOWELS_IMG__S_WN} \** # Rule for éis_, és_ **\
+    {NULL}[ {S_VOWELS_NP} ]{S_VOWELS_KER}s_   --> 1,3,2,4   --> TELCO [ {UTEHTA_NP_XS} ] SILME_NUQUERNA {SU_VOWELS_IMG__S} \** # Rule for ies_   **\
+
+    s --> SILME \** # Overload lonely s **\
+    z --> ESSE  \** # Overload lonely z **\
+
+    \** ## Ligatures **\
+    \** ## **\
+    {LINE_VARIOUS_1_KER}      ===  sċ 
+    {LINE_VARIOUS_1_IMG}      ===  ANCA_CLOSED  
+    {LINE_VARIOUS_2_KER}      ===  hw * çt * (χt,ħt)
+    {LINE_VARIOUS_2_IMG}      ===  HARP_SHAPED  * AHA_TINCO  * HWESTA_TINCO 
+
+    {S_VOWELS_KER_WN}[{LINE_VARIOUS_1_KER}]{S_VOWELS_KER_WN} --> 2,1,3 --> [{LINE_VARIOUS_1_IMG}]{SU_VOWELS_IMG_XL_WN}{SD_VOWELS_IMG_XL_WN}
+    {S_VOWELS_KER_WN}[{LINE_VARIOUS_2_KER}]{S_VOWELS_KER_WN} --> 2,1,3 --> [{LINE_VARIOUS_2_IMG}]{SU_VOWELS_IMG__S_WN}{SD_VOWELS_IMG__S_WN}
+
+
+    \** ## Various **\
+    \** ## **\
+    {S_VOWELS_KER_WN}h{S_VOWELS_KER_WN}   --> 2,1,3 --> HYARMEN {SU_VOWELS_IMG_XS_WN}{SD_VOWELS_IMG__L_WN}
+    {S_VOWELS_KER_WN}hh                   --> 2,1   --> HYARMEN THINF_DSTROKE_XL {SU_VOWELS_IMG_XS_WN}
+
+
+    \** ## X **\
+    \** ## For x, due to the cedilla, we cannot put tehtas under the tengwa. **\
+    {S_VOWELS_KER_WN}x  --> 2,1 --> QUESSE SHOOK_LEFT_L {SU_VOWELS_IMG__S_WN}
+    {S_VOWELS_KER_WN}xx --> 2,1 --> QUESSE SHOOK_LEFT_L THINF_DSTROKE_XL {SU_VOWELS_IMG__S_WN}
+    {S_VOWELS_KER_WN}nx --> 2,1 --> QUESSE SHOOK_LEFT_L TILD_SUP_S {SU_VOWELS_IMG__S_WN}
+  \end
+  
+  \beg rules punctuation 
+    ⁊ --> OLD_ENGLISH_AND
+  
+    . --> PUNCT_DDOT
+    .. --> PUNCT_DOT PUNCT_DDOT PUNCT_DOT
+    …  --> PUNCT_TILD
+    ... --> PUNCT_TILD
+    .... --> PUNCT_TILD
+    ..... --> PUNCT_TILD
+    ...... --> PUNCT_TILD
+    ....... --> PUNCT_TILD
+
+    , --> PUNCT_DOT
+    : --> PUNCT_DOT
+    ; --> PUNCT_DOT
+    ! --> PUNCT_EXCLAM
+    ? --> PUNCT_INTERR
+    · --> PUNCT_DOT
+
+    \** Apostrophe **\
+
+    ' --> {NULL}
+    ’ --> {NULL}
+
+    \** Quotes **\
+
+    “ --> DQUOT_OPEN
+    ” --> DQUOT_CLOSE
+    « --> DQUOT_OPEN 
+    » --> DQUOT_CLOSE 
+
+    - --> {NULL}
+    – --> PUNCT_TILD  
+    — --> PUNCT_TILD
+  
+    [ --> PUNCT_PAREN_L
+    ] --> PUNCT_PAREN_R
+    ( --> PUNCT_PAREN_L_ALT \** TODO : Remove alt ? **\
+    ) --> PUNCT_PAREN_R_ALT \** TODO : Remove alt ? **\
+    { --> PUNCT_PAREN_L
+    } --> PUNCT_PAREN_R
+    < --> PUNCT_PAREN_L
+    > --> PUNCT_PAREN_R  
+
+    \** Not universal between fonts ... **\
+    $ --> BOOKMARK_SIGN
+    ≤ --> RING_MARK_L \** Ring inscription left beautiful stuff **\
+    ≥ --> RING_MARK_R \** Ring inscription right beautiful stuff **\
+
+  \end
+  
+\end

@@ -1,0 +1,318 @@
+\**
+
+Glǽmscribe (also written Glaemscribe) is a software dedicated to
+the transcription of texts between writing systems, and more 
+specifically dedicated to the transcription of J.R.R. Tolkien's 
+invented languages to some of his devised writing systems.
+
+Copyright (C) 2015 Benjamin Babut (Talagan).
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU Affero General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Affero General Public License for more details.
+
+You should have received a copy of the GNU Affero General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+**\
+
+\** BlackSpeech ring mode for glaemscribe (FAR FROM BEING COMPLETE!!!) **\
+
+\language "Black Speech"
+\writing  "Tengwar"
+\mode     "Ring Style / Cursive"
+\version  "0.0.1"
+\authors  "Talagan (Benjamin Babut)"
+
+\charset  tengwar_ds true
+
+\beg      options
+  \option reverse_numbers true
+  \beg option numbers_base BASE_12
+    \value    BASE_10 10
+    \value    BASE_12 12
+  \end
+\end
+
+\beg      preprocessor
+  \** Work exclusively downcase **\
+  \downcase
+  
+  \** Simplify trema vowels **\
+  \substitute ä a
+  \substitute ë e
+  \substitute ï i
+  \substitute ö o
+  \substitute ü u
+  \substitute ÿ y
+  
+  \** Dis-ambiguate long vowels **\
+  \rxsubstitute "(ā|â|aa)" "á"
+  \rxsubstitute "(ē|ê|ee)" "é"
+  \rxsubstitute "(ī|î|ii)" "í"
+  \rxsubstitute "(ō|ô|oo)" "ó"
+  \rxsubstitute "(ū|û|uu)" "ú"
+  
+  \** Preprocess numbers **\
+  \elvish_numbers "\\eval numbers_base" "\\eval reverse_numbers"
+\end
+  
+\beg processor
+
+  \beg rules litteral
+    {A}                 === a
+    {AA}                === á
+    {E}                 === e
+    {EE}                === é
+    {I}                 === i
+    {II}                === í
+    {O}                 === o
+    {OO}                === ó
+    {U}                 === u
+    {UU}                === ú
+    
+    {AI}                === {A}{I} \** attested **\
+    {AU}                === {A}{U} \** attested **\
+    {OI}                === {O}{I} \** Not quite sure (dushgoi) **\
+    
+    {K}                 === (c,k)
+    
+    \** VOWELS **\
+    {VOWELS}            === {A}               * {E}               * {I}        * {O}                * {U}
+    {LVOWELS}           === {AA}              * {EE}              * {II}       * {OO}               * {UU}  
+    \** Reverse o and u **\
+    {TEHTA_XS}          === A_TEHTA_XS        * E_TEHTA_XS        * I_TEHTA_XS *  U_TEHTA_XS        * O_TEHTA_XS      
+    {TEHTA__S}          === A_TEHTA_S         * E_TEHTA_S         * I_TEHTA_S  *  U_TEHTA_S         * O_TEHTA_S     
+    {TEHTA__L}          === A_TEHTA_L         * E_TEHTA_L         * I_TEHTA_L  *  U_TEHTA_L         * O_TEHTA_L     
+    {TEHTA_XL}          === A_TEHTA_XL        * E_TEHTA_XL        * I_TEHTA_XL *  U_TEHTA_XL        * O_TEHTA_XL          
+    \** Double tehtas **\ 
+    {DTEHTA_XS}         === A_TEHTA_DOUBLE_XS * E_TEHTA_DOUBLE_XS * Y_TEHTA_XS * U_TEHTA_DOUBLE_XS  * O_TEHTA_DOUBLE_XS 
+    {DTEHTA_S}          === A_TEHTA_DOUBLE_S  * E_TEHTA_DOUBLE_S  * Y_TEHTA_S  * U_TEHTA_DOUBLE_S   * O_TEHTA_DOUBLE_S  
+    {DTEHTA_L}          === A_TEHTA_DOUBLE_L  * E_TEHTA_DOUBLE_L  * Y_TEHTA_L  * U_TEHTA_DOUBLE_L   * O_TEHTA_DOUBLE_L   
+    {DTEHTA_XL}         === A_TEHTA_DOUBLE_XL * E_TEHTA_DOUBLE_XL * Y_TEHTA_XL * U_TEHTA_DOUBLE_XL  * O_TEHTA_DOUBLE_XL
+        
+    {DIPHTHONGS}         === {AI}              * {AU}              *  {OI}              
+    {DIPHTHENGS}         === YANTA A_TEHTA_L    * URE A_TEHTA_L     * YANTA U_TEHTA_L   
+     
+    {V_D_KER}           === [ {VOWELS}   * {LVOWELS}    * {DIPHTHONGS} ]
+    {V_D_IMG_XS}        === [ {TEHTA_XS} * {DTEHTA_XS}  * {DIPHTHENGS} ]
+    {V_D_IMG__S}        === [ {TEHTA__S} * {DTEHTA_L}   * {DIPHTHENGS} ]
+    {V_D_IMG__L}        === [ {TEHTA__L} * {DTEHTA_S}   * {DIPHTHENGS} ]
+    {V_D_IMG_XL}        === [ {TEHTA_XL} * {DTEHTA_XL}  * {DIPHTHENGS} ]
+    
+    [{VOWELS}]          -->   TELCO [{TEHTA_XS}]  \** Replace isolated short vowels **\
+    [{LVOWELS}]         -->   ARA   [{TEHTA_XS}]  \**  Replace long vowels **\
+    [{DIPHTHONGS}]       -->  [{DIPHTHENGS}]  \**  Replace diphthongs **\
+    
+    \** CONSONANT RULES (could be factorized with crossrules) **\
+    
+    \** ======================== **\
+         
+    l               --> LAMBE
+    \** If we look closely on the ring inscription, **\
+    \** we can see the offset for the tehta starting point **\
+    \** That's why we use the XL tehtas **\
+    {V_D_KER}  l    --> LAMBE {V_D_IMG_XL}       
+    \** when telco follows, ligature with telco **\
+    l {V_D_KER}  _  --> LAMBE_LIG TELCO {V_D_IMG_XS}
+    
+    \** ======================== **\
+    
+    b                           --> UMBAR
+    {V_D_KER}   b              --> UMBAR {V_D_IMG_XL}
+    \** Attached l to b **\
+    l {V_D_KER}  b             --> LAMBE_LIG UMBAR {V_D_IMG_XL}
+    {V_D_KER}  l {V_D_KER}  b --> LAMBE_LIG {V_D_IMG_XL} UMBAR {V_D_IMG_XL}
+                                                    
+    d                           --> ANDO
+    {V_D_KER}   d              --> ANDO {V_D_IMG_XL}
+    \** Attached l to d **\
+    l {V_D_KER}  d             --> LAMBE_LIG ANDO {V_D_IMG_XL}
+    {V_D_KER}  l {V_D_KER}  d --> LAMBE_LIG {V_D_IMG_XL} ANDO {V_D_IMG_XL}
+                                          
+    f                           --> FORMEN 
+    {V_D_KER}   f              --> FORMEN_EXT {V_D_IMG__S} \** Beware. **\ 
+    \** Attached l to f **\
+    l {V_D_KER}  f             --> LAMBE_LIG FORMEN_EXT {V_D_IMG__S}
+    {V_D_KER}  l {V_D_KER}  f --> LAMBE_LIG {V_D_IMG_XL} FORMEN_EXT {V_D_IMG__S}
+                                           
+    g                           --> UNGWE
+    {V_D_KER}   g              --> UNGWE {V_D_IMG_XL}
+    \** Attached l to g **\
+    l {V_D_KER}  g             --> LAMBE_LIG UNGWE {V_D_IMG_XL}
+    {V_D_KER}  l {V_D_KER}  g --> LAMBE_LIG {V_D_IMG_XL} UNGWE {V_D_IMG_XL}
+     
+    gh                           --> UNGWE_EXT
+    {V_D_KER}   gh              --> UNGWE_EXT {V_D_IMG_XL}
+    \** Attached l to g **\
+    l {V_D_KER}  gh             --> LAMBE_LIG UNGWE_EXT {V_D_IMG_XL}
+    {V_D_KER}  l {V_D_KER}  gh --> LAMBE_LIG {V_D_IMG_XL} UNGWE_EXT {V_D_IMG_XL}
+    
+    h                           --> HYARMEN
+    {V_D_KER}   h              --> HYARMEN {V_D_IMG_XS}
+    \** Attached l to g **\
+    l {V_D_KER}  h             --> LAMBE_LIG HYARMEN {V_D_IMG_XS}
+    {V_D_KER}  l {V_D_KER}  h --> LAMBE_LIG {V_D_IMG_XL} HYARMEN {V_D_IMG_XS}
+          
+    {K}                          --> QUESSE
+    {V_D_KER}   {K}              --> QUESSE {V_D_IMG__L}
+    \** Attached l to g **\
+    l {V_D_KER}  {K}             --> LAMBE_LIG QUESSE {V_D_IMG__L}
+    {V_D_KER}  l {V_D_KER}  {K}  --> LAMBE_LIG {V_D_IMG_XL} QUESSE {V_D_IMG__L}
+          
+    {K}h                           --> HWESTA
+    {V_D_KER}   {K}h              --> HWESTA_EXT {V_D_IMG__L}
+    \** Attached l to g **\
+    l {V_D_KER}  {K}h             --> LAMBE_LIG HWESTA_EXT {V_D_IMG__L}
+    {V_D_KER}  l {V_D_KER}  {K}h --> LAMBE_LIG {V_D_IMG_XL} HWESTA_EXT {V_D_IMG__L}
+          
+    
+    m                               --> MALTA
+    {V_D_KER}  m                   --> MALTA {V_D_IMG_XL}
+    
+    mb                              --> UMBAR TILD_SUP_L
+    {V_D_KER}  mb                  --> UMBAR TILD_SUP_L {V_D_IMG_XL}
+    
+    mp                             --> PARMA TILD_SUP_S
+    {V_D_KER}  mp                  --> PARMA TILD_SUP_S {V_D_IMG__L}
+    
+    n                              --> NUMEN
+    {V_D_KER} n                    --> NUMEN {V_D_IMG_XL} 
+    
+    n{K}                           --> QUESSE TILD_SUP_S
+    {V_D_KER} n{K}                 --> QUESSE TILD_SUP_S {V_D_IMG__S} 
+    
+    p                               --> PARMA
+    
+    r                               --> ROMEN
+    {V_D_KER}  r                   --> ORE {V_D_IMG__L}
+    \** Attached l to r **\        
+    l {V_D_KER}  r                 --> LAMBE_LIG ORE {V_D_IMG__L}
+    {V_D_KER}  l {V_D_KER}  r     --> LAMBE_LIG {V_D_IMG_XL} ORE {V_D_IMG__L}
+    
+    
+    r                               --> ROMEN
+    r_                              --> ORE
+    {V_D_KER} r                    --> ORE {V_D_IMG__S}                                      
+    {V_D_KER} rb                   --> ORE {V_D_IMG__L} UMBAR                                  
+    {V_D_KER} rz                   --> ORE {V_D_IMG__L} ESSE
+    
+    s                               --> SILME
+    
+    
+    \** Beware sh is not the same if not preceeded by vowel **\
+    sh                              --> AHA
+    {A}sh                           --> AHA_EXT A_TEHTA_L           
+    {E}sh                           --> AHA_EXT E_TEHTA_L
+    {I}sh                           --> AHA_EXT I_TEHTA_L
+    {O}sh                           --> AHA_EXT U_TEHTA_S 
+    {U}sh                           --> AHA_EXT O_TEHTA_XS \** The best one still not satisfying... **\
+    {AA}sh                          --> ESSE_NUQUERNA A_TEHTA_DOUBLE_L 
+    {EE}sh                          --> ESSE_NUQUERNA E_TEHTA_DOUBLE_L
+    {II}sh                          --> ESSE_NUQUERNA Y_TEHTA_L
+    {OO}sh                          --> ESSE_NUQUERNA U_TEHTA_DOUBLE_S 
+    {UU}sh                          --> ESSE_NUQUERNA O_TEHTA_DOUBLE_XS
+    
+    t                               --> TINCO
+    {V_D_KER} t                    --> TINCO {V_D_IMG__L}
+    
+    th                              --> SULE
+    y                               --> ANNA
+    
+    z                               --> ESSE
+    
+    \** Need to break thisone too **\
+    {A}z                            --> ESSE_NUQUERNA A_TEHTA_L 
+    {E}z                            --> ESSE_NUQUERNA E_TEHTA_L
+    {I}z                            --> ESSE_NUQUERNA I_TEHTA_L
+    {O}z                            --> ESSE_NUQUERNA U_TEHTA_S 
+    {U}z                            --> ESSE_NUQUERNA O_TEHTA_S
+    {AA}z                           --> ESSE_NUQUERNA A_TEHTA_DOUBLE_L 
+    {EE}z                           --> ESSE_NUQUERNA E_TEHTA_DOUBLE_L
+    {II}z                           --> ESSE_NUQUERNA Y_TEHTA_L
+    {OO}z                           --> ESSE_NUQUERNA U_TEHTA_DOUBLE_S 
+    {UU}z                           --> ESSE_NUQUERNA O_TEHTA_DOUBLE_S
+  \end
+    
+  \beg rules punctuation
+    . --> PUNCT_DDOT
+    .. --> PUNCT_DOT PUNCT_DDOT PUNCT_DOT
+    …  --> PUNCT_TILD
+    ... --> PUNCT_TILD
+    .... --> PUNCT_TILD
+    ..... --> PUNCT_TILD
+    ...... --> PUNCT_TILD
+    ....... --> PUNCT_TILD
+    
+    , --> PUNCT_DOT
+    : --> PUNCT_DOT
+    ; --> PUNCT_DOT
+    ! --> PUNCT_EXCLAM
+    ? --> PUNCT_INTERR
+    · --> PUNCT_DOT
+
+    \** Apostrophe **\
+
+    ' --> {NULL}
+    ’ --> {NULL}
+
+    \** Quotes **\
+
+    “ --> DQUOT_OPEN
+    ” --> DQUOT_CLOSE
+    « --> DQUOT_OPEN 
+    » --> DQUOT_CLOSE 
+
+    - --> {NULL}     
+    – --> PUNCT_TILD  
+    — --> PUNCT_TILD
+
+    [ --> PUNCT_PAREN_L
+    ] --> PUNCT_PAREN_R
+    ( --> PUNCT_PAREN_L
+    ) --> PUNCT_PAREN_R
+    { --> PUNCT_PAREN_L
+    } --> PUNCT_PAREN_R
+    < --> PUNCT_PAREN_L
+    > --> PUNCT_PAREN_R
+
+    \** Not universal between fonts ... **\
+    $ --> BOOKMARK_SIGN
+    ≤ --> RING_MARK_L \** Ring inscription left beautiful stuff **\
+    ≥ --> RING_MARK_R \** Ring inscription right beautiful stuff **\
+
+  \end
+
+  \beg rules numbers
+    0 --> NUM_0
+    1 --> NUM_1
+    2 --> NUM_2
+    3 --> NUM_3
+    4 --> NUM_4
+    5 --> NUM_5
+    6 --> NUM_6
+    7 --> NUM_7
+    8 --> NUM_8
+    9 --> NUM_9
+    A --> NUM_10
+    B --> NUM_11      
+  \end
+
+\end
+
+
+
+
+
+
+
+
+
+ 
+                        

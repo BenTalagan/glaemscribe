@@ -1,0 +1,120 @@
+\**
+
+Glǽmscribe (also written Glaemscribe) is a software dedicated to
+the transcription of texts between writing systems, and more 
+specifically dedicated to the transcription of J.R.R. Tolkien's 
+invented languages to some of his devised writing systems.
+
+Copyright (C) 2015 Benjamin Babut (Talagan).
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU Affero General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Affero General Public License for more details.
+
+You should have received a copy of the GNU Affero General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+**\
+
+\** Charset for the pfeffermediaeval font used by the furtharc mode **\ 
+\** Very incomplete outside of the runes range **\
+\** Minimal service here ... **\ 
+
+\**   **\ \char 20 SPACE                      
+\** , **\ \char 2C COMA
+\** . **\ \char 2E PERIOD 
+\** ; **\ \char 3B SEMICOLON   
+\** ᚠ **\ \char 16A0 FEHU FEOH FE 
+\** ᚡ **\ \char 16A1 RUNIC_V 
+\** ᚢ **\ \char 16A2 URUZ UR 
+\** ᚣ **\ \char 16A3 YR 
+\** ᚤ **\ \char 16A4 RUNIC_Y 
+\** ᚥ **\ \char 16A5 RUNIC_W 
+\** ᚦ **\ \char 16A6 THURISAZ THURS THORN 
+\** ᚧ **\ \char 16A7 ETH 
+\** ᚨ **\ \char 16A8 ANSUZ 
+\** ᚩ **\ \char 16A9 OS 
+\** ᚪ **\ \char 16AA AC 
+\** ᚫ **\ \char 16AB AESC 
+\** ᚬ **\ \char 16AC LONG_BRANCH_OSS 
+\** ᚭ **\ \char 16AD SHORT_TWIG_OSS 
+\** ᚮ **\ \char 16AE RUNIC_O 
+\** ᚯ **\ \char 16AF RUNIC_OE 
+\** ᚰ **\ \char 16B0 RUNIC_ON 
+\** ᚱ **\ \char 16B1 RAIDO RAD REID 
+\** ᚲ **\ \char 16B2 KAUNA 
+\** ᚳ **\ \char 16B3 CEN 
+\** ᚴ **\ \char 16B4 KAUN 
+\** ᚵ **\ \char 16B5 RUNIC_G 
+\** ᚶ **\ \char 16B6 ENG 
+\** ᚷ **\ \char 16B7 GEBO GYFU 
+\** ᚷ **\ \char 16B8 GAR 
+\** ᚹ **\ \char 16B9 WUNJO WYNN 
+\** ᚺ **\ \char 16BA HAGLAZ 
+\** ᚻ **\ \char 16BB HAEGL 
+\** ᚼ **\ \char 16BC LONG_BRANCH_HAGALL 
+\** ᚽ **\ \char 16BD SHORT_TWIG_HAGALL 
+\** ᚾ **\ \char 16BE NAUDIZ NYD NAUD 
+\** ᚿ **\ \char 16BF SHORT_TWIG_NAUD 
+\** ᛀ **\ \char 16C0 DOTTED_N 
+\** ᛁ **\ \char 16C1 ISAZ IS ISS 
+\** ᛂ **\ \char 16C2 RUNIC_E 
+\** ᛃ **\ \char 16C3 JERAN 
+\** ᛄ **\ \char 16C4 GER 
+\** ᛅ **\ \char 16C5 LONG_BRANCH_AR 
+\** ᛆ **\ \char 16C6 SHORT_TWIG_AR 
+\** ᛇ **\ \char 16C7 IWAZ EOH 
+\** ᛈ **\ \char 16C8 PERTHO PEORTH 
+\** ᛉ **\ \char 16C9 ALGIZ EOLHX 
+\** ᛊ **\ \char 16CA SOWILO 
+\** ᛋ **\ \char 16CB SIGEL LONG_BRANCH_SOL 
+\** ᛌ **\ \char 16CC SHORT_TWIG_SOL 
+\** ᛍ **\ \char 16CD RUNIC_C 
+\** ᛎ **\ \char 16CE RUNIC_Z 
+\** ᛏ **\ \char 16CF TIWAZ TIR TYR 
+\** ᛐ **\ \char 16D0 SHORT_TWIG_TYR 
+\** ᛑ **\ \char 16D1 RUNIC_D 
+\** ᛒ **\ \char 16D2 BERKANAN BEORC BJARKAN 
+\** ᛔ **\ \char 16D4 DOTTED_P 
+\** ᛕ **\ \char 16D5 OPEN_P 
+\** ᛖ **\ \char 16D6 EHWAZ EH 
+\** ᛗ **\ \char 16D7 MANNAZ MAN 
+\** ᛘ **\ \char 16D8 LONG_BRANCH_MADR 
+\** ᛙ **\ \char 16D9 SHORT_TWIG_MADR 
+\** ᛚ **\ \char 16DA LAUKAZ LAGU LOGR 
+\** ᛛ **\ \char 16DB DOTTED_L 
+\** ᛜ **\ \char 16DC INGWAZ 
+\** ᛝ **\ \char 16DD ING 
+\** ᛞ **\ \char 16DE DAGAZ DAEG 
+\** ᛟ **\ \char 16DF OTHALAN ETHEL 
+\** ᛠ **\ \char 16E0 EAR 
+\** ᛡ **\ \char 16E1 IOR 
+\** ᛢ **\ \char 16E2 CWEORTH 
+\** ᛣ **\ \char 16E3 CALC 
+\** ᛤ **\ \char 16E4 CEALC 
+\** ᛥ **\ \char 16E4 STAN 
+\** ᛦ **\ \char 16E6 LONG_BRANCH_YR 
+\** ᛧ **\ \char 16E7 SHORT_TWIG_YR 
+\** ᛨ **\ \char 16E8 ICELANDIC_YR 
+\** ᛩ **\ \char 16E9 RUNIC_Q 
+\** ᛪ **\ \char 16EA RUNIC_X 
+\** ᛫ **\ \char 16EB RUNIC_SINGLE_PUNCTUATION 
+\** ᛬ **\ \char 16EC RUNIC_MULTIPLE_PUNCTUATION 
+\** ᛭ **\ \char 16ED RUNIC_CROSS_PUNCTUATION
+\** ᛮ **\ \char 16EE RUNIC_ARLAUG_SYMBOL 
+\** ᛯ **\ \char 16EF RUNIC_TVIMADUR_SYMBOL 
+\** ᛰ **\ \char 16F0 RUNIC_BELGTHOR_SYMBOL 
+\** ᛱ **\ \char 16F1 RUNIC_LETTER_K 
+\** ᛲ **\ \char 16F2 RUNIC_LETTER_SH 
+\** ᛳ **\ \char 16F3 RUNIC_LETTER_OO   
+\** ᛴ **\ \char 16F4 RUNIC_LETTER_FRANKS_CASKET_OS 
+\** ᛵ **\ \char 16F5 RUNIC_LETTER_FRANKS_CASKET_IS 
+\** ᛶ **\ \char 16F6 RUNIC_LETTER_FRANKS_CASKET_EH 
+\** ᛷ **\ \char 16F7 RUNIC_LETTER_FRANKS_CASKET_AC 
+\** ᛸ **\ \char 16F8 RUNIC_LETTER_FRANKS_CASKET_AESC

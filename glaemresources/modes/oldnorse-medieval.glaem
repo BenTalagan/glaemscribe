@@ -1,0 +1,127 @@
+\**
+
+Glǽmscribe (also written Glaemscribe) is a software dedicated to
+the transcription of texts between writing systems, and more 
+specifically dedicated to the transcription of J.R.R. Tolkien's 
+invented languages to some of his devised writing systems.
+
+Copyright (C) 2015 Benjamin Babut (Talagan).
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU Affero General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Affero General Public License for more details.
+
+You should have received a copy of the GNU Affero General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+**\
+
+\language "Old Norse"
+\writing  "Runes"
+\mode     "Futhark Codex Runicus"
+\version  "0.0.1"
+\authors  "Talagan (Benjamin Babut)"
+
+\charset  unicode_runes true
+
+\beg      preprocessor
+  \downcase
+\end
+
+\beg      processor
+    
+  \beg    rules litteral
+    {A}       === (a,á) 
+    {E}       === (e,é) 
+    {I}       === (i,í,j)
+    {O}       === (o,ó)
+    {U}       === (u,ú)
+    {Y}       === (y,ý)
+
+    {AE}      === (æ,ǽ,ę)
+    {OE}      === (ø,ǿ,œ)
+    {OTREM}   === (ö,ǫ)
+    {AEI}     === (æi,ei)
+
+    \**  VOWELS **\
+    
+    \**  ą (> a, o, á, ó plus tard)   **\
+
+    {A}       --> SHORT_TWIG_AR
+    {E}       --> RUNIC_E
+    {I}       --> ISS 
+    {O}       --> RUNIC_O
+    {U}       --> UR
+    {Y}       --> LONG_BRANCH_YR
+    {AE}      --> LONG_BRANCH_AR
+    {OE}      --> RUNIC_OE
+    {OTREM}   --> RUNIC_O       \** # ö en islandais **\
+    ǭ         --> SHORT_TWIG_AR \** # á en islandais  **\
+    {AEI}     --> LONG_BRANCH_AR ISS    
+    
+    \**  au: ok    **\
+    {E}{Y}    --> LONG_BRANCH_AR LONG_BRANCH_YR
+    {OE}{Y}   --> LONG_BRANCH_AR LONG_BRANCH_YR                       
+
+    \**  CONSONANTS **\
+  
+    b         --> BJARKAN
+    c         --> RUNIC_C
+    \**  bb: ok **\
+    \**  mb: ok **\
+    d         --> RUNIC_D
+    \**  dd: ok **\
+    \**  nd: ok **\
+    ð         --> THORN
+    (f,f_)    --> FEHU \** # Second part is unuseful but exists in other modes **\
+    _g        --> RUNIC_G \** # Initial / After prefix **\
+    (g,g_)    --> LONG_BRANCH_HAGALL \** # Median / Final Spirant **\
+    gg        --> RUNIC_G RUNIC_G
+    ng        --> SHORT_TWIG_NAUD RUNIC_G
+    h         --> LONG_BRANCH_HAGALL
+    k         --> KAUN
+    \**  kk: ok **\
+    \**  nk: ok **\
+    l         --> LOGR
+    \**  ll: ok **\
+    m         --> LONG_BRANCH_MADR
+    \**  mm: ok **\
+    n         --> SHORT_TWIG_NAUD
+    \**  nn: ok **\
+    p         --> DOTTED_P
+    \**  pp: ok **\
+    \**  mp: ok **\
+    r         --> REID
+    \**  rr: ok **\
+    \**  ř < z = rune ýr, none in this mode **\
+    s         --> SIGEL
+    \**  ss: ok **\
+    t         --> SHORT_TWIG_TYR
+    nt        --> SHORT_TWIG_TYR
+    \**  tt: ok **\
+    þ        --> THORN
+    vv       --> FEHU  \** # v (< f) **\
+    v        --> URUZ  \** # v (< w)  **\
+    w        --> URUZ  \** # Should not exist but let's handle it **\
+    x        --> RUNIC_X                 
+    z        --> RUNIC_Z
+  \end
+  
+  \beg    rules  punctuation
+    , --> RUNIC_SINGLE_PUNCTUATION
+    ; --> RUNIC_SINGLE_PUNCTUATION
+    : --> RUNIC_MULTIPLE_PUNCTUATION
+    . --> RUNIC_MULTIPLE_PUNCTUATION
+    ! --> RUNIC_MULTIPLE_PUNCTUATION
+    ? --> RUNIC_CROSS_PUNCTUATION	
+  \end
+\end
+  
+    
+      

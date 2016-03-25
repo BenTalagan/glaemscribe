@@ -1,0 +1,311 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+
+  <link type='text/css' rel='stylesheet' href='codemirror/codemirror.css'>
+  <link type='text/css' rel='stylesheet' href='codemirror/vibrant-ink.css'>
+  <link type='text/css' rel='stylesheet' href='codemirror/addons/dialog.css'>
+  
+  <link type='text/css' rel='stylesheet' href='font-awesome/css/font-awesome.css'>
+  <link type='text/css' rel='stylesheet' href='alertify/alertify.core.css'>
+  <link type='text/css' rel='stylesheet' href='alertify/alertify.default.css'>
+  <link type='text/css' rel='stylesheet' href='tipsy/tipsy.css'>
+  <link type='text/css' rel='stylesheet' href='css/glaemscribe_editor.css'>
+  
+  <script src="./codemirror/codemirror.js"></script>  
+  <script src="./codemirror/addons/search.js"></script>  
+  <script src="./codemirror/addons/searchcursor.js"></script>  
+  <script src="./codemirror/addons/dialog.js"></script>  
+  
+  
+  <script src="./codemirror/glaemscribe_mode.js"></script>  
+  
+  <script src="./alertify/alertify.min.js"></script>
+  <script src="./d3/d3.min.js"></script>
+  <script src="./tipsy/tipsy.js"></script>
+ 
+  <script src="../build/web/glaemscribe/js/glaemscribe.js"></script>
+  
+  <script src="./js/glaemscribe_editor.js"></script>  
+  <script src="./js/glaemscribe_debug_tree.js"></script>  
+    
+  <title>Glaemscribe Editor</title>
+</head>
+ 
+<body>  
+  
+  <div class="glaemscribe" style="position:absolute">
+    <!--
+    <div class="title_line">
+      <a class="docbutton" target="glaemeddoc" style="float:right;margin-right:10px;margin-top:2px" href="http://jrrvf.com/~glaemscrafu/english/glaemscribe-mode-authoring.html#using_ide">Documentation</a>
+      <div class="title">Glaemscribe Editor</div>
+    </div>
+      -->
+   
+    <div class="ide">
+      
+      <div class="toprow">         
+        <div class="code_toolbar">    
+          
+          <div class="widget_bar" style="float:right;">
+            <a id="doc_link" style="display:none" target="glaemeddoc" href="http://jrrvf.com/~glaemscrafu/english/glaemscribe-mode-authoring.html#using_ide"></a>          
+            <div class="widget button_with_icon" id="doc_button" title="Documentation">
+              <div class="fa fa-book"></div>  
+            </div>           
+            <div class="widget miniseparator"></div>
+            <div class="widget button_with_icon" id="about_button" title="About">
+              <div class="fa fa-question"></div>  
+            </div>
+          </div>
+          
+          <div class="widget_bar">
+            
+            <div class="widget label session">Session</div>
+          
+            <div class="widget button_with_icon session" id="new_session_button" title="New session, start from scratch">
+              <div class="fa fa-file"></div>  
+            </div>
+          
+            <div class="widget miniseparator"></div>
+          
+            <div class="widget">         
+              <div class="widget button_with_icon session" id="open_session_button" title="Open session">
+                <div class="fa fa-folder-open"></div>         
+              </div>    
+              <div class="session session_list" style="display:none" id="session_list">  </div>
+            </div>
+          
+            <div class="widget miniseparator"></div>
+          
+            <div class="widget customFileInput" id="session_file_import">
+              <div class="customOpenButton session">
+                <div class="fa fa-level-down"></div>
+                <input type="file" accept=".sess" title="Import session"/>
+              </div>
+            </div>
+          
+            <div class="widget miniseparator"></div>
+          
+            <a id="export_session_anchor" style="display:none"></a>          
+            <div class="widget button_with_icon session" id="export_session_button" title="Export session (.sess)">
+              <div class="fa fa-level-up"></div>  
+            </div>
+          
+            <div class="widget miniseparator"></div>          
+            <div class="widget input sm session">
+              <input type="text" placeholder="No current session yet" readonly id="session_name" />
+            </div>
+                  
+            <div class="widget miniseparator"></div>
+                  
+            <div class="widget">
+              <div class="widget button_with_icon session" id="commit_history_button" title="Open a commit of this session">
+                <div class="fa fa-history"></div>  
+              </div>    
+              <div class="session commit_list" style="display:none" id="commit_list">  </div>
+            </div>
+          
+            <div class="widget miniseparator"></div>
+          
+            <div class="widget">
+              <div class="widget button_with_icon session" id="commit_session_button" title="Commit as latest commit for this session">
+                <div class="fa fa-save"></div>
+              </div>
+              <div class="session commit_session_pannel" style="display:none" id="commit_session_pannel">
+                <span id="confirm_commit_session_button" class="confirm_commit_session_button">Commit</span>
+                <span class="commit_session_label">in session</span>
+                <span><input type="text" placeholder="Session name" id="commit_session_name" /></span>
+              </div>
+            </div>
+            
+            <div class="widget separator"></div>
+          
+          </div>
+          
+          
+          <div class="widget_bar">
+                                  
+            <div class="widget label mode">Mode</div>
+            <div class="widget input sm mode">
+              <input type="text" placeholder="Name your mode" id="mode_name" >
+            </div>
+          
+            <div class="widget miniseparator"></div>
+          
+            <div class="widget customFileInput" id="mode_file_import">
+              <div class="customOpenButton mode">
+                <div class="fa fa-level-down"></div>
+                <input type="file" accept=".glaem" title="Import mode"/>
+              </div>
+            </div>
+          
+            <div class="widget miniseparator"></div>
+          
+            <a id="export_mode_anchor" style="display:none"></a>          
+            <div class="widget button_with_icon mode" id="export_mode_button" title="Export mode (.glaem)">
+              <div class="fa fa-level-up"></div>  
+            </div>      
+          
+            <div class="widget miniseparator"></div>         
+          
+            <div class="widget button_with_icon mode" id="export_mode_js_button" title="Export mode (.glaem.js)">
+              <div class="fa fa-level-up"></div>  
+              <div class="js-export-mark">.js</div>
+            </div>
+            
+            <div class="widget separator"></div>
+          
+          </div>
+          
+             
+          <div class="widget_bar">
+               
+            <div class="widget label charset">Charset</div>
+            <div class="widget input sm charset">
+              <input type="text" placeholder="Name your charset" id="charset_name" >
+            </div>
+          
+            <div class="widget miniseparator"></div>
+          
+            <div class="widget customFileInput" id="charset_file_import">
+              <div class="customOpenButton charset">
+                <div class="fa fa-level-down"></div>
+                <input type="file" accept=".cst" title="Import charset"/>
+              </div>     
+            </div>   
+          
+            <div class="widget miniseparator"></div>
+          
+            <a id="export_charset_anchor" style="display:none"></a>          
+            <div class="widget button_with_icon charset" id="export_charset_button" title="Export charset (.cst)">
+              <div class="fa fa-level-up"></div>  
+            </div>
+          
+            <div class="widget miniseparator"></div>
+          
+            <div class="widget button_with_icon charset" id="export_charset_js_button" title="Export charset (.cst.js)">
+              <div class="fa fa-level-up"></div>  
+              <div class="js-export-mark">.js</div>
+            </div>    
+                
+            <div class="widget separator"></div>
+          
+          </div>
+          
+          
+          <div class="widget_bar">        
+            <div class="widget label font">Font</div>
+            <div class="widget input font">
+              <input type="text" placeholder="Installed font name..." id="font_name">
+            </div>
+         
+            <div class="widget separator"></div>
+         
+          </div>
+          
+          
+          <div class="widget_bar">        
+            <div class="widget label debug">Debug</div>
+            <div class="widget button_with_icon debug" id="display_debugger_info" title="Display debug info">
+              <div class="fa fa-paw"></div>  
+            </div>
+          </div>                   
+        </div>
+      </div>
+      
+      <div class="midrow">
+        <div class="code_wrapper">
+          <textarea id="code" class="code" spellcheck="false"></textarea>
+          <div class="noselect editor_buttons">
+            <div class="editor_button find noselect" title="Find occurences (Ctrl+F/Cmd+F)">Find</div>
+            <div class="editor_button find_next fa fa-caret-down noselect" title="Find next (Ctrl+G/Cmd+G)"></div>
+            <div class="editor_button find_previous fa fa-caret-up noselect" title="Find previous (Ctrl/Cmd)"></div> 
+            <div class="editor_button replace noselect" title="Replace occurences (Ctrl+R/Cmd+R)">Replace</div>
+          </div>
+        </div>
+        <div class="charset_wrapper">
+          <div class="charset_table">
+            <table>
+            </table>
+          </div>
+        </div>  
+      </div>
+      
+      <div class="modal_char_editor" id="modal_char_editor" style="display:none">        
+        <div class="char_editor" id="char_editor" >
+          <span class="char_editor_left">
+            <div><span class="char_code_label">Code</span><input class="char_code_edit" id="char_code_edit" placeholder="Hex"/></div>
+            <div class="char_preview" id="char_preview"></div>
+            <div class="char_editor_buttons">
+              <div class="char_editor_button trash"><div class="fa fa-trash"></div></div>
+              <div class="char_editor_button ok"><div class="fa fa-check"></div></div>
+              <div class="char_editor_button cancel"><div class="fa fa-close"></div></div>
+            </div>
+          </span>
+          <span class="char_editor_right">
+
+            <div class="char_code_names_label">Names</div>
+            
+            <div class="char_names_wrapper">
+              <textarea class="char_names_edit" id="char_names_edit" placeholder="Names in upper case, separated by spaces"></textarea>
+            </div>
+          </span>
+        </div>
+      </div>
+      
+      
+      <div class="bottomrow">
+        <div class="transcription_wrapper">
+          <div class="entry_wrapper">
+            <textarea id="entry" class="entry" spellcheck="false" placeholder="Text to transcribe..."></textarea>
+          </div>
+          <div class="transcribed_wrapper">
+            <div class="transcribed"></div>
+          </div>           
+        </div>
+        
+        <div class="options_wrapper">
+          <div class="options">
+          </div>
+        </div>       
+      </div>  
+      
+      <div class="modal_debugger" id="modal_debugger" style="display:none">        
+        <div class="modal_debugger_main_window" id="modal_debugger_main_window" >
+          <div class="fa fa-close close_debugger_button" id="close_debugger_button"></div>
+         <div class="modal_debugger_right">          
+            <div class="processor_tree" id="processor_tree">   
+            </div>
+          </div>
+          <div class="modal_debugger_left">
+            <div class="modal_debugger_left_inner">
+              <div class="debugger_label">Transcriptor entry</div>
+              <div><textarea class="debugger_entry" placeholder="Enter some text to debug"></textarea></div>
+              <div class="debugger_label">Preprocessor output</div>
+              <div class="preprocessor_output"></div>
+              <div class="debugger_label">Processor followed pathes <span class="debugger_plus_post">+post</span></div>
+              <div class="processor_followed_pathes"><table></table></div>
+              <div class="debugger_label">Processor output <span class="debugger_plus_post">+post</span></div>
+              <div class="processor_output"></div>
+              <div class="debugger_checkbox"><input type="checkbox" id="debugger_apply_postprocessor" checked> Apply Postprocessor</div>
+            </div>
+          </div>
+        
+        </div>
+
+      </div>
+      
+      
+    </div>  
+
+  </div>
+  
+  <script type="text/javascript">    
+  $(document).ready(function() { glaemscribe_editor = new GlaemscribeEditor() });
+  </script>
+ 
+</body>
+</html>

@@ -1,0 +1,307 @@
+\**
+
+Glǽmscribe (also written Glaemscribe) is a software dedicated to
+the transcription of texts between writing systems, and more 
+specifically dedicated to the transcription of J.R.R. Tolkien's 
+invented languages to some of his devised writing systems.
+
+Copyright (C) 2015 Benjamin Babut (Talagan).
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU Affero General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Affero General Public License for more details.
+
+You should have received a copy of the GNU Affero General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+**\
+
+\language "Quenya"
+\writing  "Tengwar"
+\mode     "Classical"
+\version  "0.0.1"
+\authors  "Talagan (Benjamin Babut)"
+
+\charset  tengwar_ds true
+  
+\beg      options
+  \option split_diphthongs false
+  \option always_use_romen_for_r false
+  \option reverse_numbers true
+  \beg option numbers_base BASE_12
+    \value    BASE_10 10
+    \value    BASE_12 12
+  \end
+\end
+
+\beg      preprocessor
+  \** Work exclusively downcase **\
+  \downcase
+  
+  \** Simplify trema vowels **\
+  \substitute ä a
+  \substitute ë e
+  \substitute ï i
+  \substitute ö o
+  \substitute ü u
+  \substitute ÿ y
+
+  \** Dis-ambiguate long vowels **\
+  \rxsubstitute "(ā|â|aa)" "á"
+  \rxsubstitute "(ē|ê|ee)" "é"
+  \rxsubstitute "(ī|î|ii)" "í"
+  \rxsubstitute "(ō|ô|oo)" "ó"
+  \rxsubstitute "(ū|û|uu)" "ú"
+  \rxsubstitute "(ȳ|ŷ|yy)" "ý"
+
+  \substitute   "qu" "q" \** Dis-ambiguate qu **\
+  
+  \elvish_numbers "\\eval numbers_base" "\\eval reverse_numbers"
+\end
+  
+\beg processor
+  
+  \beg    rules litteral
+                       
+    {K}                 ===  (c,k)
+    {MB}                ===  (b,mb)
+    {SS}                ===  (z,ss)
+                      
+    {VOWELS}            === a               *  e              * i              * o              *  u
+    {LVOWELS}           === á               *  é              * í              * ó              *  ú
+    
+    {TEHTA_XS}          === A_TEHTA_XS      *  E_TEHTA_XS     *  I_TEHTA_XS    * O_TEHTA_XS     *  U_TEHTA_XS 
+    {TEHTA__S}          === A_TEHTA_S       *  E_TEHTA_S      *  I_TEHTA_S     * O_TEHTA_S      *  U_TEHTA_S 
+    {TEHTA__L}          === A_TEHTA_L       *  E_TEHTA_L      *  I_TEHTA_L     * O_TEHTA_L      *  U_TEHTA_L 
+    {TEHTA_XL}          === A_TEHTA_XL      *  E_TEHTA_XL     *  I_TEHTA_XL    * O_TEHTA_XL     *  U_TEHTA_XL 
+       
+    \if split_diphthongs
+      {WDIPHTHONGS}     === {NULL} 
+      {WDIPHTHENGS}     === {NULL}
+    \else
+      {DIPHTHONGS}      === ai              * au              * eu            * iu             * oi               * ui
+      {DIPHTHENGS}      === YANTA A_TEHTA_L * URE A_TEHTA_L   * URE E_TEHTA_L * URE I_TEHTA_L  * YANTA O_TEHTA_L  * YANTA U_TEHTA_L
+      {WDIPHTHONGS}     === * {DIPHTHONGS} \** groovy! **\
+      {WDIPHTHENGS}     === * {DIPHTHENGS} \** same thing **\
+    \endif
+    
+    {V_D_KER}           === [ {VOWELS} {WDIPHTHONGS} ]
+    {V_D_KER_WN}        === [ {VOWELS} {WDIPHTHONGS} * {NULL} ]
+
+    {V_D_IMG_XS}        === [ {TEHTA_XS} {WDIPHTHENGS} ]
+    {V_D_IMG__S}        === [ {TEHTA__L} {WDIPHTHENGS} ]
+    {V_D_IMG__L}        === [ {TEHTA__S} {WDIPHTHENGS} ]
+    {V_D_IMG_XL}        === [ {TEHTA_XL} {WDIPHTHENGS} ]
+    {V_D_IMG_XS_WN}     === [ {TEHTA_XS} {WDIPHTHENGS} * {NULL} ]
+    {V_D_IMG__S_WN}     === [ {TEHTA__L} {WDIPHTHENGS} * {NULL} ]
+    {V_D_IMG__L_WN}     === [ {TEHTA__S} {WDIPHTHENGS} * {NULL} ]
+    {V_D_IMG_XL_WN}     === [ {TEHTA_XL} {WDIPHTHENGS} * {NULL} ]
+  
+    \** VOWEL RULES **\
+    [{VOWELS}]          -->   TELCO [{TEHTA_XS}]  \** Replace isolated short vowels **\
+    [{LVOWELS}]         -->   ARA [{TEHTA_XS}]    \**  Replace long vowels **\
+   
+    \if !split_diphthongs
+      [{DIPHTHONGS}]    -->   [{DIPHTHENGS}]     \**  Replace diphthongs **\
+    \endif
+    
+    \** ===================== **\
+    \**     1ST LINE RULES    **\
+    \** ===================== **\
+    {L1_KER_1}        === t                   *  p  
+    {L1_IMG_1}        === TINCO               *  PARMA
+    {L1_KER_2}        === {K}                 * q
+    {L1_IMG_2}        === CALMA               *  QUESSE
+    {L1_KER_1_GEMS}   === tt                  * pp
+    {L1_IMG_1_GEMS}   === TINCO DASH_INF_S    * PARMA DASH_INF_S
+    
+    \** NORMAL **\
+    [ {L1_KER_1} ] {V_D_KER_WN}        --> [ {L1_IMG_1} ] {V_D_IMG__S_WN}
+    [ {L1_KER_2} ] {V_D_KER_WN}        --> [ {L1_IMG_2} ] {V_D_IMG__S_WN}
+
+    \** GEMINATED **\
+    [ {L1_KER_1_GEMS} ] {V_D_KER_WN}   --> [ {L1_IMG_1_GEMS} ] {V_D_IMG__S_WN} \** Tengscribe uses S but L is probably better  **\
+    {K}{K}{V_D_KER_WN}                 --> CALMA DASH_INF_S {V_D_IMG__S_WN} 
+
+    \** OTHERS **\
+    ty{V_D_KER_WN}          --> TINCO THINF_DDOT_L {V_D_IMG__S_WN}
+    py{V_D_KER_WN}          --> PARMA THINF_DDOT_L {V_D_IMG__S_WN}
+                            
+    ts{V_D_KER_WN}_         --> TINCO SHOOK_RIGHT_L {V_D_IMG_XL_WN} 
+    ps{V_D_KER_WN}_         --> PARMA SHOOK_RIGHT_L {V_D_IMG_XL_WN} 
+    x{V_D_KER_WN}           --> CALMA SHOOK_LEFT_L {V_D_IMG_S_WN}   \** render ks for x **\
+        
+    \** ===================== **\
+    \**     2ND LINE RULES    **\
+    \** ===================== **\
+    {L2_KER}        === nd      * {MB}      * ng      *  ngw
+    {L2_IMG}        === ANDO    * UMBAR     * ANGA    *  UNGWE
+  
+    \** STANDARD **\
+    [{L2_KER}]{V_D_KER_WN}  --> [{L2_IMG}]{V_D_IMG_XL_WN}
+    \** OTHERS **\
+    ndy{V_D_KER_WN}         --> ANDO THINF_DDOT_XL {V_D_IMG_XL_WN}
+      
+    \** ===================== **\
+    \**     3RD LINE RULES    **\
+    \** ===================== **\
+    {L3_KER_1} === (th,þ) * f
+    {L3_IMG_1} === SULE   * FORMEN
+    {L3_KER_2} === h      * hw
+    {L3_IMG_2} === AHA    * HWESTA
+
+    \** NORMAL **\
+    [{L3_KER_1}]{V_D_KER_WN}  --> [{L3_IMG_1}]{V_D_IMG__S_WN}
+    [{L3_KER_2}]{V_D_KER_WN}  --> [{L3_IMG_2}]{V_D_IMG__S_WN} \**  Tengscribe uses S but L is probably better  **\
+  
+    \** OTHERS **\
+    hy{V_D_KER_WN}                  --> HYARMEN THINF_DDOT_L {V_D_IMG__L_WN}
+   
+    \** Override h with vowels (descendent of hy) **\
+    _h{V_D_KER}                     --> HYARMEN {V_D_IMG__L}
+    h[{LVOWELS}]                    --> HYARMEN ARA [{TEHTA_XS}] 
+    h                               --> AHA
+
+    \** ===================== **\
+    \**     4TH LINE RULES    **\
+    \** ===================== **\
+    {L4_KER}  === nt    * mp    * nc    * nq      \** Not nqu, due to preprocessor **\
+    {L4_IMG}  === ANTO  * AMPA  * ANCA  * UNQUE
+ 
+    \** NORMAL **\
+    [{L4_KER}]{V_D_KER_WN}    --> [{L4_IMG}]{V_D_IMG_XL_WN}
+    \** OTHERS **\
+    nty{V_D_KER_WN}                 --> ANTO THINF_DDOT_XL {V_D_IMG_XL_WN}
+
+    \** ===================== **\
+    \**     5TH LINE RULES    **\
+    \** ===================== **\
+    {L5_KER}  === n     * m     * ñ     * ñw      * _nw 
+    {L5_IMG}  === NUMEN * MALTA * NOLDO * NWALME  * NWALME
+
+    [{L5_KER}]{V_D_KER_WN}  --> [{L5_IMG}]{V_D_IMG_XL_WN}
+
+    ny{V_D_KER_WN}          --> NUMEN THINF_DDOT_XL {V_D_IMG_XL_WN}
+    nn{V_D_KER_WN}          --> NUMEN DASH_INF_L {V_D_IMG_XL_WN}
+    my{V_D_KER_WN}          --> MALTA THINF_DDOT_XL {V_D_IMG_XL_WN}
+    mm{V_D_KER_WN}          --> MALTA DASH_INF_L {V_D_IMG_XL_WN}
+
+    \** ===================== **\
+    \**     6TH LINE RULES    **\
+    \** ===================== **\
+    {L6_KER}        === r     * v     * y                   * w  
+    {L6_IMG}        === ROMEN * VALA  * ANNA THINF_DDOT_L   * VILYA  
+
+    [{L6_KER}]{V_D_KER_WN} --> [{L6_IMG}]{V_D_IMG__S_WN}
+
+    \** r before long vowels is voiced **\
+    r[{LVOWELS}]          --> ROMEN ARA [{TEHTA_XS}]
+    
+    \if always_use_romen_for_r
+      r                     --> ROMEN
+    \else        
+      r                     --> ORE \** lonely r is not voiced, so override rule **\
+    \endif
+
+    rr{V_D_KER_WN}        --> ROMEN DASH_INF_S {V_D_IMG__S_WN}
+    ry{V_D_KER_WN}        --> ROMEN THINF_DDOT_L {V_D_IMG__S_WN}
+    rd{V_D_KER_WN}        --> ARDA {V_D_IMG__S_WN}
+
+    \** ===================== **\
+    \**     L  LINE RULES     **\
+    \** ===================== **\
+    {LINE_L_KER}          === l     * ld      * ll
+    {LINE_L_IMG}          === LAMBE * ALDA    * LAMBE LAMBE_MARK_TILD
+
+    [{LINE_L_KER}]{V_D_KER_WN}    --> [{LINE_L_IMG}]{V_D_IMG__S_WN}
+    ly{V_D_KER_WN}                --> LAMBE LAMBE_MARK_DDOT {V_D_IMG__S_WN}
+    hl{V_D_KER_WN}                --> HALLA LAMBE {V_D_IMG__S_WN}
+    hr{V_D_KER_WN}                --> HALLA ROMEN {V_D_IMG__S_WN}
+
+    \** ===================== **\
+    \**   S/Z LINE RULES      **\
+    \** ===================== **\
+    {L8_KER}        === s               * {SS}   
+    {L8_IMG}        === SILME_NUQUERNA  * ESSE_NUQUERNA 
+
+    [{L8_KER}]{V_D_KER_WN} --> [{L8_IMG}]{V_D_IMG__S_WN}
+
+    \** Override lonely s / ss / before consonant **\
+    s               --> SILME
+    s[{LVOWELS}]    --> SILME ARA [{TEHTA_XS}] 
+    {SS}             --> ESSE
+    {SS}[{LVOWELS}] --> ESSE ARA [{TEHTA_XS}] 
+    
+  \end
+  
+  \beg    rules punctuation
+    . --> PUNCT_DDOT
+    .. --> PUNCT_DOT PUNCT_DDOT PUNCT_DOT
+    …  --> PUNCT_TILD
+    ... --> PUNCT_TILD
+    .... --> PUNCT_TILD
+    ..... --> PUNCT_TILD
+    ...... --> PUNCT_TILD
+    ....... --> PUNCT_TILD
+
+    , --> PUNCT_DOT
+    : --> PUNCT_DOT
+    ; --> PUNCT_DOT
+    ! --> PUNCT_EXCLAM
+    ? --> PUNCT_INTERR
+    · --> PUNCT_DOT
+
+    \** Apostrophe **\
+
+    ' --> {NULL}
+    ’ --> {NULL}
+
+    \** Quotes **\
+
+    “ --> DQUOT_OPEN
+    ” --> DQUOT_CLOSE
+    « --> DQUOT_OPEN 
+    » --> DQUOT_CLOSE 
+
+    - --> {NULL}     
+    – --> PUNCT_TILD  
+    — --> PUNCT_TILD
+
+    [ --> PUNCT_PAREN_L
+    ] --> PUNCT_PAREN_R
+    ( --> PUNCT_PAREN_L
+    ) --> PUNCT_PAREN_R
+    { --> PUNCT_PAREN_L
+    } --> PUNCT_PAREN_R
+    < --> PUNCT_PAREN_L
+    > --> PUNCT_PAREN_R  
+
+    \** Not universal between fonts ... **\
+    $ --> BOOKMARK_SIGN
+    ≤ --> RING_MARK_L \** Ring inscription left beautiful stuff **\
+    ≥ --> RING_MARK_R \** Ring inscription right beautiful stuff **\
+  
+  \end
+  
+  \beg    rules  numbers
+    0 --> NUM_0
+    1 --> NUM_1
+    2 --> NUM_2
+    3 --> NUM_3
+    4 --> NUM_4
+    5 --> NUM_5
+    6 --> NUM_6
+    7 --> NUM_7
+    8 --> NUM_8
+    9 --> NUM_9
+    A --> NUM_10
+    B --> NUM_11      
+  \end
+  
+\end

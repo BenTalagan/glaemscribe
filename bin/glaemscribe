@@ -1,0 +1,307 @@
+#!/usr/bin/env ruby
+# encoding: UTF-8
+#
+# Glǽmscribe (also written Glaemscribe) is a software dedicated to
+# the transcription of texts between writing systems, and more 
+# specifically dedicated to the transcription of J.R.R. Tolkien's 
+# invented languages to some of his devised writing systems.
+# 
+# Copyright (C) 2015 Benjamin Babut (Talagan).
+# 
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# any later version.
+# 
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+# 
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+###############
+#  ENV STUFF  #
+###############
+
+begin
+  require 'commander/import'
+rescue Exception => e
+  puts "The 'glaemscribe' binary requires the 'commander' gem to work. Please 'gem install commander' to make it work or add it to your Gemfile."
+  exit(0)
+end
+
+env_version = ""
+begin
+  # Try to load dev version before loading the gem one
+  require File.dirname(__FILE__) + "/../lib_rb/glaemscribe.rb"
+  env_version = " (DEVELOPER VERSION - LOADED FROM SRC DIRECTORY)"
+  Glaemscribe::API::Debug.enabled = false
+rescue Exception => e
+  # This is (probably) the gem version
+  require 'glaemscribe'
+end
+
+# Just a small monkey patch because I found commander lacks a new line at the beginning of its formatters
+module Commander
+  module HelpFormatter
+    class Terminal < Base
+      def render
+        "\n" + template(:help).result(ProgramContext.new(@runner).get_binding)
+      end
+    end
+  end
+end
+
+#############
+#  HELPERS  #
+#############
+
+def puts_available_modes
+  puts "\n #{$terminal.color 'Available modes are :', :bold }\n\n"
+  puts Glaemscribe::API::ResourceManager.available_mode_names.map{|k| ". " + k.strip}.join("\n")
+  puts "\n"
+end
+
+def perxit(error = nil, exit_code = nil)
+  STDERR.puts "*** " + error if(error)
+  exit(exit_code) if(exit_code)
+end
+
+def pereol
+  STDERR.puts "\n"
+end
+
+def profile
+  # Profile the code
+  RubyProf.start
+  yield()
+  result = RubyProf.stop
+  printer = RubyProf::MultiPrinter.new(result)
+  printer.print(:path => ".", :profile => "profile")
+end
+
+##############
+#  PROGRAMM  #
+##############
+
+program :name, "glaemscribe#{env_version}"
+program :version, '0.0.1'
+program :description, 'Glǽmscribe (also written Glaemscribe) is a software dedicated to the
+transcription of texts between writing systems, and more specifically
+dedicated to the transcription of J.R.R. Tolkien\'s invented languages 
+to some of his devised writing systems.'
+program :help, 'Author', 'Benjamin Talagan Babut'
+
+##############
+#  COMMANDS  #
+##############
+
+default_command :transcribe
+
+command :transcribe do |c|
+  
+  c.syntax      = 'glaemscribe transcribe file [options]'
+  c.summary     = 'Transcribes a file (default command)'
+  c.description = "Transcribes a file with the given options. You can use '-' instead of a file name to work with stdin."
+   
+  c.option '-m',  '--mode mode',                 String, "The name of the embedded mode to use. See the 'list' command to get a list of available modes names."
+  c.option '-c',  '--charset charset',           String, 'The name of the charset to use. If not given, glaemscribe will load and use the default charset defined in the mode.' 
+  c.option        '--modefile modefile',         String, 'Use a custom mode file instead of an embedded one. The file extension must be .glaem .'
+  c.option        '--charsetfile charsetfile',   String, 'Use a custom charset file instead of an embedded one. The file extension must be .cst .'
+  c.option '-o',  '--options name1:value1,name2:value2,...',   String, 'Pass options to the transcriptor (see the mode options documentation).'
+   
+  c.action do |args, options|
+      
+    filename = args[0]
+    # Let's do some checks
+    if !filename && options.__hash__.keys.count == 0
+      # Nothing at all given!
+      command(:help).run()
+      exit(123)
+    end
+   
+    if !filename
+      perxit("No file given for transcription.", 1)
+    end
+        
+    if !options.mode && !options.modefile
+      perxit("An option 'mode' (-m) or 'modefile' (--modefile) is mandatory!", 2)
+    end
+    
+    if options.mode && options.modefile
+      perxit("Option 'mode' (-m) and 'modefile' (--modefile) are not compatible. You have to chose!")
+    end
+    
+    if options.charset && options.charsetfile
+      perxit("Option 'charset' (-c) and 'charsetfile' (--charsetfile) are not compatible. You have to chose!")
+    end
+        
+    charset        = nil
+    charset_name   = nil
+    
+    # If given a charset_file, it should be loaded BEFORE so that we have it in our charset base
+    if options.charsetfile
+      # External charset file loading
+      charset_name   = Glaemscribe::API::ResourceManager.charset_name_from_file_path(options.charsetfile)
+      
+      begin
+        charset      = Glaemscribe::API::CharsetParser.new().parse(options.charsetfile)
+        # Put it in our base of charsets
+        Glaemscribe::API::ResourceManager.loaded_charsets[charset_name] = charset      
+      rescue Errno::ENOENT
+        perxit("Charset file '#{options.charsetfile}' could not be opened for reading.",3)
+      end
+    elsif options.charset
+      charset_name  = options.charset 
+      # Let the mode load the embedded charset
+    end
+           
+    mode      = nil
+    mode_name = nil
+  
+    if options.mode
+      # Embedded mode loading
+      mode_name = options.mode
+      
+      Glaemscribe::API::ResourceManager.load_modes([mode_name])
+      mode = Glaemscribe::API::ResourceManager.loaded_modes[mode_name]
+      
+      if !mode
+        perxit("Embedded #{mode_name} not handled!")
+        puts_available_modes
+        perxit(nil, 3)
+      end
+      
+    else
+      # External mode file loading
+      mode_name = Glaemscribe::API::ResourceManager.mode_name_from_file_path(options.modefile)
+      
+      begin
+        mode      = Glaemscribe::API::ModeParser.new().parse(options.modefile)
+      rescue Errno::ENOENT
+        perxit("Mode file '#{options.modefile}' could not be opened for reading.",3)
+      end
+      
+      Glaemscribe::API::ResourceManager.loaded_modes[mode_name] = mode   
+    end  
+         
+    if mode.errors.any?
+      pereol
+      perxit("The mode '#{mode_name}' contains errors. ")
+      mode.errors.each{ |e|
+        puts "** #{mode.name}:#{e.line}: #{e.text}"
+      }
+      pereol
+      perxit("Transcription cannot continue", 3)
+    end
+    
+    if mode.warnings.any?
+      pereol
+      perxit("The mode '#{mode_name}' contains warnings. ")
+      mode.warnings.each{ |e|
+        puts "** #{mode.name}:#{e.line}: #{e.text}"
+      }
+      pereol
+      perxit("Continuing transcription without guarantee...\n")     
+    end
+
+    # If a charset was forced (embedded or with external file), check that the mode supports it
+    if charset_name
+      charset       = mode.supported_charsets[charset_name]
+      perxit("Was asked to use charset '#{charset_name}', but the mode does not handle it. Aborting.", 12) if !charset
+    end
+    
+    if options.options
+      a = options.options.split(",").map{ |o| o.split(":") }.flatten.map{|s| s.strip }
+      opts = Hash[*a]
+      mode.finalize(opts)
+    end   
+    
+    # Ready for transcription ...
+  
+    if(filename == "-")
+      perxit "Opened in stdin mode, waiting for input..."
+      begin
+        while to_transcribe = STDIN.gets
+          success, ret = mode.transcribe(to_transcribe, charset) 
+          if success
+            STDOUT.puts ret
+          else
+            perxit("The transcription failed.")
+            perxit(ret, 42)    
+          end 
+        end
+      rescue Interrupt
+        perxit "Interrupted, end of session.", 42     
+      end
+    else
+            
+      to_transcribe = ""    
+      begin
+        File.open(args[0],"rb:utf-8") {|f|
+          to_transcribe = f.read
+        }
+      rescue Errno::ENOENT
+        perxit("File '#{args[0]}' could not be opened for reading.",3)
+      end
+          
+      success, ret = mode.transcribe(to_transcribe, charset)
+      
+      if success
+        STDOUT.puts ret
+      else
+        perxit("The transcription failed.")
+        perxit(ret, 42)    
+      end
+    end
+    
+  end  
+end
+
+command :list do |c|
+  
+  c.syntax      = 'glaemscribe list'
+  c.summary     = 'Lists all available embedded modes'
+  c.description = 'Lists all available embedded modes.'
+    
+  c.action do |args, options|
+    puts_available_modes  
+  end
+  
+end
+
+
+command :info do |c|
+  
+  c.syntax      = 'glaemscribe info'
+  c.summary     = "Displays information about an embedded mode"
+  c.description = "Displays information about the embedded mode 'modename'."
+    
+  c.action do |args, options|
+    
+    mode_name = args[0]
+    if !mode_name
+      perxit("No mode name given!", 2)
+    end
+  
+    Glaemscribe::API::ResourceManager.load_modes(mode_name)
+    mode = Glaemscribe::API::ResourceManager.loaded_modes[mode_name]
+    if !mode
+      perxit("Mode #{mode_name} not handled!")
+      perxit(nil, 3)
+    end
+    
+    puts "#{$terminal.color "Mode ID   " , :bold} : #{mode.name}"
+    puts "#{$terminal.color "Language  " , :bold} : #{mode.language}"
+    puts "#{$terminal.color "Writing   " , :bold} : #{mode.writing}"
+    puts "#{$terminal.color "Human Name" , :bold} : #{mode.human_name}"
+    puts "#{$terminal.color "Authors   " , :bold} : #{mode.authors}"
+    puts "#{$terminal.color "Version   " , :bold} : #{mode.version}"
+      
+  end
+  
+end
+
+

@@ -1,0 +1,64 @@
+\**
+
+Glǽmscribe (also written Glaemscribe) is a software dedicated to
+the transcription of texts between writing systems, and more 
+specifically dedicated to the transcription of J.R.R. Tolkien's 
+invented languages to some of his devised writing systems.
+
+Copyright (C) 2015 Benjamin Babut (Talagan).
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU Affero General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Affero General Public License for more details.
+
+You should have received a copy of the GNU Affero General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+**\
+
+\** Charset for the analecta font used by the gothic mode **\ 
+\** Very incomplete outside of the gothic range **\ 
+\** Minimal service here ... **\
+
+\**   **\ \char 20 SPACE  
+\** , **\ \char 2C COMA
+\** . **\ \char 2E PERIOD
+\** : **\ \char 3A COLON
+\** ; **\ \char 3B SEMICOLON
+
+\** Gothic part **\
+\** 𐌰 **\ \char 10330 AZA  
+\** 𐌱 **\ \char 10331 BERCNA  
+\** 𐌳 **\ \char 10333 DAAZ  
+\** 𐌴 **\ \char 10334 EYZ  
+\** 𐍆 **\ \char 10346 FE  
+\** 𐌲 **\ \char 10332 GEUUA  
+\** 𐌷 **\ \char 10337 HAAL  
+\** 𐌹 **\ \char 10339 IIZ  
+\** 𐌾 **\ \char 1033E GAAR  
+\** 𐌺 **\ \char 1033A CHOZMA  
+\** 𐌻 **\ \char 1033B LAAZ  
+\** 𐌼 **\ \char 1033C MANNA  
+\** 𐌽 **\ \char 1033D NOICZ  
+\** 𐍉 **\ \char 10349 UTAL 
+\** 𐍀 **\ \char 10340 PERTRA  
+\** 𐌵 **\ \char 10335 QUETRA  
+\** 𐍂 **\ \char 10342 REDA  
+\** 𐍃 **\ \char 10343 SUGIL  
+\** 𐍄 **\ \char 10344 TYZ  
+\** 𐌸 **\ \char 10338 THYTH  
+\** 𐌿 **\ \char 1033F URAZ  
+\** 𐍇 **\ \char 10347 ENGUZ  
+\** 𐍅 **\ \char 10345 UUINNE  
+\** 𐌶 **\ \char 10336 EZEC  
+\** 𐍈 **\ \char 10348 UUAER  
+\** 𐍋 **\ \char 1034B IIZ_TREMA \** Special Glaemscrafu ! **\ 
+\** 𐍁 **\ \char 10341 ? 
+\** 𐍊 **\ \char 1034A ? 
+

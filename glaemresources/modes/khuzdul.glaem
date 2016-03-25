@@ -1,0 +1,141 @@
+\**
+
+Glǽmscribe (also written Glaemscribe) is a software dedicated to
+the transcription of texts between writing systems, and more 
+specifically dedicated to the transcription of J.R.R. Tolkien's 
+invented languages to some of his devised writing systems.
+
+Copyright (C) 2015 Benjamin Babut (Talagan).
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU Affero General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Affero General Public License for more details.
+
+You should have received a copy of the GNU Affero General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+**\
+
+\** Khuzdul mode for glaemscribe **\
+
+\language "Khuzdul"
+\writing  "Cirth"
+\mode     "Angerthas Moria"
+\version  "0.0.1"
+\authors  "Talagan (Benjamin Babut)"
+
+\charset  cirth_ds true
+
+\beg      preprocessor
+  \** Work exclusively downcase **\
+  \downcase
+  
+  \** Simplify trema vowels **\
+  \substitute "ä" "a"
+  \substitute "ë" "e"
+  \substitute "ï" "i"
+  \substitute "ö" "o"
+  \substitute "ü" "u"
+  \substitute "ÿ" "y"
+  
+  \** Dis-ambiguate long vowels **\
+  \rxsubstitute "(ā|â|aa)" "â"
+  \rxsubstitute "(ē|ê|ee)" "ê"
+  \rxsubstitute "(ī|î|ii)" "î"
+  \rxsubstitute "(ō|ô|oo)" "ô"
+  \rxsubstitute "(ū|û|uu)" "û"
+  \rxsubstitute "(ȳ|ŷ|yy)" "ŷ"
+\end
+
+\beg      processor
+  
+  \** We redefine the output space to have something beautiful, especially with erebor1 and erebor2 **\ 
+  \outspace CIRTH_SPACE_BIG
+
+  \beg    rules litteral
+    a --> CIRTH_48
+    â --> CIRTH_49
+    e --> CIRTH_46
+    ê --> CIRTH_47
+
+    i --> CIRTH_39
+    î --> CIRTH_39 CIRTH_39
+
+    o --> CIRTH_50
+
+    u --> CIRTH_42
+    û --> CIRTH_43
+
+    b   --> CIRTH_2
+    d   --> CIRTH_9
+    f   --> CIRTH_3
+    g   --> CIRTH_19
+    h   --> CIRTH_34
+    gh  --> CIRTH_19 CIRTH_34
+    k   --> CIRTH_18
+    l   --> CIRTH_31
+    m   --> CIRTH_6
+    n   --> CIRTH_22
+    nd  --> CIRTH_33
+    r   --> CIRTH_12
+    s   --> CIRTH_54
+    t   --> CIRTH_8
+    sh  --> CIRTH_15
+    th  --> CIRTH_8 CIRTH_59
+    z   --> CIRTH_17
+
+    k   --> CIRTH_18
+    kh  --> CIRTH_18 CIRTH_59    
+  \end
+  
+  \beg    rules punctuation
+    . --> CIRTH_PUNCT_THREE_DOTS
+    .. --> CIRTH_PUNCT_THREE_DOTS
+    ... --> CIRTH_PUNCT_THREE_DOTS
+    …   --> CIRTH_PUNCT_THREE_DOTS
+    .... --> CIRTH_PUNCT_THREE_DOTS
+    ..... --> CIRTH_PUNCT_THREE_DOTS
+    ...... --> CIRTH_PUNCT_THREE_DOTS
+    ....... --> CIRTH_PUNCT_THREE_DOTS
+
+    , --> CIRTH_PUNCT_MID_DOT
+    : --> CIRTH_PUNCT_TWO_DOTS
+    ; --> CIRTH_PUNCT_TWO_DOTS
+    ! --> CIRTH_PUNCT_THREE_DOTS
+    ? --> CIRTH_PUNCT_THREE_DOTS
+    · --> CIRTH_PUNCT_MID_DOT
+
+    - --> CIRTH_PUNCT_MID_DOT
+    – --> CIRTH_PUNCT_TWO_DOTS  
+    — --> CIRTH_PUNCT_TWO_DOTS
+
+    \** Apostrophe **\
+
+    ' --> {NULL}
+    ’ --> {NULL}
+
+    \** Quotes **\
+
+    “ --> {NULL}
+    ” --> {NULL}
+    « --> {NULL} 
+    » --> {NULL} 
+
+    [ --> CIRTH_PUNCT_THREE_DOTS_L
+    ] --> CIRTH_PUNCT_THREE_DOTS_L
+    ( --> CIRTH_PUNCT_THREE_DOTS_L
+    ) --> CIRTH_PUNCT_THREE_DOTS_L
+    { --> CIRTH_PUNCT_THREE_DOTS_L
+    } --> CIRTH_PUNCT_THREE_DOTS_L
+    < --> CIRTH_PUNCT_THREE_DOTS_L
+    > --> CIRTH_PUNCT_THREE_DOTS_L
+
+    / --> CIRTH_PUNCT_FOUR_DOTS
+  \end
+\end

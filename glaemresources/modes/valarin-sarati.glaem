@@ -1,0 +1,210 @@
+\**
+
+Glǽmscribe (also written Glaemscribe) is a software dedicated to
+the transcription of texts between writing systems, and more 
+specifically dedicated to the transcription of J.R.R. Tolkien's 
+invented languages to some of his devised writing systems.
+
+Copyright (C) 2015 Benjamin Babut (Talagan).
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU Affero General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Affero General Public License for more details.
+
+You should have received a copy of the GNU Affero General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+**\
+
+\language "Valarin"
+\writing  "Sarati"
+\mode     "Glaemscrafu"
+\version  "0.0.1"
+\authors  "Talagan (Benjamin Babut)"
+
+\charset  sarati_eldamar true
+
+\beg      preprocessor
+  \** Work exclusively downcase **\
+  \downcase
+  
+  \** Simplify trema vowels **\
+  \substitute ä a
+  \substitute ë e
+  \substitute ï i
+  \substitute ö o
+  \substitute ü u
+  \substitute ÿ y
+  
+  \** Dis-ambiguate long vowels **\
+  \rxsubstitute "(ā|â|aa)" "á"
+  \rxsubstitute "(ē|ê|ee)" "é" 
+  \rxsubstitute "(ī|î|ii)" "í"
+  \rxsubstitute "(ō|ô|oo)" "ó"
+  \rxsubstitute "(ū|û|uu)" "ú"
+  \rxsubstitute "(ȳ|ŷ|yy)" "ý"
+
+  \substitute   "ai" "ay" \** Dis-ambiguate ai **\
+\end
+  
+\beg      processor
+
+  \outspace SARATI_SPACE
+  
+  \beg rules litteral 
+      
+    {A}                           === a
+    {AA}                          === á     
+    {E}                           === e
+    {EE}                          === é     
+    {I}                           === i
+    {II}                          === í     
+    {O}                           === o
+    {OO}                          === ó     
+    {U}                           === u
+    {UU}                          === ú     
+    {Y}                           === y
+    {YY}                          === ý                                        
+
+    {AE}                          === (æ,ae)
+    {AEAE}                        === (ǽ,ǣ)
+
+    {OE}                          === ǫ
+    {OEOE}                        === ǭ
+
+    \** ################################################# **\
+    \**  DIPHTHONGS are dis-ambiguated in the preprocessor # **\
+    \** ################################################# **\
+
+    \** ############# **\
+    \**  DIACRITICS # **\
+    \** ############# **\
+
+    {VOWELS}                      === {A}                 * {E}                   * {I}                 * {O}                 * {U}                 * {AE}                            * {OE}    
+    {LVOWELS}                     === {AA}                * {EE}                  * {II}                * {OO}                * {UU}                * {AEAE}                          * {OEOE}  
+    {STEHTAS}                     === SARATI_QUENYA_A     * SARATI_QUENYA_E       * SARATI_QUENYA_I     * SARATI_QUENYA_O     * SARATI_QUENYA_U     * SARATI_QUENYA_A_REVERSED        * SARATI_DIACRITIC_CIRCLE       
+
+    {V_L_KER_WN}                  === [ {VOWELS}  * {NULL} ]
+    {V_IMG_FOR_CONSONNANTS_WN}    === [ {STEHTAS} * {NULL} ]  \** # No vowel == nothing **\
+
+    \** ######## **\
+    \**  RULES # **\
+    \** ######## **\
+
+    [{VOWELS}]      -->   [{STEHTAS}] SARATI_QUENYA_LONG_VOWEL_CARRIER    \** # Isolated vowels : use short carrier (reversed order RTL) **\
+    [{LVOWELS}]     -->   [{STEHTAS}] SARATI_DASH_U SARATI_QUENYA_LONG_VOWEL_CARRIER   \** # Long vowels: carrier + dash + tehta **\
+
+    \** ########### **\
+    \**  FIRST LINE **\
+
+    {K}   === (c,k) \** # For tolkienian compatibility's sake **\
+
+    {LINE_1ST_KER}        === t         * p         * {K}               \** # * tt * pp * {K}{K}   **\
+    {LINE_1ST_IMG}        === SARATI_T  * SARATI_P  * SARATI_QUENYA_C                 \** # * ó" * óq * ó# **\
+
+    {V_L_KER_WN}[{LINE_1ST_KER}]  --> {V_IMG_FOR_CONSONNANTS_WN}[{LINE_1ST_IMG}]
+
+    \** ########### **\
+    \**  SECOND LINE **\
+
+    {LINE_2ND_KER}        === d                 * b                 * g         * gw 
+    {LINE_2ND_IMG}        === SARATI_QUENYA_ND  * SARATI_QUENYA_MB  * SARATI_NG * SARATI_PHONETIC_GW
+
+    {V_L_KER_WN}[{LINE_2ND_KER}] --> {V_IMG_FOR_CONSONNANTS_WN}[{LINE_2ND_IMG}]
+
+    \** ########### **\
+    \**  THIRD LINE **\
+
+    {LINE_3RD_KER}        ===   þ                 * s               * š                                                   * (χ,x)                             * h         * šš \** # * s_ **\
+    {LINE_3RD_IMG}        ===   SARATI_QUENYA_NT  * SARATI_QUENYA_S * SARATI_VOICELESS_PALATO_ALVEOLAR_SIBILANT_FRICATIVE * SARATI_VOICELESS_VELAR_FRICATIVE  * SARATI_H  * SARATI_DASH_D SARATI_VOICELESS_PALATO_ALVEOLAR_SIBILANT_FRICATIVE \** # * ü **\
+
+    {V_L_KER_WN}[{LINE_3RD_KER}] --> {V_IMG_FOR_CONSONNANTS_WN}[{LINE_3RD_IMG}]
+
+    \** ########### **\
+    \**  FOURTH LINE **\
+
+    {LINE_4TH_KER}        ===   ð                               * z                       * ȝ \** # * z_  **\
+    {LINE_4TH_IMG}        ===   SARATI_VOICED_DENTAL_FRICATIVE  * SARATI_QUENYA_SS_ALT_1  * SARATI_VOICED_VELAR_FRICATIVE \** # * ú **\
+
+    {V_L_KER_WN}[{LINE_4TH_KER}] --> {V_IMG_FOR_CONSONNANTS_WN}[{LINE_4TH_IMG}]
+
+    \** ########### **\
+    \**  FIFTH LINE **\
+
+    {LINE_5TH_KER}        ===   m         * n
+    {LINE_5TH_IMG}        ===   SARATI_M  * SARATI_N
+
+    {V_L_KER_WN}[{LINE_5TH_KER}] --> {V_IMG_FOR_CONSONNANTS_WN}[{LINE_5TH_IMG}]
+
+    \** ########### **\
+    \**  SIXTH LINE **\
+
+    {LINE_6TH_KER}        === l * ll  
+    {LINE_6TH_IMG}        === SARATI_L * SARATI_DASH_D SARATI_L 
+
+    {V_L_KER_WN}[{LINE_6TH_KER}] --> {V_IMG_FOR_CONSONNANTS_WN}[{LINE_6TH_IMG}]
+
+    \** ########### **\
+    \**  SEVENTH LINE **\
+
+    {LINE_7TH_KER}        === r * rr  
+    {LINE_7TH_IMG}        === SARATI_R * SARATI_DASH_D SARATI_R  
+
+    {V_L_KER_WN}[{LINE_7TH_KER}] --> {V_IMG_FOR_CONSONNANTS_WN}[{LINE_7TH_IMG}]
+
+    \** ########### **\
+    \**  EIGHTH LINE **\
+
+    {LINE_8TH_KER}        === y * w   
+    {LINE_8TH_IMG}        === SARATI_QUENYA_Y * SARATI_W  
+
+    {V_L_KER_WN}[{LINE_8TH_KER}] --> {V_IMG_FOR_CONSONNANTS_WN}[{LINE_8TH_IMG}]
+  \end
+    
+  \beg rules punctuation
+    · --> {NULL}
+    , --> {NULL}
+    ; --> {NULL}
+    : --> {NULL}
+    . --> SARATI_SPACE
+    - --> SARATI_SPACE
+    – --> SARATI_SPACE
+    ! --> {NULL}
+    ? --> {NULL}
+    ' --> {NULL}
+    [ --> {NULL}
+    ] --> {NULL}
+    ‘ --> {NULL}
+    ’ --> {NULL}
+    “ --> {NULL}
+    ” --> {NULL}
+  \end 
+\end 
+
+\beg postprocessor
+  \reverse
+\end
+
+
+\** # Voyelles : a æ e i o ǫ u / ǭ Ǭ **\
+\** # Diphtongues : ai **\
+\** # **\
+\** # Occlusives aspirées   ph th .  .  .  kh .  **\
+\** # Occlusives sourdes    p  t  .  .  .  k  .  **\
+\** # Occlusives sonores    b  d  .  .  .  g  .  **\
+\** # Fricatives sourdes    .  þ  s  š  .  χ  h  **\
+\** # Fricatives sonores    .  ð  z  .  .  ȝ  .  **\
+\** # Nasales               m  n  .  .  .  .  .  **\
+\** # Latérales             .  l  .  .  .  .  .  **\
+\** # Vibrantes             .  r  .  .  .  .  .  **\
+\** # Semi-voyelles         w  .  .  .  y  .  .  **\
+
+
+      
+

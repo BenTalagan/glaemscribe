@@ -1,0 +1,256 @@
+\**
+
+Glǽmscribe (also written Glaemscribe) is a software dedicated to
+the transcription of texts between writing systems, and more 
+specifically dedicated to the transcription of J.R.R. Tolkien's 
+invented languages to some of his devised writing systems.
+
+Copyright (C) 2015 Benjamin Babut (Talagan).
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU Affero General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Affero General Public License for more details.
+
+You should have received a copy of the GNU Affero General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+**\
+
+\**   **\ \char 20 ?
+\** ! **\ \char 21 SARATI_SPACE
+\** " **\ \char 22 SARATI_T
+\** # **\ \char 23 SARATI_QUENYA_C
+\** $ **\ \char 24 ?
+\** % **\ \char 25 SARATI_D
+\** & **\ \char 26 SARATI_NG
+\** ' **\ \char 27 SARATI_PHONETIC_GW
+\** ( **\ \char 28 ?
+\** ) **\ \char 29 ?
+\** * **\ \char 2a ?
+\** + **\ \char 2b SARATI_QUENYA_VELAR_NASAL
+\** , **\ \char 2c SARATI_QUENYA_NW
+\** - **\ \char 2d ?
+\** . **\ \char 2e ?
+\** / **\ \char 2f ?
+\** 0 **\ \char 30 ?
+\** 1 **\ \char 31 ?
+\** 2 **\ \char 32 ?
+\** 3 **\ \char 33 ?
+\** 4 **\ \char 34 ?
+\** 5 **\ \char 35 ?
+\** 6 **\ \char 36 ?
+\** 7 **\ \char 37 ?
+\** 8 **\ \char 38 ?
+\** 9 **\ \char 39 ?
+\** : **\ \char 3a ?
+\** ; **\ \char 3b ?
+\** < **\ \char 3c ?
+\** = **\ \char 3d ?
+\** > **\ \char 3e ?
+\** ? **\ \char 3f SARATI_L
+\** @ **\ \char 40 ?
+\** A **\ \char 41 ?
+\** B **\ \char 42 ?
+\** C **\ \char 43 ?
+\** D **\ \char 44 ?
+\** E **\ \char 45 ?
+\** F **\ \char 46 SARATI_R
+\** G **\ \char 47 ?
+\** H **\ \char 48 ?
+\** I **\ \char 49 ?
+\** J **\ \char 4a ?
+\** K **\ \char 4b ?
+\** L **\ \char 4c ?
+\** M **\ \char 4d ?
+\** N **\ \char 4e ?
+\** O **\ \char 4f ?
+\** P **\ \char 50 SARATI_M
+\** Q **\ \char 51 ?
+\** R **\ \char 52 ?
+\** S **\ \char 53 ?
+\** T **\ \char 54 ?
+\** U **\ \char 55 ?
+\** V **\ \char 56 ?
+\** W **\ \char 57 ?
+\** X **\ \char 58 ?
+\** Y **\ \char 59 ?
+\** Z **\ \char 5a SARATI_P
+\** [ **\ \char 5b SARATI_F
+\** \ **\ \char 5c SARATI_QUENYA_F_ALT
+\** ] **\ \char 5d ?
+\** ^ **\ \char 5e ?
+\** _ **\ \char 5f SARATI_B SARATI_QUENYA_MB
+\** ` **\ \char 60 SARATI_V
+\** a **\ \char 61 SARATI_QUENYA_V_ALT
+\** b **\ \char 62 ?
+\** c **\ \char 63 ?
+\** d **\ \char 64 SARATI_QUENYA_MP SARATI_QUENYA_QU_ALT
+\** e **\ \char 65 ?
+\** f **\ \char 66 ?
+\** g **\ \char 67 SARATI_QUENYA_TS
+\** h **\ \char 68 ?
+\** i **\ \char 69 ?
+\** j **\ \char 6a ?
+\** k **\ \char 6b ?
+\** l **\ \char 6c ?
+\** m **\ \char 6d ?
+\** n **\ \char 6e SARATI_VOICELESS_VELAR_FRICATIVE
+\** o **\ \char 6f ?
+\** p **\ \char 70 SARATI_QUENYA_QU
+\** q **\ \char 71 SARATI_VOICED_VELAR_FRICATIVE
+\** r **\ \char 72 ?
+\** s **\ \char 73 SARATI_QUENYA_NGW
+\** t **\ \char 74 ?
+\** u **\ \char 75 ?
+\** v **\ \char 76 SARATI_QUENYA_ST
+\** w **\ \char 77 ?
+\** x **\ \char 78 ?
+\** y **\ \char 79 SARATI_QUENYA_X SARATI_VELAR_LATERAL_APPROXIMANT
+\** z **\ \char 7a SARATI_UVULAR_TRILL
+\** { **\ \char 7b ?
+\** | **\ \char 7c ?
+\** } **\ \char 7d ?
+\** ~ **\ \char 7e ?
+\**   **\ \char a0 ?
+\** ¡ **\ \char a1 ?
+\** ¢ **\ \char a2 SARATI_VOICELESS_PALATO_ALVEOLAR_SIBILANT_FRICATIVE
+\** £ **\ \char a3 ?
+\** ¤ **\ \char a4 ?
+\** ¥ **\ \char a5 ?
+\** ¦ **\ \char a6 SARATI_QUENYA_SS_ALT_1
+\** § **\ \char a7 ?
+\** ¨ **\ \char a8 ?
+\** © **\ \char a9 ?
+\** ª **\ \char aa SARATI_QUENYA_NT
+\** « **\ \char ab SARATI_VOICED_DENTAL_FRICATIVE
+\** ¬ **\ \char ac ?
+\** ­ **\ \char ad ?
+\** ® **\ \char ae ?
+\** ¯ **\ \char af ?
+\** ° **\ \char b0 ?
+\** ± **\ \char b1 SARATI_QUENYA_TY
+\** ² **\ \char b2 SARATI_QUENYA_HT_ALT_1
+\** ³ **\ \char b3 SARATI_QUENYA_NDY
+\** ´ **\ \char b4 ?
+\** µ **\ \char b5 ?
+\** ¶ **\ \char b6 ?
+\** · **\ \char b7 ?
+\** ¸ **\ \char b8 ?
+\** ¹ **\ \char b9 SARATI_W
+\** º **\ \char ba SARATI_QUENYA_HW SARATI_VOICELESS_LABIOVELAR_APPROXIMANT
+\** » **\ \char bb SARATI_QUENYA_Y SARATI_J
+\** ¼ **\ \char bc ?
+\** ½ **\ \char bd SARATI_QUENYA_HY SARATI_VOICELESS_PALATAL_APPROXIMANT
+\** ¾ **\ \char be ?
+\** ¿ **\ \char bf ?
+\** À **\ \char c0 SARATI_N
+\** Á **\ \char c1 ?
+\** Â **\ \char c2 ?
+\** Ã **\ \char c3 ?
+\** Ä **\ \char c4 ?
+\** Å **\ \char c5 ?
+\** Æ **\ \char c6 ?
+\** Ç **\ \char c7 ?
+\** È **\ \char c8 SARATI_QUENYA_LONG_VOWEL_CARRIER
+\** É **\ \char c9 ?
+\** Ê **\ \char ca ?
+\** Ë **\ \char cb SARATI_H
+\** Ì **\ \char cc ?
+\** Í **\ \char cd ?
+\** Î **\ \char ce ?
+\** Ï **\ \char cf ?
+\** Ð **\ \char d0 ?
+\** Ñ **\ \char d1 ?
+\** Ò **\ \char d2 SARATI_DOT_U SARATI_QUENYA_I
+\** Ó **\ \char d3 SARATI_DOT_D
+\** Ô **\ \char d4 ?
+\** Õ **\ \char d5 ?
+\** Ö **\ \char d6 SARATI_QUENYA_A
+\** × **\ \char d7 ?
+\** Ø **\ \char d8 SARATI_QUENYA_A_REVERSED
+\** Ù **\ \char d9 ?
+\** Ú **\ \char da ?
+\** Û **\ \char db ?
+\** Ü **\ \char dc SARATI_QUENYA_O
+\** Ý **\ \char dd ?
+\** Þ **\ \char de SARATI_QUENYA_U
+\** ß **\ \char df ?
+\** à **\ \char e0 ?
+\** á **\ \char e1 ?
+\** â **\ \char e2 ?
+\** ã **\ \char e3 ?
+\** ä **\ \char e4 ?
+\** å **\ \char e5 ?
+\** æ **\ \char e6 ?
+\** ç **\ \char e7 ?
+\** è **\ \char e8 SARATI_QUENYA_E
+\** é **\ \char e9 ?
+\** ê **\ \char ea ?
+\** ë **\ \char eb ?
+\** ì **\ \char ec ?
+\** í **\ \char ed ?
+\** î **\ \char ee ?
+\** ï **\ \char ef ?
+\** ð **\ \char f0 SARATI_DIACRITIC_CIRCLE
+\** ñ **\ \char f1 ?
+\** ò **\ \char f2 SARATI_DASH_U
+\** ó **\ \char f3 SARATI_DASH_D
+\** ô **\ \char f4 ?
+\** õ **\ \char f5 ?
+\** ö **\ \char f6 ?
+\** ÷ **\ \char f7 ?
+\** ø **\ \char f8 ?
+\** ù **\ \char f9 ?
+\** ú **\ \char fa ?
+\** û **\ \char fb ?
+\** ü **\ \char fc ?
+\** ý **\ \char fd ?
+\** þ **\ \char fe ?
+\** ÿ **\ \char ff ?
+\** Ā **\ \char 100 ?
+\** ā **\ \char 101 ?
+\** Ă **\ \char 102 ?
+\** Đ **\ \char 110 ?
+\** đ **\ \char 111 ?
+\** Ġ **\ \char 120 ?
+\** ġ **\ \char 121 ?
+\** Ģ **\ \char 122 ?
+\** ģ **\ \char 123 ?
+\** Ĥ **\ \char 124 ?
+\** İ **\ \char 130 ?
+\** ı **\ \char 131 ?
+\** ŀ **\ \char 140 ?
+\** Œ **\ \char 152 SARATI_QUENYA_HTY
+\** œ **\ \char 153 ?
+\** Š **\ \char 160 ?
+\** š **\ \char 161 ?
+\** Ÿ **\ \char 178 SARATI_QUENYA_S
+\** Ž **\ \char 17d ?
+\** ž **\ \char 17e ?
+\** ƒ **\ \char 192 ?
+\** ˆ **\ \char 2c6 ?
+\** ˜ **\ \char 2dc SARATI_QUENYA_NQU
+\** – **\ \char 2013 ?
+\** — **\ \char 2014 SARATI_QUENYA_NC
+\** ‘ **\ \char 2018 ?
+\** ’ **\ \char 2019 ?
+\** ‚ **\ \char 201a ?
+\** “ **\ \char 201c ?
+\** ” **\ \char 201d ?
+\** „ **\ \char 201e SARATI_QUENYA_NTY
+\** † **\ \char 2020 ?
+\** ‡ **\ \char 2021 ?
+\** • **\ \char 2022 ?
+\** … **\ \char 2026 SARATI_QUENYA_STY
+\** ‰ **\ \char 2030 SARATI_QUENYA_NY
+\** ‹ **\ \char 2039 ?
+\** › **\ \char 203a ?
+\** € **\ \char 20ac SARATI_QUENYA_ND
+\** ™ **\ \char 2122 ?
+
