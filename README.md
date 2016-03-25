@@ -50,7 +50,9 @@ Glǽmscribe is released under the terms of the GNU Affero General Public License
 Acknowledgments and thanks
 --------------------------
 
-**_Glǽmscribe_** would never have been possible without the unworthy and inconditionnal help and wisdom of **_Bertrand Bellet_**.
+**_Glǽmscribe_** would never have been possible without the unworthy and unconditional help and wisdom of **_Bertrand Bellet_**.
+
+Special thanks to **_Måns Björkman_** author of the outstanding website Amanyë Tenceli and its typefaces, a precious resource for **_Glǽmscribe_**'s development, and **_Didier Willis_** for having ignited the inspiration of this project.
 
 Glǽmscribe would never have come to be without the ceaseless and continuously renewed work of the great family of Internet Tolkienists, both on technologies (with several generations of transcribers and typefaces) and on knowledge shared and gathered on websites and forums. Neither would it exist without the devoted labour of all those that make the publication of Tolkien's linguistic works possible. A very big thank you to them all!
 
