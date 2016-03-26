@@ -135,7 +135,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                             
     ts{V_D_KER_WN}_         --> TINCO SHOOK_RIGHT_L {V_D_IMG_XL_WN} 
     ps{V_D_KER_WN}_         --> PARMA SHOOK_RIGHT_L {V_D_IMG_XL_WN} 
-    x{V_D_KER_WN}           --> CALMA SHOOK_LEFT_L {V_D_IMG_S_WN}   \** render ks for x **\
+    x{V_D_KER_WN}           --> CALMA SHOOK_LEFT_L {V_D_IMG__S_WN}   \** render ks for x **\
         
     \** ===================== **\
     \**     2ND LINE RULES    **\
