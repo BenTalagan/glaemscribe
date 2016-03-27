@@ -80,6 +80,17 @@ Glaemscribe.Mode.prototype.finalize = function(options) {
   trans_options.glaem_each(function(oname,valname) {
     trans_options_converted[oname] = mode.options[oname].value_for_value_name(valname);
   });
+
+  // Add the option defined constants to the whole list for evaluation purposes
+  mode.options.glaem_each(function(oname, o) {
+    // For enums, add the values as constants for the evaluator
+    if(o.type == Glaemscribe.Option.Type.ENUM )
+    {
+      o.values.glaem_each(function(name,val) {
+        trans_options_converted[name] = val
+      });
+    }
+  });   
     
   this.pre_processor.finalize(trans_options_converted);
   this.post_processor.finalize(trans_options_converted);

@@ -70,7 +70,7 @@ module Glaemscribe
                   descend_if_tree(if_cond.child_code_block, trans_options)
                   break
                 end
-              rescue IfEvalError => e
+              rescue Eval::IfEvalError => e
                 @mode.errors << Glaeml::Error.new(if_cond.line, "Failed to evaluate condition '#{if_cond.expression}' (#{e})")
               end 
                 

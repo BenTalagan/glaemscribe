@@ -75,8 +75,15 @@ module Glaemscribe
         }
         
         doc.root_node.gpath("processor.rules").each{ |rules_element|
-          validate_presence_of_args(rules_element, 1)          
+          validate_presence_of_args(rules_element, 1)       
+          validate_presence_of_children(rules_element,"if",nil,1);  
+          validate_presence_of_children(rules_element,"elsif",nil,1);  
         }        
+
+        doc.root_node.gpath("preprocessor.if").each{ |e| validate_presence_of_args(e,  1) }    
+        doc.root_node.gpath("preprocessor.elsif").each{ |e| validate_presence_of_args(e,  1) }    
+        doc.root_node.gpath("postprocessor.if").each{ |e| validate_presence_of_args(e,  1) }    
+        doc.root_node.gpath("postprocessor.elsif").each{ |e| validate_presence_of_args(e,  1) }    
       end
       
       def create_if_cond_for_if_term(line, if_term, cond)      

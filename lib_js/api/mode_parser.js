@@ -82,8 +82,15 @@ Glaemscribe.ModeParser.prototype.verify_mode_glaeml = function(doc)
   });
   
   doc.root_node.gpath("processor.rules").glaem_each(function (re, rules_element) {
-    parser.validate_presence_of_args(rules_element, 1);          
+    parser.validate_presence_of_args(rules_element, 1);      
+    parser.validate_presence_of_children(rules_element,"if",null,1);  
+    parser.validate_presence_of_children(rules_element,"elsif",null,1);      
   });  
+
+  doc.root_node.gpath("preprocessor.if").glaem_each(function (re, rules_element) { validate_presence_of_args(e,  1) }); 
+  doc.root_node.gpath("preprocessor.elsif").glaem_each(function (re, rules_element) { validate_presence_of_args(e,  1) });   
+  doc.root_node.gpath("postprocessor.if").glaem_each(function (re, rules_element) { validate_presence_of_args(e,  1) });  
+  doc.root_node.gpath("postprocessor.elsif").glaem_each(function (re, rules_element) { validate_presence_of_args(e,  1) }); 
 }   
 
 Glaemscribe.ModeParser.prototype.create_if_cond_for_if_term = function(line, if_term, cond)

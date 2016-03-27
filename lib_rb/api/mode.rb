@@ -80,11 +80,21 @@ module Glaemscribe
         }
     
         trans_options_converted = {}
- 
+
         # Do a conversion to values space
         trans_options.each{ |oname,valname| 
           trans_options_converted[oname] = @options[oname].value_for_value_name(valname)
         }
+
+        # Add the option defined constants to the whole list for evaluation purposes
+        @options.each { |oname, o|
+          # For enums, add the values as constants for the evaluator
+          if(o.type == Option::Type::ENUM)
+            o.values.each{ |name, val|
+              trans_options_converted[name] = val
+            }
+          end
+        }   
            
         @pre_processor.finalize(trans_options_converted)
         @post_processor.finalize(trans_options_converted)

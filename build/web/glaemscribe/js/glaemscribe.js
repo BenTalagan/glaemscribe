@@ -796,6 +796,17 @@ Glaemscribe.Mode.prototype.finalize = function(options) {
   trans_options.glaem_each(function(oname,valname) {
     trans_options_converted[oname] = mode.options[oname].value_for_value_name(valname);
   });
+
+  // Add the option defined constants to the whole list for evaluation purposes
+  mode.options.glaem_each(function(oname, o) {
+    // For enums, add the values as constants for the evaluator
+    if(o.type == Glaemscribe.Option.Type.ENUM )
+    {
+      o.values.glaem_each(function(name,val) {
+        trans_options_converted[name] = val
+      });
+    }
+  });   
     
   this.pre_processor.finalize(trans_options_converted);
   this.post_processor.finalize(trans_options_converted);
@@ -945,8 +956,15 @@ Glaemscribe.ModeParser.prototype.verify_mode_glaeml = function(doc)
   });
   
   doc.root_node.gpath("processor.rules").glaem_each(function (re, rules_element) {
-    parser.validate_presence_of_args(rules_element, 1);          
+    parser.validate_presence_of_args(rules_element, 1);      
+    parser.validate_presence_of_children(rules_element,"if",null,1);  
+    parser.validate_presence_of_children(rules_element,"elsif",null,1);      
   });  
+
+  doc.root_node.gpath("preprocessor.if").glaem_each(function (re, rules_element) { validate_presence_of_args(e,  1) }); 
+  doc.root_node.gpath("preprocessor.elsif").glaem_each(function (re, rules_element) { validate_presence_of_args(e,  1) });   
+  doc.root_node.gpath("postprocessor.if").glaem_each(function (re, rules_element) { validate_presence_of_args(e,  1) });  
+  doc.root_node.gpath("postprocessor.elsif").glaem_each(function (re, rules_element) { validate_presence_of_args(e,  1) }); 
 }   
 
 Glaemscribe.ModeParser.prototype.create_if_cond_for_if_term = function(line, if_term, cond)

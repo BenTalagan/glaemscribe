@@ -97,7 +97,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     {OOI} === {OO}{I} \** ôi **\
     {OOU} === {OO}{U} \** ôu **\
         
-    \if reverse_o_u_tehtar == U_UP_O_DOWN
+    \if "reverse_o_u_tehtar == U_UP_O_DOWN"
         {O_LOOP_XS} === O_TEHTA_XS
         {O_LOOP_S}  === O_TEHTA_S
         {O_LOOP_L}  === O_TEHTA_L
