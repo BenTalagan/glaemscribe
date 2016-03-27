@@ -22,11 +22,15 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 **\
 
+\** Changelog **\
+\** 0.0.2 : added option for o/u tehtar loop orientation **\
+
+
 \**  Adunaic mode for glaemscribe (MAY BE INCOMPLETE) **\
 \language Adûnaic
 \writing  Tengwar
 \mode     Glaemscrafu
-\version  0.0.1
+\version  0.0.2
 \authors  "Talagan (Benjamin Babut)"
 
 \charset  tengwar_ds true
@@ -36,6 +40,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   \beg option numbers_base BASE_12
     \value    BASE_10 10
     \value    BASE_12 12
+  \end
+  \beg option reverse_o_u_tehtar O_UP_U_DOWN
+    \value O_UP_U_DOWN 1
+    \value U_UP_O_DOWN 2
   \end
 \end
 
@@ -88,21 +96,41 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     {EEU} === {EE}{U} \** êu **\
     {OOI} === {OO}{I} \** ôi **\
     {OOU} === {OO}{U} \** ôu **\
-
+        
+    \if reverse_o_u_tehtar == U_UP_O_DOWN
+        {O_LOOP_XS} === O_TEHTA_XS
+        {O_LOOP_S}  === O_TEHTA_S
+        {O_LOOP_L}  === O_TEHTA_L
+        {O_LOOP_XL} === O_TEHTA_XL
+        {U_LOOP_XS} === U_TEHTA_XS
+        {U_LOOP_S}  === U_TEHTA_S
+        {U_LOOP_L}  === U_TEHTA_L
+        {U_LOOP_XL} === U_TEHTA_XL  
+    \else
+        {O_LOOP_XS} === U_TEHTA_XS
+        {O_LOOP_S}  === U_TEHTA_S
+        {O_LOOP_L}  === U_TEHTA_L
+        {O_LOOP_XL} === U_TEHTA_XL
+        {U_LOOP_XS} === O_TEHTA_XS
+        {U_LOOP_S}  === O_TEHTA_S
+        {U_LOOP_L}  === O_TEHTA_L
+        {U_LOOP_XL} === O_TEHTA_XL    
+    \endif
+        
     {SDIPHTHONGS}  === {AI}            * {AU}
     {SDIPHTHENGS}  === YANTA A_TEHTA_L  * URE A_TEHTA_L 
                    
     {LDIPHTHONGS}  === {AAI}                  * {AAU}                 * {EEI}                 * {EEU}               * {OOI}                 * {OOU}
-    {LDIPHTHENGS}  === ARA A_TEHTA_XS YANTA   * ARA A_TEHTA_XS URE    * ARA E_TEHTA_XS YANTA  * ARA E_TEHTA_XS URE  * ARA O_TEHTA_XS YANTA  * ARA O_TEHTA_XS URE
-                   
+    {LDIPHTHENGS}  === ARA A_TEHTA_XS YANTA   * ARA A_TEHTA_XS URE    * ARA E_TEHTA_XS YANTA  * ARA E_TEHTA_XS URE  * ARA {O_LOOP_XS} YANTA  * ARA {O_LOOP_XS} URE
+                                                                                                                 
     {VOWELS}      === {A}         * {E}         * {I}           * {O}           * {U}    
-    {TEHTA_XS}    === A_TEHTA_XS  * E_TEHTA_XS  * I_TEHTA_XS    * O_TEHTA_XS    * U_TEHTA_XS 
-    {TEHTA__S}    === A_TEHTA_S   * E_TEHTA_S   * I_TEHTA_S     * O_TEHTA_S     * U_TEHTA_S 
-    {TEHTA__L}    === A_TEHTA_L   * E_TEHTA_L   * I_TEHTA_L     * O_TEHTA_L     * U_TEHTA_L 
-    {TEHTA_XL}    === A_TEHTA_XL  * E_TEHTA_XL  * I_TEHTA_XL    * O_TEHTA_XL    * U_TEHTA_XL 
+    {TEHTA_XS}    === A_TEHTA_XS  * E_TEHTA_XS  * I_TEHTA_XS    * {O_LOOP_XS}   * {U_LOOP_XS} 
+    {TEHTA__S}    === A_TEHTA_S   * E_TEHTA_S   * I_TEHTA_S     * {O_LOOP_S}    * {U_LOOP_S} 
+    {TEHTA__L}    === A_TEHTA_L   * E_TEHTA_L   * I_TEHTA_L     * {O_LOOP_L}    * {U_LOOP_L} 
+    {TEHTA_XL}    === A_TEHTA_XL  * E_TEHTA_XL  * I_TEHTA_XL    * {O_LOOP_XL}   * {U_LOOP_XL} 
                    
     {LVOWELS}     === {AA}            * {EE}            * {II}            * {OO}            * {UU}
-    {LVOWTNG}     === ARA A_TEHTA_XS  * ARA E_TEHTA_XS  * ARA I_TEHTA_XS  * ARA O_TEHTA_XS  * ARA U_TEHTA_XS 
+    {LVOWTNG}     === ARA A_TEHTA_XS  * ARA E_TEHTA_XS  * ARA I_TEHTA_XS  * ARA {O_LOOP_XS} * ARA {U_LOOP_XS} 
 
     \** Let' put all vowels/diphthongs in the same basket **\
     {V_D}         === [ {VOWELS}    * {LVOWELS} * {SDIPHTHONGS} * {LDIPHTHONGS} ]        
