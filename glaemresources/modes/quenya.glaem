@@ -24,11 +24,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 \** Changelog **\
 \** 0.0.2 : added χ for the word χarina, correcting ts/ps sequences to work better with eldamar **\
+\** 0.0.3 : added o/u curl option **\
 
 \language "Quenya"
 \writing  "Tengwar"
 \mode     "Classical"
-\version  "0.0.2"
+\version  "0.0.3"
 \authors  "Talagan (Benjamin Babut)"
 
 \charset  tengwar_ds true
@@ -36,6 +37,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 \beg      options
   \option split_diphthongs false
   \option always_use_romen_for_r false
+  \beg option reverse_o_u_tehtar U_UP_O_DOWN
+    \value O_UP_U_DOWN 1
+    \value U_UP_O_DOWN 2
+  \end
   \option reverse_numbers true
   \beg option numbers_base BASE_12
     \value    BASE_10 10
@@ -79,17 +84,37 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     {VOWELS}            === a               *  e              * i              * o              *  u
     {LVOWELS}           === á               *  é              * í              * ó              *  ú
     
-    {TEHTA_XS}          === A_TEHTA_XS      *  E_TEHTA_XS     *  I_TEHTA_XS    * O_TEHTA_XS     *  U_TEHTA_XS 
-    {TEHTA__S}          === A_TEHTA_S       *  E_TEHTA_S      *  I_TEHTA_S     * O_TEHTA_S      *  U_TEHTA_S 
-    {TEHTA__L}          === A_TEHTA_L       *  E_TEHTA_L      *  I_TEHTA_L     * O_TEHTA_L      *  U_TEHTA_L 
-    {TEHTA_XL}          === A_TEHTA_XL      *  E_TEHTA_XL     *  I_TEHTA_XL    * O_TEHTA_XL     *  U_TEHTA_XL 
+    \if "reverse_o_u_tehtar == U_UP_O_DOWN"
+        {O_LOOP_XS} === O_TEHTA_XS
+        {O_LOOP_S}  === O_TEHTA_S
+        {O_LOOP_L}  === O_TEHTA_L
+        {O_LOOP_XL} === O_TEHTA_XL
+        {U_LOOP_XS} === U_TEHTA_XS
+        {U_LOOP_S}  === U_TEHTA_S
+        {U_LOOP_L}  === U_TEHTA_L
+        {U_LOOP_XL} === U_TEHTA_XL  
+    \else
+        {O_LOOP_XS} === U_TEHTA_XS
+        {O_LOOP_S}  === U_TEHTA_S
+        {O_LOOP_L}  === U_TEHTA_L
+        {O_LOOP_XL} === U_TEHTA_XL
+        {U_LOOP_XS} === O_TEHTA_XS
+        {U_LOOP_S}  === O_TEHTA_S
+        {U_LOOP_L}  === O_TEHTA_L
+        {U_LOOP_XL} === O_TEHTA_XL    
+    \endif
+
+    {TEHTA_XS}          === A_TEHTA_XS      *  E_TEHTA_XS     *  I_TEHTA_XS    * {O_LOOP_XS}    *  {U_LOOP_XS} 
+    {TEHTA__S}          === A_TEHTA_S       *  E_TEHTA_S      *  I_TEHTA_S     * {O_LOOP_S}     *  {U_LOOP_S} 
+    {TEHTA__L}          === A_TEHTA_L       *  E_TEHTA_L      *  I_TEHTA_L     * {O_LOOP_L}     *  {U_LOOP_L} 
+    {TEHTA_XL}          === A_TEHTA_XL      *  E_TEHTA_XL     *  I_TEHTA_XL    * {O_LOOP_XL}    *  {U_LOOP_XL} 
        
     \if split_diphthongs
       {WDIPHTHONGS}     === {NULL} 
       {WDIPHTHENGS}     === {NULL}
     \else
       {DIPHTHONGS}      === ai              * au              * eu            * iu             * oi               * ui
-      {DIPHTHENGS}      === YANTA A_TEHTA_L * URE A_TEHTA_L   * URE E_TEHTA_L * URE I_TEHTA_L  * YANTA O_TEHTA_L  * YANTA U_TEHTA_L
+      {DIPHTHENGS}      === YANTA A_TEHTA_L * URE A_TEHTA_L   * URE E_TEHTA_L * URE I_TEHTA_L  * YANTA {O_LOOP_L} * YANTA {U_LOOP_L} 
       {WDIPHTHONGS}     === * {DIPHTHONGS} \** groovy! **\
       {WDIPHTHENGS}     === * {DIPHTHENGS} \** same thing **\
     \endif
