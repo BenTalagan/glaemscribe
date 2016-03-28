@@ -24,6 +24,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 \** Telerin mode for glaemscribe (MAY BE INCOMPLETE) - Derived from Quenya **\
 
+\** Changelog **\
+\** 0.0.2 : correcting ts/ps sequences to work better with eldamar **\
+
 \language "Telerin"
 \writing  "Tengwar"
 \mode     "Glaemscrafu"
@@ -143,10 +146,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     [ {L1_KER_1_GEMS} ] {V_D_KER_WN}   --> [ {L1_IMG_1_GEMS} ] {V_D_IMG__S_WN} \** Tengscribe uses S but L is probably better  **\
     {K}{K}{V_D_KER_WN}                 --> CALMA DASH_INF_S {V_D_IMG__S_WN} 
                             
-    ts{V_D_KER_WN}_         --> TINCO SHOOK_RIGHT_L {V_D_IMG__S_WN} 
-    ps{V_D_KER_WN}_         --> PARMA SHOOK_RIGHT_L {V_D_IMG__S_WN} 
+    ts{V_D_KER_WN}_         --> TINCO {V_D_IMG__L_WN} SHOOK_RIGHT_L 
+    ps{V_D_KER_WN}_         --> PARMA {V_D_IMG__L_WN} SHOOK_RIGHT_L  
     x{V_D_KER_WN}           --> CALMA SHOOK_LEFT_L {V_D_IMG__S_WN}   \** render ks for x **\
-  
+                            
     \** ===================== **\
     \** 2ND LINE RULES **\
     \** ===================== **\

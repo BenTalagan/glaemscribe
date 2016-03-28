@@ -1,7 +1,7 @@
 Gem::Specification.new do |s|
   s.name        = 'glaemscribe'
-  s.version     = '1.0.3'
-  s.date        = '2016-03-27'
+  s.version     = '1.0.4'
+  s.date        = '2016-03-28'
   s.summary     = "Glǽmscribe"
   
   s.description = 

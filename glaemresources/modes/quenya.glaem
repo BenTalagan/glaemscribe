@@ -22,10 +22,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 **\
 
+\** Changelog **\
+\** 0.0.2 : added χ for the word χarina, correcting ts/ps sequences to work better with eldamar **\
+
 \language "Quenya"
 \writing  "Tengwar"
 \mode     "Classical"
-\version  "0.0.1"
+\version  "0.0.2"
 \authors  "Talagan (Benjamin Babut)"
 
 \charset  tengwar_ds true
@@ -133,8 +136,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     ty{V_D_KER_WN}          --> TINCO THINF_DDOT_L {V_D_IMG__S_WN}
     py{V_D_KER_WN}          --> PARMA THINF_DDOT_L {V_D_IMG__S_WN}
                             
-    ts{V_D_KER_WN}_         --> TINCO SHOOK_RIGHT_L {V_D_IMG_XL_WN} 
-    ps{V_D_KER_WN}_         --> PARMA SHOOK_RIGHT_L {V_D_IMG_XL_WN} 
+    ts{V_D_KER_WN}_         --> TINCO {V_D_IMG__L_WN} SHOOK_RIGHT_L 
+    ps{V_D_KER_WN}_         --> PARMA {V_D_IMG__L_WN} SHOOK_RIGHT_L  
     x{V_D_KER_WN}           --> CALMA SHOOK_LEFT_L {V_D_IMG__S_WN}   \** render ks for x **\
         
     \** ===================== **\
@@ -153,7 +156,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     \** ===================== **\
     {L3_KER_1} === (th,þ) * f
     {L3_IMG_1} === SULE   * FORMEN
-    {L3_KER_2} === h      * hw
+    {L3_KER_2} === (h,χ)  * hw
     {L3_IMG_2} === AHA    * HWESTA
 
     \** NORMAL **\
@@ -166,7 +169,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     \** Override h with vowels (descendent of hy) **\
     _h{V_D_KER}                     --> HYARMEN {V_D_IMG__L}
     h[{LVOWELS}]                    --> HYARMEN ARA [{TEHTA_XS}] 
-    h                               --> AHA
+    (h,χ)                           --> AHA
 
     \** ===================== **\
     \**     4TH LINE RULES    **\

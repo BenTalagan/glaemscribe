@@ -22,11 +22,15 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 **\
 
+\** Changelog **\
+\** 0.0.2 : correcting ts/ps sequences to work better with eldamar **\
+
+
 \**  Westron mode for glaemscribe (MAY BE INCOMPLETE) **\
 \language Westron
 \writing  Tengwar
 \mode     Glaemscrafu
-\version  0.0.1
+\version  0.0.2
 \authors  "Talagan (Benjamin Babut)"
 
 \charset  tengwar_ds true
@@ -250,9 +254,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     ps                --> PARMA SHOOK_RIGHT_L
     (ks,cs,x)         --> QUESSE SHOOK_LEFT_L
 
-    ts{V_D}         --> TINCO SHOOK_RIGHT_L {T_XL_D} 
-    ps{V_D}         --> PARMA SHOOK_RIGHT_L {T_XL_D} 
-    (ks,cs,x){V_D}  --> QUESSE SHOOK_LEFT_L {T_S_D}	
+    ts{V_D}           --> TINCO {T_L_D} SHOOK_RIGHT_L 
+    ps{V_D}           --> PARMA {T_L_D} SHOOK_RIGHT_L
+    (ks,cs,x){V_D}    --> QUESSE SHOOK_LEFT_L {T_S_D}	
 
     h{V_D}            --> HYARMEN {T_XS_D}
     h                 --> HYARMEN
