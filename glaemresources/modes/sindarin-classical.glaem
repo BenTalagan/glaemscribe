@@ -24,10 +24,19 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 \** Sindarin Classical mode for glaemscribe (MAY BE INCOMPLETE) **\
 
+\** Changelog **\
+\** 
+
+0.0.2 : Fixed some tehtar versions which did not look quite nice for ch, dh, v, mb
+        Reworked the problem of labialized consonnants (+w), adding an option for treating the u-curl + tehta combination.
+
+**\
+
+
 \language "Sindarin"
 \writing  "Tengwar"
 \mode     "Classical"
-\version  "0.0.1"
+\version  "0.0.2"
 \authors  "Talagan (Benjamin Babut)"
 
 \charset  tengwar_ds true
@@ -38,6 +47,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     \value    BASE_10 10
     \value    BASE_12 12
   \end
+    \option labialized_consonants_accept_tehtar true
 \end
 
 \beg preprocessor
@@ -145,12 +155,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     {V_D_KER_WN}n{K} --> CALMA DASH_SUP_S {V_D_IMG__S_WN}
 
     \** 2ND LINE **\
-    {LINE_2ND_KER}        === d     * b     * g     * ng                               \** * g **\
+    {LINE_2ND_KER}        === d     * b     * g     * ng                    \** * g **\
     {LINE_2ND_IMG}        === ANDO  * UMBAR * UNGWE * UNGWE DASH_SUP_L      \** * s **\
 
     {V_D_KER_WN}[{LINE_2ND_KER}] --> 2,1 --> [{LINE_2ND_IMG}]{V_D_IMG_XL_WN}
 
-    {V_D_KER_WN}mb   --> UMBAR  DASH_SUP_L {V_D_IMG__S_WN}
+    {V_D_KER_WN}mb   --> UMBAR  DASH_SUP_L {V_D_IMG_XL_WN}
     {V_D_KER_WN}nd   --> ANDO   DASH_SUP_L {V_D_IMG_XL_WN}
 
     \** 3RD LINE **\
@@ -160,7 +170,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     {LINE_3RD_IMG_2} === HWESTA
 
     {V_D_KER_WN}[{LINE_3RD_KER_1}] --> 2,1 --> [{LINE_3RD_IMG_1}]{V_D_IMG__S_WN} 
-    {V_D_KER_WN}[{LINE_3RD_KER_2}] --> 2,1 --> [{LINE_3RD_IMG_2}]{V_D_IMG__L_WN} \** Tengscribe uses _S **\
+    {V_D_KER_WN}[{LINE_3RD_KER_2}] --> 2,1 --> [{LINE_3RD_IMG_2}]{V_D_IMG_XL_WN} \** Tengscribe uses _S **\
 
     {V_D_KER_WN}nth   --> SULE   DASH_SUP_S {V_D_IMG__S_WN}
     {V_D_KER_WN}mph   --> FORMEN DASH_SUP_S {V_D_IMG__S_WN}
@@ -168,9 +178,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     {V_D_KER_WN}nch   --> HWESTA DASH_SUP_S {V_D_IMG__S_WN}
 
     \** 4TH LINE **\
-    {LINE_4TH_KER}        === (ð,ðh,dh)    * (v,bh,f_) \** Some noldorin variants here ... **\
-    {LINE_4TH_IMG}        === ANTO  * AMPA 
-    {V_D_KER_WN}[{LINE_4TH_KER}] --> 2,1 --> [{LINE_4TH_IMG}]{V_D_IMG__L_WN}
+    {LINE_4TH_KER}        === (ð,ðh,dh)   * (v,bh,f_) \** Some noldorin variants here ... **\
+    {LINE_4TH_IMG}        === ANTO        * AMPA 
+
+    {V_D_KER_WN}[{LINE_4TH_KER}] --> 2,1 --> [{LINE_4TH_IMG}]{V_D_IMG_XL_WN}
 
     \** 5TH LINE **\
     {LINE_5TH_KER}        === n * m * _ng * _mh
@@ -184,10 +195,16 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     \** 6TH LINE **\
 
     \** 7TH LINE **\
-    {LINE_L_KER}        === r_  * r     * _rh   * l     * _lh   * ll * w
-    {LINE_L_IMG}        === ORE * ROMEN * ARDA  * LAMBE * ALDA  * LAMBE LAMBE_MARK_TILD * VALA
-
-    {V_D_KER_WN}[{LINE_L_KER}] --> 2,1 --> [{LINE_L_IMG}]{V_D_IMG__S_WN}
+    {LINE_L_KER_1}        === r_    * r     
+    {LINE_L_IMG_1}        === ORE   * ROMEN
+    {LINE_L_KER_2}        === l     * ll * w
+    {LINE_L_IMG_2}        === LAMBE * LAMBE LAMBE_MARK_TILD * VALA
+        
+    {V_D_KER_WN}[{LINE_L_KER_1}] --> 2,1 --> [{LINE_L_IMG_1}]{V_D_IMG__S_WN}
+    {V_D_KER_WN}[{LINE_L_KER_2}] --> 2,1 --> [{LINE_L_IMG_2}]{V_D_IMG__S_WN} \** Best compromise between sindarin/eldamar, but not really satisfactory **\
+    
+    _rh --> ARDA
+    _lh --> ALDA
 
     \** S/Z LINE **\
     {LINE_8TH_KER}        === s * y * ss
@@ -205,10 +222,27 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     {V_D_KER_WN}h    --> HYARMEN {V_D_IMG__S_WN}
     {V_D_KER_WN}hw   --> HWESTA_SINDARINWA {V_D_IMG__S_WN}
 
-    {V_D_KER_WN}gw   --> UNGWE THSUP_SEV_XL  {V_D_IMG__S_WN}
-    {V_D_KER_WN}dw   --> ANDO  THSUP_SEV_XS  {V_D_IMG_XL_WN}
-    {V_D_KER_WN}nw   --> ORE   THSUP_SEV_L   {V_D_IMG__S_WN}
-    {V_D_KER_WN}rw   --> ROMEN THSUP_SEV_L   {V_D_IMG__S_WN}
+    \** 
+        Ok here come the labialized consonants which are really tricky
+        The fonts generally do not handle well the u curl + tehtar, this should be one more argument for
+        adopting open type anchors with which we can stack diacritics (see the sarati modes).
+        For here, we cheat. Either we don't have any tehta on the tengwa, and it's easy.
+        Or, we put the two signs in their small versions, side by side.
+        We give an option not to use that trick, if the option is not set, we simply do not use
+        the u-curl at all when there's a tehta on the tengwa.
+    **\
+    
+    gw   --> UNGWE THSUP_SEV_XL  
+    dw   --> ANDO  THSUP_SEV_XS  
+    nw   --> ORE   THSUP_SEV_L   
+    rw   --> ROMEN THSUP_SEV_L   
+        
+    \if "labialized_consonants_accept_tehtar"
+      {V_D_KER}gw   --> UNGWE THSUP_SEV_XS  {V_D_IMG_XL}
+      {V_D_KER}dw   --> ANDO  THSUP_SEV_XS  {V_D_IMG_XL}
+      {V_D_KER}nw   --> ORE   THSUP_SEV_XS  {V_D_IMG_XL}
+      {V_D_KER}rw   --> ROMEN THSUP_SEV_XS  {V_D_IMG_XL}
+    \endif
   \end
   
   \beg rules punctuation

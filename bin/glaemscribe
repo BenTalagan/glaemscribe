@@ -86,8 +86,11 @@ end
 #  PROGRAMM  #
 ##############
 
+loaded_gem = Gem.loaded_specs["glaemscribe"]
+version    = (loaded_gem && loaded_gem.version.to_s) || "NO_GEM"
+
 program :name, "glaemscribe#{env_version}"
-program :version, '0.0.1'
+program :version, version
 program :description, 'Glǽmscribe (also written Glaemscribe) is a software dedicated to the
 transcription of texts between writing systems, and more specifically
 dedicated to the transcription of J.R.R. Tolkien\'s invented languages 

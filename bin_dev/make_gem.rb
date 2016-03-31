@@ -18,11 +18,11 @@ def cleanup
 end
 
 def copy_files
-  cp_r      Dir.glob("../lib_rb/*"),          BUILD_GEM_PATH + "/lib"
-  cp_r      Dir.glob("../glaemresources/*"),  BUILD_GEM_PATH + "/glaemresources"
-  cp_r      Dir.glob("../lib_gem/*"),         BUILD_GEM_PATH
-  cp_r      "../bin/glaemscribe",             BUILD_GEM_PATH + "/bin/" 
-  cp_r      "../LICENSE.txt",                 BUILD_GEM_PATH
+  cp_r      Dir.glob("../lib_rb/*"),           BUILD_GEM_PATH + "/lib"
+  cp_r      Dir.glob("../glaemresources/*"),   BUILD_GEM_PATH + "/glaemresources"
+  cp_r      "../bin_dev/glaemscribe.gemspec",  BUILD_GEM_PATH
+  cp_r      "../bin/glaemscribe",              BUILD_GEM_PATH + "/bin/" 
+  cp_r      "../LICENSE.txt",                  BUILD_GEM_PATH
 end
 
 
