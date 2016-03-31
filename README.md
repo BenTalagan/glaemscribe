@@ -54,7 +54,7 @@ Acknowledgments and thanks
 
 Special thanks to **_Måns Björkman_** author of the outstanding website Amanyë Tenceli and its typefaces, a precious resource for **_Glǽmscribe_**'s development, and **_Didier Willis_** for having ignited the inspiration of this project.
 
-Many thanks to **_Paul Strack_** for all his suggestions and careful examinations on the tengwar modes during his integration of **_Glǽmscribe_** into [**_eldamo_**](http://eldamo.org)
+Many thanks to **_Paul Strack_** for all his suggestions and careful examinations on the tengwar modes during his integration of **_Glǽmscribe_**'s engine into his [**_eldamo_**](http://eldamo.org) project!
 
 **_Glǽmscribe_** would never have come to be without the ceaseless and continuously renewed work of the great family of Internet Tolkienists, both on technologies (with several generations of transcribers and typefaces) and on knowledge shared and gathered on websites and forums. Neither would it exist without the devoted labour of all those that make the publication of Tolkien's linguistic works possible. A very big thank you to them all!
 
