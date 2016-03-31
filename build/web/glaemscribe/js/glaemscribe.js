@@ -1997,15 +1997,15 @@ Glaemscribe.Eval.Parser.prototype.explore_bool = function()
     {
     case 'bool_or':
       if(v == true)
-        thisexplore_bool();
+        this.explore_bool();
       else
-        v = explore_compare();
+        v = this.explore_compare();
       break;
     case 'bool_and':
       if(!v == true)
-        explore_bool(); 
+        this.explore_bool(); 
       else
-        v = explore_compare();
+        v = this.explore_compare();
       break;
     default:
       stop = true;

@@ -29,6 +29,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 0.0.2 : Fixed some tehtar versions which did not look quite nice for ch, dh, v, mb
         Reworked the problem of labialized consonnants (+w), adding an option for treating the u-curl + tehta combination.
+0.0.3 : Extended the labialized consonnants option.
 
 **\
 
@@ -36,7 +37,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 \language "Sindarin"
 \writing  "Tengwar"
 \mode     "Classical"
-\version  "0.0.2"
+\version  "0.0.3"
 \authors  "Talagan (Benjamin Babut)"
 
 \charset  tengwar_ds true
@@ -47,7 +48,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     \value    BASE_10 10
     \value    BASE_12 12
   \end
-    \option labialized_consonants_accept_tehtar true
+  \beg option labialized_consonants_u_curl LABIALIZED_U_CURL_ALWAYS
+    \value    LABIALIZED_U_CURL_NONE      1
+    \value    LABIALIZED_U_CURL_NO_TEHTAR 2
+    \value    LABIALIZED_U_CURL_ALWAYS    3
+  \end
 \end
 
 \beg preprocessor
@@ -232,12 +237,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         the u-curl at all when there's a tehta on the tengwa.
     **\
     
-    gw   --> UNGWE THSUP_SEV_XL  
-    dw   --> ANDO  THSUP_SEV_XS  
-    nw   --> ORE   THSUP_SEV_L   
-    rw   --> ROMEN THSUP_SEV_L   
-        
-    \if "labialized_consonants_accept_tehtar"
+    \if "labialized_consonants_u_curl == LABIALIZED_U_CURL_NO_TEHTAR || labialized_consonants_u_curl == LABIALIZED_U_CURL_ALWAYS"
+      gw   --> UNGWE THSUP_SEV_XL  
+      dw   --> ANDO  THSUP_SEV_XS  
+      nw   --> ORE   THSUP_SEV_L   
+      rw   --> ROMEN THSUP_SEV_L   
+    \endif
+
+    \if "labialized_consonants_u_curl == LABIALIZED_U_CURL_ALWAYS"
       {V_D_KER}gw   --> UNGWE THSUP_SEV_XS  {V_D_IMG_XL}
       {V_D_KER}dw   --> ANDO  THSUP_SEV_XS  {V_D_IMG_XL}
       {V_D_KER}nw   --> ORE   THSUP_SEV_XS  {V_D_IMG_XL}
