@@ -25,11 +25,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 \** Changelog **\
 \** 0.0.2 : added χ for the word χarina, correcting ts/ps sequences to work better with eldamar **\
 \** 0.0.3 : added o/u curl option **\
+\** 0.0.4 : added voiced plosived corner cases treatment and option to chose method **\
 
 \language "Quenya"
 \writing  "Tengwar"
 \mode     "Classical"
-\version  "0.0.3"
+\version  "0.0.4"
 \authors  "Talagan (Benjamin Babut)"
 
 \charset  tengwar_ds true
@@ -40,6 +41,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   \beg option reverse_o_u_tehtar U_UP_O_DOWN
     \value O_UP_U_DOWN 1
     \value U_UP_O_DOWN 2
+  \end
+  \beg option voiced_plosives_treatment VOICED_PLOSIVES_WITH_STROKE
+    \value VOICED_PLOSIVES_WITH_STROKE 1
+    \value VOICED_PLOSIVES_WITH_XTD 2
   \end
   \option reverse_numbers true
   \beg option numbers_base BASE_12
@@ -78,7 +83,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   \beg    rules litteral
                        
     {K}                 ===  (c,k)
-    {MB}                ===  (b,mb)
     {SS}                ===  (z,ss)
                       
     {VOWELS}            === a               *  e              * i              * o              *  u
@@ -142,10 +146,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     \** ===================== **\
     \**     1ST LINE RULES    **\
     \** ===================== **\
-    {L1_KER_1}        === t                   *  p  
-    {L1_IMG_1}        === TINCO               *  PARMA
+    {L1_KER_1}        === t                   * p  
+    {L1_IMG_1}        === TINCO               * PARMA
     {L1_KER_2}        === {K}                 * q
-    {L1_IMG_2}        === CALMA               *  QUESSE
+    {L1_IMG_2}        === CALMA               * QUESSE
     {L1_KER_1_GEMS}   === tt                  * pp
     {L1_IMG_1_GEMS}   === TINCO DASH_INF_S    * PARMA DASH_INF_S
     
@@ -168,13 +172,23 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     \** ===================== **\
     \**     2ND LINE RULES    **\
     \** ===================== **\
-    {L2_KER}        === nd      * {MB}      * ng      *  ngw
-    {L2_IMG}        === ANDO    * UMBAR     * ANGA    *  UNGWE
-  
+    {L2_KER}        === nd      * mb        * ng      * ngw
+    {L2_IMG}        === ANDO    * UMBAR     * ANGA    * UNGWE
+
     \** STANDARD **\
     [{L2_KER}]{V_D_KER_WN}  --> [{L2_IMG}]{V_D_IMG_XL_WN}
-    \** OTHERS **\
+    
+    \** Palatalized **\ 
     ndy{V_D_KER_WN}         --> ANDO THINF_DDOT_XL {V_D_IMG_XL_WN}
+ 
+    \** Have some rules for d,b,g,gw although there are not theoritically possible, alduudenie e.g needs it **\
+    {L2_KER_UN}     === d       * b         * g       * gw     
+    \if "voiced_plosives_treatment == VOICED_PLOSIVES_WITH_STROKE"
+      [{L2_KER_UN}]{V_D_KER_WN}  --> [{L2_IMG}] THINF_STROKE_XL {V_D_IMG_XL_WN}
+    \else
+     {L2_IMG_UN}    === TW_EXT_21 * TW_EXT_22 * TW_EXT_23 * TW_EXT_24    
+     [{L2_KER_UN}]{V_D_KER_WN}  --> [{L2_IMG_UN}] {V_D_IMG_XL_WN} 
+    \endif
       
     \** ===================== **\
     \**     3RD LINE RULES    **\

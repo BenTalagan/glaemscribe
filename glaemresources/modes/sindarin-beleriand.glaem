@@ -22,12 +22,20 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 **\
 
-\** Sindarin Beleriand mode 0.5 for jrrtranscribe (MAY BE INCOMPLETE) **\
+\** Sindarin Beleriand mode for glaemscribe (MAY BE INCOMPLETE) **\
+
+\** Changelog **\
+\** 
+
+0.0.2 : Added lw
+
+**\
+
 
 \language "Sindarin"
 \writing  "Tengwar"
 \mode     "Beleriand"
-\version  "0.0.1"
+\version  "0.0.2"
 \authors  "Talagan (Benjamin Babut)"
 
 \charset  tengwar_ds true
@@ -213,10 +221,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     h --> HYARMEN
 
     hw   --> HWESTA_SINDARINWA
-    gw   --> ANGA THSUP_SEV_XL
+
     dw   --> ANDO THSUP_SEV_XL
+    gw   --> ANGA THSUP_SEV_XL
+    lw   --> LAMBE THSUP_SEV_L
     nw   --> ORE THSUP_SEV_L
     rw   --> ROMEN THSUP_SEV_L 
+
   \end
   
   \beg    rules punctuation
