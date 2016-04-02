@@ -26,11 +26,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 \** 0.0.2 : added χ for the word χarina, correcting ts/ps sequences to work better with eldamar **\
 \** 0.0.3 : added o/u curl option **\
 \** 0.0.4 : added voiced plosived corner cases treatment and option to chose method **\
+\** 0.0.5 : fixing h+long vowel medially **\
 
 \language "Quenya"
 \writing  "Tengwar"
 \mode     "Classical"
-\version  "0.0.4"
+\version  "0.0.5"
 \authors  "Talagan (Benjamin Babut)"
 
 \charset  tengwar_ds true
@@ -207,7 +208,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
    
     \** Override h with vowels (descendent of hy) **\
     _h{V_D_KER}                     --> HYARMEN {V_D_IMG__L}
-    h[{LVOWELS}]                    --> HYARMEN ARA [{TEHTA_XS}] 
+    _h[{LVOWELS}]                   --> HYARMEN ARA [{TEHTA_XS}] 
     (h,χ)                           --> AHA
 
     \** ===================== **\
