@@ -25,7 +25,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 \** Changelog **\
 \** 0.0.2 : added χ for the word χarina, correcting ts/ps sequences to work better with eldamar **\
 \** 0.0.3 : added o/u curl option **\
-\** 0.0.4 : added voiced plosived corner cases treatment and option to chose method **\
+\** 0.0.4 : added voiced plosives corner cases treatment and option to chose method **\
 \** 0.0.5 : fixing h+long vowel medially **\
 
 \language "Quenya"
