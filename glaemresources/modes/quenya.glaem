@@ -27,11 +27,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 \** 0.0.3 : added o/u curl option **\
 \** 0.0.4 : added voiced plosives corner cases treatment and option to chose method **\
 \** 0.0.5 : fixing h+long vowel medially **\
+\** 0.0.6 : adding option for alveolarized consonants  st (t+t), pt (p+t), ht (c+t) **\
 
 \language "Quenya"
 \writing  "Tengwar"
 \mode     "Classical"
-\version  "0.0.5"
+\version  "0.0.6"
 \authors  "Talagan (Benjamin Babut)"
 
 \charset  tengwar_ds true
@@ -46,6 +47,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   \beg option voiced_plosives_treatment VOICED_PLOSIVES_WITH_STROKE
     \value VOICED_PLOSIVES_WITH_STROKE 1
     \value VOICED_PLOSIVES_WITH_XTD 2
+  \end
+  \beg option st_pt_ht ST_PT_HT_SEPARATED
+    \value ST_PT_HT_SEPARATED 1
+    \value ST_PT_HT_WITH_XTD 2
   \end
   \option reverse_numbers true
   \beg option numbers_base BASE_12
@@ -79,6 +84,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   \elvish_numbers "\\eval numbers_base" "\\eval reverse_numbers"
 \end
   
+
 \beg processor
   
   \beg    rules litteral
@@ -191,6 +197,16 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
      [{L2_KER_UN}]{V_D_KER_WN}  --> [{L2_IMG_UN}] {V_D_IMG_XL_WN} 
     \endif
       
+    \if "st_pt_ht == ST_PT_HT_WITH_XTD"
+      {L2_KER_ALVEOLARIZED_1}     === st        * pt           
+      {L2_IMG_ALVEOLARIZED_1}     === TW_EXT_11 * TW_EXT_12       
+      {L2_KER_ALVEOLARIZED_2}     === ht    
+      {L2_IMG_ALVEOLARIZED_2}     === TW_EXT_13       
+            
+      [{L2_KER_ALVEOLARIZED_1}]{V_D_KER_WN}  --> [{L2_IMG_ALVEOLARIZED_1}] {V_D_IMG__L_WN}     
+      [{L2_KER_ALVEOLARIZED_2}]{V_D_KER_WN}  --> [{L2_IMG_ALVEOLARIZED_2}] {V_D_IMG_XL_WN}     
+    \endif
+            
     \** ===================== **\
     \**     3RD LINE RULES    **\
     \** ===================== **\
