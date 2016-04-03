@@ -182,7 +182,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     \** Palatalized **\ 
     ndy{V_D_KER_WN}         --> ANDO THINF_DDOT_XL {V_D_IMG_XL_WN}
  
-    \** Have some rules for d,b,g,gw although there are not theoritically possible, alduudenie e.g needs it **\
+    \** Have some rules for d,b,g,gw although there are not theoritically possible, aldudénie e.g needs it **\
     {L2_KER_UN}     === d       * b         * g       * gw     
     \if "voiced_plosives_treatment == VOICED_PLOSIVES_WITH_STROKE"
       [{L2_KER_UN}]{V_D_KER_WN}  --> [{L2_IMG}] THINF_STROKE_XL {V_D_IMG_XL_WN}

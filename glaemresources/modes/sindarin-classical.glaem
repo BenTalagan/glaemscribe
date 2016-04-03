@@ -31,6 +31,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         Reworked the problem of labialized consonnants (+w), adding an option for treating the u-curl + tehta combination.
 0.0.3 : Extended the labialized consonnants option.
 0.0.4 : Fixed nw (BUG : was using ORE from the beleriand mode), added lw
+0.0.5 : Added thorn as equivalent for th
 
 **\
 
@@ -38,7 +39,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 \language "Sindarin"
 \writing  "Tengwar"
 \mode     "Classical"
-\version  "0.0.4"
+\version  "0.0.5"
 \authors  "Talagan (Benjamin Babut)"
 
 \charset  tengwar_ds true
@@ -170,7 +171,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     {V_D_KER_WN}nd   --> ANDO   DASH_SUP_L {V_D_IMG_XL_WN}
 
     \** 3RD LINE **\
-    {LINE_3RD_KER_1} === th     * (f,ph,ff)
+    {LINE_3RD_KER_1} === (þ,th) * (f,ph,ff)
     {LINE_3RD_IMG_1} === SULE   * FORMEN
     {LINE_3RD_KER_2} === ch 
     {LINE_3RD_IMG_2} === HWESTA
@@ -184,7 +185,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     {V_D_KER_WN}nch   --> HWESTA DASH_SUP_S {V_D_IMG__S_WN}
 
     \** 4TH LINE **\
-    {LINE_4TH_KER}        === (ð,ðh,dh)   * (v,bh,f_) \** Some noldorin variants here ... **\
+    {LINE_4TH_KER}        === (đ,ð,ðh,dh)   * (v,bh,f_) \** Some noldorin variants here ... **\
     {LINE_4TH_IMG}        === ANTO        * AMPA 
 
     {V_D_KER_WN}[{LINE_4TH_KER}] --> 2,1 --> [{LINE_4TH_IMG}]{V_D_IMG_XL_WN}

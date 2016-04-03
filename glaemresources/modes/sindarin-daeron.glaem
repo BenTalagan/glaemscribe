@@ -24,10 +24,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 \** Sindarin Angerthas Daeron mode for glaemscribe **\
 
+\** changelog **\
+\** 0.0.3 : Added thorn as equivalent for th **\
+
+
 \language "Sindarin"
 \writing  "Cirth"
 \mode     "Angerthas Daeron"
-\version  "0.0.1"
+\version  "0.0.2"
 \authors  "Talagan (Benjamin Babut)"
 
 \charset  cirth_ds true
@@ -120,7 +124,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     sh    --> CIRTH_15
     ss    --> CIRTH_36
     t     --> CIRTH_8
-    th    --> CIRTH_10
+    (þ,th) --> CIRTH_10
     u     --> CIRTH_42
     ú     --> CIRTH_43
     ü     --> CIRTH_45_ALT \** Can use CIRTH_45 **\

@@ -28,6 +28,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 \** 
 
 0.0.2 : Added lw
+0.0.3 : Added thorn as equivalent for th
 
 **\
 
@@ -35,7 +36,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 \language "Sindarin"
 \writing  "Tengwar"
 \mode     "Beleriand"
-\version  "0.0.2"
+\version  "0.0.3"
 \authors  "Talagan (Benjamin Babut)"
 
 \charset  tengwar_ds true
@@ -157,8 +158,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     \** ======== **\
     \** 3RD LINE **\
     \** ======== **\
-    {LINE_3RD_KER_1} === th   * (f,ph,ff)
-    {LINE_3RD_IMG_1} === SULE * FORMEN
+    {LINE_3RD_KER_1} === (þ,th) * (f,ph,ff)
+    {LINE_3RD_IMG_1} === SULE   * FORMEN
     {LINE_3RD_KER_2} === ch 
     {LINE_3RD_IMG_2} === AHA
 
@@ -173,7 +174,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     \** ======== **\
     \** 4TH LINE **\
     \** ======== **\
-    {LINE_4TH_KER}        === (ð,ðh,dh) * (v,bh,f_) 
+    {LINE_4TH_KER}        === (đ,ð,ðh,dh) * (v,bh,f_) 
     {LINE_4TH_IMG}        === ANTO  * AMPA 
 
     [{LINE_4TH_KER}] --> [{LINE_4TH_IMG}]
