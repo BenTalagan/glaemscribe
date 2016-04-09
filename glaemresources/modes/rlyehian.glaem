@@ -1,0 +1,289 @@
+\**
+
+Glǽmscribe (also written Glaemscribe) is a software dedicated to
+the transcription of texts between writing systems, and more 
+specifically dedicated to the transcription of J.R.R. Tolkien's 
+invented languages to some of his devised writing systems.
+
+Copyright (C) 2015 Benjamin Babut (Talagan).
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU Affero General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Affero General Public License for more details.
+
+You should have received a copy of the GNU Affero General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+**\
+
+\** largely based on the Cthuvian dictionary compiled by cyberangel at yog-sothoth forums **\
+\** Discussion on the incatena forum : http://www.incatena.org/viewtopic.php?f=4&t=37194&start=1225 **\
+\** This reconstruction : http://conworkshop.info/view_language.php?l=RLH **\
+
+\** Changelog **\
+
+\**  R'lyehian mode for glaemscribe : a non-euclidian joke, muhahahaha **\
+
+\language "R'lyehian"
+\writing  Tengwar
+\mode     Glaemscrafu
+\version  0.0.1
+\authors  "Fthalagn"
+
+\charset  tengwar_ds true
+
+\beg      options
+\end
+
+\beg      preprocessor
+  \** Work exclusively downcase **\
+  \downcase
+  
+  \** Simplify trema vowels **\
+  \substitute "ä" "a"
+  \substitute "ë" "e"
+  \substitute "ï" "i"
+  \substitute "ö" "o"
+  \substitute "ü" "u"
+  \substitute "ÿ" "y"
+\end
+
+\** Use H as gutturals **\
+
+
+\**
+
+HPL :
+-----
+Ph'nglui mglw'nafh Cthulhu R'lyeh wgah'nagl fhtagn
+Ygnaiih ... ygnaiih ... thflthkh'ngha ... Yog-Sothoth ... y'bthnk .. h'ehye-n'grkdl'lh
+N'gai, n'gha'ghaa, bugg-shoggog, y'hah, Yog-Sothoth
+Y'ai 'ng'ngah, Yog-Sothoth h'ee - l'geb f'ai throdog uaaah
+ogthrod ai'f geb'l - ee'h Yog-Sothoth 'ngah'ng ai'y zhro
+
+
+DERLETH (The Return of Hastur) :
+--------------------------------
+Cthulhu naflfhtagn
+
+CAMPBELL (The Moon-Lens) :
+--------------------------
+Gof'nn hupadgh Shub-Niggurath
+
+BRUNNER (Concerning the Forthcoming) :
+--------------------------------------
+Llllll-nglui, nnnn-lagl, fhtagn-ngah, ai Yog-Sothoth!
+
+PEREZ (The Likeness) :
+----------------------
+Ia! Vthyarilops! Ut ftaghu wk'hmr Vthyarilops! Ia! Ia!
+
+GLASBY (Return to Y'ha-nthlei) :
+--------------------------------
+Shtunggli grah'nn fhhui Y'ha-nthlei vra Dagon chtenff.
+
+KUTTNER (The Salem Horror):
+---------------------------
+Ya na kadishtu nilgh'ri 
+stell'bsna kn'aa Nyogtha 
+k'yarnak phlegethor
+
+LUMLEY (The Burrowers Beneath):
+-------------------------------
+Ya na kadishtu nilgh'ri stell'bsna Nyogtha, 
+K'yarnak phlegethor l'ebumna syha'h n'ghft, 
+Ya hai kadishtu ep r'luh-eeh Nyogtha eeh, 
+s'uhn-ngh athg li'hee orr'e syha'h.
+
+RUSSELL (Faith):
+----------------
+Cthugha fm'latgh mnahn' hlirgh! 
+Cthugha ch'nw hafh'drn! 
+Cthugha fm'latgh uh'e wfaqa!
+
+VESTER (Innsmouth's gold):
+--------------------------
+Cthulhu fhtagn - G'thugha w'gah! 
+Ng'goka y'gotha ooboshu R'lyeh! 
+Cthulhu fhtagn! Fhtagn!
+
+CLORE (The Dying God):
+----------------------
+sll'ha-gn'wgn-ll'ah-sgn'wahl
+
+I vs Y :
+========
+Y looks like a semi vowel after consonants (r'lyeh) but 
+sometimes found as a vowel  
+
+C vs K : 
+========
+We should probably use c == k
+
+
+'  Glottal stop
++h cthuvianisation (aspiration + pharyngalisation)
+
+a i u o e w
+
+
+b
+d
+c ch
+k kh
+g gh
+h hh hy
+l lh ly
+f fh
+n 
+m
+p ph
+r rh
+s sh
+t th
+z zh
+
+y palatal semi vowel ?
+
+**\
+
+\beg      processor
+
+  \beg    rules litteral  
+    {VOWELS}            === a               *  e              * i              * o              *  u  * w
+
+    {O_LOOP_XS} === U_TEHTA_XS
+    {O_LOOP_S}  === U_TEHTA_S
+    {O_LOOP_L}  === U_TEHTA_L
+    {O_LOOP_XL} === U_TEHTA_XL
+    {U_LOOP_XS} === O_TEHTA_XS
+    {U_LOOP_S}  === O_TEHTA_S
+    {U_LOOP_L}  === O_TEHTA_L
+    {U_LOOP_XL} === O_TEHTA_XL   
+        
+    {TEHTA_XS}          === A_TEHTA_XS      *  E_TEHTA_XS     *  I_TEHTA_XS    * {O_LOOP_XS}    *  {U_LOOP_XS} * THSUP_SEV_XS
+    {TEHTA__S}          === A_TEHTA_S       *  E_TEHTA_S      *  I_TEHTA_S     * {O_LOOP_S}     *  {U_LOOP_S}  * THSUP_SEV_S
+    {TEHTA__L}          === A_TEHTA_L       *  E_TEHTA_L      *  I_TEHTA_L     * {O_LOOP_L}     *  {U_LOOP_L}  * THSUP_SEV_L
+    {TEHTA_XL}          === A_TEHTA_XL      *  E_TEHTA_XL     *  I_TEHTA_XL    * {O_LOOP_XL}    *  {U_LOOP_XL} * THSUP_SEV_XL
+
+    [{VOWELS}]          --> TELCO [{TEHTA_XS}]  \** Replace isolated short vowels **\
+  
+
+    {WDIPHTHONGS}       === {NULL} 
+    {WDIPHTHENGS}       === {NULL}
+      
+    {V_D_KER}           === [ {VOWELS} {WDIPHTHONGS} ]
+    {V_D_KER_WN}        === [ {VOWELS} {WDIPHTHONGS} * {NULL} ]
+
+    {V_D_IMG_XS}        === [ {TEHTA_XS} {WDIPHTHENGS} ]
+    {V_D_IMG__S}        === [ {TEHTA__L} {WDIPHTHENGS} ]
+    {V_D_IMG__L}        === [ {TEHTA__S} {WDIPHTHENGS} ]
+    {V_D_IMG_XL}        === [ {TEHTA_XL} {WDIPHTHENGS} ]
+    {V_D_IMG_XS_WN}     === [ {TEHTA_XS} {WDIPHTHENGS} * {NULL} ]
+    {V_D_IMG__S_WN}     === [ {TEHTA__L} {WDIPHTHENGS} * {NULL} ]
+    {V_D_IMG__L_WN}     === [ {TEHTA__S} {WDIPHTHENGS} * {NULL} ]
+    {V_D_IMG_XL_WN}     === [ {TEHTA_XL} {WDIPHTHENGS} * {NULL} ]
+  
+  
+    {L1_KER_1}        === t                   * p  
+    {L1_IMG_1}        === TINCO               * PARMA
+    {L1_KER_2}        === (c,k)                   
+    {L1_IMG_2}        === CALMA               
+    
+    \** NORMAL **\
+    [ {L1_KER_1} ] [{NULL} * h] {V_D_KER_WN}  --> [ {L1_IMG_1} ] [{NULL} * TILD_INF_S] {V_D_IMG__S_WN}
+    [ {L1_KER_2} ] [{NULL} * h] {V_D_KER_WN}  --> [ {L1_IMG_2} ] [{NULL} * TILD_INF_S] {V_D_IMG__S_WN}
+
+    {L2_KER}        === d      * b        * g      
+    {L2_IMG}        === ANDO   * UMBAR    * ANGA    
+    [ {L2_KER} ] [{NULL} * h] {V_D_KER_WN}  --> [ {L2_IMG} ] [{NULL} * TILD_INF_L] {V_D_IMG_XL_WN}
+  
+    {L3_KER} === f
+    {L3_IMG} === FORMEN
+    [ {L3_KER} ] [{NULL} * h] {V_D_KER_WN}  --> [ {L3_IMG} ] [{NULL} * TILD_INF_S] {V_D_IMG_XL_WN}
+ 
+    {L5_KER}  === n     * m     
+    {L5_IMG}  === NUMEN * MALTA 
+    [ {L5_KER} ] [{NULL} * h] {V_D_KER_WN}  --> [ {L5_IMG} ] [{NULL} * TILD_INF_L] {V_D_IMG_XL_WN}
+  
+    r [{NULL} * y * h] {V_D_KER_WN} --> ROMEN [{NULL} * THINF_DDOT_S * LAMBE_MARK_TILD] {V_D_IMG__L_WN}
+    s {V_D_KER_WN} --> SILME_NUQUERNA {V_D_IMG__L_WN}
+    z {V_D_KER_WN} --> ESSE_NUQUERNA {V_D_IMG__L_WN}
+
+    l [{NULL} * y * h] {V_D_KER_WN} --> LAMBE [{NULL} * LAMBE_MARK_DDOT * LAMBE_MARK_TILD] {V_D_IMG__L_WN}
+    h [{NULL} * y * h] {V_D_KER_WN} --> AHA [{NULL} * THINF_DDOT_L * LAMBE_MARK_TILD] {V_D_IMG_XL_WN}
+    v [{NULL} * y * h] {V_D_KER_WN} --> VALA [{NULL} * THINF_DDOT_L * LAMBE_MARK_TILD] {V_D_IMG__S_WN}
+ 
+    y {V_D_KER_WN} --> VILYA {V_D_IMG__L_WN}
+
+    ' --> HARP_SHAPED
+    ’ --> HARP_SHAPED
+
+  \end
+  
+  \beg rules punctutation
+    . --> PUNCT_DDOT
+    .. --> PUNCT_DOT PUNCT_DDOT PUNCT_DOT
+    …  --> PUNCT_TILD
+    ... --> PUNCT_TILD
+    .... --> PUNCT_TILD
+    ..... --> PUNCT_TILD
+    ...... --> PUNCT_TILD
+    ....... --> PUNCT_TILD
+
+    , --> PUNCT_DOT
+    : --> PUNCT_DOT
+    ; --> PUNCT_DOT
+    ! --> PUNCT_EXCLAM
+    ? --> PUNCT_INTERR
+    · --> PUNCT_DOT
+
+    \** Quotes **\
+
+    “ --> DQUOT_OPEN
+    ” --> DQUOT_CLOSE
+    « --> DQUOT_OPEN 
+    » --> DQUOT_CLOSE 
+    
+    - --> PUNCT_DOT    
+    – --> WAVE_MED_SIMPLE  
+    — --> WAVE_MED_DOUBLE
+ 
+    [ --> PUNCT_PAREN_L
+    ] --> PUNCT_PAREN_R
+    ( --> PUNCT_PAREN_L
+    ) --> PUNCT_PAREN_R
+    { --> PUNCT_PAREN_L
+    } --> PUNCT_PAREN_R
+    < --> PUNCT_PAREN_L
+    > --> PUNCT_PAREN_R  
+
+    \** Not universal between fonts ... **\
+    $ --> BOOKMARK_SIGN
+    ≤ --> RING_MARK_L \** Ring inscription left beautiful stuff **\
+    ≥ --> RING_MARK_R \** Ring inscription right beautiful stuff **\
+  \end
+
+  \beg rules numbers
+    0 --> NUM_0
+    1 --> NUM_1
+    2 --> NUM_2
+    3 --> NUM_3
+    4 --> NUM_4
+    5 --> NUM_5
+    6 --> NUM_6
+    7 --> NUM_7
+    8 --> NUM_8
+    9 --> NUM_9
+    A --> NUM_10
+    B --> NUM_11   
+  \end
+  
+\end
+
