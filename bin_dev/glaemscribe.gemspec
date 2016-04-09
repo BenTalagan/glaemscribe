@@ -1,7 +1,7 @@
 Gem::Specification.new do |s|
   s.name        = 'glaemscribe'
-  s.version     = '1.0.11'
-  s.date        = '2016-04-04'
+  s.version     = '1.0.12'
+  s.date        = '2016-04-09'
   s.summary     = "Glǽmscribe"
   
   s.description = 
@@ -18,7 +18,7 @@ Gem::Specification.new do |s|
   s.executables << "glaemscribe"
   
   s.homepage    = 'http://jrrvf.com/~glaemscrafu/english/glaemscribe.html'
-  s.license     = 'AGPLv3'
+  s.license     = 'AGPL-3.0'
   
   s.add_runtime_dependency 'commander', '~> 4.3'
   
