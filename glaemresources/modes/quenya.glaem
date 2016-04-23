@@ -28,11 +28,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 \** 0.0.4 : added voiced plosives corner cases treatment and option to chose method **\
 \** 0.0.5 : fixing h+long vowel medially **\
 \** 0.0.6 : adding option for alveolarized consonants  st (t+t), pt (p+t), ht (c+t) **\
+\** 0.0.7 : Fixing rb/lb, to be treated as r+mb and l+mb**\
 
 \language "Quenya"
 \writing  "Tengwar"
 \mode     "Classical"
-\version  "0.0.6"
+\version  "0.0.7"
 \authors  "Talagan (Benjamin Babut)"
 
 \charset  tengwar_ds true
@@ -254,19 +255,23 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     \** ===================== **\
     \**     6TH LINE RULES    **\
     \** ===================== **\
-    {L6_KER}        === r     * v     * y                   * w  
+    
+    {LONE_R_IMG} === ORE \** lonely r is not voiced, so override rule **\
+    \if always_use_romen_for_r
+      {LONE_R_IMG} === ROMEN \** Override lone r if option is on **\
+    \endif
+        
+    {L6_KER}        === r     * v     * y                   * w
     {L6_IMG}        === ROMEN * VALA  * ANNA THINF_DDOT_L   * VILYA  
 
     [{L6_KER}]{V_D_KER_WN} --> [{L6_IMG}]{V_D_IMG__S_WN}
-
+    
     \** r before long vowels is voiced **\
     r[{LVOWELS}]          --> ROMEN ARA [{TEHTA_XS}]
-    
-    \if always_use_romen_for_r
-      r                     --> ROMEN
-    \else        
-      r                     --> ORE \** lonely r is not voiced, so override rule **\
-    \endif
+    r                     --> {LONE_R_IMG} \** lonely r is not voiced, so override rule **\
+
+    \** rb is specified to be treated as r + mb in the LotR Appendix E **\
+    rb {V_D_KER_WN} --> {LONE_R_IMG} UMBAR {V_D_IMG_XL_WN}
 
     rr{V_D_KER_WN}        --> ROMEN DASH_INF_S {V_D_IMG__S_WN}
     ry{V_D_KER_WN}        --> ROMEN THINF_DDOT_L {V_D_IMG__S_WN}
@@ -279,6 +284,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     {LINE_L_IMG}          === LAMBE * ALDA    * LAMBE LAMBE_MARK_TILD
 
     [{LINE_L_KER}]{V_D_KER_WN}    --> [{LINE_L_IMG}]{V_D_IMG__S_WN}
+    
+    \** lb is specified to be treated as l + mb in the LotR Appendix E **\
+    lb {V_D_KER_WN}               --> LAMBE UMBAR {V_D_IMG_XL_WN}
+    
     ly{V_D_KER_WN}                --> LAMBE LAMBE_MARK_DDOT {V_D_IMG__S_WN}
     hl{V_D_KER_WN}                --> HALLA LAMBE {V_D_IMG__S_WN}
     hr{V_D_KER_WN}                --> HALLA ROMEN {V_D_IMG__S_WN}
