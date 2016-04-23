@@ -1,7 +1,10 @@
+dir     = File.absolute_path(File.dirname(__FILE__))
+version = File.open(dir+ "/../../version","rb:utf-8") { |f| f.read }
+
 Gem::Specification.new do |s|
   s.name        = 'glaemscribe'
-  s.version     = '1.0.12'
-  s.date        = '2016-04-09'
+  s.version     = version
+  s.date        = '2016-04-23'
   s.summary     = "Glǽmscribe"
   
   s.description = 

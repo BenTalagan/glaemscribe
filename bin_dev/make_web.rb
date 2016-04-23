@@ -80,9 +80,11 @@ end
 
 def build_engine  
   license = File.open("../LICENSE.txt","rb:utf-8") { |f| f.read }
+  version = File.open("../version","rb:utf-8") { |f| f.read }
   
   File.open(BUILD_JS_PATH + "/glaemscribe.js","wb:utf-8") { |fout|
-    fout << "/*\n" + license + "\n*/\n"
+    fout << "/*\n" + license + "\nVersion : " + version + "\n*/\n\n"
+
     JS_FILES.each{ |fname|
       File.open("../lib_js/" + fname,"rb:utf-8") { |fin|
         fout << "// Adding #{fname} \n\n"
