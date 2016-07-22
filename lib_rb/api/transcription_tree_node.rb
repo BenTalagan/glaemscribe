@@ -84,7 +84,7 @@ module Glaemscribe
         end
       
         # Only the root node is in the chain, we could not find anything; return the "unknown char"
-        return [UNKNOWN_CHAR_OUTPUT], 1    
+        return ["*UNKNOWN"], 1    
       end
     end
   end

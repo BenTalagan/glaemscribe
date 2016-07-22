@@ -25,6 +25,7 @@ module Glaemscribe
     
     class PrePostProcessorOperator
       attr_reader :args
+      attr_reader :raw_args
       
       def initialize(raw_args)
         @raw_args = raw_args
@@ -46,7 +47,7 @@ module Glaemscribe
         }
       end
       
-      def apply(l)
+      def apply
         raise "Pure virtual method, should be overloaded."
       end
     end
@@ -90,7 +91,16 @@ module Glaemscribe
           op.finalize(trans_options)
         }
       end
-      
+
+    end
+    
+    class PreProcessorOperator < PrePostProcessorOperator  
+    end
+   
+    class PostProcessorOperator < PrePostProcessorOperator
+    end
+    
+    class TranscriptionPreProcessor < TranscriptionPrePostProcessor           
       # Apply all preprocessor rules consecutively
       def apply(l)
         ret = l
@@ -99,19 +109,39 @@ module Glaemscribe
         } 
         ret
       end
+    end
+    
+    class TranscriptionPostProcessor < TranscriptionPrePostProcessor
       
-    end
-    
-    class PreProcessorOperator < PrePostProcessorOperator
-    end
-    
-    class TranscriptionPreProcessor < TranscriptionPrePostProcessor      
-    end
-    
-    class PostProcessorOperator < PrePostProcessorOperator
-    end
-    
-    class TranscriptionPostProcessor < TranscriptionPrePostProcessor      
+      attr_accessor :out_space
+          
+      def apply(tokens, out_charset)
+        
+        out_space_str     = " "
+        out_space_str     = @out_space.map{ |token| out_charset[token].str }.join("") if @out_space
+         
+        # Apply filters
+        @operators.each{ |operator|
+          tokens = operator.apply(tokens)
+        } 
+        
+        # Convert output
+        ret = ""
+        tokens.each{ |token|
+          case token 
+            when ""
+            when "*UNKNOWN"
+               ret += UNKNOWN_CHAR_OUTPUT
+            when "*SPACE"
+                ret += out_space_str
+            when "*LF"
+               ret += "\n"
+            else
+               ret += out_charset[token].str
+          end        
+        }
+        ret
+      end  
     end   
     
   end

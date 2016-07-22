@@ -49,6 +49,8 @@ module Glaemscribe
       attr_reader :mode
       attr_reader :rule
       
+      attr_reader :expression
+      
       def src? ; is_src ; end
       def dst? ; !is_src ; end
                  

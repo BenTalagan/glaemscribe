@@ -23,13 +23,42 @@
 module Glaemscribe
   module API
 
-    class ReversePostProcessorOperator < PostProcessorOperator
+    class CSubPostProcessorOperator < PostProcessorOperator
+      attr_reader :matcher
+      attr_reader :triggers
+      
+      def initialize(args)
+        super(args)
+        
+        # Build our operator
+        @matcher     = self.raw_args[0]
+        @triggers    = Hash.new
+  
+        self.raw_args.each{ |arg|
+
+          splitted  = arg.split()   
+          replacer  = splitted.shift()
+    
+          splitted.each{ |token|
+            @triggers[token] = replacer
+          }
+        }
+      end
+    
       def apply(tokens)
-        tokens.reverse
+        last_trigger_replacer = nil
+        tokens.each_with_index{ |token,idx|
+          if token == @matcher && last_trigger_replacer != nil
+            tokens[idx] = last_trigger_replacer
+          elsif @triggers[token] != nil
+            last_trigger_replacer = @triggers[token]
+          end
+        }
+        tokens
       end
     end
 
-    ResourceManager::register_post_processor_class("reverse", ReversePostProcessorOperator)    
+    ResourceManager::register_post_processor_class("csub", CSubPostProcessorOperator)    
 
   end
 end

@@ -84,19 +84,6 @@ Glaemscribe.TranscriptionPrePostProcessor = function(mode)
   return this;
 }
 
-Glaemscribe.TranscriptionPrePostProcessor.prototype.apply = function(l)
-{
-  var ret = l
-  
-  for(var i=0;i<this.operators.length;i++)
-  {
-    var operator  = this.operators[i];
-    ret       = operator.apply(ret);
-  }
-  
-  return ret;
-}   
-
 Glaemscribe.TranscriptionPrePostProcessor.prototype.finalize = function(options)
 {
   this.operators = []
@@ -148,6 +135,19 @@ Glaemscribe.TranscriptionPreProcessor = function(mode)
 } 
 Glaemscribe.TranscriptionPreProcessor.inheritsFrom( Glaemscribe.TranscriptionPrePostProcessor ); 
 
+Glaemscribe.TranscriptionPreProcessor.prototype.apply = function(l)
+{
+  var ret = l
+  
+  for(var i=0;i<this.operators.length;i++)
+  {
+    var operator  = this.operators[i];
+    ret       = operator.apply(ret);
+  }
+  
+  return ret;
+}   
+
 // POSTPROCESSOR
 // Inherit from TranscriptionPrePostProcessor; a bit more verbose than in ruby ...
 Glaemscribe.TranscriptionPostProcessor = function(mode)  
@@ -156,6 +156,45 @@ Glaemscribe.TranscriptionPostProcessor = function(mode)
   return this;
 } 
 Glaemscribe.TranscriptionPostProcessor.inheritsFrom( Glaemscribe.TranscriptionPrePostProcessor ); 
+
+Glaemscribe.TranscriptionPostProcessor.prototype.apply = function(tokens, out_charset)
+{
+  var out_space_str     = " ";
+  if(this.out_space != null)
+  {
+    out_space_str       = this.out_space.map(function(token) { return out_charset.n2c(token).str }).join("");
+  }
+  
+  for(var i=0;i<this.operators.length;i++)
+  {
+    var operator  = this.operators[i];
+    tokens        = operator.apply(tokens);
+  }
+  
+  // Convert output
+  var ret = "";
+  for(var t=0;t<tokens.length;t++)
+  {
+    var token = tokens[t];
+    switch(token)
+    {
+    case "":
+      break;
+    case "*UNKNOWN":
+      ret += Glaemscribe.UNKNOWN_CHAR_OUTPUT;
+      break;
+    case "*SPACE":
+      ret += out_space_str;
+      break;
+    case "*LF":
+      ret += "\n";
+    default:
+      ret += out_charset.n2c(token).str
+    }    
+  }
+ 
+  return ret;
+}   
 
  
  

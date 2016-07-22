@@ -77,7 +77,7 @@ Glaemscribe.ModeParser.prototype.verify_mode_glaeml = function(doc)
     });
   });
   
-  doc.root_node.gpath("processor.outspace").glaem_each(function (oe, outspace_element) {
+  doc.root_node.gpath("outspace").glaem_each(function (oe, outspace_element) {
     parser.validate_presence_of_args(outspace_element, 1);        
   });
   
@@ -223,13 +223,8 @@ Glaemscribe.ModeParser.prototype.parse_pre_post_processor = function(processor_e
       mode.errors.push(new Glaemscribe.Glaeml.Error(element.line, "Operator '" + operator_name + "' is unknown."));
     }
     else
-    {      
-      var arg0 = element.args[0];
-      var arg1 = element.args[1];
-      var arg2 = element.args[2];
-      var arg3 = element.args[3];
-     
-      term.operators.push(new operator_class([arg0,arg1,arg2,arg3]));     
+    {         
+      term.operators.push(new operator_class(element.args.slice(0)));     
     }     
   }  
   
@@ -352,11 +347,11 @@ Glaemscribe.ModeParser.prototype.parse_raw = function(mode_name, raw, mode_optio
   if(postprocessor_element)
     this.parse_pre_post_processor(postprocessor_element, false);
     
-  var outspace_element   = doc.root_node.gpath('processor.outspace')[0];
+  var outspace_element   = doc.root_node.gpath('outspace')[0];
   if(outspace_element)
   {
-    var val                   = outspace_element.args[0];
-    mode.processor.out_space  = stringListToCleanArray(val,/\s/);   
+    var val                        = outspace_element.args[0];
+    mode.post_processor.out_space  = stringListToCleanArray(val,/\s/);   
   } 
  
   var rules_elements  = doc.root_node.gpath('processor.rules');

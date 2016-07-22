@@ -857,7 +857,7 @@ GlaemscribeEditor.prototype.getOptionsFromGUI = function()
   return opt;
 }
 
-GlaemscribeEditor.prototype.genericRefreshTranscription = function(entry_selector, transcribed_selector, debug_preprocessor_selector, debug_processor_selector, debug_processor_pathes_selector, debug_should_apply_postprocessor)
+GlaemscribeEditor.prototype.genericRefreshTranscription = function(entry_selector, transcribed_selector, debug_preprocessor_selector, debug_processor_selector, debug_postprocessor_selector, debug_processor_pathes_selector, debug_should_apply_postprocessor)
 {
   var editor          = this;
   var failure         = false;
@@ -884,12 +884,16 @@ GlaemscribeEditor.prototype.genericRefreshTranscription = function(entry_selecto
         
         if(debug_processor_selector)    
         {
-          var po = dbg_ctx.processor_output;
-          if(debug_should_apply_postprocessor)
-            po = dbg_ctx.postprocessor_output; 
+          var po = dbg_ctx.processor_output.filter(function(n){ return n != "" }).join(" &bull; ");
           
-          debug_processor_selector.html(po);
-          editor.refreshFont(debug_processor_selector, false); 
+          debug_processor_selector.html(po);          
+        }
+        
+        if(debug_postprocessor_selector)
+        {
+          var po = dbg_ctx.postprocessor_output;
+          debug_postprocessor_selector.html(po);
+          editor.refreshFont(debug_postprocessor_selector, false); 
         }
         
         if(debug_processor_pathes_selector)
@@ -909,8 +913,7 @@ GlaemscribeEditor.prototype.genericRefreshTranscription = function(entry_selecto
             
             var preview = path[2];
             
-            if(debug_should_apply_postprocessor)
-              preview = editor.mode.post_processor.apply(path[2]);
+            preview = editor.mode.post_processor.apply(path[2], editor.charset);
             
             var inner1 = $("<div>").html(path[0]);
             var inner2 = $("<div>").html(preview);
@@ -991,6 +994,7 @@ GlaemscribeEditor.prototype.refreshDebuggerTranscription = function()
     $(".debugger_transcribed"),
     $(".preprocessor_output"),
     $(".processor_output"),
+    $(".postprocessor_output"),
     $(".processor_followed_pathes table"),
     editor.debuggerShouldApplyPostProcessor());
 }

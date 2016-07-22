@@ -52,7 +52,7 @@ Glaemscribe.TranscriptionProcessor.prototype.finalize = function(options) {
       var group_for_char  = processor.in_charset[char];
            
       if(group_for_char != null)
-        mode.errors.push(new Glaemscribe.Glaeml.Error(0, "Group " + rgname + " uses input character " + char + " which is also used by group " + group_for_char.name + ". Input charsets should not intersect between groups.")); 
+        mode.errors.push(new Glaemscribe.Glaeml.Error(0, "Group " + gname + " uses input character " + char + " which is also used by group " + group_for_char.name + ". Input charsets should not intersect between groups.")); 
       else
         processor.in_charset[char] = group;
       
@@ -80,17 +80,11 @@ Glaemscribe.TranscriptionProcessor.prototype.add_subrule = function(sub_rule) {
 }
 
 
-Glaemscribe.TranscriptionProcessor.prototype.apply = function(l, out_charset, debug_context) {
+Glaemscribe.TranscriptionProcessor.prototype.apply = function(l, debug_context) {
       
-  var ret               = "";
+  var ret               = [];
   var current_group     = null;
   var accumulated_word  = "";
-        
-  var out_space_str     = " ";
-  if(this.out_space != null)
-  {
-    out_space_str       = this.out_space.map(function(token) { return out_charset.n2c(token).str }).join("");
-  }
   
   var chars             = l.split("");
   for(var i=0;i<chars.length;i++)
@@ -100,15 +94,17 @@ Glaemscribe.TranscriptionProcessor.prototype.apply = function(l, out_charset, de
     {
       case " ":
       case "\t":
-        ret += this.transcribe_word(accumulated_word, out_charset, debug_context);
-        ret += out_space_str;
+        ret = ret.concat(this.transcribe_word(accumulated_word, debug_context));
+        ret = ret.concat("*SPACE");
             
         accumulated_word = "";
         break;
       case "\r":
+        // ignore
+        break;
       case "\n":
-        ret += this.transcribe_word(accumulated_word, out_charset, debug_context)
-        ret += c
+        ret = ret.concat(this.transcribe_word(accumulated_word, debug_context));
+        ret = ret.concat("*LF");
         
         accumulated_word = ""
         break;
@@ -118,7 +114,7 @@ Glaemscribe.TranscriptionProcessor.prototype.apply = function(l, out_charset, de
           accumulated_word += c;
         else
         {
-          ret += this.transcribe_word(accumulated_word, out_charset, debug_context);
+          ret = ret.concat(this.transcribe_word(accumulated_word, debug_context));
           current_group    = c_group;
           accumulated_word = c;
         }
@@ -127,61 +123,31 @@ Glaemscribe.TranscriptionProcessor.prototype.apply = function(l, out_charset, de
     
   }
   // End of stirng
-  ret += this.transcribe_word(accumulated_word, out_charset, debug_context);
+  ret = ret.concat(this.transcribe_word(accumulated_word, debug_context));
   return ret;
 }
 
-Glaemscribe.TranscriptionProcessor.prototype.transcribe_token = function(token, out_charset)
-{
-  var ret = ""
-  switch(token)
-  {
-  case "":
-    break;
-  case Glaemscribe.UNKNOWN_CHAR_OUTPUT:
-    ret += Glaemscribe.UNKNOWN_CHAR_OUTPUT;
-    break;
-  default:
-    ret += out_charset.n2c(token).str
-  }
-  return ret;
-}
-
-Glaemscribe.TranscriptionProcessor.prototype.transcribe_token_list = function(token_list, out_charset)
-{
-  var processor = this;
-  
-  var ret = "";
-  for(var i=0;i<token_list.length;i++)
-  {
-    var token = token_list[i];
-    ret += processor.transcribe_token(token, out_charset);
-  }  
-  return ret;
-}
-
-
-Glaemscribe.TranscriptionProcessor.prototype.transcribe_word = function(word, out_charset, debug_context) {
+Glaemscribe.TranscriptionProcessor.prototype.transcribe_word = function(word, debug_context) {
   
   var processor = this;
     
-  var res = "";
+  var res = [];
   var word = Glaemscribe.WORD_BOUNDARY + word + Glaemscribe.WORD_BOUNDARY;
 
   while(word.length != 0)
   {    
+    // Explore tree
     var ttret = this.transcription_tree.transcribe(word);   
     
     // r is the replacement, len its length
-    var r         = ttret[0];
+    var tokens    = ttret[0];
     var len       = ttret[1];   
-    var trans     = processor.transcribe_token_list(r, out_charset);
     var eaten     = word.substring(0,len);
     
     word          = word.substring(len); // eat len characters
-    res           += trans;
+    res           = res.concat(tokens);
     
-    debug_context.processor_pathes.push([eaten, r, trans]);
+    debug_context.processor_pathes.push([eaten, tokens, tokens]);
   }
   
   return res;

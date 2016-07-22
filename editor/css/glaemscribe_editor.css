@@ -85,7 +85,18 @@ html, body, .glaemscribe { height:100%; width:100%; margin:0px; padding:0px; bac
   overflow:auto;
 }
 
-.transcribed, .debugger_transcribed, .processor_output, .trpath, .tip_trans  {
+.processor_output {
+  font-size: 12px;
+  margin: 0px 10px;
+  padding: 5px;
+  color: #B6C5FF;
+  border: solid 1px rgba(255, 255, 255, 0.41);
+  background-color: rgba(152, 152, 185, 0.18);
+  position:relative;
+  max-width:400px;
+}
+
+.transcribed, .debugger_transcribed, .postprocessor_output, .trpath, .tip_trans  {
   /* Make sarati work ... */
   text-rendering: optimizeLegibility;
   font-feature-settings: "kern" 1;
@@ -707,7 +718,7 @@ html, body, .glaemscribe { height:100%; width:100%; margin:0px; padding:0px; bac
   border: solid 1px rgba(255, 255, 255, 0.41);
 }
 
-.debugger_transcribed, .preprocessor_output, .processor_output, .processor_followed_pathes {
+.debugger_transcribed, .preprocessor_output, .postprocessor_output, .processor_followed_pathes {
     margin: 0px 10px;
     padding: 5px;
     font-size: 16px;

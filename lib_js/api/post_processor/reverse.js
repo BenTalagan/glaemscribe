@@ -29,13 +29,9 @@ Glaemscribe.ReversePostProcessorOperator = function(args)
 } 
 Glaemscribe.ReversePostProcessorOperator.inheritsFrom( Glaemscribe.PostProcessorOperator );  
 
-Glaemscribe.ReversePostProcessorOperator.prototype.apply = function(str)
+Glaemscribe.ReversePostProcessorOperator.prototype.apply = function(tokens)
 {
-  var o = '';
-  for (var i = str.length - 1; i >= 0; i--)
-    o += str[i];
-  
-  return o;
+  return tokens.reverse();
 }  
 
 Glaemscribe.resource_manager.register_post_processor_class("reverse", Glaemscribe.ReversePostProcessorOperator);    

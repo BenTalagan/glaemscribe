@@ -26,9 +26,7 @@ module Glaemscribe
            
       attr_reader   :rule_groups
       attr_reader   :mode
-      
-      attr_accessor :out_space
-      
+            
       def initialize(mode)
         @mode         = mode
         @rule_groups  = {}
@@ -58,7 +56,7 @@ module Glaemscribe
           rg.in_charset.each{ |char, group|
             group_for_char = @in_charset[char]
             if group_for_char
-              mode.errors << "Group #{rgname} uses input character #{char} which is also used by group #{group_for_char.name}. Input charsets should not intersect between groups." 
+              mode.errors << Glaeml::Error.new(-1,"Group #{rgname} uses input character #{char} which is also used by group #{group_for_char.name}. Input charsets should not intersect between groups.") 
             else
               @in_charset[char] = group
             end
@@ -75,24 +73,23 @@ module Glaemscribe
         }        
       end
       
-      def apply(l, out_charset)
-        ret = ""
+      def apply(l)
+        ret = []
         current_group     = nil
         accumulated_word  = ""
-        
-        out_space_str     = " "
-        out_space_str     = @out_space.map{ |token| out_charset[token].str }.join("") if @out_space
-        
+       
         l.split("").each{ |c|
           case c
           when " ", "\t" 
-            ret += transcribe_word(accumulated_word, out_charset)
-            ret += out_space_str
+            ret += transcribe_word(accumulated_word)
+            ret += ["*SPACE"]
             
             accumulated_word = ""
-          when "\r", "\n"
-            ret += transcribe_word(accumulated_word, out_charset)
-            ret += c
+          when "\r"
+            # Ignore
+          when "\n"
+            ret += transcribe_word(accumulated_word)
+            ret += ["*LF"]
             
             accumulated_word = ""
           else
@@ -100,18 +97,18 @@ module Glaemscribe
             if c_group == current_group
               accumulated_word += c
             else
-              ret += transcribe_word(accumulated_word, out_charset)
+              ret += transcribe_word(accumulated_word)
               current_group    = c_group
               accumulated_word = c
             end
           end            
         }
         # Just in case
-        ret += transcribe_word(accumulated_word, out_charset)
+        ret += transcribe_word(accumulated_word)
         ret
       end
       
-      def transcribe_word(word, out_charset)
+      def transcribe_word(word)
         res = []
         word = WORD_BOUNDARY + word + WORD_BOUNDARY
         while word.length != 0
@@ -119,17 +116,8 @@ module Glaemscribe
           word = word[len..-1]
           res += r
         end
-        ret = ""
-        res.each{ |token|
-          case token 
-          when ""
-          when UNKNOWN_CHAR_OUTPUT
-            ret += UNKNOWN_CHAR_OUTPUT
-          else
-            ret += out_charset[token].str
-          end        
-        }
-        ret
+        # Return token list
+        res
       end
       
     end

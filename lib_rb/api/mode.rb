@@ -110,8 +110,8 @@ module Glaemscribe
         ret = content.lines.map{ |l| 
           l = l.strip # Clean the lines
           l = @pre_processor.apply(l)
-          l = @processor.apply(l, charset)
-          l = @post_processor.apply(l)
+          l = @processor.apply(l)
+          l = @post_processor.apply(l, charset)
         }.join("\n")
         
         return true, ret

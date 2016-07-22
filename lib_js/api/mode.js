@@ -26,7 +26,7 @@ Glaemscribe.ModeDebugContext = function()
 {
   this.preprocessor_output  = "";
   this.processor_pathes     = [];
-  this.processor_output     = "";
+  this.processor_output     = [];
   this.postprocessor_output = "";
   
   return this;
@@ -118,10 +118,10 @@ Glaemscribe.Mode.prototype.transcribe = function(content, charset) {
     l = this.pre_processor.apply(l);
     debug_context.preprocessor_output += l + "\n";
     
-    l = this.processor.apply(l, charset, debug_context);
-    debug_context.processor_output += l + "\n";
+    l = this.processor.apply(l, debug_context);
+    debug_context.processor_output = debug_context.processor_output.concat(l);
     
-    l = this.post_processor.apply(l);
+    l = this.post_processor.apply(l, charset);
     debug_context.postprocessor_output += l + "\n";
     
     ret += l + "\n";

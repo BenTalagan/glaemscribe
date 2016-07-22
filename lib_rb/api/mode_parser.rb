@@ -70,7 +70,7 @@ module Glaemscribe
           }
         }
         
-        doc.root_node.gpath("processor.outspace").each{ |outspace_element|
+        doc.root_node.gpath("postprocessor.outspace").each{ |outspace_element|
           validate_presence_of_args(outspace_element, 1)          
         }
         
@@ -180,13 +180,8 @@ module Glaemscribe
           
           if !operator_class
             @mode.errors << Glaeml::Error.new(element.line,"Operator #{operator_name} is unknown.")
-          else
-            arg0 = element.args[0]
-            arg1 = element.args[1]
-            arg2 = element.args[2]
-            arg3 = element.args[3]
-            
-            term.operators << operator_class.new([arg0,arg1,arg2,arg3])
+          else            
+            term.operators << operator_class.new(element.args.clone)
           end  
         }  
         
@@ -277,9 +272,9 @@ module Glaemscribe
         }
 
         # Read the processor
-        doc.root_node.gpath("processor.outspace").each{ |outspace_element|
-          val                         = outspace_element.args[0]
-          @mode.processor.out_space   = val.split.reject{|token| token.empty? }       
+        doc.root_node.gpath("outspace").each{ |outspace_element|
+          val                             = outspace_element.args[0]
+          @mode.post_processor.out_space  = val.split.reject{|token| token.empty? }       
         }      
         
         doc.root_node.gpath("processor.rules").each{ |rules_element|

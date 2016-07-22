@@ -263,12 +263,8 @@ GlaemDebugTree.prototype.installTooltips = function() {
       {
         var font_name = $("#font_name").val();
         
-        var trans = gt.glaem_editor.mode.processor.transcribe_token_list(token_list, gt.glaem_editor.charset);
-                
-        if(gt.glaem_editor.debuggerShouldApplyPostProcessor())
-          trans = gt.glaem_editor.mode.post_processor.apply(trans);
-        
-       
+        var trans = gt.glaem_editor.mode.post_processor.apply(token_list, gt.glaem_editor.charset);
+                           
         content += "<div class='tip_trans' style='font-family:" + font_name + "'>" + trans + "</div>";
       }
 

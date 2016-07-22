@@ -67,7 +67,7 @@ module Glaemscribe
         }   
           
         equivalences = [[[""]]] if equivalences.empty?
-        
+             
         # In the case of a destination fragment, check that all symbols used are found 
         # in the charsets used by the mode
         if dst?

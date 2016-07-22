@@ -35,6 +35,8 @@ module Glaemscribe
       attr_reader :sheaf_chain 
       attr_reader :mode
       attr_reader :rule
+      
+      attr_reader :expression
        
       SHEAF_SEPARATOR    = "*"
       
