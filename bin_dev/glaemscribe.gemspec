@@ -4,7 +4,7 @@ version = File.open(dir+ "/../../version","rb:utf-8") { |f| f.read }
 Gem::Specification.new do |s|
   s.name        = 'glaemscribe'
   s.version     = version
-  s.date        = '2016-04-23'
+  s.date        = '2016-07-29'
   s.summary     = "Glǽmscribe"
   
   s.description = 

@@ -19,7 +19,7 @@ GNU Affero General Public License for more details.
 You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-Version : 1.0.14
+Version : 1.0.15
 */
 
 // Adding utils/string_list_to_clean_array.js 
