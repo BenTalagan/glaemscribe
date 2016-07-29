@@ -1,0 +1,41 @@
+# Welcome to Jekyll!
+#
+# This config file is meant for settings that affect your whole blog, values
+# which you are expected to set up once and rarely need to edit after that.
+# For technical reasons, this file is *NOT* reloaded automatically when you use
+# 'jekyll serve'. If you change this file, please restart the server process.
+
+# Site settings
+
+title:          Glǽmscribe
+subtitle:       Developer
+author:         Benjamin *Talagan* Babut
+long_subtitle:  "Integration and development documentation"
+email:          glaemscrafu@jrrvf.com
+description:    "The tolkienian language transcriptor"
+
+long_description: > # this means to ignore newlines until "baseurl:"
+    [**_Glǽmscribe_**](http://jrrvf.com/~glaemscrafu/english/glaemscribe.html) (also written **_Glaemscribe_**) is a software dedicated to
+    the transcription of texts between writing systems, and more 
+    specifically dedicated to the transcription of J.R.R. Tolkien's 
+    invented languages to some of his devised writing systems.
+
+
+github_username: "BenTalagan"
+github_project: "BenTalagan/glaemscribe"
+
+official_glaemscribe_url:               "http://jrrvf.com/~glaemscrafu/english/glaemscribe.html"
+glaemscribe_mode_documentation_url:     "http://jrrvf.com/~glaemscrafu/english/glaemscribe-mode-authoring.html"
+
+
+highlighter: pygments
+
+baseurl:    /glaemscribe
+url:        "https://bentalagan.github.io/glaemscribe"
+github:     "https://github.com/BenTalagan/glaemscribe"
+safe:       true
+lsi:        false
+source:     .
+
+# Build settings
+markdown: kramdown

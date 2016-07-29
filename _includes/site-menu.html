@@ -1,0 +1,23 @@
+{% assign sorted_pages = site.pages | sort:"menuorder"  %}
+<ul class="menu">
+    {% for my_page in sorted_pages %}
+    {% if my_page.menulevel and my_page.full_title %}
+        <li>
+            <a class="page-link" href="{{ my_page.url | prepend: site.baseurl }}">{{ my_page.full_title | markdownify }}</a>
+            {% if my_page.anchors %}
+            
+            {% comment %}
+            <ul>
+            {% for anchor in my_page.anchors %}
+                <li>
+                    <a class="page-link" href="{{ my_page.url | prepend: site.baseurl }}#{{anchor[0]}}">{{ anchor[1] }}</a>        
+                </li>
+            {% endfor %}
+            </ul>
+            {% endcomment %}
+            
+            {% endif %}
+        </li>
+    {% endif %}
+    {% endfor %}
+</ul>
