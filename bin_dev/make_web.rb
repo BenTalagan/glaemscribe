@@ -44,6 +44,7 @@ JS_FILES = [
   "api/pre_processor/up_down_tehta_split.js",
   "api/pre_processor/elvish_numbers.js",
   "api/post_processor/reverse.js",
+  "api/post_processor/csub.js",
   "extern/shellwords.js",
 ]
 

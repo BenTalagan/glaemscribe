@@ -4,6 +4,8 @@ require 'fileutils'
 
 SCRIPT_PATH     = File.dirname(__FILE__)
 
-Dir.chdir(SCRIPT_PATH)
+Dir.chdir(SCRIPT_PATH + "/../glaemresources")
 
-%x(bsdtar --disable-copyfile -czv -f ../build/glaemscribe_package.tar.gz -C ../glaemresources .)
+%x(find ./modes/*.glaem ./charsets/*.cst | xargs bsdtar --disable-copyfile -czv -f ../build/glaemscribe_package.tar.gz)
+
+# %x(find ./modes/*.glaem ./charsets/*.cst | bsdtar --disable-copyfile -czv -f ../build/glaemscribe_package.tar.gz -)
