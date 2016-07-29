@@ -19,7 +19,7 @@ GNU Affero General Public License for more details.
 You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-Version : 1.0.13
+Version : 1.0.14
 */
 
 // Adding utils/string_list_to_clean_array.js 
@@ -744,7 +744,7 @@ Glaemscribe.ModeDebugContext = function()
 {
   this.preprocessor_output  = "";
   this.processor_pathes     = [];
-  this.processor_output     = "";
+  this.processor_output     = [];
   this.postprocessor_output = "";
   
   return this;
@@ -836,10 +836,10 @@ Glaemscribe.Mode.prototype.transcribe = function(content, charset) {
     l = this.pre_processor.apply(l);
     debug_context.preprocessor_output += l + "\n";
     
-    l = this.processor.apply(l, charset, debug_context);
-    debug_context.processor_output += l + "\n";
+    l = this.processor.apply(l, debug_context);
+    debug_context.processor_output = debug_context.processor_output.concat(l);
     
-    l = this.post_processor.apply(l);
+    l = this.post_processor.apply(l, charset);
     debug_context.postprocessor_output += l + "\n";
     
     ret += l + "\n";
@@ -953,7 +953,7 @@ Glaemscribe.ModeParser.prototype.verify_mode_glaeml = function(doc)
     });
   });
   
-  doc.root_node.gpath("processor.outspace").glaem_each(function (oe, outspace_element) {
+  doc.root_node.gpath("outspace").glaem_each(function (oe, outspace_element) {
     parser.validate_presence_of_args(outspace_element, 1);        
   });
   
@@ -1099,13 +1099,8 @@ Glaemscribe.ModeParser.prototype.parse_pre_post_processor = function(processor_e
       mode.errors.push(new Glaemscribe.Glaeml.Error(element.line, "Operator '" + operator_name + "' is unknown."));
     }
     else
-    {      
-      var arg0 = element.args[0];
-      var arg1 = element.args[1];
-      var arg2 = element.args[2];
-      var arg3 = element.args[3];
-     
-      term.operators.push(new operator_class([arg0,arg1,arg2,arg3]));     
+    {         
+      term.operators.push(new operator_class(element.args.slice(0)));     
     }     
   }  
   
@@ -1228,11 +1223,11 @@ Glaemscribe.ModeParser.prototype.parse_raw = function(mode_name, raw, mode_optio
   if(postprocessor_element)
     this.parse_pre_post_processor(postprocessor_element, false);
     
-  var outspace_element   = doc.root_node.gpath('processor.outspace')[0];
+  var outspace_element   = doc.root_node.gpath('outspace')[0];
   if(outspace_element)
   {
-    var val                   = outspace_element.args[0];
-    mode.processor.out_space  = stringListToCleanArray(val,/\s/);   
+    var val                        = outspace_element.args[0];
+    mode.post_processor.out_space  = stringListToCleanArray(val,/\s/);   
   } 
  
   var rules_elements  = doc.root_node.gpath('processor.rules');
@@ -2212,7 +2207,7 @@ Glaemscribe.TranscriptionTreeNode.prototype.transcribe = function(string, chain)
   }
   
   // Only the root node is in the chain, we could not find anything; return the "unknown char"
-  return [[Glaemscribe.UNKNOWN_CHAR_OUTPUT], 1]; 
+  return [["*UNKNOWN"], 1]; 
 }
 
 
@@ -2282,19 +2277,6 @@ Glaemscribe.TranscriptionPrePostProcessor = function(mode)
   return this;
 }
 
-Glaemscribe.TranscriptionPrePostProcessor.prototype.apply = function(l)
-{
-  var ret = l
-  
-  for(var i=0;i<this.operators.length;i++)
-  {
-    var operator  = this.operators[i];
-    ret       = operator.apply(ret);
-  }
-  
-  return ret;
-}   
-
 Glaemscribe.TranscriptionPrePostProcessor.prototype.finalize = function(options)
 {
   this.operators = []
@@ -2346,6 +2328,19 @@ Glaemscribe.TranscriptionPreProcessor = function(mode)
 } 
 Glaemscribe.TranscriptionPreProcessor.inheritsFrom( Glaemscribe.TranscriptionPrePostProcessor ); 
 
+Glaemscribe.TranscriptionPreProcessor.prototype.apply = function(l)
+{
+  var ret = l
+  
+  for(var i=0;i<this.operators.length;i++)
+  {
+    var operator  = this.operators[i];
+    ret       = operator.apply(ret);
+  }
+  
+  return ret;
+}   
+
 // POSTPROCESSOR
 // Inherit from TranscriptionPrePostProcessor; a bit more verbose than in ruby ...
 Glaemscribe.TranscriptionPostProcessor = function(mode)  
@@ -2354,6 +2349,45 @@ Glaemscribe.TranscriptionPostProcessor = function(mode)
   return this;
 } 
 Glaemscribe.TranscriptionPostProcessor.inheritsFrom( Glaemscribe.TranscriptionPrePostProcessor ); 
+
+Glaemscribe.TranscriptionPostProcessor.prototype.apply = function(tokens, out_charset)
+{
+  var out_space_str     = " ";
+  if(this.out_space != null)
+  {
+    out_space_str       = this.out_space.map(function(token) { return out_charset.n2c(token).str }).join("");
+  }
+  
+  for(var i=0;i<this.operators.length;i++)
+  {
+    var operator  = this.operators[i];
+    tokens        = operator.apply(tokens);
+  }
+  
+  // Convert output
+  var ret = "";
+  for(var t=0;t<tokens.length;t++)
+  {
+    var token = tokens[t];
+    switch(token)
+    {
+    case "":
+      break;
+    case "*UNKNOWN":
+      ret += Glaemscribe.UNKNOWN_CHAR_OUTPUT;
+      break;
+    case "*SPACE":
+      ret += out_space_str;
+      break;
+    case "*LF":
+      ret += "\n";
+    default:
+      ret += out_charset.n2c(token).str
+    }    
+  }
+ 
+  return ret;
+}   
 
  
  
@@ -2392,7 +2426,7 @@ Glaemscribe.TranscriptionProcessor.prototype.finalize = function(options) {
       var group_for_char  = processor.in_charset[char];
            
       if(group_for_char != null)
-        mode.errors.push(new Glaemscribe.Glaeml.Error(0, "Group " + rgname + " uses input character " + char + " which is also used by group " + group_for_char.name + ". Input charsets should not intersect between groups.")); 
+        mode.errors.push(new Glaemscribe.Glaeml.Error(0, "Group " + gname + " uses input character " + char + " which is also used by group " + group_for_char.name + ". Input charsets should not intersect between groups.")); 
       else
         processor.in_charset[char] = group;
       
@@ -2420,17 +2454,11 @@ Glaemscribe.TranscriptionProcessor.prototype.add_subrule = function(sub_rule) {
 }
 
 
-Glaemscribe.TranscriptionProcessor.prototype.apply = function(l, out_charset, debug_context) {
+Glaemscribe.TranscriptionProcessor.prototype.apply = function(l, debug_context) {
       
-  var ret               = "";
+  var ret               = [];
   var current_group     = null;
   var accumulated_word  = "";
-        
-  var out_space_str     = " ";
-  if(this.out_space != null)
-  {
-    out_space_str       = this.out_space.map(function(token) { return out_charset.n2c(token).str }).join("");
-  }
   
   var chars             = l.split("");
   for(var i=0;i<chars.length;i++)
@@ -2440,15 +2468,17 @@ Glaemscribe.TranscriptionProcessor.prototype.apply = function(l, out_charset, de
     {
       case " ":
       case "\t":
-        ret += this.transcribe_word(accumulated_word, out_charset, debug_context);
-        ret += out_space_str;
+        ret = ret.concat(this.transcribe_word(accumulated_word, debug_context));
+        ret = ret.concat("*SPACE");
             
         accumulated_word = "";
         break;
       case "\r":
+        // ignore
+        break;
       case "\n":
-        ret += this.transcribe_word(accumulated_word, out_charset, debug_context)
-        ret += c
+        ret = ret.concat(this.transcribe_word(accumulated_word, debug_context));
+        ret = ret.concat("*LF");
         
         accumulated_word = ""
         break;
@@ -2458,7 +2488,7 @@ Glaemscribe.TranscriptionProcessor.prototype.apply = function(l, out_charset, de
           accumulated_word += c;
         else
         {
-          ret += this.transcribe_word(accumulated_word, out_charset, debug_context);
+          ret = ret.concat(this.transcribe_word(accumulated_word, debug_context));
           current_group    = c_group;
           accumulated_word = c;
         }
@@ -2467,61 +2497,31 @@ Glaemscribe.TranscriptionProcessor.prototype.apply = function(l, out_charset, de
     
   }
   // End of stirng
-  ret += this.transcribe_word(accumulated_word, out_charset, debug_context);
+  ret = ret.concat(this.transcribe_word(accumulated_word, debug_context));
   return ret;
 }
 
-Glaemscribe.TranscriptionProcessor.prototype.transcribe_token = function(token, out_charset)
-{
-  var ret = ""
-  switch(token)
-  {
-  case "":
-    break;
-  case Glaemscribe.UNKNOWN_CHAR_OUTPUT:
-    ret += Glaemscribe.UNKNOWN_CHAR_OUTPUT;
-    break;
-  default:
-    ret += out_charset.n2c(token).str
-  }
-  return ret;
-}
-
-Glaemscribe.TranscriptionProcessor.prototype.transcribe_token_list = function(token_list, out_charset)
-{
-  var processor = this;
-  
-  var ret = "";
-  for(var i=0;i<token_list.length;i++)
-  {
-    var token = token_list[i];
-    ret += processor.transcribe_token(token, out_charset);
-  }  
-  return ret;
-}
-
-
-Glaemscribe.TranscriptionProcessor.prototype.transcribe_word = function(word, out_charset, debug_context) {
+Glaemscribe.TranscriptionProcessor.prototype.transcribe_word = function(word, debug_context) {
   
   var processor = this;
     
-  var res = "";
+  var res = [];
   var word = Glaemscribe.WORD_BOUNDARY + word + Glaemscribe.WORD_BOUNDARY;
 
   while(word.length != 0)
   {    
+    // Explore tree
     var ttret = this.transcription_tree.transcribe(word);   
     
     // r is the replacement, len its length
-    var r         = ttret[0];
+    var tokens    = ttret[0];
     var len       = ttret[1];   
-    var trans     = processor.transcribe_token_list(r, out_charset);
     var eaten     = word.substring(0,len);
     
     word          = word.substring(len); // eat len characters
-    res           += trans;
+    res           = res.concat(tokens);
     
-    debug_context.processor_pathes.push([eaten, r, trans]);
+    debug_context.processor_pathes.push([eaten, tokens, tokens]);
   }
   
   return res;
@@ -2788,16 +2788,65 @@ Glaemscribe.ReversePostProcessorOperator = function(args)
 } 
 Glaemscribe.ReversePostProcessorOperator.inheritsFrom( Glaemscribe.PostProcessorOperator );  
 
-Glaemscribe.ReversePostProcessorOperator.prototype.apply = function(str)
+Glaemscribe.ReversePostProcessorOperator.prototype.apply = function(tokens)
 {
-  var o = '';
-  for (var i = str.length - 1; i >= 0; i--)
-    o += str[i];
-  
-  return o;
+  return tokens.reverse();
 }  
 
 Glaemscribe.resource_manager.register_post_processor_class("reverse", Glaemscribe.ReversePostProcessorOperator);    
+
+
+// Adding api/post_processor/csub.js 
+
+
+
+Glaemscribe.CSubPostProcessorOperator = function(args)  
+{
+  Glaemscribe.PostProcessorOperator.call(this,args); //super
+  
+  // Build our operator
+  var op         = this;
+  
+  op.matcher     = op.raw_args[0];
+  op.triggers    = {};
+  
+  for(var a=1;a<args.length;a++)
+  {
+    var arg       = op.raw_args[a];
+    var splitted  = arg.match(/\S+/g);
+    
+    var replacer  = splitted.shift();
+    
+    for(var t=0;t<splitted.length;t++)
+      op.triggers[splitted[t]] = replacer;
+  }
+  
+  return this;
+} 
+Glaemscribe.CSubPostProcessorOperator.inheritsFrom( Glaemscribe.PostProcessorOperator );  
+
+Glaemscribe.CSubPostProcessorOperator.prototype.apply = function(tokens)
+{
+  var op = this;
+  
+  var last_trigger_replacer = null;
+  for(var t=0;t<tokens.length;t++)
+  {
+    var token = tokens[t];
+    if(token == op.matcher && last_trigger_replacer != null)
+    {
+      tokens[t] = last_trigger_replacer
+    }
+    else if(op.triggers[token] != null)
+    {
+      last_trigger_replacer = op.triggers[token];
+    }
+  }
+  
+  return tokens;
+}  
+
+Glaemscribe.resource_manager.register_post_processor_class("csub", Glaemscribe.CSubPostProcessorOperator);    
 
 
 // Adding extern/shellwords.js 
