@@ -1,8 +1,8 @@
 \**
 
 Glǽmscribe (also written Glaemscribe) is a software dedicated to
-the transcription of texts between writing systems, and more 
-specifically dedicated to the transcription of J.R.R. Tolkien's 
+the transcription of texts between writing systems, and more
+specifically dedicated to the transcription of J.R.R. Tolkien's
 invented languages to some of his devised writing systems.
 
 Copyright (C) 2015 Benjamin Babut (Talagan).
@@ -23,29 +23,51 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 **\
 
 \** Changelog **\
-\** 0.0.2 : added χ for the word χarina, correcting ts/ps sequences to work better with eldamar **\
-\** 0.0.3 : added o/u curl option **\
-\** 0.0.4 : added voiced plosives corner cases treatment and option to chose method **\
-\** 0.0.5 : fixing h+long vowel medially **\
-\** 0.0.6 : adding option for alveolarized consonants  st (t+t), pt (p+t), ht (c+t) **\
-\** 0.0.7 : Fixing rb/lb, to be treated as r+mb and l+mb**\
+\**
+\beg changelog
+  \entry "0.0.2", "added χ for the word χarina, correcting ts/ps sequences to work better with eldamar"
+  \entry "0.0.3", "added o/u curl option"
+  \entry "0.0.4", "added voiced plosives corner cases treatment and option to chose method"
+  \entry "0.0.5", "fixing h+long vowel medially"
+  \entry "0.0.6", "adding option for alveolarized consonants  st (t+t), pt (p+t), ht (c+t)"
+  \entry "0.0.7", "Fixing rb/lb, to be treated as r+mb and l+mb"
+  \entry "0.0.8", "Correcting double dot version for ry (aesthetics)"
+  \entry "0.0.9", "Adding 'implicit a' option."
+  \entry "0.1.0", "Simplified diacritic use by using new post-processor directive"
+  \entry "0.1.1", "Added default option for voiced plosives : use mb, nd, ng, ngw"
+  \entry "0.1.2", "Added a tehta shape selection"
+  \entry "0.1.3", "Fixing ks, ps, ts. Fixing dot under ore, romen in implicit a mode."
+\end
+**\
+
+\**
+  TODO : Use the new csub directive for all diacritics/signs that could have variants (e.g. THINF_DDOT (LAMBE_MARK_DDOT for LAMBE), DASH_INF (LAMBE_MARK_TILD for LAMBE), SHOOK_LEFT)
+  TODO : Option for dot or not in 'a implicit' option before long vowels ?
+  TODO : bb, dd etc ? (for noobs)
+**\
 
 \language "Quenya"
 \writing  "Tengwar"
 \mode     "Classical"
-\version  "0.0.7"
+\version  "0.1.3"
 \authors  "Talagan (Benjamin Babut)"
 
 \charset  tengwar_ds true
-  
+
 \beg      options
-  \option split_diphthongs false
-  \option always_use_romen_for_r false
+  \option implicit_a false
+  \beg option a_tetha_shape A_SHAPE_THREE_DOTS
+    \value A_SHAPE_THREE_DOTS 1
+    \value A_SHAPE_CIRCUMFLEX 2
+  \end
   \beg option reverse_o_u_tehtar U_UP_O_DOWN
     \value O_UP_U_DOWN 1
     \value U_UP_O_DOWN 2
   \end
-  \beg option voiced_plosives_treatment VOICED_PLOSIVES_WITH_STROKE
+  \option split_diphthongs false
+  \option always_use_romen_for_r false
+  \beg option voiced_plosives_treatment VOICED_PLOSIVES_AS_NASALIZED
+    \value VOICED_PLOSIVES_AS_NASALIZED 0
     \value VOICED_PLOSIVES_WITH_STROKE 1
     \value VOICED_PLOSIVES_WITH_XTD 2
   \end
@@ -63,7 +85,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 \beg      preprocessor
   \** Work exclusively downcase **\
   \downcase
-  
+
   \** Simplify trema vowels **\
   \substitute ä a
   \substitute ë e
@@ -81,233 +103,241 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   \rxsubstitute "(ȳ|ŷ|yy)" "ý"
 
   \substitute   "qu" "q" \** Dis-ambiguate qu **\
-  
+
   \elvish_numbers "\\eval numbers_base" "\\eval reverse_numbers"
 \end
-  
+
 
 \beg processor
-  
+
   \beg    rules litteral
-                       
+
     {K}                 ===  (c,k)
     {SS}                ===  (z,ss)
-                      
+
     {VOWELS}            === a               *  e              * i              * o              *  u
     {LVOWELS}           === á               *  é              * í              * ó              *  ú
-    
+
     \if "reverse_o_u_tehtar == U_UP_O_DOWN"
-        {O_LOOP_XS} === O_TEHTA_XS
-        {O_LOOP_S}  === O_TEHTA_S
-        {O_LOOP_L}  === O_TEHTA_L
-        {O_LOOP_XL} === O_TEHTA_XL
-        {U_LOOP_XS} === U_TEHTA_XS
-        {U_LOOP_S}  === U_TEHTA_S
-        {U_LOOP_L}  === U_TEHTA_L
-        {U_LOOP_XL} === U_TEHTA_XL  
+      {O_LOOP} === O_TEHTA
+      {U_LOOP} === U_TEHTA
     \else
-        {O_LOOP_XS} === U_TEHTA_XS
-        {O_LOOP_S}  === U_TEHTA_S
-        {O_LOOP_L}  === U_TEHTA_L
-        {O_LOOP_XL} === U_TEHTA_XL
-        {U_LOOP_XS} === O_TEHTA_XS
-        {U_LOOP_S}  === O_TEHTA_S
-        {U_LOOP_L}  === O_TEHTA_L
-        {U_LOOP_XL} === O_TEHTA_XL    
+      {O_LOOP} === U_TEHTA
+      {U_LOOP} === O_TEHTA
     \endif
 
-    {TEHTA_XS}          === A_TEHTA_XS      *  E_TEHTA_XS     *  I_TEHTA_XS    * {O_LOOP_XS}    *  {U_LOOP_XS} 
-    {TEHTA__S}          === A_TEHTA_S       *  E_TEHTA_S      *  I_TEHTA_S     * {O_LOOP_S}     *  {U_LOOP_S} 
-    {TEHTA__L}          === A_TEHTA_L       *  E_TEHTA_L      *  I_TEHTA_L     * {O_LOOP_L}     *  {U_LOOP_L} 
-    {TEHTA_XL}          === A_TEHTA_XL      *  E_TEHTA_XL     *  I_TEHTA_XL    * {O_LOOP_XL}    *  {U_LOOP_XL} 
-       
+    \if "a_tetha_shape == A_SHAPE_THREE_DOTS"
+      {A_SHAPE} === A_TEHTA
+    \else
+      {A_SHAPE} === A_TEHTA_CIRCUM
+    \endif
+
+    \if implicit_a
+      {_A_}              === {NULL}
+      {_NVOWEL_}         === THINF_DOT
+    \else
+      {_A_}              === {A_SHAPE}
+      {_NVOWEL_}         === {NULL}
+    \endif
+
+    {_TEHTAR_}          === {_A_}      *  E_TEHTA     *  I_TEHTA    * {O_LOOP}    *  {U_LOOP}
+
     \if split_diphthongs
-      {WDIPHTHONGS}     === {NULL} 
-      {WDIPHTHENGS}     === {NULL}
+      {WDIPHTHONGS}     === {NULL}
+      {_WDIPHTHONGS_}   === {NULL}
     \else
-      {DIPHTHONGS}      === ai              * au              * eu            * iu             * oi               * ui
-      {DIPHTHENGS}      === YANTA A_TEHTA_L * URE A_TEHTA_L   * URE E_TEHTA_L * URE I_TEHTA_L  * YANTA {O_LOOP_L} * YANTA {U_LOOP_L} 
-      {WDIPHTHONGS}     === * {DIPHTHONGS} \** groovy! **\
-      {WDIPHTHENGS}     === * {DIPHTHENGS} \** same thing **\
+      {DIPHTHONGS}      === ai            * au            * eu            * iu             * oi               * ui
+      {_DIPHTHONGS_}    === YANTA {_A_}   * URE {_A_}     * URE E_TEHTA   * URE I_TEHTA    * YANTA {O_LOOP}   * YANTA {U_LOOP}
+      {WDIPHTHONGS}     === * {DIPHTHONGS}   \** groovy! **\
+      {_WDIPHTHONGS_}   === * {_DIPHTHONGS_} \** same thing **\
     \endif
-    
-    {V_D_KER}           === [ {VOWELS} {WDIPHTHONGS} ]
-    {V_D_KER_WN}        === [ {VOWELS} {WDIPHTHONGS} * {NULL} ]
 
-    {V_D_IMG_XS}        === [ {TEHTA_XS} {WDIPHTHENGS} ]
-    {V_D_IMG__S}        === [ {TEHTA__L} {WDIPHTHENGS} ]
-    {V_D_IMG__L}        === [ {TEHTA__S} {WDIPHTHENGS} ]
-    {V_D_IMG_XL}        === [ {TEHTA_XL} {WDIPHTHENGS} ]
-    {V_D_IMG_XS_WN}     === [ {TEHTA_XS} {WDIPHTHENGS} * {NULL} ]
-    {V_D_IMG__S_WN}     === [ {TEHTA__L} {WDIPHTHENGS} * {NULL} ]
-    {V_D_IMG__L_WN}     === [ {TEHTA__S} {WDIPHTHENGS} * {NULL} ]
-    {V_D_IMG_XL_WN}     === [ {TEHTA_XL} {WDIPHTHENGS} * {NULL} ]
-  
-    \** VOWEL RULES **\
-    [{VOWELS}]          -->   TELCO [{TEHTA_XS}]  \** Replace isolated short vowels **\
-    [{LVOWELS}]         -->   ARA [{TEHTA_XS}]    \**  Replace long vowels **\
-   
-    \if !split_diphthongs
-      [{DIPHTHONGS}]    -->   [{DIPHTHENGS}]     \**  Replace diphthongs **\
+    \if implicit_a
+      \** consonants will take a tehta for a, and have ara + tehta in other cases **\
+      
+      \** Bertrand does like the dot before long vowels **\
+      \** {_LTEHTAR_}     === {A_SHAPE} * {_NVOWEL_} ARA E_TEHTA * {_NVOWEL_} ARA I_TEHTA * {_NVOWEL_} ARA {O_LOOP} * {_NVOWEL_} ARA {U_LOOP} **\
+      
+      {_LTEHTAR_}         === {A_SHAPE} * ARA E_TEHTA * ARA I_TEHTA * ARA {O_LOOP} * ARA {U_LOOP}
+      {_WLONG_}           === * {_LTEHTAR_}
+      {WLONG}             === * {LVOWELS}
+    \else
+      {_LTEHTAR_}         === ARA {A_SHAPE} * ARA E_TEHTA * ARA I_TEHTA * ARA {O_LOOP} * ARA {U_LOOP}
+      {_WLONG_}           === {NULL}
+      {WLONG}             === {NULL}
     \endif
-    
+
+    {V_D}           === [ {VOWELS} {WLONG} {WDIPHTHONGS} ]
+    {V_D_WN}        === [ {VOWELS} {WLONG} {WDIPHTHONGS} * {NULL} ]
+
+    {_V_D_}         === [ {_TEHTAR_} {_WLONG_} {_WDIPHTHONGS_} ]
+    {_V_D_WN_}      === [ {_TEHTAR_} {_WLONG_} {_WDIPHTHONGS_} * {_NVOWEL_} ]
+
+    \** VOWEL RULES **\
+    [{VOWELS}]    --> TELCO [{_TEHTAR_}]  \** Replace isolated short vowels **\
+    \if implicit_a
+      [{LVOWELS}] --> TELCO {A_SHAPE}  * ARA E_TEHTA * ARA I_TEHTA * ARA {O_LOOP} * ARA {U_LOOP}
+    \else
+      [{LVOWELS}] --> [{_LTEHTAR_}]       \** Replace long vowels **\
+    \endif
+
+    \if !split_diphthongs
+      [{DIPHTHONGS}]    -->   [{_DIPHTHONGS_}]     \**  Replace diphthongs **\
+    \endif
+
     \** ===================== **\
     \**     1ST LINE RULES    **\
     \** ===================== **\
-    {L1_KER_1}        === t                   * p  
-    {L1_IMG_1}        === TINCO               * PARMA
-    {L1_KER_2}        === {K}                 * q
-    {L1_IMG_2}        === CALMA               * QUESSE
-    {L1_KER_1_GEMS}   === tt                  * pp
-    {L1_IMG_1_GEMS}   === TINCO DASH_INF_S    * PARMA DASH_INF_S
-    
-    \** NORMAL **\
-    [ {L1_KER_1} ] {V_D_KER_WN}        --> [ {L1_IMG_1} ] {V_D_IMG__S_WN}
-    [ {L1_KER_2} ] {V_D_KER_WN}        --> [ {L1_IMG_2} ] {V_D_IMG__S_WN}
+    {L1}          === t     * p       * {K}   * q
+    {_L1_}        === TINCO * PARMA   * CALMA * QUESSE
 
     \** GEMINATED **\
-    [ {L1_KER_1_GEMS} ] {V_D_KER_WN}   --> [ {L1_IMG_1_GEMS} ] {V_D_IMG__S_WN} \** Tengscribe uses S but L is probably better  **\
-    {K}{K}{V_D_KER_WN}                 --> CALMA DASH_INF_S {V_D_IMG__S_WN} 
+    {L1_1_GEMS}   === tt                  * pp               * {K}{K}
+    {_L1_1_GEMS_} === TINCO DASH_INF_S    * PARMA DASH_INF_S * CALMA DASH_INF_S
+
+    \** NORMAL **\
+    [ {L1} * {L1_1_GEMS} ] {V_D_WN} --> [ {_L1_} * {_L1_1_GEMS_} ] {_V_D_WN_}
 
     \** OTHERS **\
-    ty{V_D_KER_WN}          --> TINCO THINF_DDOT_L {V_D_IMG__S_WN}
-    py{V_D_KER_WN}          --> PARMA THINF_DDOT_L {V_D_IMG__S_WN}
-                            
-    ts{V_D_KER_WN}_         --> TINCO {V_D_IMG__L_WN} SHOOK_RIGHT_L 
-    ps{V_D_KER_WN}_         --> PARMA {V_D_IMG__L_WN} SHOOK_RIGHT_L  
-    x{V_D_KER_WN}           --> CALMA SHOOK_LEFT_L {V_D_IMG__S_WN}   \** render ks for x **\
-        
+    ty{V_D_WN}          --> TINCO THINF_DDOT_L {_V_D_WN_}
+    py{V_D_WN}          --> PARMA THINF_DDOT_L {_V_D_WN_}
+
+    ts{V_D_WN}          --> TINCO {_V_D_WN_} SHOOK_RIGHT_L
+    ps{V_D_WN}          --> PARMA {_V_D_WN_} SHOOK_RIGHT_L
+    {K}s{V_D_WN}        --> CALMA SHOOK_LEFT_L {_V_D_WN_}   
+    x{V_D_WN}           --> CALMA SHOOK_LEFT_L {_V_D_WN_}   \** render ks for x **\
+
     \** ===================== **\
     \**     2ND LINE RULES    **\
     \** ===================== **\
-    {L2_KER}        === nd      * mb        * ng      * ngw
-    {L2_IMG}        === ANDO    * UMBAR     * ANGA    * UNGWE
+    {L2}          === nd      * mb        * ng      * ngw
+    {_L2_}        === ANDO    * UMBAR     * ANGA    * UNGWE
 
     \** STANDARD **\
-    [{L2_KER}]{V_D_KER_WN}  --> [{L2_IMG}]{V_D_IMG_XL_WN}
-    
-    \** Palatalized **\ 
-    ndy{V_D_KER_WN}         --> ANDO THINF_DDOT_XL {V_D_IMG_XL_WN}
- 
+    [{L2}]{V_D_WN}  --> [{_L2_}]{_V_D_WN_}
+
+    \** Palatalized **\
+    ndy{V_D_WN} --> ANDO THINF_DDOT_XL {_V_D_WN_}
+
     \** Have some rules for d,b,g,gw although there are not theoritically possible, aldudénie e.g needs it **\
-    {L2_KER_UN}     === d       * b         * g       * gw     
-    \if "voiced_plosives_treatment == VOICED_PLOSIVES_WITH_STROKE"
-      [{L2_KER_UN}]{V_D_KER_WN}  --> [{L2_IMG}] THINF_STROKE_XL {V_D_IMG_XL_WN}
+    {L2_UN}               === d       * b         * g       * gw
+
+    \if "voiced_plosives_treatment == VOICED_PLOSIVES_AS_NASALIZED"
+      [{L2_UN}]{V_D_WN}   --> [{_L2_}] {_V_D_WN_}
+    \elsif "voiced_plosives_treatment == VOICED_PLOSIVES_WITH_STROKE"
+      [{L2_UN}]{V_D_WN}   --> [{_L2_}] THINF_STROKE_XL {_V_D_WN_}
     \else
-     {L2_IMG_UN}    === TW_EXT_21 * TW_EXT_22 * TW_EXT_23 * TW_EXT_24    
-     [{L2_KER_UN}]{V_D_KER_WN}  --> [{L2_IMG_UN}] {V_D_IMG_XL_WN} 
+      {_L2_UN_}            === TW_EXT_21 * TW_EXT_22 * TW_EXT_23 * TW_EXT_24
+      [{L2_UN}]{V_D_WN}    --> [{_L2_UN_}] {_V_D_WN_}
     \endif
-      
+
     \if "st_pt_ht == ST_PT_HT_WITH_XTD"
-      {L2_KER_ALVEOLARIZED_1}     === st        * pt           
-      {L2_IMG_ALVEOLARIZED_1}     === TW_EXT_11 * TW_EXT_12       
-      {L2_KER_ALVEOLARIZED_2}     === ht    
-      {L2_IMG_ALVEOLARIZED_2}     === TW_EXT_13       
-            
-      [{L2_KER_ALVEOLARIZED_1}]{V_D_KER_WN}  --> [{L2_IMG_ALVEOLARIZED_1}] {V_D_IMG__L_WN}     
-      [{L2_KER_ALVEOLARIZED_2}]{V_D_KER_WN}  --> [{L2_IMG_ALVEOLARIZED_2}] {V_D_IMG_XL_WN}     
+      {L2_ALVEOLARIZED}     === st        * pt        * ht
+      {_L2_ALVEOLARIZED_}   === TW_EXT_11 * TW_EXT_12 * TW_EXT_13
+
+      [{L2_ALVEOLARIZED}]{V_D_WN}  --> [{_L2_ALVEOLARIZED_}] {_V_D_WN_}
     \endif
-            
+
     \** ===================== **\
     \**     3RD LINE RULES    **\
     \** ===================== **\
-    {L3_KER_1} === (th,þ) * f
-    {L3_IMG_1} === SULE   * FORMEN
-    {L3_KER_2} === (h,χ)  * hw
-    {L3_IMG_2} === AHA    * HWESTA
+    {L3}      === (th,þ) * f       * (h,χ)  * hw
+    {_L3_}    === SULE   * FORMEN  * AHA    * HWESTA
 
     \** NORMAL **\
-    [{L3_KER_1}]{V_D_KER_WN}  --> [{L3_IMG_1}]{V_D_IMG__S_WN}
-    [{L3_KER_2}]{V_D_KER_WN}  --> [{L3_IMG_2}]{V_D_IMG__S_WN} \**  Tengscribe uses S but L is probably better  **\
-  
+    [{L3}]{V_D_WN}  --> [{_L3_}]{_V_D_WN_}
+
     \** OTHERS **\
-    hy{V_D_KER_WN}                  --> HYARMEN THINF_DDOT_L {V_D_IMG__L_WN}
-   
+    hy{V_D_WN}      --> HYARMEN THINF_DDOT_L {_V_D_WN_}
+
     \** Override h with vowels (descendent of hy) **\
-    _h{V_D_KER}                     --> HYARMEN {V_D_IMG__L}
-    _h[{LVOWELS}]                   --> HYARMEN ARA [{TEHTA_XS}] 
-    (h,χ)                           --> AHA
+    _h{V_D}         --> HYARMEN {_V_D_}
+    _h[{LVOWELS}]   --> HYARMEN [{_LTEHTAR_}]
+
+    (h,χ)           --> AHA
 
     \** ===================== **\
     \**     4TH LINE RULES    **\
     \** ===================== **\
-    {L4_KER}  === nt    * mp    * nc    * nq      \** Not nqu, due to preprocessor **\
-    {L4_IMG}  === ANTO  * AMPA  * ANCA  * UNQUE
- 
+    {L4}   === nt    * mp    * nc    * nq      \** Not nqu, due to preprocessor **\
+    {_L4_} === ANTO  * AMPA  * ANCA  * UNQUE
+
     \** NORMAL **\
-    [{L4_KER}]{V_D_KER_WN}    --> [{L4_IMG}]{V_D_IMG_XL_WN}
+    [{L4}]{V_D_WN}    --> [{_L4_}]{_V_D_WN_}
     \** OTHERS **\
-    nty{V_D_KER_WN}                 --> ANTO THINF_DDOT_XL {V_D_IMG_XL_WN}
+    nty{V_D_WN}       --> ANTO THINF_DDOT_XL {_V_D_WN_}
 
     \** ===================== **\
     \**     5TH LINE RULES    **\
     \** ===================== **\
-    {L5_KER}  === n     * m     * ñ     * ñw      * _nw 
-    {L5_IMG}  === NUMEN * MALTA * NOLDO * NWALME  * NWALME
+    {L5}   === n     * m     * ñ     * ñw      * _nw
+    {_L5_} === NUMEN * MALTA * NOLDO * NWALME  * NWALME
 
-    [{L5_KER}]{V_D_KER_WN}  --> [{L5_IMG}]{V_D_IMG_XL_WN}
+    [{L5}]{V_D_WN}  --> [{_L5_}]{_V_D_WN_}
 
-    ny{V_D_KER_WN}          --> NUMEN THINF_DDOT_XL {V_D_IMG_XL_WN}
-    nn{V_D_KER_WN}          --> NUMEN DASH_INF_L {V_D_IMG_XL_WN}
-    my{V_D_KER_WN}          --> MALTA THINF_DDOT_XL {V_D_IMG_XL_WN}
-    mm{V_D_KER_WN}          --> MALTA DASH_INF_L {V_D_IMG_XL_WN}
+    ny{V_D_WN}          --> NUMEN THINF_DDOT_XL {_V_D_WN_}
+    nn{V_D_WN}          --> NUMEN DASH_INF_L    {_V_D_WN_}
+    my{V_D_WN}          --> MALTA THINF_DDOT_XL {_V_D_WN_}
+    mm{V_D_WN}          --> MALTA DASH_INF_L    {_V_D_WN_}
 
     \** ===================== **\
     \**     6TH LINE RULES    **\
     \** ===================== **\
-    
-    {LONE_R_IMG} === ORE \** lonely r is not voiced, so override rule **\
+
+    {_LONE_R_} === ORE
     \if always_use_romen_for_r
-      {LONE_R_IMG} === ROMEN \** Override lone r if option is on **\
+      \** Override lone r if option is on **\
+      {_LONE_R_} === ROMEN 
     \endif
-        
-    {L6_KER}        === r     * v     * y                   * w
-    {L6_IMG}        === ROMEN * VALA  * ANNA THINF_DDOT_L   * VILYA  
 
-    [{L6_KER}]{V_D_KER_WN} --> [{L6_IMG}]{V_D_IMG__S_WN}
-    
+    {L6}        === r     * v     * y                   * w
+    {_L6_}      === ROMEN * VALA  * ANNA THINF_DDOT_L   * VILYA
+
+    [{L6}]{V_D_WN} --> [{_L6_}]{_V_D_WN_}
+
     \** r before long vowels is voiced **\
-    r[{LVOWELS}]          --> ROMEN ARA [{TEHTA_XS}]
-    r                     --> {LONE_R_IMG} \** lonely r is not voiced, so override rule **\
+    r[{LVOWELS}]      --> ROMEN [{_LTEHTAR_}]
 
-    \** rb is specified to be treated as r + mb in the LotR Appendix E **\
-    rb {V_D_KER_WN} --> {LONE_R_IMG} UMBAR {V_D_IMG_XL_WN}
+    \** Override rule r + null **\
+    r                 --> {_LONE_R_} {_NVOWEL_}
 
-    rr{V_D_KER_WN}        --> ROMEN DASH_INF_S {V_D_IMG__S_WN}
-    ry{V_D_KER_WN}        --> ROMEN THINF_DDOT_L {V_D_IMG__S_WN}
-    rd{V_D_KER_WN}        --> ARDA {V_D_IMG__S_WN}
+    rr{V_D_WN}        --> ROMEN DASH_INF_S {_V_D_WN_}
+    ry{V_D_WN}        --> ROMEN THINF_DDOT_XS {_V_D_WN_}
+    rd{V_D_WN}        --> ARDA {_V_D_WN_}
 
     \** ===================== **\
     \**     L  LINE RULES     **\
     \** ===================== **\
-    {LINE_L_KER}          === l     * ld      * ll
-    {LINE_L_IMG}          === LAMBE * ALDA    * LAMBE LAMBE_MARK_TILD
+    {LINE_L}          === l     * ld      * ll
+    {_LINE_L_}        === LAMBE * ALDA    * LAMBE LAMBE_MARK_TILD
 
-    [{LINE_L_KER}]{V_D_KER_WN}    --> [{LINE_L_IMG}]{V_D_IMG__S_WN}
-    
-    \** lb is specified to be treated as l + mb in the LotR Appendix E **\
-    lb {V_D_KER_WN}               --> LAMBE UMBAR {V_D_IMG_XL_WN}
-    
-    ly{V_D_KER_WN}                --> LAMBE LAMBE_MARK_DDOT {V_D_IMG__S_WN}
-    hl{V_D_KER_WN}                --> HALLA LAMBE {V_D_IMG__S_WN}
-    hr{V_D_KER_WN}                --> HALLA ROMEN {V_D_IMG__S_WN}
+    [{LINE_L}]{V_D_WN}    --> [{_LINE_L_}]{_V_D_WN_}
+
+    ly{V_D_WN}            --> LAMBE LAMBE_MARK_DDOT {_V_D_WN_}
+    hl{V_D_WN}            --> HALLA LAMBE {_V_D_WN_}
+    hr{V_D_WN}            --> HALLA ROMEN {_V_D_WN_}
 
     \** ===================== **\
     \**   S/Z LINE RULES      **\
     \** ===================== **\
-    {L8_KER}        === s               * {SS}   
-    {L8_IMG}        === SILME_NUQUERNA  * ESSE_NUQUERNA 
+    {L8}        === s               * {SS}
+    {_L8_}      === SILME_NUQUERNA  * ESSE_NUQUERNA
 
-    [{L8_KER}]{V_D_KER_WN} --> [{L8_IMG}]{V_D_IMG__S_WN}
+    [{L8}]{V_D_WN} --> [{_L8_}]{_V_D_WN_}
 
     \** Override lonely s / ss / before consonant **\
     s               --> SILME
-    s[{LVOWELS}]    --> SILME ARA [{TEHTA_XS}] 
-    {SS}             --> ESSE
-    {SS}[{LVOWELS}] --> ESSE ARA [{TEHTA_XS}] 
-    
+    s[{LVOWELS}]    --> SILME [{_LTEHTAR_}]
+    {SS}            --> ESSE
+    {SS}[{LVOWELS}] --> ESSE [{_LTEHTAR_}]
+
+    \if implicit_a
+      sá            --> SILME_NUQUERNA {A_SHAPE}
+      {SS}á         --> ESSE_NUQUERNA {A_SHAPE}
+    \endif
+
   \end
-  
+
   \beg    rules punctuation
     . --> PUNCT_DDOT
     .. --> PUNCT_DOT PUNCT_DDOT PUNCT_DOT
@@ -334,11 +364,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
     “ --> DQUOT_OPEN
     ” --> DQUOT_CLOSE
-    « --> DQUOT_OPEN 
-    » --> DQUOT_CLOSE 
+    « --> DQUOT_OPEN
+    » --> DQUOT_CLOSE
 
-    - --> {NULL}     
-    – --> PUNCT_TILD  
+    - --> {NULL}
+    – --> PUNCT_TILD
     — --> PUNCT_TILD
 
     [ --> PUNCT_PAREN_L
@@ -348,15 +378,15 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     { --> PUNCT_PAREN_L
     } --> PUNCT_PAREN_R
     < --> PUNCT_PAREN_L
-    > --> PUNCT_PAREN_R  
+    > --> PUNCT_PAREN_R
 
     \** Not universal between fonts ... **\
     $ --> BOOKMARK_SIGN
     ≤ --> RING_MARK_L \** Ring inscription left beautiful stuff **\
     ≥ --> RING_MARK_R \** Ring inscription right beautiful stuff **\
-  
+
   \end
-  
+
   \beg    rules  numbers
     0 --> NUM_0
     1 --> NUM_1
@@ -369,7 +399,19 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     8 --> NUM_8
     9 --> NUM_9
     A --> NUM_10
-    B --> NUM_11      
+    B --> NUM_11
   \end
-  
+
 \end
+
+\beg postprocessor
+  \** TODO : Move formen to S, move hyarmen to XS **\
+  \csub A_TEHTA          "A_TEHTA_XS        TELCO ARA"  "A_TEHTA_S         ORE TW_EXT_11 TW_EXT_12 SULE HYARMEN" "A_TEHTA_L         TINCO CALMA PARMA QUESSE AHA HWESTA LAMBE ALDA YANTA URE ROMEN ARDA SILME_NUQUERNA ESSE_NUQUERNA VALA ANNA VILYA FORMEN" "A_TEHTA_XL         TW_EXT_13 TW_EXT_14 TW_EXT_21 TW_EXT_22 TW_EXT_23 TW_EXT_24 ANDO UMBAR ANGA UNGWE ANTO AMPA ANCA UNQUE NUMEN MALTA NOLDO NWALME"
+  \csub A_TEHTA_CIRCUM   "A_TEHTA_CIRCUM_XS TELCO ARA"  "A_TEHTA_CIRCUM_S  ORE TW_EXT_11 TW_EXT_12 SULE HYARMEN" "A_TEHTA_CIRCUM_L  TINCO CALMA PARMA QUESSE AHA HWESTA LAMBE ALDA YANTA URE ROMEN ARDA SILME_NUQUERNA ESSE_NUQUERNA VALA ANNA VILYA FORMEN" "A_TEHTA_CIRCUM_XL  TW_EXT_13 TW_EXT_14 TW_EXT_21 TW_EXT_22 TW_EXT_23 TW_EXT_24 ANDO UMBAR ANGA UNGWE ANTO AMPA ANCA UNQUE NUMEN MALTA NOLDO NWALME"
+  \csub E_TEHTA          "E_TEHTA_XS        TELCO ARA"  "E_TEHTA_S         ORE TW_EXT_11 TW_EXT_12 SULE HYARMEN" "E_TEHTA_L         TINCO CALMA PARMA QUESSE AHA HWESTA LAMBE ALDA YANTA URE ROMEN ARDA SILME_NUQUERNA ESSE_NUQUERNA VALA ANNA VILYA FORMEN" "E_TEHTA_XL         TW_EXT_13 TW_EXT_14 TW_EXT_21 TW_EXT_22 TW_EXT_23 TW_EXT_24 ANDO UMBAR ANGA UNGWE ANTO AMPA ANCA UNQUE NUMEN MALTA NOLDO NWALME"
+  \csub I_TEHTA          "I_TEHTA_XS        TELCO ARA"  "I_TEHTA_S         ORE TW_EXT_11 TW_EXT_12 SULE HYARMEN" "I_TEHTA_L         TINCO CALMA PARMA QUESSE AHA HWESTA LAMBE ALDA YANTA URE ROMEN ARDA SILME_NUQUERNA ESSE_NUQUERNA VALA ANNA VILYA FORMEN" "I_TEHTA_XL         TW_EXT_13 TW_EXT_14 TW_EXT_21 TW_EXT_22 TW_EXT_23 TW_EXT_24 ANDO UMBAR ANGA UNGWE ANTO AMPA ANCA UNQUE NUMEN MALTA NOLDO NWALME"
+  \csub O_TEHTA          "O_TEHTA_XS        TELCO ARA"  "O_TEHTA_S         ORE TW_EXT_11 TW_EXT_12 SULE HYARMEN" "O_TEHTA_L         TINCO CALMA PARMA QUESSE AHA HWESTA LAMBE ALDA YANTA URE ROMEN ARDA SILME_NUQUERNA ESSE_NUQUERNA VALA ANNA VILYA FORMEN" "O_TEHTA_XL         TW_EXT_13 TW_EXT_14 TW_EXT_21 TW_EXT_22 TW_EXT_23 TW_EXT_24 ANDO UMBAR ANGA UNGWE ANTO AMPA ANCA UNQUE NUMEN MALTA NOLDO NWALME"
+  \csub U_TEHTA          "U_TEHTA_XS        TELCO ARA"  "U_TEHTA_S         ORE TW_EXT_11 TW_EXT_12 SULE HYARMEN" "U_TEHTA_L         TINCO CALMA PARMA QUESSE AHA HWESTA LAMBE ALDA YANTA URE ROMEN ARDA SILME_NUQUERNA ESSE_NUQUERNA VALA ANNA VILYA FORMEN" "U_TEHTA_XL         TW_EXT_13 TW_EXT_14 TW_EXT_21 TW_EXT_22 TW_EXT_23 TW_EXT_24 ANDO UMBAR ANGA UNGWE ANTO AMPA ANCA UNQUE NUMEN MALTA NOLDO NWALME"
+  \csub THINF_DOT        "THINF_DOT_XS      TELCO ROMEN ARDA" "THINF_DOT_L ORE TW_EXT_11 TW_EXT_12  TINCO PARMA SULE FORMEN VALA ANNA VILYA SILME ESSE AHA HWESTA HYARMEN YANTA URE" "THINF_DOT_XL QUESSE CALMA TW_EXT_13 TW_EXT_14 TW_EXT_21 TW_EXT_22 TW_EXT_23 TW_EXT_24 ANDO UMBAR ANGA UNGWE ANTO AMPA ANCA UNQUE NUMEN MALTA NOLDO NWALME" "LAMBE_MARK_DOT LAMBE ALDA"
+\end
+
