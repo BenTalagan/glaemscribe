@@ -24,7 +24,16 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 \** Charset for Dan Smith layout based fonts **\ 
 
-\**  **\ \char 20 SPACE              
+\version 0.0.2
+
+\** 
+  First character is used for all temporary tokens that should be replaced by the post processor,
+  mainly, tehtar variants. These characters are only virtual, they do not really exist in DS based fonts.
+**\
+
+\** ☢ **\ \char 2622 A_TEHTA A_TEHTA_CIRCUM E_TEHTA I_TEHTA O_TEHTA U_TEHTA THSUP_TICK_INV THSUP_LAMBDA THSUP_TICK THINF_CURL THSUP_SEV THINF_DOT THINF_DDOT THINF_TDOT THINF_STROKE THINF_DSTROKE
+
+\**   **\ \char 20 SPACE              
 \** ! **\ \char 21 TW_EXT_11            
 \** " **\ \char 22 DASH_INF_L            
 \** # **\ \char 23 A_TEHTA_XL          
@@ -68,7 +77,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 \** I **\ \char 49 SILME_NUQUERNA_ALT \** Used for y in s. beleriand **\                
 \** J **\ \char 4a U_TEHTA_S         
 \** K **\ \char 4b ?                
-\** L **\ \char 4c ?                
+\** L **\ \char 4c LAMBE_MARK_DOT                
 \** M **\ \char 4d U_TEHTA_XS        
 \** N **\ \char 4e O_TEHTA_XS          
 \** O **\ \char 4f ?                
@@ -168,18 +177,18 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 \** Ñ **\ \char d1 THINF_TDOT_L           
 \** Ò **\ \char d2 THINF_TDOT_S           
 \** Ó **\ \char d3 THINF_TDOT_XS          
-\** Ô **\ \char d4 THSUP_DDOT_XL Y_TEHTA_XL          
-\** Õ **\ \char d5 THSUP_DDOT_L Y_TEHTA_L           
-\** Ö **\ \char d6 THSUP_DDOT_S Y_TEHTA_S           
-\** × **\ \char d7 THSUP_DDOT_XS Y_TEHTA_XS          
+\** Ô **\ \char d4 THSUP_DDOT_XL Y_TEHTA_XL I_TEHTA_DOUBLE_XL         
+\** Õ **\ \char d5 THSUP_DDOT_L Y_TEHTA_L I_TEHTA_DOUBLE_L       
+\** Ö **\ \char d6 THSUP_DDOT_S Y_TEHTA_S I_TEHTA_DOUBLE_S          
+\** × **\ \char d7 THSUP_DDOT_XS Y_TEHTA_XS I_TEHTA_DOUBLE_XS         
 \** Ø **\ \char d8 THSUP_TICK_XL          
 \** Ù **\ \char d9 THSUP_TICK_L           
 \** Ú **\ \char da THSUP_TICK_S           
 \** Û **\ \char db THSUP_TICK_XS          
-\** Ü **\ \char dc THSUP_TICK_INV_XL        
-\** Ý **\ \char dd THSUP_TICK_INV_L         
-\** Þ **\ \char de THSUP_TICK_INV_S         
-\** ß **\ \char df THSUP_TICK_INV_XS        
+\** Ü **\ \char dc THSUP_TICK_INV_XL A_TEHTA_CIRCUM_XL       
+\** Ý **\ \char dd THSUP_TICK_INV_L A_TEHTA_CIRCUM_L        
+\** Þ **\ \char de THSUP_TICK_INV_S A_TEHTA_CIRCUM_S         
+\** ß **\ \char df THSUP_TICK_INV_XS A_TEHTA_CIRCUM_XS       
 \** à **\ \char e0 THSUP_LAMBDA_XL         
 \** á **\ \char e1 THSUP_LAMBDA_L          
 \** â **\ \char e2 THSUP_LAMBDA_S          
@@ -314,5 +323,5 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 \** 倢 **\ \char 5022 ?                                
 \** 倦 **\ \char 5026 ?                                
 \** 倰 **\ \char 5030 ?                                
-\** 倹 **\ \char 5039 ?   
+\** 倹 **\ \char 5039 ?
              
