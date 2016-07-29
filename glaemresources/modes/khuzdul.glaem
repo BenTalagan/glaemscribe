@@ -27,10 +27,20 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 \language "Khuzdul"
 \writing  "Cirth"
 \mode     "Angerthas Moria"
-\version  "0.0.1"
+\version  "0.0.2"
 \authors  "Talagan (Benjamin Babut)"
 
 \charset  cirth_ds true
+
+\** Changelog **\
+\**
+\beg changelog
+  \entry "0.0.2", "Moved outspace character to general element"
+\end
+**\
+
+\** We redefine the output space to have something beautiful, especially with erebor1 and erebor2 **\ 
+\outspace CIRTH_SPACE_BIG
 
 \beg      preprocessor
   \** Work exclusively downcase **\
@@ -54,9 +64,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 \end
 
 \beg      processor
-  
-  \** We redefine the output space to have something beautiful, especially with erebor1 and erebor2 **\ 
-  \outspace CIRTH_SPACE_BIG
 
   \beg    rules litteral
     a --> CIRTH_48

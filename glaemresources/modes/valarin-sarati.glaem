@@ -22,6 +22,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 **\
 
+\** 0.0.3 : Moved out space to general element **\
+
 \language "Valarin"
 \writing  "Sarati"
 \mode     "Glaemscrafu"
@@ -29,6 +31,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 \authors  "Talagan (Benjamin Babut)"
 
 \charset  sarati_eldamar true
+
+\outspace SARATI_SPACE
+  
 
 \beg      preprocessor
   \** Work exclusively downcase **\
@@ -55,7 +60,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   
 \beg      processor
 
-  \outspace SARATI_SPACE
   
   \beg rules litteral 
       

@@ -25,16 +25,19 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 \** Sindarin Angerthas Daeron mode for glaemscribe **\
 
 \** changelog **\
-\** 0.0.3 : Added thorn as equivalent for th **\
-
+\** 0.0.2 : Added thorn as equivalent for th **\
+\** 0.0.3 : Moved out space to general element **\
 
 \language "Sindarin"
 \writing  "Cirth"
 \mode     "Angerthas Daeron"
-\version  "0.0.2"
+\version  "0.0.3"
 \authors  "Talagan (Benjamin Babut)"
 
 \charset  cirth_ds true
+
+\** We redefine the output space to have something beautiful, especially with erebor1 and erebor2 **\ 
+\outspace CIRTH_SPACE_BIG
 
 \beg      preprocessor
   \** Work exclusively downcase **\
@@ -59,9 +62,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 \beg      processor
   
-  \** We redefine the output space to have something beautiful, especially with erebor1 and erebor2 **\ 
-  \outspace CIRTH_SPACE_BIG
-
   \beg    rules litteral
     a     --> CIRTH_48
     á     --> CIRTH_49

@@ -22,6 +22,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 **\
 
+\** Changelog **\
+\**
+\beg changelog
+  \entry "0.0.2", "Moved outspace character to general element"
+\end
+**\
+
 \language "Quenya"
 \writing  "Sarati"
 \mode     "Quenya Usage"
@@ -29,6 +36,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 \authors  "Talagan (Benjamin Babut)"
 
 \charset  sarati_eldamar true
+
+\outspace SARATI_SPACE
 
 \beg      preprocessor
   \** Work exclusively downcase **\
@@ -57,15 +66,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   \substitute   "ui" "uy"
 
   \substitute   "á" "aa" \** Split long a  **\
-  \substitute   "ā" "aa" \** '' **\
-  \substitute   "â" "aa" \** '' **\
 
   \substitute   "qu" "q" \** Dis-ambiguate qu **\
 \end
 
 \beg      processor
 
-  \outspace SARATI_SPACE
   
   \beg    rules litteral 
     {A}                           === a
