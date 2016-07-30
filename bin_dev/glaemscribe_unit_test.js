@@ -12,7 +12,7 @@ Util         = require("util")
 
 // Use the following trick to load the javascript that we would use normally in a web browser
 function include(path) { var code = Fs.readFileSync(path, 'utf-8'); Vm.runInThisContext(code, path); }
-include(__dirname + "/../build/web/glaemscribe/js/glaemscribe.js")
+include(__dirname + "/../build/web/glaemscribe/js/glaemscribe.min.js")
 
 // Include all charsets and modes
 var cfiles = Glob.sync(__dirname + "/../build/web/glaemscribe/js/charsets/*.cst.js", {});

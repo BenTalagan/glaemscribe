@@ -4,3 +4,4 @@
 /unit_tests/old
 /unit_tests_dumped
 .DS_Store
+*.disabled

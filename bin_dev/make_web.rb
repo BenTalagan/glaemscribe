@@ -9,6 +9,9 @@ BUILD_JS_PATH   = "../build/web/glaemscribe/js/"
 
 Dir.chdir(SCRIPT_PATH)
 
+$license = File.open("../LICENSE.txt","rb:utf-8") { |f| f.read }
+$version = File.open("../version","rb:utf-8") { |f| f.read }
+
 JS_FILES = [
   "utils/string_list_to_clean_array.js",
   "utils/string_from_code_point.js",
@@ -79,16 +82,16 @@ def generate_js_charsets
   }
 end
 
+
+
 def build_engine  
-  license = File.open("../LICENSE.txt","rb:utf-8") { |f| f.read }
-  version = File.open("../version","rb:utf-8") { |f| f.read }
   
   File.open(BUILD_JS_PATH + "/glaemscribe.js","wb:utf-8") { |fout|
-    fout << "/*\n" + license + "\nVersion : " + version + "\n*/\n\n"
+    fout << "/*\n" + $license + "\nVersion : " + $version + "\n*/\n\n"
 
     JS_FILES.each{ |fname|
       File.open("../lib_js/" + fname,"rb:utf-8") { |fin|
-        fout << "// Adding #{fname} \n\n"
+        fout << "/*\n  Adding #{fname} \n*/\n"
         content = fin.read
         if(fname.start_with?("api")) 
           content = content.gsub(/\/\*.*?Copyright.*?\*\//m,"")
@@ -102,7 +105,8 @@ end
 
 def build_ugly_min
   File.open(BUILD_JS_PATH + "/glaemscribe.min.js","wb:utf-8") { |f|
-    f << Uglifier.new.compile(File.read(BUILD_JS_PATH + "/glaemscribe.js"))
+    f << "/*\n" + $license + "\nVersion : " + $version + "\n*/\n\n"
+    f << Uglifier.compile(File.read(BUILD_JS_PATH + "/glaemscribe.js"), :comments => :none)
   }
 end
 

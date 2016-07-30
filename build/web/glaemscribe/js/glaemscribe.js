@@ -22,8 +22,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 Version : 1.0.15
 */
 
-// Adding utils/string_list_to_clean_array.js 
-
+/*
+  Adding utils/string_list_to_clean_array.js 
+*/
 function stringListToCleanArray(str,separator)
 {
   return str.split(separator)
@@ -33,8 +34,9 @@ function stringListToCleanArray(str,separator)
 
 
 
-// Adding utils/string_from_code_point.js 
-
+/*
+  Adding utils/string_from_code_point.js 
+*/
 /*! http://mths.be/fromcodepoint v0.1.0 by @mathias */
 if (!String.fromCodePoint) {
   (function() {
@@ -98,8 +100,9 @@ if (!String.fromCodePoint) {
   }());
 }
 
-// Adding utils/inherits_from.js 
-
+/*
+  Adding utils/inherits_from.js 
+*/
 // Thank you mozilla! https://developer.mozilla.org/en-US/docs/Web/JavaScript/Inheritance_and_the_prototype_chain
 
 Function.prototype.inheritsFrom = function( parentClassOrObject ){ 
@@ -121,8 +124,9 @@ Function.prototype.inheritsFrom = function( parentClassOrObject ){
 } 
 
 
-// Adding utils/array_productize.js 
-
+/*
+  Adding utils/array_productize.js 
+*/
 Object.defineProperty(Array.prototype, "productize", {
   enumerable: false,
   value: function(other_array) {
@@ -140,8 +144,9 @@ Object.defineProperty(Array.prototype, "productize", {
   }
 });
 
-// Adding utils/array_equals.js 
-
+/*
+  Adding utils/array_equals.js 
+*/
 Object.defineProperty(Array.prototype, "equals", {
   enumerable: false,
   value:  function (array) {
@@ -164,8 +169,9 @@ Object.defineProperty(Array.prototype, "equals", {
   }   
 });
 
-// Adding utils/array_unique.js 
-
+/*
+  Adding utils/array_unique.js 
+*/
 Object.defineProperty(Array.prototype, "unique", {
   enumerable: false,
   value:  function () {
@@ -179,8 +185,9 @@ Object.defineProperty(Array.prototype, "unique", {
 });
 
 
-// Adding utils/glaem_object.js 
-
+/*
+  Adding utils/glaem_object.js 
+*/
 Object.defineProperty(Object.prototype, "glaem_each", {
   enumerable: false,
   value:  function (callback) {
@@ -219,16 +226,18 @@ Object.defineProperty(Object.prototype, "glaem_merge", {
 
 
 
-// Adding api.js 
-
+/*
+  Adding api.js 
+*/
 
 
 var Glaemscribe           = {};
 
 
 
-// Adding api/constants.js 
-
+/*
+  Adding api/constants.js 
+*/
 
 
 Glaemscribe.WORD_BREAKER        = "|";
@@ -236,8 +245,9 @@ Glaemscribe.WORD_BOUNDARY       = "_"
 Glaemscribe.UNKNOWN_CHAR_OUTPUT = "☠"      
 
 
-// Adding api/resource_manager.js 
-
+/*
+  Adding api/resource_manager.js 
+*/
 
 
 Glaemscribe.ResourceManager = function() {  
@@ -334,8 +344,9 @@ Glaemscribe.resource_manager = new Glaemscribe.ResourceManager();
 
 
 
-// Adding api/charset.js 
-
+/*
+  Adding api/charset.js 
+*/
 
 
 Glaemscribe.Char = function()
@@ -395,8 +406,9 @@ Glaemscribe.Charset.prototype.n2c = function(cname)
 }
 
 
-// Adding api/charset_parser.js 
-
+/*
+  Adding api/charset_parser.js 
+*/
 
 
 Glaemscribe.CharsetParser = function()
@@ -437,8 +449,9 @@ Glaemscribe.CharsetParser.prototype.parse = function(charset_name) {
 }
 
 
-// Adding api/glaeml.js 
-
+/*
+  Adding api/glaeml.js 
+*/
 
 
 Glaemscribe.Glaeml = {}
@@ -638,8 +651,9 @@ Glaemscribe.Glaeml.Parser.prototype.parse = function(raw_data) {
   return doc;
 }
 
-// Adding api/fragment.js 
-
+/*
+  Adding api/fragment.js 
+*/
 
 
 Glaemscribe.Fragment = function(sheaf, expression) {
@@ -736,8 +750,9 @@ Glaemscribe.Fragment.prototype.is_src = function() {  return this.sheaf.is_src()
 Glaemscribe.Fragment.prototype.is_dst = function() {  return this.sheaf.is_dst(); };
 
 
-// Adding api/mode.js 
-
+/*
+  Adding api/mode.js 
+*/
 
 
 Glaemscribe.ModeDebugContext = function()
@@ -850,8 +865,9 @@ Glaemscribe.Mode.prototype.transcribe = function(content, charset) {
 
 
 
-// Adding api/option.js 
-
+/*
+  Adding api/option.js 
+*/
 
 
 Glaemscribe.Option = function(name, default_value_name, values)
@@ -894,8 +910,9 @@ Glaemscribe.Option.prototype.value_for_value_name = function(val_name)
   }
 }
 
-// Adding api/mode_parser.js 
-
+/*
+  Adding api/mode_parser.js 
+*/
 
 
 Glaemscribe.ModeParser = function() { 
@@ -1282,8 +1299,9 @@ Glaemscribe.ModeParser.prototype.parse = function(mode_name) {
   return parser.parse_raw(mode_name, raw);
 }
 
-// Adding api/rule.js 
-
+/*
+  Adding api/rule.js 
+*/
 
 
 Glaemscribe.Rule = function(line, rule_group) {
@@ -1356,8 +1374,9 @@ Glaemscribe.Rule.prototype.finalize = function(cross_schema) {
 }
 
 
-// Adding api/rule_group.js 
-
+/*
+  Adding api/rule_group.js 
+*/
 
 
 Glaemscribe.RuleGroup = function(mode,name) {
@@ -1542,8 +1561,9 @@ Glaemscribe.RuleGroup.prototype.finalize = function(options) {
 }
 
 
-// Adding api/sub_rule.js 
-
+/*
+  Adding api/sub_rule.js 
+*/
 
 
 Glaemscribe.SubRule = function(rule, src_combination, dst_combination)
@@ -1553,8 +1573,9 @@ Glaemscribe.SubRule = function(rule, src_combination, dst_combination)
 }
 
 
-// Adding api/sheaf.js 
-
+/*
+  Adding api/sheaf.js 
+*/
 
 
 Glaemscribe.Sheaf = function(sheaf_chain, expression) {
@@ -1584,8 +1605,9 @@ Glaemscribe.Sheaf.prototype.is_dst = function() { return !this.sheaf_chain.is_sr
 Glaemscribe.Sheaf.prototype.mode   = function() { return this.sheaf_chain.mode(); };
 
 
-// Adding api/sheaf_chain.js 
-
+/*
+  Adding api/sheaf_chain.js 
+*/
 
 
 Glaemscribe.SheafChain = function(rule, expression, is_src)
@@ -1621,8 +1643,9 @@ Glaemscribe.SheafChain.SHEAF_REGEXP_OUT   = /(\[.*?\])/;
 
 Glaemscribe.SheafChain.prototype.mode = function() { return this.rule.mode() };
 
-// Adding api/sheaf_chain_iterator.js 
-
+/*
+  Adding api/sheaf_chain_iterator.js 
+*/
 
 
 Glaemscribe.SheafChainIterator = function (sheaf_chain, cross_schema)
@@ -1737,8 +1760,9 @@ Glaemscribe.SheafChainIterator.prototype.iterate = function()
 }
 
 
-// Adding api/if_tree.js 
-
+/*
+  Adding api/if_tree.js 
+*/
 
 
 Glaemscribe.IfTree = {}
@@ -1871,8 +1895,9 @@ Glaemscribe.IfTree.CodeBlock.prototype.dump = function(level)
 
 
 
-// Adding api/eval.js 
-
+/*
+  Adding api/eval.js 
+*/
 
 
 Glaemscribe.Eval = {}
@@ -2147,8 +2172,9 @@ Glaemscribe.Eval.Parser.prototype.cast_constant = function(cst)
 
 
 
-// Adding api/transcription_tree_node.js 
-
+/*
+  Adding api/transcription_tree_node.js 
+*/
 
 
 Glaemscribe.TranscriptionTreeNode = function(character,replacement,path) {
@@ -2211,8 +2237,9 @@ Glaemscribe.TranscriptionTreeNode.prototype.transcribe = function(string, chain)
 }
 
 
-// Adding api/transcription_pre_post_processor.js 
-
+/*
+  Adding api/transcription_pre_post_processor.js 
+*/
 
 
 // ====================== //
@@ -2392,8 +2419,9 @@ Glaemscribe.TranscriptionPostProcessor.prototype.apply = function(tokens, out_ch
  
  
 
-// Adding api/transcription_processor.js 
-
+/*
+  Adding api/transcription_processor.js 
+*/
 
 
 Glaemscribe.TranscriptionProcessor = function(mode)
@@ -2528,8 +2556,9 @@ Glaemscribe.TranscriptionProcessor.prototype.transcribe_word = function(word, de
 }
       
 
-// Adding api/pre_processor/downcase.js 
-
+/*
+  Adding api/pre_processor/downcase.js 
+*/
 
 
 Glaemscribe.DowncasePreProcessorOperator = function(args)  
@@ -2547,8 +2576,9 @@ Glaemscribe.DowncasePreProcessorOperator.prototype.apply = function(str)
 Glaemscribe.resource_manager.register_pre_processor_class("downcase", Glaemscribe.DowncasePreProcessorOperator);    
 
 
-// Adding api/pre_processor/rxsubstitute.js 
-
+/*
+  Adding api/pre_processor/rxsubstitute.js 
+*/
 
 
 // Inherit from PrePostProcessorOperator
@@ -2572,8 +2602,9 @@ Glaemscribe.RxSubstitutePreProcessorOperator.prototype.apply = function(str)
 Glaemscribe.resource_manager.register_pre_processor_class("rxsubstitute", Glaemscribe.RxSubstitutePreProcessorOperator);    
 
 
-// Adding api/pre_processor/substitute.js 
-
+/*
+  Adding api/pre_processor/substitute.js 
+*/
 
 
 // Inherit from PrePostProcessorOperator
@@ -2595,8 +2626,9 @@ Glaemscribe.SubstitutePreProcessorOperator.prototype.apply = function(str)
 Glaemscribe.resource_manager.register_pre_processor_class("substitute", Glaemscribe.SubstitutePreProcessorOperator);    
 
 
-// Adding api/pre_processor/up_down_tehta_split.js 
-
+/*
+  Adding api/pre_processor/up_down_tehta_split.js 
+*/
 
 
 // Inherit from PrePostProcessorOperator
@@ -2738,8 +2770,9 @@ Glaemscribe.resource_manager.register_pre_processor_class("up_down_tehta_split",
 
 
 
-// Adding api/pre_processor/elvish_numbers.js 
-
+/*
+  Adding api/pre_processor/elvish_numbers.js 
+*/
 
 
 Glaemscribe.ElvishNumbersPreProcessorOperator = function(args)  {  Glaemscribe.PreProcessorOperator.call(this,args); return this; } 
@@ -2777,8 +2810,9 @@ Glaemscribe.ElvishNumbersPreProcessorOperator.prototype.apply = function(str)
 Glaemscribe.resource_manager.register_pre_processor_class("elvish_numbers", Glaemscribe.ElvishNumbersPreProcessorOperator);    
 
 
-// Adding api/post_processor/reverse.js 
-
+/*
+  Adding api/post_processor/reverse.js 
+*/
 
 
 Glaemscribe.ReversePostProcessorOperator = function(args)  
@@ -2796,8 +2830,9 @@ Glaemscribe.ReversePostProcessorOperator.prototype.apply = function(tokens)
 Glaemscribe.resource_manager.register_post_processor_class("reverse", Glaemscribe.ReversePostProcessorOperator);    
 
 
-// Adding api/post_processor/csub.js 
-
+/*
+  Adding api/post_processor/csub.js 
+*/
 
 
 Glaemscribe.CSubPostProcessorOperator = function(args)  
@@ -2849,8 +2884,9 @@ Glaemscribe.CSubPostProcessorOperator.prototype.apply = function(tokens)
 Glaemscribe.resource_manager.register_post_processor_class("csub", Glaemscribe.CSubPostProcessorOperator);    
 
 
-// Adding extern/shellwords.js 
-
+/*
+  Adding extern/shellwords.js 
+*/
 /*
 
 Copyright (C) 2011 by Jimmy Cuadra
