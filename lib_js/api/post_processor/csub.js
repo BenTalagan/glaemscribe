@@ -39,17 +39,14 @@ Glaemscribe.CSubPostProcessorOperator.prototype.finalize = function(trans_option
   op.matcher     = op.finalized_glaeml_element.args[0];
   op.triggers    = {};
   
-  for(var a=1;a<op.finalized_glaeml_element.args.length;a++)
-  {
-    var arg       = op.finalized_glaeml_element.args[a];
-    var splitted  = arg.match(/\S+/g);
+  op.finalized_glaeml_element.children.glaem_each(function(idx, child) {
+    var args      = child.args.slice(0);
+    var replacer  = args.shift();
     
-    var replacer  = splitted.shift();
+    for(var t=0;t<args.length;t++)
+      op.triggers[args[t]] = replacer;
+  });
     
-    for(var t=0;t<splitted.length;t++)
-      op.triggers[splitted[t]] = replacer;
-  }
-  
   return this;
 }
 

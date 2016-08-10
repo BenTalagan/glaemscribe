@@ -496,7 +496,7 @@ Glaemscribe.Glaeml.Node.prototype.is_text = function()
 Glaemscribe.Glaeml.Node.prototype.is_element = function()
 {
   return (this.type == Glaemscribe.Glaeml.NodeType.ElementInline || 
-  this.Type == Glaemscribe.Glaeml.NodeType.ElementBlock) ;
+  this.type == Glaemscribe.Glaeml.NodeType.ElementBlock) ;
 }
 
 Glaemscribe.Glaeml.Node.prototype.pathfind_crawl = function(apath, found)
@@ -603,6 +603,7 @@ Glaemscribe.Glaeml.Parser.prototype.parse = function(raw_data) {
           else
           {
             name    = rmatch[0];
+       
             try { args    = shellwords.split(rest.substring(name.length)); }
             catch(error) {
                doc.errors.push(new Glaemscribe.Glaeml.Error(lnum, "Error parsing args (" + error + ")."));
@@ -612,7 +613,7 @@ Glaemscribe.Glaeml.Parser.prototype.parse = function(raw_data) {
           var n         = new Glaemscribe.Glaeml.Node(lnum, Glaemscribe.Glaeml.NodeType.ElementBlock, name);
           n.args        = n.args.concat(args);
           n.parent_node = parser.current_parent_node;
-          
+              
           parser.current_parent_node.children.push(n);
           parser.current_parent_node = n;
         }
@@ -2885,17 +2886,14 @@ Glaemscribe.CSubPostProcessorOperator.prototype.finalize = function(trans_option
   op.matcher     = op.finalized_glaeml_element.args[0];
   op.triggers    = {};
   
-  for(var a=1;a<op.finalized_glaeml_element.args.length;a++)
-  {
-    var arg       = op.finalized_glaeml_element.args[a];
-    var splitted  = arg.match(/\S+/g);
+  op.finalized_glaeml_element.children.glaem_each(function(idx, child) {
+    var args      = child.args.slice(0);
+    var replacer  = args.shift();
     
-    var replacer  = splitted.shift();
+    for(var t=0;t<args.length;t++)
+      op.triggers[args[t]] = replacer;
+  });
     
-    for(var t=0;t<splitted.length;t++)
-      op.triggers[splitted[t]] = replacer;
-  }
-  
   return this;
 }
 

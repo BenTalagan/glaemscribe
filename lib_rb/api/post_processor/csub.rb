@@ -34,12 +34,12 @@ module Glaemscribe
         @matcher     = self.finalized_glaeml_element.args[0]
         @triggers    = Hash.new
   
-        self.finalized_glaeml_element.args.each{ |arg|
-
-          splitted  = arg.split()   
-          replacer  = splitted.shift()
+        self.finalized_glaeml_element.children.each{ |child|
+ 
+          args      = child.args.clone
+          replacer  = args.shift()
     
-          splitted.each{ |token|
+          args.each{ |token|
             @triggers[token] = replacer
           }
         }
