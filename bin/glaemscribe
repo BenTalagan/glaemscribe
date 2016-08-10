@@ -107,7 +107,7 @@ command :transcribe do |c|
   
   c.syntax      = 'glaemscribe transcribe file [options]'
   c.summary     = 'Transcribes a file (default command)'
-  c.description = "Transcribes a file with the given options. You can use '-' instead of a file name to work with stdin."
+  c.description = "Transcribes a file with the given options. You can use 'STDIN' instead of a file name to work with stdin."
    
   c.option '-m',  '--mode mode',                 String, "The name of the embedded mode to use. See the 'list' command to get a list of available modes names."
   c.option '-c',  '--charset charset',           String, 'The name of the charset to use. If not given, glaemscribe will load and use the default charset defined in the mode.' 
@@ -224,7 +224,7 @@ command :transcribe do |c|
     
     # Ready for transcription ...
   
-    if(filename == "-")
+    if(filename == "STDIN")
       perxit "Opened in stdin mode, waiting for input..."
       begin
         while to_transcribe = STDIN.gets
@@ -302,7 +302,14 @@ command :info do |c|
     puts "#{$terminal.color "Human Name" , :bold} : #{mode.human_name}"
     puts "#{$terminal.color "Authors   " , :bold} : #{mode.authors}"
     puts "#{$terminal.color "Version   " , :bold} : #{mode.version}"
-      
+    puts ""
+    puts "#{$terminal.color "Options   " , :bold} :"
+    mode.options.each { |name,option|
+      puts "  #{$terminal.color name, :bold} (#{option.type}) [#{option.default_value_name}]"
+      option.values.each{ |oname,ovalue|
+        puts "    #{$terminal.color oname, :bold}"
+      }
+    }
   end
   
 end
