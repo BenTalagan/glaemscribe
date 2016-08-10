@@ -64,7 +64,7 @@ Glaemscribe.Glaeml.Node.prototype.is_text = function()
 Glaemscribe.Glaeml.Node.prototype.is_element = function()
 {
   return (this.type == Glaemscribe.Glaeml.NodeType.ElementInline || 
-  this.Type == Glaemscribe.Glaeml.NodeType.ElementBlock) ;
+  this.type == Glaemscribe.Glaeml.NodeType.ElementBlock) ;
 }
 
 Glaemscribe.Glaeml.Node.prototype.pathfind_crawl = function(apath, found)
@@ -171,6 +171,7 @@ Glaemscribe.Glaeml.Parser.prototype.parse = function(raw_data) {
           else
           {
             name    = rmatch[0];
+       
             try { args    = shellwords.split(rest.substring(name.length)); }
             catch(error) {
                doc.errors.push(new Glaemscribe.Glaeml.Error(lnum, "Error parsing args (" + error + ")."));
@@ -180,7 +181,7 @@ Glaemscribe.Glaeml.Parser.prototype.parse = function(raw_data) {
           var n         = new Glaemscribe.Glaeml.Node(lnum, Glaemscribe.Glaeml.NodeType.ElementBlock, name);
           n.args        = n.args.concat(args);
           n.parent_node = parser.current_parent_node;
-          
+              
           parser.current_parent_node.children.push(n);
           parser.current_parent_node = n;
         }
