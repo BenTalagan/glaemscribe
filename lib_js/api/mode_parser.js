@@ -224,7 +224,7 @@ Glaemscribe.ModeParser.prototype.parse_pre_post_processor = function(processor_e
     }
     else
     {         
-      term.operators.push(new operator_class(element.args.slice(0)));     
+      term.operators.push(new operator_class(element.clone()));     
     }     
   }  
   

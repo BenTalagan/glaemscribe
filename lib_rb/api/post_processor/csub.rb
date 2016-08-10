@@ -27,14 +27,14 @@ module Glaemscribe
       attr_reader :matcher
       attr_reader :triggers
       
-      def initialize(args)
-        super(args)
+      def finalize(trans_options)
+        super(trans_options)
         
         # Build our operator
-        @matcher     = self.raw_args[0]
+        @matcher     = self.finalized_glaeml_element.args[0]
         @triggers    = Hash.new
   
-        self.raw_args.each{ |arg|
+        self.finalized_glaeml_element.args.each{ |arg|
 
           splitted  = arg.split()   
           replacer  = splitted.shift()

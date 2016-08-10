@@ -25,7 +25,16 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 // Inherit from PrePostProcessorOperator
 Glaemscribe.UpDownTehtaSplitPreProcessorOperator = function(args)  
 {
-  Glaemscribe.PreProcessorOperator.call(this,args); //super
+  Glaemscribe.PreProcessorOperator.call(this,args); //super 
+  return this;
+} 
+Glaemscribe.UpDownTehtaSplitPreProcessorOperator.inheritsFrom( Glaemscribe.PreProcessorOperator );  
+
+Glaemscribe.UpDownTehtaSplitPreProcessorOperator.prototype.finalize = function(trans_options) {
+  Glaemscribe.PreProcessorOperator.prototype.finalize.call(this, trans_options); // super
+   
+  var op    = this;
+  var args  = op.finalized_glaeml_element.args; 
   
   var vowel_list      = args[0];
   var consonant_list  = args[1];
@@ -60,10 +69,8 @@ Glaemscribe.UpDownTehtaSplitPreProcessorOperator = function(args)
     var l = all_letters[li];
     this.word_split_map[l] = l;
   }    
-    
-  return this;
-} 
-Glaemscribe.UpDownTehtaSplitPreProcessorOperator.inheritsFrom( Glaemscribe.PreProcessorOperator );  
+   
+}
 
 Glaemscribe.UpDownTehtaSplitPreProcessorOperator.prototype.type_of_token = function(token)
 {

@@ -477,6 +477,17 @@ Glaemscribe.Glaeml.Node = function(line, type, name) {
   return this
 }
 
+Glaemscribe.Glaeml.Node.prototype.clone = function() {
+    var new_element  = new Glaemscribe.Glaeml.Node(this.line, this.type, this.name);
+    // Clone the array of args
+    new_element.args = this.args.slice(0); 
+    // Clone the children
+    this.children.glaem_each(function(child_index, child) {
+        new_element.children.push(child.clone());
+    });
+    return new_element;
+}
+
 Glaemscribe.Glaeml.Node.prototype.is_text = function()
 {
   return (this.type == Glaemscribe.Glaeml.NodeType.Text);
@@ -1117,7 +1128,7 @@ Glaemscribe.ModeParser.prototype.parse_pre_post_processor = function(processor_e
     }
     else
     {         
-      term.operators.push(new operator_class(element.args.slice(0)));     
+      term.operators.push(new operator_class(element.clone()));     
     }     
   }  
   
@@ -2246,9 +2257,9 @@ Glaemscribe.TranscriptionTreeNode.prototype.transcribe = function(string, chain)
 //      OPERATORS         //
 // ====================== //
 
-Glaemscribe.PrePostProcessorOperator = function(raw_args)
+Glaemscribe.PrePostProcessorOperator = function(glaeml_element)
 {
-  this.raw_args = raw_args;
+  this.glaeml_element = glaeml_element;
   return this;
 }
 Glaemscribe.PrePostProcessorOperator.prototype.apply = function(l)
@@ -2267,13 +2278,22 @@ Glaemscribe.PrePostProcessorOperator.prototype.eval_arg = function(arg, trans_op
   }
   return arg;
 }
+Glaemscribe.PrePostProcessorOperator.prototype.finalize_glaeml_element = function(ge, trans_options) {
+  var op = this;
+  
+  for(var i=0;i<ge.args.length;i++)
+    ge.args[i] = op.eval_arg(ge.args[i], trans_options);
+
+  ge.children.glaem_each(function(idx, child) {
+    op.finalize_glaeml_element(child, trans_options);
+  });
+  return ge;
+}
 Glaemscribe.PrePostProcessorOperator.prototype.finalize = function(trans_options) {
   var op = this;
-
-  op.args = [];
-  op.raw_args.glaem_each( function(arg_num, arg) {
-    op.args.push(op.eval_arg(arg, trans_options));
-  });
+  
+  // Deep copy the glaeml_element so we can safely eval the inner args
+  op.finalized_glaeml_element = op.finalize_glaeml_element(op.glaeml_element.clone(), trans_options);
 }
 
 // Inherit from PrePostProcessorOperator
@@ -2582,19 +2602,25 @@ Glaemscribe.resource_manager.register_pre_processor_class("downcase", Glaemscrib
 
 
 // Inherit from PrePostProcessorOperator
-Glaemscribe.RxSubstitutePreProcessorOperator = function(raw_args)  
+Glaemscribe.RxSubstitutePreProcessorOperator = function(glaeml_element)  
 {
-  Glaemscribe.PreProcessorOperator.call(this, raw_args); //super
-  // Ruby uses \1, \2, etc for captured expressions. Convert to javascript. 
-  this.raw_args[1] = this.raw_args[1].replace(/(\\\d)/g,function(cap) { return "$" + cap.replace("\\","")});
+  Glaemscribe.PreProcessorOperator.call(this, glaeml_element); //super
   return this;
 } 
 Glaemscribe.RxSubstitutePreProcessorOperator.inheritsFrom( Glaemscribe.PreProcessorOperator );  
 
+Glaemscribe.RxSubstitutePreProcessorOperator.prototype.finalize = function(trans_options) {
+  
+  Glaemscribe.PreProcessorOperator.prototype.finalize.call(this, trans_options); // super
+  
+  // Ruby uses \1, \2, etc for captured expressions. Convert to javascript. 
+  this.finalized_glaeml_element.args[1] = this.finalized_glaeml_element.args[1].replace(/(\\\d)/g,function(cap) { return "$" + cap.replace("\\","")});  
+}
+
 Glaemscribe.RxSubstitutePreProcessorOperator.prototype.apply = function(str)
 {
-  var what  = new RegExp(this.args[0],"g");
-  var to    = this.args[1];
+  var what  = new RegExp(this.finalized_glaeml_element.args[0],"g");
+  var to    = this.finalized_glaeml_element.args[1];
 
   return str.replace(what,to);
 }  
@@ -2617,8 +2643,8 @@ Glaemscribe.SubstitutePreProcessorOperator.inheritsFrom( Glaemscribe.PreProcesso
 
 Glaemscribe.SubstitutePreProcessorOperator.prototype.apply = function(str)
 {
-  var what  = new RegExp(this.args[0],"g");
-  var to    = this.args[1];
+  var what  = new RegExp(this.finalized_glaeml_element.args[0],"g");
+  var to    = this.finalized_glaeml_element.args[1];
 
   return str.replace(what,to);
 }  
@@ -2634,7 +2660,16 @@ Glaemscribe.resource_manager.register_pre_processor_class("substitute", Glaemscr
 // Inherit from PrePostProcessorOperator
 Glaemscribe.UpDownTehtaSplitPreProcessorOperator = function(args)  
 {
-  Glaemscribe.PreProcessorOperator.call(this,args); //super
+  Glaemscribe.PreProcessorOperator.call(this,args); //super 
+  return this;
+} 
+Glaemscribe.UpDownTehtaSplitPreProcessorOperator.inheritsFrom( Glaemscribe.PreProcessorOperator );  
+
+Glaemscribe.UpDownTehtaSplitPreProcessorOperator.prototype.finalize = function(trans_options) {
+  Glaemscribe.PreProcessorOperator.prototype.finalize.call(this, trans_options); // super
+   
+  var op    = this;
+  var args  = op.finalized_glaeml_element.args; 
   
   var vowel_list      = args[0];
   var consonant_list  = args[1];
@@ -2669,10 +2704,8 @@ Glaemscribe.UpDownTehtaSplitPreProcessorOperator = function(args)
     var l = all_letters[li];
     this.word_split_map[l] = l;
   }    
-    
-  return this;
-} 
-Glaemscribe.UpDownTehtaSplitPreProcessorOperator.inheritsFrom( Glaemscribe.PreProcessorOperator );  
+   
+}
 
 Glaemscribe.UpDownTehtaSplitPreProcessorOperator.prototype.type_of_token = function(token)
 {
@@ -2781,10 +2814,10 @@ Glaemscribe.ElvishNumbersPreProcessorOperator.prototype.apply = function(str)
 {
   var op      = this;
   
-  var base    = op.args[0];
+  var base    = op.finalized_glaeml_element.args[0];
   base        = (base != null)?(parseInt(base)):(12);
   
-  var reverse = op.args[1]
+  var reverse = op.finalized_glaeml_element.args[1]
   reverse     = (reverse != null)?(reverse == true || reverse == "true"):(true) 
   
   return str.replace(/\d+/g,function(match) {
@@ -2838,16 +2871,23 @@ Glaemscribe.resource_manager.register_post_processor_class("reverse", Glaemscrib
 Glaemscribe.CSubPostProcessorOperator = function(args)  
 {
   Glaemscribe.PostProcessorOperator.call(this,args); //super
+  return this;
+} 
+Glaemscribe.CSubPostProcessorOperator.inheritsFrom( Glaemscribe.PostProcessorOperator );  
+
+Glaemscribe.CSubPostProcessorOperator.prototype.finalize = function(trans_options) {
+  
+  Glaemscribe.PostProcessorOperator.prototype.finalize.call(this,trans_options); //super
   
   // Build our operator
   var op         = this;
   
-  op.matcher     = op.raw_args[0];
+  op.matcher     = op.finalized_glaeml_element.args[0];
   op.triggers    = {};
   
-  for(var a=1;a<args.length;a++)
+  for(var a=1;a<op.finalized_glaeml_element.args.length;a++)
   {
-    var arg       = op.raw_args[a];
+    var arg       = op.finalized_glaeml_element.args[a];
     var splitted  = arg.match(/\S+/g);
     
     var replacer  = splitted.shift();
@@ -2857,8 +2897,7 @@ Glaemscribe.CSubPostProcessorOperator = function(args)
   }
   
   return this;
-} 
-Glaemscribe.CSubPostProcessorOperator.inheritsFrom( Glaemscribe.PostProcessorOperator );  
+}
 
 Glaemscribe.CSubPostProcessorOperator.prototype.apply = function(tokens)
 {

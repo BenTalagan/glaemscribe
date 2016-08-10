@@ -26,10 +26,10 @@ module Glaemscribe
     class ElvishNumbersPreProcessorOperator < PreProcessorOperator
 
       def apply(l)
-        base    = args[0]
+        base    = finalized_glaeml_element.args[0]
         base    = (base)?(base.to_i):(12)
         
-        reverse = args[1]
+        reverse = finalized_glaeml_element.args[1]
         reverse = (reverse != nil)?(reverse == "true" || reverse == true):(true) 
 
         l.gsub(/\d+/) { |f| 

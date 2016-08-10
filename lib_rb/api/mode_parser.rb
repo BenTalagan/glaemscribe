@@ -181,7 +181,7 @@ module Glaemscribe
           if !operator_class
             @mode.errors << Glaeml::Error.new(element.line,"Operator #{operator_name} is unknown.")
           else            
-            term.operators << operator_class.new(element.args.clone)
+            term.operators << operator_class.new(element.clone)
           end  
         }  
         

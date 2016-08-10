@@ -26,9 +26,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //      OPERATORS         //
 // ====================== //
 
-Glaemscribe.PrePostProcessorOperator = function(raw_args)
+Glaemscribe.PrePostProcessorOperator = function(glaeml_element)
 {
-  this.raw_args = raw_args;
+  this.glaeml_element = glaeml_element;
   return this;
 }
 Glaemscribe.PrePostProcessorOperator.prototype.apply = function(l)
@@ -47,13 +47,22 @@ Glaemscribe.PrePostProcessorOperator.prototype.eval_arg = function(arg, trans_op
   }
   return arg;
 }
+Glaemscribe.PrePostProcessorOperator.prototype.finalize_glaeml_element = function(ge, trans_options) {
+  var op = this;
+  
+  for(var i=0;i<ge.args.length;i++)
+    ge.args[i] = op.eval_arg(ge.args[i], trans_options);
+
+  ge.children.glaem_each(function(idx, child) {
+    op.finalize_glaeml_element(child, trans_options);
+  });
+  return ge;
+}
 Glaemscribe.PrePostProcessorOperator.prototype.finalize = function(trans_options) {
   var op = this;
-
-  op.args = [];
-  op.raw_args.glaem_each( function(arg_num, arg) {
-    op.args.push(op.eval_arg(arg, trans_options));
-  });
+  
+  // Deep copy the glaeml_element so we can safely eval the inner args
+  op.finalized_glaeml_element = op.finalize_glaeml_element(op.glaeml_element.clone(), trans_options);
 }
 
 // Inherit from PrePostProcessorOperator

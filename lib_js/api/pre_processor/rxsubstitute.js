@@ -23,19 +23,25 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 // Inherit from PrePostProcessorOperator
-Glaemscribe.RxSubstitutePreProcessorOperator = function(raw_args)  
+Glaemscribe.RxSubstitutePreProcessorOperator = function(glaeml_element)  
 {
-  Glaemscribe.PreProcessorOperator.call(this, raw_args); //super
-  // Ruby uses \1, \2, etc for captured expressions. Convert to javascript. 
-  this.raw_args[1] = this.raw_args[1].replace(/(\\\d)/g,function(cap) { return "$" + cap.replace("\\","")});
+  Glaemscribe.PreProcessorOperator.call(this, glaeml_element); //super
   return this;
 } 
 Glaemscribe.RxSubstitutePreProcessorOperator.inheritsFrom( Glaemscribe.PreProcessorOperator );  
 
+Glaemscribe.RxSubstitutePreProcessorOperator.prototype.finalize = function(trans_options) {
+  
+  Glaemscribe.PreProcessorOperator.prototype.finalize.call(this, trans_options); // super
+  
+  // Ruby uses \1, \2, etc for captured expressions. Convert to javascript. 
+  this.finalized_glaeml_element.args[1] = this.finalized_glaeml_element.args[1].replace(/(\\\d)/g,function(cap) { return "$" + cap.replace("\\","")});  
+}
+
 Glaemscribe.RxSubstitutePreProcessorOperator.prototype.apply = function(str)
 {
-  var what  = new RegExp(this.args[0],"g");
-  var to    = this.args[1];
+  var what  = new RegExp(this.finalized_glaeml_element.args[0],"g");
+  var to    = this.finalized_glaeml_element.args[1];
 
   return str.replace(what,to);
 }  

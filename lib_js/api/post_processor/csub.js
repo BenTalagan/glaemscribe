@@ -25,16 +25,23 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 Glaemscribe.CSubPostProcessorOperator = function(args)  
 {
   Glaemscribe.PostProcessorOperator.call(this,args); //super
+  return this;
+} 
+Glaemscribe.CSubPostProcessorOperator.inheritsFrom( Glaemscribe.PostProcessorOperator );  
+
+Glaemscribe.CSubPostProcessorOperator.prototype.finalize = function(trans_options) {
+  
+  Glaemscribe.PostProcessorOperator.prototype.finalize.call(this,trans_options); //super
   
   // Build our operator
   var op         = this;
   
-  op.matcher     = op.raw_args[0];
+  op.matcher     = op.finalized_glaeml_element.args[0];
   op.triggers    = {};
   
-  for(var a=1;a<args.length;a++)
+  for(var a=1;a<op.finalized_glaeml_element.args.length;a++)
   {
-    var arg       = op.raw_args[a];
+    var arg       = op.finalized_glaeml_element.args[a];
     var splitted  = arg.match(/\S+/g);
     
     var replacer  = splitted.shift();
@@ -44,8 +51,7 @@ Glaemscribe.CSubPostProcessorOperator = function(args)
   }
   
   return this;
-} 
-Glaemscribe.CSubPostProcessorOperator.inheritsFrom( Glaemscribe.PostProcessorOperator );  
+}
 
 Glaemscribe.CSubPostProcessorOperator.prototype.apply = function(tokens)
 {

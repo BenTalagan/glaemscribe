@@ -45,6 +45,17 @@ Glaemscribe.Glaeml.Node = function(line, type, name) {
   return this
 }
 
+Glaemscribe.Glaeml.Node.prototype.clone = function() {
+    var new_element  = new Glaemscribe.Glaeml.Node(this.line, this.type, this.name);
+    // Clone the array of args
+    new_element.args = this.args.slice(0); 
+    // Clone the children
+    this.children.glaem_each(function(child_index, child) {
+        new_element.children.push(child.clone());
+    });
+    return new_element;
+}
+
 Glaemscribe.Glaeml.Node.prototype.is_text = function()
 {
   return (this.type == Glaemscribe.Glaeml.NodeType.Text);

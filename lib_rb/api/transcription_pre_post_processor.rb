@@ -24,11 +24,11 @@ module Glaemscribe
   module API
     
     class PrePostProcessorOperator
-      attr_reader :args
-      attr_reader :raw_args
+      attr_reader :glaeml_element
+      attr_reader :finalized_glaeml_element
       
-      def initialize(raw_args)
-        @raw_args = raw_args
+      def initialize(glaeml_element)
+        @glaeml_element = glaeml_element
       end
       
       def eval_arg(arg, trans_options)
@@ -40,11 +40,16 @@ module Glaemscribe
         return arg 
       end
       
-      def finalize(trans_options)
-        @args = []
-        @raw_args.each{ |arg|
-          @args << eval_arg(arg, trans_options)
+      def finalize_glaeml_element(ge, trans_options)
+        ge.args.map! { |arg| eval_arg(arg, trans_options) }
+        ge.children.each{ |child|
+          finalize_glaeml_element(child, trans_options)
         }
+        ge
+      end
+      
+      def finalize(trans_options)
+        @finalized_glaeml_element = finalize_glaeml_element(@glaeml_element.clone, trans_options)
       end
       
       def apply

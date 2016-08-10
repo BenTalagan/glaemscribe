@@ -5,3 +5,4 @@
 /unit_tests_dumped
 .DS_Store
 *.disabled
+npm-debug.log

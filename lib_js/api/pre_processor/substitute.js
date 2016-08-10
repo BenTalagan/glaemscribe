@@ -32,8 +32,8 @@ Glaemscribe.SubstitutePreProcessorOperator.inheritsFrom( Glaemscribe.PreProcesso
 
 Glaemscribe.SubstitutePreProcessorOperator.prototype.apply = function(str)
 {
-  var what  = new RegExp(this.args[0],"g");
-  var to    = this.args[1];
+  var what  = new RegExp(this.finalized_glaeml_element.args[0],"g");
+  var to    = this.finalized_glaeml_element.args[1];
 
   return str.replace(what,to);
 }  

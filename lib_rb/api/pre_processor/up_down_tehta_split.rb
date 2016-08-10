@@ -26,11 +26,11 @@ module Glaemscribe
     class UpDownTehtaSplitPreProcessorOperator < PreProcessorOperator
            
       attr_reader :vowel_list, :consonant_list
-      def initialize(args)
-        super(args)
+      def finalize(trans_options)
+        super(trans_options)
         
-        vowel_list          = args[0]
-        consonant_list      = args[1]
+        vowel_list          = finalized_glaeml_element.args[0]
+        consonant_list      = finalized_glaeml_element.args[1]
             
         vowel_list          = vowel_list.split(/,/).map{|s| s.strip}
         consonant_list      = consonant_list.split(/,/).map{|s| s.strip}  

@@ -28,10 +28,10 @@ Glaemscribe.ElvishNumbersPreProcessorOperator.prototype.apply = function(str)
 {
   var op      = this;
   
-  var base    = op.args[0];
+  var base    = op.finalized_glaeml_element.args[0];
   base        = (base != null)?(parseInt(base)):(12);
   
-  var reverse = op.args[1]
+  var reverse = op.finalized_glaeml_element.args[1]
   reverse     = (reverse != null)?(reverse == true || reverse == "true"):(true) 
   
   return str.replace(/\d+/g,function(match) {

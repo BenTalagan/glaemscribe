@@ -27,8 +27,8 @@ module Glaemscribe
     class RxSubstitutePreProcessorOperator < PreProcessorOperator
 
       def apply(l)
-        what = /#{@args[0]}/
-        with = @args[1]
+        what = /#{finalized_glaeml_element.args[0]}/
+        with = finalized_glaeml_element.args[1]
         l.gsub(what, with)
       end
       

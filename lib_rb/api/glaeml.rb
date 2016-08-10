@@ -67,6 +67,13 @@ module Glaemscribe
           @children     = []
         end
         
+        # Make our object clonable
+        def initialize_copy(other)
+          super
+          @args = other.args.clone
+          @children = other.children.map{|c| c.clone}
+        end
+        
         def pathfind_crawl(apath, found)
         
           children.each{ |c|
