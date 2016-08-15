@@ -45,6 +45,18 @@ module Glaemscribe
           names  = char_element.args[1..-1].map{|cname| cname.strip }.reject{ |cname| cname.empty? }
           @charset.add_char(char_element.line,code,names)
         }
+        
+        doc.root_node.gpath("virtual").each { |virtual_element|
+          names = virtual_element.args
+          classes = {}
+          virtual_element.gpath("class").each { |class_element|
+            result    = class_element.args[0]
+            triggers  = class_element.args[1..-1].map{|cname| cname.strip }.reject{ |cname| cname.empty? }     
+            classes[result] = triggers
+          }
+          @charset.add_virtual_char(virtual_element.line,classes,names)
+        }
+        
         @charset.finalize
              
         @charset 

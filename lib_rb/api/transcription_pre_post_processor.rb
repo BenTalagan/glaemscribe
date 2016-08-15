@@ -127,7 +127,7 @@ module Glaemscribe
          
         # Apply filters
         @operators.each{ |operator|
-          tokens = operator.apply(tokens)
+          tokens = operator.apply(tokens,out_charset)
         } 
         
         # Convert output

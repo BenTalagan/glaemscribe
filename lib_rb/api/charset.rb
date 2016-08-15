@@ -27,15 +27,74 @@ module Glaemscribe
       
       attr_accessor :errors
       attr_reader   :chars
+      attr_reader   :virtual_chars
             
       class Char
         attr_accessor :line
         attr_accessor :code
         attr_accessor :names
         attr_accessor :str
+        attr_accessor :charset
         
         def initialize
           @names = {}
+        end
+        
+        def virtual?
+          false
+        end
+      end
+      
+      class VirtualChar
+        attr_accessor :line
+        attr_accessor :names
+        attr_accessor :classes
+        attr_accessor :charset
+        
+        def initialize
+          @classes = {} # result_char_1 => [trigger_char_1, trigger_char_2 ...] , result_char_1 => ...
+          @lookup_table = {}
+        end
+        
+        def str
+          VIRTUAL_CHAR_OUTPUT
+        end
+        
+        def finalize
+          @lookup_table = {}
+          @classes.each{ |result_char, trigger_chars|
+            trigger_chars.each{ |trigger_char|
+              found = @lookup_table[trigger_char]
+              if found
+                @charset.errors << Glaeml::Error.new(@line, "Trigger char #{trigger_char} found twice in virtual char.")
+              else
+                rc = @charset[result_char]
+                tc = @charset[trigger_char]
+        
+                if rc.nil?
+                  @charset.errors << Glaeml::Error.new(@line, "Trigger char #{trigger_char} points to unknown result char #{result_char}.")
+                elsif tc.nil?
+                  @charset.errors << Glaeml::Error.new(@line, "Unknown trigger char #{trigger_char}.")
+                elsif tc.class == VirtualChar
+                  @charset.errors << Glaeml::Error.new(@line, "Trigger char #{trigger_char} is virtual. This is not supported!")    
+                elsif rc.class == VirtualChar
+                  @charset.errors << Glaeml::Error.new(@line, "Trigger char #{trigger_char} points to another virtual char #{result_char}. This is not supported!")
+                else
+                  tc.names.each{|trigger_char_name| # Don't forget to match all name variants for that trigger char!
+                    @lookup_table[trigger_char_name] = rc
+                  }              
+                end  
+              end              
+            }
+          }
+        end
+        
+        def [](trigger_char_name)
+          @lookup_table[trigger_char_name]
+        end
+        
+        def virtual?
+          true
         end
       end
       
@@ -49,17 +108,30 @@ module Glaemscribe
       def add_char(line, code, names)
         return if names.empty? || names.include?("?") # Ignore characters with '?'
         
-        c       = Char.new
-        c.line  = line
-        c.code  = code
-        c.names = names
-        c.str   = code.chr('UTF-8')
+        c         = Char.new
+        c.line    = line
+        c.code    = code
+        c.names   = names
+        c.str     = code.chr('UTF-8')
+        c.charset = self
         @chars << c
       end
       
+      def add_virtual_char(line, classes, names)
+        return if names.empty? || names.include?("?") # Ignore characters with '?'
+        
+        c         = VirtualChar.new
+        c.line    = line
+        c.names   = names
+        c.classes = classes # We'll check errors in finalize
+        c.charset = self
+        @chars << c   
+      end
+      
       def finalize
-        @errors = []
-        @lookup_table = {}
+        @errors         = []
+        @lookup_table   = {}
+        @virtual_chars  = []
         
         @chars.each { |c|
           c.names.each { |cname|
@@ -70,6 +142,13 @@ module Glaemscribe
               @lookup_table[cname] = c
             end
           }
+        }
+        
+        @chars.each{ |c|
+          if c.class == VirtualChar
+            c.finalize
+            @virtual_chars << c
+          end
         }
         
         API::Debug::log("Finalized charset '#{@name}', #{@lookup_table.count} symbols loaded.")

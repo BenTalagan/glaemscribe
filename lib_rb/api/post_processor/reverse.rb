@@ -24,7 +24,7 @@ module Glaemscribe
   module API
 
     class ReversePostProcessorOperator < PostProcessorOperator
-      def apply(tokens)
+      def apply(tokens,charset)
         tokens.reverse
       end
     end

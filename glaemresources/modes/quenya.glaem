@@ -131,7 +131,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
     \if implicit_a
       {_A_}              === {NULL}
-      {_NVOWEL_}         === THINF_DOT
+      {_NVOWEL_}         === NO_VOWEL
     \else
       {_A_}              === {A_SHAPE}
       {_NVOWEL_}         === {NULL}
@@ -189,20 +189,20 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     {_L1_}        === TINCO * PARMA   * CALMA * QUESSE
 
     \** GEMINATED **\
-    {L1_1_GEMS}   === tt                  * pp               * {K}{K}
-    {_L1_1_GEMS_} === TINCO DASH_INF      * PARMA DASH_INF   * CALMA DASH_INF
+    {L1_1_GEMS}   === tt                  * pp                    * {K}{K}
+    {_L1_1_GEMS_} === TINCO GEMINATE_SIGN * PARMA GEMINATE_SIGN   * CALMA GEMINATE_SIGN
 
     \** NORMAL **\
     [ {L1} * {L1_1_GEMS} ] {V_D_WN} --> [ {_L1_} * {_L1_1_GEMS_} ] {_V_D_WN_}
 
     \** OTHERS **\
-    ty{V_D_WN}          --> TINCO THINF_DDOT {_V_D_WN_}
-    py{V_D_WN}          --> PARMA THINF_DDOT {_V_D_WN_}
+    ty{V_D_WN}          --> TINCO PALATAL_SIGN {_V_D_WN_}
+    py{V_D_WN}          --> PARMA PALATAL_SIGN {_V_D_WN_}
 
-    ts{V_D_WN}          --> TINCO {_V_D_WN_} SHOOK_RIGHT
-    ps{V_D_WN}          --> PARMA {_V_D_WN_} SHOOK_RIGHT
-    {K}s{V_D_WN}        --> CALMA SHOOK_LEFT {_V_D_WN_}   
-    x{V_D_WN}           --> CALMA SHOOK_LEFT {_V_D_WN_}   \** render ks for x **\
+    ts{V_D_WN}          --> TINCO {_V_D_WN_} ALVEOLAR_SIGN
+    ps{V_D_WN}          --> PARMA {_V_D_WN_} ALVEOLAR_SIGN
+    {K}s{V_D_WN}        --> CALMA ALVEOLAR_SIGN {_V_D_WN_}   
+    x{V_D_WN}           --> CALMA ALVEOLAR_SIGN {_V_D_WN_}   \** render ks for x **\
 
     \** ===================== **\
     \**     2ND LINE RULES    **\
@@ -214,7 +214,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     [{L2}]{V_D_WN}  --> [{_L2_}]{_V_D_WN_}
 
     \** Palatalized **\
-    ndy{V_D_WN} --> ANDO THINF_DDOT {_V_D_WN_}
+    ndy{V_D_WN} --> ANDO PALATAL_SIGN {_V_D_WN_}
 
     \** Have some rules for d,b,g,gw although there are not theoritically possible, aldudénie e.g needs it **\
     {L2_UN}               === d       * b         * g       * gw
@@ -245,7 +245,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     [{L3}]{V_D_WN}  --> [{_L3_}]{_V_D_WN_}
 
     \** OTHERS **\
-    hy{V_D_WN}      --> HYARMEN THINF_DDOT {_V_D_WN_}
+    hy{V_D_WN}      --> HYARMEN PALATAL_SIGN {_V_D_WN_}
 
     \** Override h with vowels (descendent of hy) **\
     _h{V_D}         --> HYARMEN {_V_D_}
@@ -262,7 +262,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     \** NORMAL **\
     [{L4}]{V_D_WN}    --> [{_L4_}]{_V_D_WN_}
     \** OTHERS **\
-    nty{V_D_WN}       --> ANTO THINF_DDOT {_V_D_WN_}
+    nty{V_D_WN}       --> ANTO PALATAL_SIGN {_V_D_WN_}
 
     \** ===================== **\
     \**     5TH LINE RULES    **\
@@ -272,10 +272,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
     [{L5}]{V_D_WN}  --> [{_L5_}]{_V_D_WN_}
 
-    ny{V_D_WN}          --> NUMEN THINF_DDOT {_V_D_WN_}
-    nn{V_D_WN}          --> NUMEN DASH_INF   {_V_D_WN_}
-    my{V_D_WN}          --> MALTA THINF_DDOT {_V_D_WN_}
-    mm{V_D_WN}          --> MALTA DASH_INF   {_V_D_WN_}
+    ny{V_D_WN}          --> NUMEN PALATAL_SIGN {_V_D_WN_}
+    nn{V_D_WN}          --> NUMEN GEMINATE_SIGN   {_V_D_WN_}
+    my{V_D_WN}          --> MALTA PALATAL_SIGN {_V_D_WN_}
+    mm{V_D_WN}          --> MALTA GEMINATE_SIGN   {_V_D_WN_}
 
     \** ===================== **\
     \**     6TH LINE RULES    **\
@@ -288,7 +288,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     \endif
 
     {L6}        === r     * v     * y                   * w
-    {_L6_}      === ROMEN * VALA  * ANNA THINF_DDOT   * VILYA
+    {_L6_}      === ROMEN * VALA  * ANNA PALATAL_SIGN   * VILYA
 
     [{L6}]{V_D_WN} --> [{_L6_}]{_V_D_WN_}
 
@@ -298,8 +298,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     \** Override rule r + null **\
     r                 --> {_LONE_R_} {_NVOWEL_}
 
-    rr{V_D_WN}        --> ROMEN DASH_INF {_V_D_WN_}
-    ry{V_D_WN}        --> ROMEN THINF_DDOT {_V_D_WN_}
+    rr{V_D_WN}        --> ROMEN GEMINATE_SIGN {_V_D_WN_}
+    ry{V_D_WN}        --> ROMEN PALATAL_SIGN {_V_D_WN_}
     rd{V_D_WN}        --> ARDA {_V_D_WN_}
 
     \** ===================== **\
@@ -310,7 +310,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
     [{LINE_L}]{V_D_WN}    --> [{_LINE_L_}]{_V_D_WN_}
 
-    ly{V_D_WN}            --> LAMBE THINF_DDOT {_V_D_WN_}
+    ly{V_D_WN}            --> LAMBE PALATAL_SIGN {_V_D_WN_}
     hl{V_D_WN}            --> HALLA LAMBE {_V_D_WN_}
     hr{V_D_WN}            --> HALLA ROMEN {_V_D_WN_}
 
@@ -402,88 +402,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 \end
 
 \beg postprocessor
-
-  \** The following rules are used to handle tehtar (& the like) multiple version chosing **\
-  \** It could be avoided with modern fonts with gsub/gpos tables for ligatures and diacritics **\
-  \** placement **\
-
-  \** TODO : Move FORMEN to S, move HYARMEN to XS **\
-  
-  \beg csub A_TEHTA
-    \class A_TEHTA_XS   TELCO ARA
-    \class A_TEHTA_S    ORE TW_EXT_11 TW_EXT_12 SULE HYARMEN
-    \class A_TEHTA_L    TINCO CALMA PARMA QUESSE AHA HWESTA LAMBE ALDA YANTA URE ROMEN ARDA SILME_NUQUERNA ESSE_NUQUERNA VALA ANNA VILYA FORMEN
-    \class A_TEHTA_XL   TW_EXT_13 TW_EXT_14 TW_EXT_21 TW_EXT_22 TW_EXT_23 TW_EXT_24 ANDO UMBAR ANGA UNGWE ANTO AMPA ANCA UNQUE NUMEN MALTA NOLDO NWALME
-  \end
- 
-  \beg csub A_TEHTA_CIRCUM
-    \class A_TEHTA_CIRCUM_XS   TELCO ARA
-    \class A_TEHTA_CIRCUM_S    ORE TW_EXT_11 TW_EXT_12 SULE HYARMEN
-    \class A_TEHTA_CIRCUM_L    TINCO CALMA PARMA QUESSE AHA HWESTA LAMBE ALDA YANTA URE ROMEN ARDA SILME_NUQUERNA ESSE_NUQUERNA VALA ANNA VILYA FORMEN
-    \class A_TEHTA_CIRCUM_XL   TW_EXT_13 TW_EXT_14 TW_EXT_21 TW_EXT_22 TW_EXT_23 TW_EXT_24 ANDO UMBAR ANGA UNGWE ANTO AMPA ANCA UNQUE NUMEN MALTA NOLDO NWALME
-  \end
-  
-  \beg csub E_TEHTA
-    \class E_TEHTA_XS   TELCO ARA
-    \class E_TEHTA_S    ORE TW_EXT_11 TW_EXT_12 SULE HYARMEN
-    \class E_TEHTA_L    TINCO CALMA PARMA QUESSE AHA HWESTA LAMBE ALDA YANTA URE ROMEN ARDA SILME_NUQUERNA ESSE_NUQUERNA VALA ANNA VILYA FORMEN
-    \class E_TEHTA_XL   TW_EXT_13 TW_EXT_14 TW_EXT_21 TW_EXT_22 TW_EXT_23 TW_EXT_24 ANDO UMBAR ANGA UNGWE ANTO AMPA ANCA UNQUE NUMEN MALTA NOLDO NWALME
-  \end
-  
-  \beg csub I_TEHTA
-    \class I_TEHTA_XS   TELCO ARA
-    \class I_TEHTA_S    ORE TW_EXT_11 TW_EXT_12 SULE HYARMEN
-    \class I_TEHTA_L    TINCO CALMA PARMA QUESSE AHA HWESTA LAMBE ALDA YANTA URE ROMEN ARDA SILME_NUQUERNA ESSE_NUQUERNA VALA ANNA VILYA FORMEN
-    \class I_TEHTA_XL   TW_EXT_13 TW_EXT_14 TW_EXT_21 TW_EXT_22 TW_EXT_23 TW_EXT_24 ANDO UMBAR ANGA UNGWE ANTO AMPA ANCA UNQUE NUMEN MALTA NOLDO NWALME
-  \end
-  
-  \beg csub O_TEHTA
-    \class O_TEHTA_XS   TELCO ARA
-    \class O_TEHTA_S    ORE TW_EXT_11 TW_EXT_12 SULE HYARMEN
-    \class O_TEHTA_L    TINCO CALMA PARMA QUESSE AHA HWESTA LAMBE ALDA YANTA URE ROMEN ARDA SILME_NUQUERNA ESSE_NUQUERNA VALA ANNA VILYA FORMEN
-    \class O_TEHTA_XL   TW_EXT_13 TW_EXT_14 TW_EXT_21 TW_EXT_22 TW_EXT_23 TW_EXT_24 ANDO UMBAR ANGA UNGWE ANTO AMPA ANCA UNQUE NUMEN MALTA NOLDO NWALME
-  \end
-  
-  \beg csub U_TEHTA
-    \class U_TEHTA_XS   TELCO ARA
-    \class U_TEHTA_S    ORE TW_EXT_11 TW_EXT_12 SULE HYARMEN
-    \class U_TEHTA_L    TINCO CALMA PARMA QUESSE AHA HWESTA LAMBE ALDA YANTA URE ROMEN ARDA SILME_NUQUERNA ESSE_NUQUERNA VALA ANNA VILYA FORMEN
-    \class U_TEHTA_XL   TW_EXT_13 TW_EXT_14 TW_EXT_21 TW_EXT_22 TW_EXT_23 TW_EXT_24 ANDO UMBAR ANGA UNGWE ANTO AMPA ANCA UNQUE NUMEN MALTA NOLDO NWALME
-  \end
-  
-  \** no vowel mark **\
-  \beg csub THINF_DOT
-    \class THINF_DOT_XS     TELCO ROMEN ARDA
-    \class THINF_DOT_L      ORE TW_EXT_11 TW_EXT_12  TINCO PARMA SULE FORMEN VALA ANNA VILYA SILME ESSE AHA HWESTA HYARMEN YANTA URE
-    \class THINF_DOT_XL     QUESSE CALMA TW_EXT_13 TW_EXT_14 TW_EXT_21 TW_EXT_22 TW_EXT_23 TW_EXT_24 ANDO UMBAR ANGA UNGWE ANTO AMPA ANCA UNQUE NUMEN MALTA NOLDO NWALME 
-    \class LAMBE_MARK_DOT   LAMBE ALDA
-  \end
-
-  \** palatalisation **\
-  \beg csub THINF_DDOT
-    \class THINF_DDOT_XS    ROMEN
-    \class THINF_DDOT_S 
-    \class THINF_DDOT_L     TINCO PARMA HYARMEN ANNA
-    \class THINF_DDOT_XL    ANDO ANTO NUMEN MALTA
-    \class LAMBE_MARK_DDOT  LAMBE
-  \end
-  
-  \** gemination **\
-  \beg csub DASH_INF
-    \class DASH_INF_XS
-    \class DASH_INF_S       TINCO PARMA CALMA ROMEN
-    \class DASH_INF_L       NUMEN MALTA
-    \class DASH_INF_XL
-    \** LAMBE or not LAMBE ? **\
-  \end
-  
-  \beg csub SHOOK_LEFT
-    \class SHOOK_LEFT_L   CALMA
-  \end
-  
-  \beg csub SHOOK_RIGHT
-    \class SHOOK_RIGHT_L  TINCO PARMA   
-  \end
-
+  \resolve_virtuals
 \end
 
