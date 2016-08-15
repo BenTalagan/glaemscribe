@@ -99,9 +99,10 @@ module Glaemscribe
       end
       
       def initialize(name)
-        @name   = name
-        @chars  = []
-        @errors = []
+        @name           = name
+        @chars          = []
+        @errors         = []
+        @virtual_chars  = []
       end
       
       # Pass integer (utf8 num) and array (of strings)

@@ -6,7 +6,9 @@ Object.defineProperty(Object.prototype, "glaem_each", {
     {
       if(!this.hasOwnProperty(o))
         continue;
-      callback(o,this[o]);
+      var res = callback(o,this[o]);
+      if(res == false)
+        break;
     }
   }   
 });

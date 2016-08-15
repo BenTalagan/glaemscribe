@@ -171,13 +171,13 @@ Glaemscribe.TranscriptionPostProcessor.prototype.apply = function(tokens, out_ch
   var out_space_str     = " ";
   if(this.out_space != null)
   {
-    out_space_str       = this.out_space.map(function(token) { return out_charset.n2c(token).str }).join("");
+    out_space_str       = this.out_space.map(function(token) { return out_charset.n2c(token).output() }).join("");
   }
   
   for(var i=0;i<this.operators.length;i++)
   {
     var operator  = this.operators[i];
-    tokens        = operator.apply(tokens);
+    tokens        = operator.apply(tokens, out_charset);
   }
   
   // Convert output
@@ -198,7 +198,7 @@ Glaemscribe.TranscriptionPostProcessor.prototype.apply = function(tokens, out_ch
     case "*LF":
       ret += "\n";
     default:
-      ret += out_charset.n2c(token).str
+      ret += out_charset.n2c(token).output();
     }    
   }
  

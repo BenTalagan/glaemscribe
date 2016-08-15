@@ -29,7 +29,7 @@ Glaemscribe.ReversePostProcessorOperator = function(args)
 } 
 Glaemscribe.ReversePostProcessorOperator.inheritsFrom( Glaemscribe.PostProcessorOperator );  
 
-Glaemscribe.ReversePostProcessorOperator.prototype.apply = function(tokens)
+Glaemscribe.ReversePostProcessorOperator.prototype.apply = function(tokens, charset)
 {
   return tokens.reverse();
 }  

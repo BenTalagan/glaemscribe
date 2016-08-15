@@ -25,3 +25,4 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 Glaemscribe.WORD_BREAKER        = "|";
 Glaemscribe.WORD_BOUNDARY       = "_"
 Glaemscribe.UNKNOWN_CHAR_OUTPUT = "☠"      
+Glaemscribe.VIRTUAL_CHAR_OUTPUT = "☢" 
