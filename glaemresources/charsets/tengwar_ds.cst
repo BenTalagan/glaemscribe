@@ -31,7 +31,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   mainly, tehtar variants. These characters are only virtual, they do not really exist in DS based fonts.
 **\
 
-\** ☢ **\ \char 2622 A_TEHTA A_TEHTA_CIRCUM E_TEHTA I_TEHTA O_TEHTA U_TEHTA THSUP_TICK_INV THSUP_LAMBDA THSUP_TICK THINF_CURL THSUP_SEV THINF_DOT THINF_DDOT THINF_TDOT THINF_STROKE THINF_DSTROKE
+\** ☢ **\ \char 2622 A_TEHTA A_TEHTA_CIRCUM E_TEHTA I_TEHTA O_TEHTA U_TEHTA THSUP_TICK_INV THSUP_LAMBDA THSUP_TICK THINF_CURL THSUP_SEV THINF_DOT THINF_DDOT THINF_TDOT THINF_STROKE THINF_DSTROKE DASH_INF SHOOK_LEFT SHOOK_RIGHT
 
 \**   **\ \char 20 SPACE              
 \** ! **\ \char 21 TW_EXT_11            
