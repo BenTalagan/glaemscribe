@@ -60,6 +60,8 @@ GlaemscribeEditor = function()
   });
    
   editor.charEditor = $("#modal_char_editor");
+  editor.charEditor.normalCharEditor = editor.charEditor.find("#char_editor");
+  editor.charEditor.virtualCharEditor = editor.charEditor.find("#virtual_char_editor");
           
   editor.tweakKeyboardEvents();
   editor.installCallbacks();
@@ -79,10 +81,10 @@ GlaemscribeEditor.prototype.debuggerShouldApplyPostProcessor = function()
 GlaemscribeEditor.prototype.alertNavigator = function()
 {
   var isOpera = !!window.opera || navigator.userAgent.indexOf(' OPR/') >= 0;
-      // Opera 8.0+ (UA detection to detect Blink/v8-powered Opera)
+  // Opera 8.0+ (UA detection to detect Blink/v8-powered Opera)
   var isFirefox = typeof InstallTrigger !== 'undefined';   // Firefox 1.0+
   var isSafari = Object.prototype.toString.call(window.HTMLElement).indexOf('Constructor') > 0;
-      // At least Safari 3+: "[object HTMLElementConstructor]"
+  // At least Safari 3+: "[object HTMLElementConstructor]"
   var isChrome = !!window.chrome && !isOpera;              // Chrome 1+
   var isIE = /*@cc_on!@*/false || !!document.documentMode; // At least IE6
   
@@ -154,7 +156,7 @@ GlaemscribeEditor.prototype.installCallbacks = function()
       
     if(codemirror.realChangeTimer)
       clearTimeout(codemirror.realChangeTimer);
-      codemirror.realChangeTimer = setTimeout(function() {  
+    codemirror.realChangeTimer = setTimeout(function() {  
       editor.refreshMode();        
     }, 1000);      
       
@@ -402,7 +404,7 @@ GlaemscribeEditor.prototype.installCallbacks = function()
     }
     else
     {
-    //  alert(keycode)
+      //  alert(keycode)
     }
   });
   
@@ -645,7 +647,16 @@ GlaemscribeEditor.prototype.serializeCurrentCharset = function()
   for(var i=0;i<editor.charset.chars.length;i++)
   {
     var c = editor.charset.chars[i];
-    content += "\\** " + c.str + " **\\ \\char " + parseInt(c.code).toString(16) + " " + c.names.join(" ") + "\n";
+    if(c.is_virtual())
+    {
+      content += "\\beg virtual " + c.names.join(" ") + "\n";
+      c.classes.glaem_each(function(target, triggers) {
+        content += "\\class " + target + "\t\t" + triggers.join(" ") + "\n";
+      });
+      content += "\\end\n\n"
+    }
+    else  
+      content += "\\** " + c.str + " **\\ \\char " + parseInt(c.code).toString(16) + " " + c.names.join(" ") + "\n";
   }  
   return content;
 }
@@ -733,6 +744,9 @@ GlaemscribeEditor.prototype.refreshCharset = function()
   for(var i=0;i<editor.charset.chars.length;i++)
   {
     var c = editor.charset.chars[i];
+    if(c.is_virtual())
+      continue;
+    
     var tr = $("<tr class='char_entry' data-num='" + i + "'/>");
     var edit_button = $("<td class='edit_char_button'><div class='fa fa-pencil'></div></td>");
     
@@ -743,6 +757,37 @@ GlaemscribeEditor.prototype.refreshCharset = function()
     
     tr.append(edit_button);
     tr.append("<td>" + parseInt(c.code).toString(16) + "</td><td class='char'>" + c.str + "</td><td class='left'>" + c.names.join("<br>") + "</td>");
+    t.append(tr);
+  }
+  
+  var tr = $("<tr/>");
+  var th = $("<th id='add_virtual_char_button' class='add_char_button'><div class='fa fa-plus'></div</th>");  
+  
+  th.click(function() {
+    editor.charEditorAskedOn($(this),-2);
+  });
+  
+  tr.append(th);
+  tr.append("<th>V</th><th></th><th class='left'>Virtual Char names</th>");
+  
+  t.append(tr);  
+  
+  for(var i=0;i<editor.charset.chars.length;i++)
+  {
+    var c = editor.charset.chars[i];
+    if(!c.is_virtual())
+      continue;
+    
+    var tr = $("<tr class='char_entry' data-num='" + i + "'/>");
+    var edit_button = $("<td class='edit_char_button'><div class='fa fa-pencil'></div></td>");
+    
+    edit_button.click(function() {
+      var elt=$(this);
+      editor.charEditorAskedOn(elt,parseInt(elt.parent().data("num")));
+    });
+    
+    tr.append(edit_button);
+    tr.append("<td>X</td><td class='char'></td><td class='left'>" + c.names.join("<br>") + "</td>");
     t.append(tr);
   }
 }  
@@ -991,12 +1036,12 @@ GlaemscribeEditor.prototype.refreshDebuggerTranscription = function()
 {
   var editor = this;
   editor.genericRefreshTranscription($(".debugger_entry"),
-    $(".debugger_transcribed"),
-    $(".preprocessor_output"),
-    $(".processor_output"),
-    $(".postprocessor_output"),
-    $(".processor_followed_pathes table"),
-    editor.debuggerShouldApplyPostProcessor());
+  $(".debugger_transcribed"),
+  $(".preprocessor_output"),
+  $(".processor_output"),
+  $(".postprocessor_output"),
+  $(".processor_followed_pathes table"),
+  editor.debuggerShouldApplyPostProcessor());
 }
 
 GlaemscribeEditor.prototype.refreshDebuggerPlusPostLabels = function()
@@ -1017,25 +1062,55 @@ GlaemscribeEditor.prototype.charEditorAskedOn = function(char_row, char_num)
     return;
   
   editor.last_edited_char_num = char_num;
-  var editor_popup = $("#char_editor");
-  editor_popup.css("top",char_row.offset().top + char_row.outerHeight() + 1);
-  editor_popup.css("left",char_row.offset().left + 1);
+
+  var char = editor.charset.chars[char_num];
+
+  var is_virtual = (char_num == -2) || (char != null && char.is_virtual());
   
-  if(char_num == -1)
+  if(is_virtual == false)
   {
-    $("#char_code_edit").val("00");
-    $("#char_names_edit").val("NEW_NAME");
-    $("#char_preview").html(String.fromCodePoint(0));
-    $(".char_editor_button.trash").hide();
+    editor.charEditor.normalCharEditor.show();
+    editor.charEditor.virtualCharEditor.hide();
+    if(char_num == -1)
+    {
+      $("#char_code_edit").val("00");
+      $("#char_names_edit").val("NEW_NAME");
+      $("#char_preview").html(String.fromCodePoint(0));
+      $(".char_editor_button.trash").hide();
+    }
+    else
+    {
+  
+      $("#char_code_edit").val(parseInt(char.code).toString(16));
+      $("#char_names_edit").val(char.names.join(" "));
+      $("#char_preview").html(String.fromCodePoint(char.code));
+      $(".char_editor_button.trash").show();
+    }
   }
   else
   {
-    var char = editor.charset.chars[char_num];
-  
-    $("#char_code_edit").val(parseInt(char.code).toString(16));
-    $("#char_names_edit").val(char.names.join(" "));
-    $("#char_preview").html(String.fromCodePoint(char.code));
-    $(".char_editor_button.trash").show();
+    editor.charEditor.normalCharEditor.hide();
+    editor.charEditor.virtualCharEditor.show();
+    var class_editor = editor.charEditor.virtualCharEditor.find(".virtual_char_editor_classes");
+    class_editor.html("");
+    for(var i = 0; i<10; i++)
+      class_editor.append("<div class='class_edit' data-num='" + i + "'><span class='class_edit_target'><input class='class_target' placeholder='Target'/></span><span class='class_edit_triggers'><input class='class_triggers' placeholder='Triggers'/></span></div>");
+       
+    if(char_num == -2)
+    {    
+      $(".virtual_char_names_edit").val("NEW_NAME");
+      $(".char_editor_button.trash").hide();     
+    }
+    else
+    {
+      $(".virtual_char_names_edit").val(char.names.join(" "));
+      char.classes.glaem_each(function(c,vclass) {
+        var row = $(".class_edit[data-num='" + c +"']");
+        row.find(".class_target").val(vclass.target);
+        row.find(".class_triggers").val(vclass.triggers.join(" "));
+      });
+      $(".char_editor_button.trash").show();
+    }
   }
   
   editor.charEditor.show();
@@ -1061,21 +1136,51 @@ GlaemscribeEditor.prototype.confirmCharEdition = function()
 {
   var editor = this;
  
-  var code    = parseInt($("#char_code_edit").val(), 16);
-  var names   = $("#char_names_edit").val().split(/\s+/);
+  var edited_char = null;
+  if(editor.last_edited_char_num >= 0)
+    edited_char = editor.charset.chars[editor.last_edited_char_num];  
  
-  if(editor.last_edited_char_num == -1)
+  if(editor.last_edited_char_num == -1 || (edited_char && !edited_char.is_virtual() ))
   {
-    var newchar = editor.charset.add_char(0,code,names);  
+    var code    = parseInt($("#char_code_edit").val(), 16);
+    var names   = $("#char_names_edit").val().split(/\s+/);
+    if(editor.last_edited_char_num == -1)
+    {
+      edited_char         = editor.charset.add_char(0,code,names);        
+    }
+    else
+    {
+      edited_char.code    = code;
+      edited_char.names   = names;
+      edited_char.str     = String.fromCodePoint(code);     
+    }
   }
-  else
+  else if(editor.last_edited_char_num == -2 || (edited_char && edited_char.is_virtual() ))
   {
-    var char = editor.charset.chars[editor.last_edited_char_num];
-    char.code  = code;
-    char.names = names;
-    char.str   = String.fromCodePoint(code);
+    var names   = $("#virtual_char_names_edit").val().split(/\s+/);
+    var classes = [];
+    for(var i=0;i<10;i++)
+    {
+      var row     = $(".class_edit[data-num='" + i +"']");
+      var vc      = new Glaemscribe.VirtualChar.VirtualClass();
+      vc.target   = row.find(".class_target").val(); 
+      vc.triggers = stringListToCleanArray(row.find(".class_triggers").val(),/\s/);
+      
+      if(vc.target != "" || vc.triggers.length > 0)
+        classes.push(vc);
+    }
+    
+    if(editor.last_edited_char_num == -2)
+    {
+      edited_char = editor.charset.add_virtual_char(0,classes,names);
+    }
+    else
+    {
+      edited_char.classes = classes;
+      edited_char.names   = names
+    }
   }
-  
+
   editor.charset.finalize();  
   editor.refreshCharset();
   editor.refreshMode();

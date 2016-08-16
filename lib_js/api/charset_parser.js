@@ -50,11 +50,12 @@ Glaemscribe.CharsetParser.prototype.parse_raw = function(charset_name, raw)
   
   doc.root_node.gpath("virtual").glaem_each(function(_,virtual_element) { 
     var names = virtual_element.args;
-    var classes = {};
+    var classes = [];
     virtual_element.gpath("class").glaem_each(function(_,class_element) {
-      var result    = class_element.args[0];
-      var triggers  = class_element.args.slice(1);   
-      classes[result] = triggers;
+      var vc        = new Glaemscribe.VirtualChar.VirtualClass();
+      vc.target     = class_element.args[0];
+      vc.triggers   = class_element.args.slice(1);   
+      classes.push(vc);
     });
     charset.add_virtual_char(virtual_element.line,classes,names);
   });

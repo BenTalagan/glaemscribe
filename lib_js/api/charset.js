@@ -39,9 +39,15 @@ Glaemscribe.Char.prototype.output = function()
 
 Glaemscribe.VirtualChar = function()
 {
-  this.classes      = {};
+  this.classes      = [];
   this.lookup_table = {};
   return this;
+}
+
+Glaemscribe.VirtualChar.VirtualClass = function()
+{
+  this.target   = '';
+  this.triggers = [];
 }
 
 Glaemscribe.VirtualChar.prototype.is_virtual = function()
@@ -59,7 +65,10 @@ Glaemscribe.VirtualChar.prototype.finalize = function()
   var vc = this;
   
   vc.lookup_table = {};
-  vc.classes.glaem_each(function(result_char, trigger_chars) {
+  vc.classes.glaem_each(function(_, vclass) {
+    var result_char   = vclass.target;
+    var trigger_chars = vclass.triggers;
+    
     trigger_chars.glaem_each(function(_,trigger_char) {
       var found = vc.lookup_table[trigger_char];
       if(found != null)
@@ -141,6 +150,13 @@ Glaemscribe.Charset.prototype.finalize = function()
   charset.virtual_chars  = []
   
   charset.chars = charset.chars.sort(function(c1,c2) {
+    if(c1.is_virtual() && c2.is_virtual())
+      return c1.names[0].localeCompare(c2.names[0]);
+    if(c1.is_virtual())
+      return 1;
+    if(c2.is_virtual())
+      return -1;
+    
     return (c1.code - c2.code);
   });
   

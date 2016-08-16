@@ -51,6 +51,11 @@ module Glaemscribe
         attr_accessor :classes
         attr_accessor :charset
         
+        class VirtualClass
+          attr_accessor :target
+          attr_accessor :triggers
+        end
+        
         def initialize
           @classes = {} # result_char_1 => [trigger_char_1, trigger_char_2 ...] , result_char_1 => ...
           @lookup_table = {}
@@ -62,7 +67,11 @@ module Glaemscribe
         
         def finalize
           @lookup_table = {}
-          @classes.each{ |result_char, trigger_chars|
+          @classes.each{ |vc|
+            
+            result_char   = vc.target
+            trigger_chars = vc.triggers
+            
             trigger_chars.each{ |trigger_char|
               found = @lookup_table[trigger_char]
               if found

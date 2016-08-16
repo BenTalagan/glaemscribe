@@ -47,12 +47,13 @@ module Glaemscribe
         }
         
         doc.root_node.gpath("virtual").each { |virtual_element|
-          names = virtual_element.args
-          classes = {}
+          names   = virtual_element.args
+          classes = []
           virtual_element.gpath("class").each { |class_element|
-            result    = class_element.args[0]
-            triggers  = class_element.args[1..-1].map{|cname| cname.strip }.reject{ |cname| cname.empty? }     
-            classes[result] = triggers
+            vc =  Charset::VirtualChar::VirtualClass.new
+            vc.target    = class_element.args[0]
+            vc.triggers  = class_element.args[1..-1].map{|cname| cname.strip }.reject{ |cname| cname.empty? }     
+            classes << vc
           }
           @charset.add_virtual_char(virtual_element.line,classes,names)
         }
