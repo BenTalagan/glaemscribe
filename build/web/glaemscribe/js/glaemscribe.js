@@ -19,7 +19,7 @@ GNU Affero General Public License for more details.
 You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-Version : 1.0.16.pre
+Version : 1.0.16
 */
 
 /*
@@ -369,7 +369,7 @@ Glaemscribe.Char.prototype.output = function()
 
 Glaemscribe.VirtualChar = function()
 {
-  this.classes      = {};
+  this.classes      = [];
   this.lookup_table = {};
   return this;
 }
@@ -403,7 +403,7 @@ Glaemscribe.VirtualChar.prototype.finalize = function()
       var found = vc.lookup_table[trigger_char];
       if(found != null)
       {
-        thivcs.charset.errors.push(new Glaemscribe.Glaeml.Error(vc.line, "Trigger char " + trigger_char + "found twice in virtual char."));
+        vc.charset.errors.push(new Glaemscribe.Glaeml.Error(vc.line, "Trigger char " + trigger_char + "found twice in virtual char."));
       }
       else
       {
@@ -3012,8 +3012,8 @@ Glaemscribe.ResolveVirtualsPostProcessorOperator.prototype.finalize = function(t
 Glaemscribe.ResolveVirtualsPostProcessorOperator.prototype.reset_trigger_states = function(charset) {
   var op = this;
   charset.virtual_chars.glaem_each(function(idx,vc) {
-    vc.object_reference   = idx; // We cannot objects as references in hashes in js. Attribute a reference.
-    op.last_triggers[vc]  = null; // Clear the state
+    vc.object_reference                   = idx; // We cannot objects as references in hashes in js. Attribute a reference.
+    op.last_triggers[vc.object_reference] = null; // Clear the state
   });
 }
 
