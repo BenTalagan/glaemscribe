@@ -21,6 +21,12 @@ Installation and integration
 
 Here is [**_the installation and integration documentation_**](http://bentalagan.github.com/glaemscribe), for advanced users.
 
+Changelog
+---------
+
+1.0.16 : (16/08/2016) : Introduces virtual chars in charsets for easier tehtar and diacritic variant uses. 
+1.0.15 : ... : Unlogged (see mode changelogs)
+
 License
 -------
 
