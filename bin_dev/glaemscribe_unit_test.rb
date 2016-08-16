@@ -117,6 +117,43 @@ def unit_test_directory(directory)
 end
 
 
+def dump_test_directory(directory, dump_directory)
+  
+  puts "Dumping now test base : #{directory}"
+  
+  Glaemscribe::API::ResourceManager::loaded_modes.each{ |name,mode|  
+    
+    next if mode.errors.any?
+    
+    FileUtils.mkdir_p( dump_directory + "/sources/" + name)
+    FileUtils.mkdir_p( dump_directory + "/expecteds/" + name)
+  
+  
+    Dir.glob(directory + "/sources/" + name + "/*") { |fok|
+    
+      bfname = File.basename(fok)
+      prefix = "#{name} : #{bfname} : "
+      
+      source = "" 
+      begin
+        File.open( directory + "/sources/" + name + "/" + bfname,"rb:utf-8") { |f| source = f.read}
+      rescue Exception
+        puts "[    ] " + prefix + "Could not open source file."
+        next
+      end
+    
+      File.open( dump_directory + "/sources/"   + name + "/" + bfname,"wb:utf-8") { |fw|    
+        fw << source 
+      }
+    
+      File.open( dump_directory + "/expecteds/" + name + "/" + bfname,"wb:utf-8") { |fw|    
+        success, teng      = mode.transcribe(source, mode.default_charset)
+        fw << teng 
+      }
+    }  
+  }
+end
+
 puts "Launching unit tests on the whole sample knowledge base to test if all modes are still ok..."
 
 # Load all modes
@@ -133,4 +170,4 @@ Glaemscribe::API::ResourceManager::loaded_modes.each{ |name,mode|
 }
   
 unit_test_directory(SCRIPT_PATH + "/../unit_tests/glaemscrafu")
-# unit_test_directory(SCRIPT_PATH + "/../unit_tests/old")
+#dump_test_directory(SCRIPT_PATH + "/../unit_tests/glaemscrafu", SCRIPT_PATH + "/../unit_tests_dumped/glaemscrafu" )
