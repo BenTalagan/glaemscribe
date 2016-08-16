@@ -650,8 +650,8 @@ GlaemscribeEditor.prototype.serializeCurrentCharset = function()
     if(c.is_virtual())
     {
       content += "\\beg virtual " + c.names.join(" ") + "\n";
-      c.classes.glaem_each(function(target, triggers) {
-        content += "\\class " + target + "\t\t" + triggers.join(" ") + "\n";
+      c.classes.glaem_each(function(_, vc) {
+        content += "\\class " + vc.target + "\t\t" + vc.triggers.join(" ") + "\n";
       });
       content += "\\end\n\n"
     }
