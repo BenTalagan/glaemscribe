@@ -374,6 +374,12 @@ Glaemscribe.VirtualChar = function()
   return this;
 }
 
+Glaemscribe.VirtualChar.VirtualClass = function()
+{
+  this.target   = '';
+  this.triggers = [];
+}
+
 Glaemscribe.VirtualChar.prototype.is_virtual = function()
 {
   return true;
@@ -389,7 +395,10 @@ Glaemscribe.VirtualChar.prototype.finalize = function()
   var vc = this;
   
   vc.lookup_table = {};
-  vc.classes.glaem_each(function(result_char, trigger_chars) {
+  vc.classes.glaem_each(function(_, vclass) {
+    var result_char   = vclass.target;
+    var trigger_chars = vclass.triggers;
+    
     trigger_chars.glaem_each(function(_,trigger_char) {
       var found = vc.lookup_table[trigger_char];
       if(found != null)
@@ -471,6 +480,13 @@ Glaemscribe.Charset.prototype.finalize = function()
   charset.virtual_chars  = []
   
   charset.chars = charset.chars.sort(function(c1,c2) {
+    if(c1.is_virtual() && c2.is_virtual())
+      return c1.names[0].localeCompare(c2.names[0]);
+    if(c1.is_virtual())
+      return 1;
+    if(c2.is_virtual())
+      return -1;
+    
     return (c1.code - c2.code);
   });
   
@@ -536,11 +552,12 @@ Glaemscribe.CharsetParser.prototype.parse_raw = function(charset_name, raw)
   
   doc.root_node.gpath("virtual").glaem_each(function(_,virtual_element) { 
     var names = virtual_element.args;
-    var classes = {};
+    var classes = [];
     virtual_element.gpath("class").glaem_each(function(_,class_element) {
-      var result    = class_element.args[0];
-      var triggers  = class_element.args.slice(1);   
-      classes[result] = triggers;
+      var vc        = new Glaemscribe.VirtualChar.VirtualClass();
+      vc.target     = class_element.args[0];
+      vc.triggers   = class_element.args.slice(1);   
+      classes.push(vc);
     });
     charset.add_virtual_char(virtual_element.line,classes,names);
   });
