@@ -396,10 +396,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 \** gemination **\
 \beg virtual GEMINATE_SIGN
   \class DASH_INF_XS
-  \class DASH_INF_S       TINCO PARMA CALMA ROMEN
-  \class DASH_INF_L       NUMEN MALTA
+  \class DASH_INF_S       TINCO PARMA CALMA ROMEN HWESTA SULE
+  \class DASH_INF_L       NUMEN MALTA UNGWE ANDO 
   \class DASH_INF_XL
-  \** LAMBE or not LAMBE ? **\
+  \class LAMBE_MARK_TILD  LAMBE
 \end
 
 \beg virtual ALVEOLAR_SIGN
