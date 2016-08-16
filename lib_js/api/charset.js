@@ -73,7 +73,7 @@ Glaemscribe.VirtualChar.prototype.finalize = function()
       var found = vc.lookup_table[trigger_char];
       if(found != null)
       {
-        thivcs.charset.errors.push(new Glaemscribe.Glaeml.Error(vc.line, "Trigger char " + trigger_char + "found twice in virtual char."));
+        vc.charset.errors.push(new Glaemscribe.Glaeml.Error(vc.line, "Trigger char " + trigger_char + "found twice in virtual char."));
       }
       else
       {
