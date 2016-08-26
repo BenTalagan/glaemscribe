@@ -197,6 +197,14 @@ quenya.transcribe("Ai ! Laurie lantar lassi súrinen !")
 quenya.finalize(always_use_romen_for_r: true)
 quenya.transcribe("Ai ! Laurie lantar lassi súrinen !")
  => [true, "lE Á j.E7T`V jE4#7 jE,T 8~M7T5$5 Á"]
+ 
+# Use an alternative charset for better rendering, depending on the font 
+# you want to use
+tengwar_eldamar_charset = Glaemscribe::API::ResourceManager::loaded_charsets["tengwar_ds_eldamar"]
+
+quenya.transcribe("Ai ! Laurie lantar lassi súrinen !", tengwar_eldamar_charset)
+ => [true, "lD Á j.E7T`V jE4#6 jE,G 8~M7T5$5 Á"]
+ 
 {% endhighlight %}
 
 #### Get mode options info
@@ -280,6 +288,13 @@ quenya.transcribe("Ai ! Laurie lantar lassi súrinen !")
 quenya.finalize( { always_use_romen_for_r: true } )
 quenya.transcribe("Ai ! Laurie lantar lassi súrinen !")
  => [true, "lE Á j.E7T`V jE4#7 jE,T 8~M7T5$5 Á"]
+ 
+// Use an alternative charset for better rendering, depending on the font 
+// you want to use
+var tengwar_eldamar_charset = Glaemscribe.resource_manager.loaded_charsets["tengwar_ds_eldamar"]
+
+quenya.transcribe("Ai ! Laurie lantar lassi súrinen !", tengwar_eldamar_charset)
+ => [true, "lD Á j.E7T`V jE4#6 jE,G 8~M7T5$5 Á"] 
 {% endhighlight %}
 
 #### Get mode options info
