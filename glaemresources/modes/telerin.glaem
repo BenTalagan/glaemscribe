@@ -24,16 +24,19 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 \** Telerin mode for glaemscribe (MAY BE INCOMPLETE) - Derived from Quenya **\
 
-\** Changelog **\
-\** 0.0.2 : correcting ts/ps sequences to work better with eldamar **\
+\beg changelog
+  \entry 0.0.2 "Correcting ts/ps sequences to work better with eldamar"
+  \entry 0.0.3 "Porting to virtual chars"
+\end
 
 \language "Telerin"
 \writing  "Tengwar"
 \mode     "Glaemscrafu"
-\version  "0.0.1"
+\version  "0.0.3"
 \authors  "Talagan (Benjamin Babut)"
 
-\charset  tengwar_ds true
+\charset  tengwar_ds         true
+\charset  tengwar_ds_eldamar false
 
 \beg      options
   \option reverse_numbers true
@@ -100,142 +103,120 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     {VOWELS}            === {A}           * {E}         * {I}           * {O}           * {U}
     {LVOWELS}           === {AA}          * {EE}        * {II}          * {OO}          * {UU}
     
-    {TEHTA_XS}          === A_TEHTA_XS      * E_TEHTA_XS      * I_TEHTA_XS     * O_TEHTA_XS     * U_TEHTA_XS 
-    {TEHTA__S}          === A_TEHTA_S       * E_TEHTA_S       * I_TEHTA_S      * O_TEHTA_S      * U_TEHTA_S 
-    {TEHTA__L}          === A_TEHTA_L       * E_TEHTA_L       * I_TEHTA_L      * O_TEHTA_L      * U_TEHTA_L 
-    {TEHTA_XL}          === A_TEHTA_XL      * E_TEHTA_XL      * I_TEHTA_XL     * O_TEHTA_XL     * U_TEHTA_XL 
+    {TEHTAR}            === A_TEHTA      * E_TEHTA      * I_TEHTA    * O_TEHTA     * U_TEHTA
        
-    {DIPHTHONGS}         === {AI}              * {AU}              * {EU}              *  {IU}              * {OI}              * {UI}
-    {DIPHTHENGS}         === YANTA A_TEHTA_L    * URE A_TEHTA_L     * URE E_TEHTA_L     * URE I_TEHTA_L     * YANTA O_TEHTA_L   * YANTA U_TEHTA_L
+    {DIPHTHONGS}         === {AI}             * {AU}            * {EU}            *  {IU}           * {OI}            * {UI}
+    {_DIPHTHONGS_}       === YANTA A_TEHTA    * URE A_TEHTA     * URE E_TEHTA     * URE I_TEHTA     * YANTA O_TEHTA   * YANTA U_TEHTA
 
 
-    {V_D_KER}           === [ {VOWELS}   * {DIPHTHONGS} ]
-    {V_D_IMG_XS}        === [ {TEHTA_XS} * {DIPHTHENGS} ]
-    {V_D_IMG__S}        === [ {TEHTA__L} * {DIPHTHENGS} ]
-    {V_D_IMG__L}        === [ {TEHTA__S} * {DIPHTHENGS} ]
-    {V_D_IMG_XL}        === [ {TEHTA_XL} * {DIPHTHENGS} ]
+    {V_D}         === [ {VOWELS}   * {DIPHTHONGS} ]
+    {_V_D_}       === [ {TEHTAR} * {_DIPHTHONGS_} ]
     
-    {V_D_KER_WN}        === [ {VOWELS} * {DIPHTHONGS} * {NULL} ]  
-    {V_D_IMG_XS_WN}     === [ {TEHTA_XS} * {DIPHTHENGS} * {NULL} ]
-    {V_D_IMG__S_WN}     === [ {TEHTA__L} * {DIPHTHENGS} * {NULL} ]
-    {V_D_IMG__L_WN}     === [ {TEHTA__S} * {DIPHTHENGS} * {NULL} ]
-    {V_D_IMG_XL_WN}     === [ {TEHTA_XL} * {DIPHTHENGS} * {NULL} ]
-
+    {V_D_WN}      === [ {VOWELS} * {DIPHTHONGS} * {NULL} ]  
+    {_V_D_WN_}    === [ {TEHTAR} * {_DIPHTHONGS_} * {NULL} ]
+ 
     \** VOWEL RULES **\
-    [{VOWELS}]        -->   TELCO[{TEHTA_XS}] \** Replace isolated short vowels **\
-    [{LVOWELS}]       -->   ARA[{TEHTA_XS}] \**  Replace long vowels **\
-    [{DIPHTHONGS}]     -->  [{DIPHTHENGS}]  \**  Replace diphthongs **\
+    [{VOWELS}]        -->   TELCO[{TEHTAR}] \** Replace isolated short vowels **\
+    [{LVOWELS}]       -->   ARA[{TEHTAR}] \**  Replace long vowels **\
+    [{DIPHTHONGS}]     -->  [{_DIPHTHONGS_}]  \**  Replace diphthongs **\
 
     \** TELERIN: changed v/w, removed all y rules **\
     
     \** ===================== **\
     \** 1ST LINE RULES **\
     \** ===================== **\
-    {L1_KER_1}        === t                   * p 
-    {L1_IMG_1}        === TINCO               * PARMA
-    {L1_KER_2}        === {K}                 * q
-    {L1_IMG_2}        === CALMA               * QUESSE
-    {L1_KER_1_GEMS}   === tt                  * pp
-    {L1_IMG_1_GEMS}   === TINCO DASH_INF_S    * PARMA DASH_INF_S
+    {L1}          === {K}   * q      * t       * p 
+    {_L1_}        === CALMA * QUESSE * TINCO   * PARMA
+    
+    {L1_GEMS}     === {K}{K}              * tt                     * pp
+    {_L1_GEMS_}   === CALMA GEMINATE_SIGN * TINCO GEMINATE_SIGN    * PARMA GEMINATE_SIGN
 
     \** NORMAL **\
-    [ {L1_KER_1} ] {V_D_KER_WN}        --> [ {L1_IMG_1} ] {V_D_IMG__S_WN}
-    [ {L1_KER_2} ] {V_D_KER_WN}        --> [ {L1_IMG_2} ] {V_D_IMG__S_WN}
-
-    \** GEMINATED **\
-    [ {L1_KER_1_GEMS} ] {V_D_KER_WN}   --> [ {L1_IMG_1_GEMS} ] {V_D_IMG__S_WN} \** Tengscribe uses S but L is probably better  **\
-    {K}{K}{V_D_KER_WN}                 --> CALMA DASH_INF_S {V_D_IMG__S_WN} 
+    [ {L1} ] {V_D_WN}         --> [ {_L1_} ] {_V_D_WN_}
+    [ {L1_GEMS} ] {V_D_WN}    --> [ {_L1_GEMS_} ] {_V_D_WN_}
                             
-    ts{V_D_KER_WN}_         --> TINCO {V_D_IMG__L_WN} SHOOK_RIGHT_L 
-    ps{V_D_KER_WN}_         --> PARMA {V_D_IMG__L_WN} SHOOK_RIGHT_L  
-    x{V_D_KER_WN}           --> CALMA SHOOK_LEFT_L {V_D_IMG__S_WN}   \** render ks for x **\
+    ts{V_D_WN}          --> TINCO {_V_D_WN_} ALVEOLAR_SIGN
+    ps{V_D_WN}          --> PARMA {_V_D_WN_} ALVEOLAR_SIGN
+    {K}s{V_D_WN}        --> CALMA ALVEOLAR_SIGN {_V_D_WN_}   
+    x{V_D_WN}           --> CALMA ALVEOLAR_SIGN {_V_D_WN_}   \** render ks for x **\
                             
     \** ===================== **\
     \** 2ND LINE RULES **\
     \** ===================== **\
-    {L2_KER}        === nd      * mb        * ng      *  ngw
-    {L2_IMG}        === ANDO    * UMBAR     * ANGA    *  UNGWE 
+    {L2}        === nd      * mb        * ng      *  ngw    * d      * b        * g
+    {_L2_}      === ANDO    * UMBAR     * ANGA    *  UNGWE  * ORE    * VALA     * ANNA
     
     \** STANDARD **\
-    [{L2_KER}]{V_D_KER_WN}  --> [{L2_IMG}]{V_D_IMG_XL_WN}
-    
-    {L2_KER_2}        === d      * b        * g
-    {L2_IMG_2}        === ORE    * VALA     * ANNA 
-    
-    \** STANDARD **\
-    [{L2_KER_2}]{V_D_KER_WN}  --> [{L2_IMG_2}]{V_D_IMG__S_WN}
+    [{L2}]{V_D_WN}  --> [{_L2_}]{_V_D_WN_}
 
     \** ===================== **\
     \** 3RD LINE RULES **\
     \** ===================== **\
-    {L3_KER_1} === th     * f
-    {L3_IMG_1} === SULE   * FORMEN
-    {L3_KER_2} === h      * hw
-    {L3_IMG_2} === AHA    * HWESTA
+    {L3}    === th     * f      * h      * hw
+    {_L3_}  === SULE   * FORMEN * AHA    * HWESTA
 
     \** NORMAL **\
-    [{L3_KER_1}]{V_D_KER_WN}  --> [{L3_IMG_1}]{V_D_IMG__S_WN}
-    [{L3_KER_2}]{V_D_KER_WN}  --> [{L3_IMG_2}]{V_D_IMG__S_WN} \**  Tengscribe uses S but L is probably better  **\
+    [{L3}]{V_D_WN}  --> [{_L3_}]{_V_D_WN_}
       
     \** Override h with vowels (descendent) **\
-    _h{V_D_KER}                     --> HYARMEN {V_D_IMG__L}
-    h[{LVOWELS}]                    --> HYARMEN ARA [{TEHTA_XS}] 
-    h                               --> AHA
+    _h{V_D}                     --> HYARMEN {_V_D_}
+    h[{LVOWELS}]                --> HYARMEN ARA [{TEHTAR}] 
+    h                           --> AHA
 
     \** ===================== **\
     \** 4TH LINE RULES **\
     \** ===================== **\
-    {L4_KER}  === nt    * mp    * nc    * nq      \** Not nqu, due to preprocessor **\
-    {L4_IMG}  === ANTO  * AMPA  * ANCA  * UNQUE
+    {L4}    === nt    * mp    * nc    * nq      \** Not nqu, due to preprocessor **\
+    {_L4_}  === ANTO  * AMPA  * ANCA  * UNQUE
  
     \** NORMAL **\
-    [{L4_KER}]{V_D_KER_WN}    --> [{L4_IMG}]{V_D_IMG_XL_WN}
+    [{L4}]{V_D_WN}    --> [{_L4_}]{_V_D_WN_}
 
     \** ===================== **\
     \** 5TH LINE RULES **\
     \** ===================== **\
-    {L5_KER}  === n     * m     * ñ     * ñw      * _nw 
-    {L5_IMG}  === NUMEN * MALTA * NOLDO * NWALME  * NWALME
+    {L5}    === n     * m     * ñ     * ñw      * _nw 
+    {_L5_}  === NUMEN * MALTA * NOLDO * NWALME  * NWALME
 
-    [{L5_KER}]{V_D_KER_WN}  --> [{L5_IMG}]{V_D_IMG_XL_WN}
+    [{L5}]{V_D_WN}  --> [{_L5_}]{_V_D_WN_}
 
-    nn{V_D_KER_WN}          --> NUMEN DASH_INF_L {V_D_IMG_XL_WN}
-    mm{V_D_KER_WN}          --> MALTA DASH_INF_L {V_D_IMG_XL_WN}
+    nn{V_D_WN}          --> NUMEN GEMINATE_SIGN {_V_D_WN_}
+    mm{V_D_WN}          --> MALTA GEMINATE_SIGN {_V_D_WN_}
 
     \** ===================== **\
     \** 6TH LINE RULES **\
     \** ===================== **\
-    {L6_KER}        === r     * {W}  
-    {L6_IMG}        === ROMEN * VILYA 
+    {L6}        === r     * {W}  
+    {_L6_}      === ROMEN * VILYA 
 
-    [{L6_KER}]{V_D_KER_WN} --> [{L6_IMG}]{V_D_IMG__S_WN}
+    [{L6}]{V_D_WN} --> [{_L6_}]{_V_D_WN_}
 
-    rr{V_D_KER_WN}        --> ROMEN DASH_INF_S {V_D_IMG__S_WN}
-    rd{V_D_KER_WN}        --> ARDA {V_D_IMG__S_WN}
+    rr{V_D_WN}        --> ROMEN GEMINATE_SIGN {_V_D_WN_}
+    rd{V_D_WN}        --> ARDA {_V_D_WN_}
 
     \** ===================== **\
     \** L   LINE RULES **\
     \** ===================== **\
-    {LINE_L_KER}          === l     * ld      * ll
-    {LINE_L_IMG}          === LAMBE * ALDA    * LAMBE LAMBE_MARK_TILD
+    {LINE_L}          === l     * ld      * ll
+    {_LINE_L_}        === LAMBE * ALDA    * LAMBE GEMINATE_SIGN
 
-    [{LINE_L_KER}]{V_D_KER_WN}    --> [{LINE_L_IMG}]{V_D_IMG__S_WN}
-    hl{V_D_KER_WN}                --> HALLA LAMBE {V_D_IMG__S_WN}
-    hr{V_D_KER_WN}                --> HALLA ROMEN {V_D_IMG__S_WN}
+    [{LINE_L}]{V_D_WN}    --> [{_LINE_L_}]{_V_D_WN_}
+    hl{V_D_WN}            --> HALLA LAMBE {_V_D_WN_}
+    hr{V_D_WN}            --> HALLA ROMEN {_V_D_WN_}
 
     \** ===================== **\
     \** S/Z LINE RULES **\
     \** ===================== **\
-    {L8_KER}        === s               * {SS}   
-    {L8_IMG}        === SILME_NUQUERNA  * ESSE_NUQUERNA 
+    {L8}        === s               * {SS}   
+    {_L8_}      === SILME_NUQUERNA  * ESSE_NUQUERNA 
 
-    [{L8_KER}]{V_D_KER_WN} --> [{L8_IMG}]{V_D_IMG__S_WN}
+    [{L8}]{V_D_WN} --> [{_L8_}]{_V_D_WN_}
 
     \** Override lonely s / ss / before consonant **\
     s               --> SILME
-    s[{LVOWELS}]    --> SILME ARA [{TEHTA_XS}] 
+    s[{LVOWELS}]    --> SILME ARA [{TEHTAR}] 
     {SS}            --> ESSE
-    {SS}[{LVOWELS}] --> ESSE ARA [{TEHTA_XS}] 
+    {SS}[{LVOWELS}] --> ESSE ARA [{TEHTAR}] 
   \end
   
   \beg rules punctuation
@@ -303,3 +284,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   \end
 \end
 
+\beg postprocessor
+  \resolve_virtuals
+\end  

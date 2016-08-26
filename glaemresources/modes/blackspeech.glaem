@@ -24,13 +24,19 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 \** BlackSpeech ring mode for glaemscribe (MAY BE INCOMPLETE) **\
 
+\beg changelog
+  \entry 0.0.1 "First version"
+  \entry 0.0.2 "Ported to virtual chars."
+\end
+
 \language "Black Speech"
 \writing  "Tengwar"
 \mode     "General Use"
-\version  "0.0.1"
+\version  "0.0.2"
 \authors  "Talagan (Benjamin Babut)"
  
-\charset  tengwar_ds true
+\charset  tengwar_ds         true
+\charset  tengwar_ds_eldamar false
 
 \beg      options
   \option reverse_numbers true
@@ -83,77 +89,68 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     
     {K}                 === (c,k)
     
-    {VOWELS}            === {A}             * {E}             * {I}            * {O}          * {U}
-    {LVOWELS}           === {AA}            * {EE}            * {II}           * {OO}         * {UU}
+    {VOWELS}            === {A}          * {E}          * {I}         * {O}       * {U}
+    {LVOWELS}           === {AA}         * {EE}         * {II}        * {OO}      * {UU}
     
     \** Revers o and u **\
-    {TEHTA_XS}          === A_TEHTA_XS      * E_TEHTA_XS      * I_TEHTA_XS     *  U_TEHTA_XS  * O_TEHTA_XS      
-    {TEHTA__S}          === A_TEHTA_S       * E_TEHTA_S       * I_TEHTA_S      *  U_TEHTA_S   * O_TEHTA_S     
-    {TEHTA__L}          === A_TEHTA_L       * E_TEHTA_L       * I_TEHTA_L      *  U_TEHTA_L   * O_TEHTA_L     
-    {TEHTA_XL}          === A_TEHTA_XL      * E_TEHTA_XL      * I_TEHTA_XL     *  U_TEHTA_XL  * O_TEHTA_XL      
+    {TEHTAR}            === A_TEHTA      * E_TEHTA      * I_TEHTA     *  U_TEHTA  * O_TEHTA      
      
-    {DIPHTHONGS}         === {AI}              * {AU}              *  {OI}              
-    {DIPHTHENGS}         === YANTA A_TEHTA_L    * URE A_TEHTA_L     * YANTA U_TEHTA_L   
-     
-    {V_D_KER}           === [ {VOWELS}   * {DIPHTHONGS} ]
-    {V_D_IMG_XS}        === [ {TEHTA_XS} * {DIPHTHENGS} ]
-    {V_D_IMG__S}        === [ {TEHTA__L} * {DIPHTHENGS} ]
-    {V_D_IMG__L}        === [ {TEHTA__S} * {DIPHTHENGS} ]
-    {V_D_IMG_XL}        === [ {TEHTA_XL} * {DIPHTHENGS} ]
-    
-    [{VOWELS}]        -->   TELCO [{TEHTA_XS}]  \** Replace isolated short vowels **\
-    [{LVOWELS}]       -->   ARA [{TEHTA_XS}]  \**  Replace long vowels **\
-    [{DIPHTHONGS}]     -->  [{DIPHTHENGS}]  \**  Replace diphthongs **\
+    {DIPHTHONGS}         === {AI}            * {AU}            *  {OI}              
+    {_DIPHTHONGS_}         === YANTA A_TEHTA   * URE A_TEHTA     * YANTA U_TEHTA  
+         
+    [{VOWELS}]        -->   TELCO [{TEHTAR}]  \** Replace isolated short vowels **\
+    [{LVOWELS}]       -->   ARA [{TEHTAR}]  \**  Replace long vowels **\
+    [{DIPHTHONGS}]    -->  [{_DIPHTHONGS_}]  \**  Replace diphthongs **\
 
     b             --> UMBAR
-    [{VOWELS}] b  --> UMBAR [{TEHTA_XL}]
+    [{VOWELS}] b  --> UMBAR [{TEHTAR}]
 
     d             --> ANDO
-    [{VOWELS}] d  --> ANDO [{TEHTA_XL}]
+    [{VOWELS}] d  --> ANDO [{TEHTAR}]
     
     f             --> FORMEN 
-    [{VOWELS}] f  --> FORMEN_EXT [{TEHTA__S}] \** Beware. **\ 
+    [{VOWELS}] f  --> FORMEN_EXT [{TEHTAR}] \** Beware. **\ 
 
     g             --> UNGWE
-    [{VOWELS}] g  --> UNGWE [{TEHTA_XL}]
+    [{VOWELS}] g  --> UNGWE [{TEHTAR}]
 
     gh            --> UNGWE_EXT
-    [{VOWELS}] gh --> UNGWE_EXT [{TEHTA_XL}]
+    [{VOWELS}] gh --> UNGWE_EXT [{TEHTAR}]
 
     h             --> HYARMEN
-    [{VOWELS}] h  --> HYARMEN [{TEHTA_XS}]
+    [{VOWELS}] h  --> HYARMEN [{TEHTAR}]
 
     \** ======================== **\
 
     {K}             --> QUESSE
-    [{VOWELS}]{K}   --> QUESSE [{TEHTA__L}] 
+    [{VOWELS}]{K}   --> QUESSE [{TEHTAR}] 
 
     {K}h            --> HWESTA
-    [{VOWELS}]{K}h  --> HWESTA_EXT [{TEHTA__L}] \** Take care. **\  
+    [{VOWELS}]{K}h  --> HWESTA_EXT [{TEHTAR}] \** Take care. **\  
 
     \** ======================== **\
 
     l             --> LAMBE
-    [{VOWELS}] l  --> LAMBE [{TEHTA__L}] 
+    [{VOWELS}] l  --> LAMBE [{TEHTAR}] 
 
     \** ======================== **\
 
     m             --> MALTA
-    [{VOWELS}] m  --> MALTA [{TEHTA_XL}]
+    [{VOWELS}] m  --> MALTA [{TEHTAR}]
 
-    mb            --> UMBAR TILD_SUP_L
-    [{VOWELS}] mb --> UMBAR TILD_SUP_L [{TEHTA_XL}]
+    mb            --> UMBAR NASALIZE_SIGN_TILD
+    [{VOWELS}] mb --> UMBAR NASALIZE_SIGN_TILD [{TEHTAR}]
 
-    mp            --> PARMA TILD_SUP_S
-    [{VOWELS}] mp --> PARMA TILD_SUP_S [{TEHTA__L}]
+    mp            --> PARMA NASALIZE_SIGN_TILD
+    [{VOWELS}] mp --> PARMA NASALIZE_SIGN_TILD [{TEHTAR}]
 
     \** ======================== **\
     
     n               --> NUMEN
-    [{VOWELS}]n     --> NUMEN [{TEHTA_XL}] 
+    [{VOWELS}]n     --> NUMEN [{TEHTAR}] 
 
-    n{K}            --> QUESSE TILD_SUP_S
-    [{VOWELS}]n{K}  --> QUESSE TILD_SUP_S [{TEHTA__S}] 
+    n{K}            --> QUESSE NASALIZE_SIGN_TILD
+    [{VOWELS}]n{K}  --> QUESSE NASALIZE_SIGN_TILD [{TEHTAR}] 
 
     \** ======================== **\
     
@@ -161,13 +158,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
     r             --> ROMEN
     r_            --> ORE
-    [{VOWELS}]r   --> ORE [{TEHTA__S}]
+    [{VOWELS}]r   --> ORE [{TEHTAR}]
 
-    [{VOWELS}]rb  --> ORE [{TEHTA__L}] UMBAR
-    [{LVOWELS}]rb --> ARA [{TEHTA_XS}] ORE UMBAR
+    [{VOWELS}]rb  --> ORE [{TEHTAR}] UMBAR
+    [{LVOWELS}]rb --> ARA [{TEHTAR}] ORE UMBAR
 
-    [{VOWELS}]rz  --> ORE [{TEHTA__L}] ESSE
-    [{LVOWELS}]rz --> ARA [{TEHTA_XS}] ORE ESSE
+    [{VOWELS}]rz  --> ORE [{TEHTAR}] ESSE
+    [{LVOWELS}]rz --> ARA [{TEHTAR}] ORE ESSE
     
     \** ======================== **\
 
@@ -176,17 +173,17 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     \** ======================== **\
 
     sh            --> AHA             
-    [{VOWELS}] sh --> AHA_EXT [{TEHTA__L}] \** BEWARE. **\
+    [{VOWELS}] sh --> AHA_EXT [{TEHTAR}] \** BEWARE. **\
     
     t             --> TINCO
-    [{VOWELS}]t   --> TINCO [{TEHTA__L}]
+    [{VOWELS}]t   --> TINCO [{TEHTAR}]
 
     th            --> SULE
     
     y             --> ANNA
     
     z             --> ESSE    
-    [{VOWELS}] z  --> ESSE_NUQUERNA [{TEHTA__L}]
+    [{VOWELS}] z  --> ESSE_NUQUERNA [{TEHTAR}]
 
   \end
   
@@ -256,5 +253,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   
 \end
 
-
- 
+\beg postprocessor
+  \resolve_virtuals
+\end

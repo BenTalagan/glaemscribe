@@ -23,23 +23,20 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 **\
 
 \** Sindarin Beleriand mode for glaemscribe (MAY BE INCOMPLETE) **\
-
-\** Changelog **\
-\** 
-
-0.0.2 : Added lw
-0.0.3 : Added thorn as equivalent for th
-
-**\
-
+\beg changelog
+  \entry 0.0.2 "Added lw"
+  \entry 0.0.3 "Added thorn as equivalent for th"
+  \entry 0.0.4 "Porting to virtual chars to simplify and beautify"
+\end
 
 \language "Sindarin"
 \writing  "Tengwar"
 \mode     "Beleriand"
-\version  "0.0.3"
+\version  "0.0.4"
 \authors  "Talagan (Benjamin Babut)"
 
-\charset  tengwar_ds true
+\charset  tengwar_ds         true
+\charset  tengwar_ds_eldamar false
 
 \beg      options
   \option reverse_numbers true
@@ -114,104 +111,98 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     
     {Y}                 --> SILME_NUQUERNA_ALT
 
-    {AA}                --> OSSE  E_TEHTA_S
-    {EE}                --> YANTA E_TEHTA_S
-    {II}                --> TELCO E_TEHTA_XS
-    {OO}                --> ANNA  E_TEHTA_S
-    {UU}                --> URE   E_TEHTA_S
-    {YY}                --> SILME_NUQUERNA_ALT E_TEHTA_S
+    {AA}                --> OSSE  E_TEHTA
+    {EE}                --> YANTA E_TEHTA
+    {II}                --> TELCO E_TEHTA
+    {OO}                --> ANNA  E_TEHTA
+    {UU}                --> URE   E_TEHTA
+    {YY}                --> SILME_NUQUERNA_ALT E_TEHTA
 
-    {AE}                --> OSSE YANTA  \** Should chose between OSSE YANTA and OSSE THSUP_TICK_INV_L. Old tengscribe had second one, amanye tenceli has first one. **\ 
-    {AI}                --> OSSE THSUP_DDOT_L
-    {AU}                --> OSSE THSUP_SEV_L 
-    {AW}                --> OSSE THSUP_SEV_L
-    {EI}                --> YANTA THSUP_DDOT_L
-    {UI}                --> URE THSUP_DDOT_L
-    {OE}                --> ANNA YANTA
+    {AE}                --> OSSE  YANTA  \** Should chose between OSSE YANTA and OSSE THSUP_TICK_INV_L. Old tengscribe had second one, amanye tenceli has first one. **\ 
+    {AI}                --> OSSE  Y_TEHTA
+    {AU}                --> OSSE  SEV_TEHTA 
+    {AW}                --> OSSE  SEV_TEHTA
+    {EI}                --> YANTA Y_TEHTA
+    {UI}                --> URE   Y_TEHTA
+    {OE}                --> ANNA  YANTA
 
     \** ======== **\
     \** 1ST LINE **\
     \** ======== **\
-    {LINE_1ST_KER_1}        === t     * p 
-    {LINE_1ST_IMG_1}        === TINCO * PARMA
-    {LINE_1ST_KER_2}        === {K}
-    {LINE_1ST_IMG_2}        === CALMA
+    {L1}         === t     * p      * {K}
+    {_L1_}       === TINCO * PARMA  * CALMA
 
-    [{LINE_1ST_KER_1}]       --> [{LINE_1ST_IMG_1}]
-    [{LINE_1ST_KER_2}]       --> [{LINE_1ST_IMG_2}]
-
-    nt   --> TINCO DASH_SUP_S
-    mp   --> PARMA DASH_SUP_S
-    n{K} --> CALMA DASH_SUP_S
+    [{L1}]       --> [{_L1_}]
+ 
+    nt   --> TINCO NASALIZE_SIGN
+    mp   --> PARMA NASALIZE_SIGN
+    n{K} --> CALMA NASALIZE_SIGN
 
     \** ======== **\
     \** 2ND LINE **\
     \** ======== **\
-    {LINE_2ND_KER}        === d     * b     * g 
-    {LINE_2ND_IMG}        === ANDO  * UMBAR * ANGA 
+    {L2}   === d     * b     * g 
+    {_L2_} === ANDO  * UMBAR * ANGA 
 
-    [{LINE_2ND_KER}] --> [{LINE_2ND_IMG}]
+    [{L2}] --> [{_L2_}]
 
-    mb   --> UMBAR  DASH_SUP_L
-    nd   --> ANDO   DASH_SUP_L
+    mb   --> UMBAR  NASALIZE_SIGN
+    nd   --> ANDO   NASALIZE_SIGN
 
     \** ======== **\
     \** 3RD LINE **\
     \** ======== **\
-    {LINE_3RD_KER_1} === (þ,th) * (f,ph,ff)
-    {LINE_3RD_IMG_1} === SULE   * FORMEN
-    {LINE_3RD_KER_2} === ch 
-    {LINE_3RD_IMG_2} === AHA
+    {L3}   === (þ,th) * (f,ph,ff) * ch
+    {_L3_} === SULE   * FORMEN    * AHA
+     
+    [{L3}] --> [{_L3_}]
 
-    [{LINE_3RD_KER_1}]  --> [{LINE_3RD_IMG_1}]
-    [{LINE_3RD_KER_2}]  --> [{LINE_3RD_IMG_2}] 
-
-    nth   --> SULE    DASH_SUP_S
-    mph   --> FORMEN  DASH_SUP_S
-    nf    --> FORMEN  DASH_SUP_S
-    nch   --> AHA     DASH_SUP_S
+    nth   --> SULE    NASALIZE_SIGN
+    mph   --> FORMEN  NASALIZE_SIGN
+    nf    --> FORMEN  NASALIZE_SIGN
+    nch   --> AHA     NASALIZE_SIGN
 
     \** ======== **\
     \** 4TH LINE **\
     \** ======== **\
-    {LINE_4TH_KER}        === (đ,ð,ðh,dh) * (v,bh,f_) 
-    {LINE_4TH_IMG}        === ANTO  * AMPA 
+    {L4}    === (đ,ð,ðh,dh) * (v,bh,f_) 
+    {_L4_}  === ANTO  * AMPA 
 
-    [{LINE_4TH_KER}] --> [{LINE_4TH_IMG}]
+    [{L4}] --> [{_L4_}]
 
     \** ======== **\
     \** 5TH LINE **\
     \** ======== **\
-    {LINE_5TH_KER}        === nn    * mm    * ng
-    {LINE_5TH_IMG}        === NUMEN * MALTA * NOLDO 
+    {L5}    === nn    * mm    * ng
+    {_L5_}  === NUMEN * MALTA * NOLDO 
 
-    [{LINE_5TH_KER}] --> [{LINE_5TH_IMG}]
+    [{L5}] --> [{_L5_}]
 
     \** ======== **\
     \** 6TH LINE **\
     \** ======== **\
-    {LINE_6TH_KER}        === n   * m     * w     * _mh 
-    {LINE_6TH_IMG}        === ORE * VALA  * VILYA * MALTA_W_HOOK  
+    {L6}    === n   * m     * w     * _mh 
+    {_L6_}  === ORE * VALA  * VILYA * MALTA_W_HOOK  
 
-    [{LINE_6TH_KER}] --> [{LINE_6TH_IMG}]
+    [{L6}] --> [{_L6_}]
 
     \** ======== **\
     \** R/L LINE **\
     \** ======== **\
-    {LINE_L_KER}        === r     * _rh   * l     * _lh
-    {LINE_L_IMG}        === ROMEN * ARDA  * LAMBE  * ALDA 
+    {L_LINE}        === r     * _rh   * l     * _lh
+    {_L_LINE_}      === ROMEN * ARDA  * LAMBE  * ALDA 
 
-    [{LINE_L_KER}] --> [{LINE_L_IMG}]
+    [{L_LINE}] --> [{_L_LINE_}]
 
     \** ======== **\
     \** S/Z LINE **\
     \** ======== **\
-    {LINE_8TH_KER}        === s
-    {LINE_8TH_IMG}        === SILME 
+    {S_LINE}    === s
+    {_S_LINE_}  === SILME 
 
-    [{LINE_8TH_KER}] --> [{LINE_8TH_IMG}]
+    [{S_LINE}] --> [{_S_LINE_}]
 
-    ns --> SILME_NUQUERNA DASH_SUP_S
+    ns --> SILME_NUQUERNA NASALIZE_SIGN
 
     \** ======== **\
     \** OTHERS **\
@@ -223,11 +214,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
     hw   --> HWESTA_SINDARINWA
 
-    dw   --> ANDO THSUP_SEV_XL
-    gw   --> ANGA THSUP_SEV_XL
-    lw   --> LAMBE THSUP_SEV_L
-    nw   --> ORE THSUP_SEV_L
-    rw   --> ROMEN THSUP_SEV_L 
+    \** labialized consonants **\
+    dw   --> ANDO   SEV_TEHTA
+    gw   --> ANGA   SEV_TEHTA
+    lw   --> LAMBE  SEV_TEHTA
+    nw   --> ORE    SEV_TEHTA
+    rw   --> ROMEN  SEV_TEHTA 
 
   \end
   
@@ -294,4 +286,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     B --> NUM_11      
   \end
   
+\end
+
+\beg postprocessor
+  \resolve_virtuals
 \end

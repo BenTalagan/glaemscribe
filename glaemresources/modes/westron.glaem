@@ -22,18 +22,20 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 **\
 
-\** Changelog **\
-\** 0.0.2 : correcting ts/ps sequences to work better with eldamar **\
-
+\beg changelog
+  \entry 0.0.2 "Correcting ts/ps sequences to work better with eldamar"
+  \entry 0.0.3 "Porting to virtual chars"
+\end
 
 \**  Westron mode for glaemscribe (MAY BE INCOMPLETE) **\
 \language Westron
 \writing  Tengwar
 \mode     Glaemscrafu
-\version  0.0.2
+\version  0.0.3
 \authors  "Talagan (Benjamin Babut)"
 
-\charset  tengwar_ds true
+\charset  tengwar_ds         true
+\charset  tengwar_ds_eldamar false
 
 \beg      options
   \option reverse_numbers true
@@ -99,32 +101,27 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     {OOI} === {OO}{I} \** ôi **\
     {OOU} === {OO}{U} \** ôu **\
 
-    {SDIPHTHONGS}  === {AI}               * {AU}            * {EI} 				      * {EU}             * {IU}             * {OI}               * {OU}             * {UI}
-    {SDIPHTHENGS}  === YANTA A_TEHTA_L    * URE A_TEHTA_L   * YANTA E_TEHTA_L	  * URE E_TEHTA_L    * URE I_TEHTA_L    * YANTA O_TEHTA_L    * URE O_TEHTA_L    * YANTA U_TEHTA_L                   
-    {LDIPHTHONGS}  === {AAI}                  * {AAU}                 * {EEI}                 * {EEU}               * {OOI}                 * {OOU}
-    {LDIPHTHENGS}  === ARA A_TEHTA_XS YANTA   * ARA A_TEHTA_XS URE    * ARA E_TEHTA_XS YANTA  * ARA E_TEHTA_XS URE  * ARA O_TEHTA_XS YANTA  * ARA O_TEHTA_XS URE
+    {SDIPHTHONGS}  === {AI}           * {AU}          * {EI} 				    * {EU}        * {IU}        * {OI}          * {OU}        * {UI}
+    {_SDIPHTONGS_} === YANTA A_TEHTA  * URE A_TEHTA   * YANTA E_TEHTA	  * URE E_TEHTA * URE I_TEHTA * YANTA O_TEHTA * URE O_TEHTA * YANTA U_TEHTA                   
+    
+    {LDIPHTHONGS}  === {AAI}              * {AAU}              * {EEI}              * {EEU}            * {OOI}              * {OOU}
+    {_LDIPHTONGS_} === ARA A_TEHTA YANTA  * ARA A_TEHTA URE    * ARA E_TEHTA YANTA  * ARA E_TEHTA URE  * ARA O_TEHTA YANTA  * ARA O_TEHTA URE
                    
-    {VOWELS}      === {A}         * {E}         * {I}           * {O}           * {U}    
-    {TEHTA_XS}    === A_TEHTA_XS  * E_TEHTA_XS  * I_TEHTA_XS    * O_TEHTA_XS    * U_TEHTA_XS 
-    {TEHTA__S}    === A_TEHTA_S   * E_TEHTA_S   * I_TEHTA_S     * O_TEHTA_S     * U_TEHTA_S 
-    {TEHTA__L}    === A_TEHTA_L   * E_TEHTA_L   * I_TEHTA_L     * O_TEHTA_L     * U_TEHTA_L 
-    {TEHTA_XL}    === A_TEHTA_XL  * E_TEHTA_XL  * I_TEHTA_XL    * O_TEHTA_XL    * U_TEHTA_XL 
-                   
-    {LVOWELS}     === {AA}            * {EE}            * {II}            * {OO}            * {UU}
-    {LVOWTNG}     === ARA A_TEHTA_XS  * ARA E_TEHTA_XS  * ARA I_TEHTA_XS  * ARA O_TEHTA_XS  * ARA U_TEHTA_XS 
+    {VOWELS}      === {A}      * {E}      * {I}        * {O}        * {U}    
+    {TEHTAR}      === A_TEHTA  * E_TEHTA  * I_TEHTA    * O_TEHTA    * U_TEHTA
+                  
+    {LVOWELS}     === {AA}         * {EE}         * {II}         * {OO}         * {UU}
+    {LTETHAR}     === ARA A_TEHTA  * ARA E_TEHTA  * ARA I_TEHTA  * ARA O_TEHTA  * ARA U_TEHTA 
 
     \** Let' put all vowels/diphthongs in the same basket **\
-    {V_D}         === [ {VOWELS}    * {LVOWELS} * {SDIPHTHONGS} * {LDIPHTHONGS} ]        
+    {V_D}         === [ {VOWELS}  * {LVOWELS} * {SDIPHTHONGS} * {LDIPHTHONGS} ]        
     \** And their images... **\            
-    {T_XS_D}      === [ {TEHTA_XS}  * {LVOWTNG} * {SDIPHTHENGS} * {LDIPHTHENGS} ]
-    {T_S_D}       === [ {TEHTA__S}  * {LVOWTNG} * {SDIPHTHENGS} * {LDIPHTHENGS} ]
-    {T_L_D}       === [ {TEHTA__L}  * {LVOWTNG} * {SDIPHTHENGS} * {LDIPHTHENGS} ]
-    {T_XL_D}      === [ {TEHTA_XL}  * {LVOWTNG} * {SDIPHTHENGS} * {LDIPHTHENGS} ]
-
-    [{VOWELS}]      --> TELCO [{TEHTA_XS}]   \** Replace isolated short vowels **\
-    [{LVOWELS}]     --> [{LVOWTNG}]    \** Replace long vowels **\
-    [{SDIPHTHONGS}]  --> [{SDIPHTHENGS}]  \** Replace short diphthongs **\
-    [{LDIPHTHONGS}]  --> [{LDIPHTHENGS}]  \** Replace long diphthongs **\
+    {_V_D_}       === [ {TEHTAR}  * {LTETHAR} * {_SDIPHTONGS_} * {_LDIPHTONGS_} ]
+ 
+    [{VOWELS}]      --> TELCO [{TEHTAR}]   \** Replace isolated short vowels **\
+    [{LVOWELS}]     --> [{LTETHAR}]    \** Replace long vowels **\
+    [{SDIPHTHONGS}]  --> [{_SDIPHTONGS_}]  \** Replace short diphthongs **\
+    [{LDIPHTHONGS}]  --> [{_LDIPHTONGS_}]  \** Replace long diphthongs **\
 
     \** ================ **\
     \**    CONSONANTS    **\
@@ -134,37 +131,37 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     {L1_T}         === TINCO  * PARMA * CALMA	  * QUESSE 
     
     [{L1_S}]       -->  [ {L1_T} ]
-    [{L1_S}]{V_D}  -->  [ {L1_T} ]{T_S_D} 
+    [{L1_S}]{V_D}  -->  [ {L1_T} ]{_V_D_} 
 	
-    {L1_G_S}         === tt			             * pp                  *cch				        * (c,k)(c,k)             
-    {L1_G_T}         === TINCO DASH_INF_S    * PARMA DASH_INF_S    *CALMA DASH_INF_S	* QUESSE DASH_INF_S  
+    {L1_G_S}         === tt			              * pp                  * cch				          * (c,k)(c,k)             
+    {L1_G_T}         === TINCO GEMINATE_SIGN  * PARMA GEMINATE_SIGN * CALMA GEMINATE_SIGN	* QUESSE GEMINATE_SIGN  
     
     [{L1_G_S}]       -->  [ {L1_G_T} ]
-    [{L1_G_S}]{V_D}  -->  [ {L1_G_T} ]{T_S_D} 
+    [{L1_G_S}]{V_D}  -->  [ {L1_G_T} ]{_V_D_} 
 	  
-    {L1_N_S}         === nt			             * mp                * nch				        * (n,ñ)(c,k)             
-    {L1_N_T}         === TINCO DASH_SUP_S    * PARMA DASH_SUP_S  * CALMA DASH_SUP_S	  * QUESSE DASH_SUP_S  
+    {L1_N_S}         === nt			              * mp                    * nch				          * (n,ñ)(c,k)             
+    {L1_N_T}         === TINCO NASALIZE_SIGN  * PARMA NASALIZE_SIGN   * CALMA NASALIZE_SIGN * QUESSE NASALIZE_SIGN  
     
     [{L1_N_S}]       -->  [ {L1_N_T} ]
-    [{L1_N_S}]{V_D}  -->  [ {L1_N_T} ]{T_S_D} 	 
+    [{L1_N_S}]{V_D}  -->  [ {L1_N_T} ]{_V_D_} 	 
 
     {L2_S}         === d    * b     * j	  	* g
     {L2_T}         === ANDO * UMBAR * ANGA	* UNGWE
 		
     [{L2_S}]       --> [{L2_T}] 
-    [{L2_S}]{V_D}  --> [{L2_T}]{T_XL_D} 
+    [{L2_S}]{V_D}  --> [{L2_T}]{_V_D_} 
 
-    {L2_G_S}         === dd                * bb                  * jj			            * gg
-    {L2_G_T}         === ANDO DASH_INF_L   * UMBAR DASH_INF_L    * ANGA DASH_INF_L	  * UNGWE DASH_INF_L
+    {L2_G_S}         === dd                 * bb                  * jj			            * gg
+    {L2_G_T}         === ANDO GEMINATE_SIGN * UMBAR GEMINATE_SIGN * ANGA GEMINATE_SIGN  * UNGWE GEMINATE_SIGN
 		
     [{L2_G_S}]       --> [{L2_G_T}] 
-    [{L2_G_S}]{V_D}  --> [{L2_G_T}]{T_XL_D} 
+    [{L2_G_S}]{V_D}  --> [{L2_G_T}]{_V_D_} 
 
-    {L2_N_S}         === nd                * Mb                  * nj			            * (n,ñ)g
-    {L2_N_T}         === ANDO DASH_SUP_L   * UMBAR DASH_SUP_L    * ANGA DASH_SUP_L	  * UNGWE DASH_SUP_L
+    {L2_N_S}         === nd                 * mb                  * nj			            * (n,ñ)g
+    {L2_N_T}         === ANDO NASALIZE_SIGN * UMBAR NASALIZE_SIGN * ANGA NASALIZE_SIGN  * UNGWE NASALIZE_SIGN
 		
     [{L2_N_S}]       --> [{L2_N_T}] 
-    [{L2_N_S}]{V_D}  --> [{L2_N_T}]{T_XL_D} 
+    [{L2_N_S}]{V_D}  --> [{L2_N_T}]{_V_D_} 
 
     \** Alignment of tehta is not the same in the font **\
     \** So we need to split the third line unfortunately **\
@@ -175,104 +172,104 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     {L3_2_T}          === AHA    * HWESTA
    
     [{L3_1_S}]        --> [{L3_1_T}] 
-    [{L3_1_S}]{V_D}   --> [{L3_1_T}]{T_S_D} 
+    [{L3_1_S}]{V_D}   --> [{L3_1_T}]{_V_D_} 
     [{L3_2_S}]        --> [{L3_2_T}] 
-    [{L3_2_S}]{V_D}   --> [{L3_2_T}]{T_L_D} 
+    [{L3_2_S}]{V_D}   --> [{L3_2_T}]{_V_D_} 
 		
-    {L3_1G_S}         === (thth,tth,þþ)     * (ff,phph,pph)
-    {L3_1G_T}         === SULE DASH_INF_S   * FORMEN DASH_INF_S
+    {L3_1G_S}         === (thth,tth,þþ)       * (ff,phph,pph)
+    {L3_1G_T}         === SULE GEMINATE_SIGN  * FORMEN GEMINATE_SIGN
    
-    {L3_2G_S}          === (shsh,ssh)      * (k,kh)kh
-    {L3_2G_T}          === AHA DASH_INF_S  * HWESTA DASH_INF_S
+    {L3_2G_S}          === (shsh,ssh)         * (k,kh)kh
+    {L3_2G_T}          === AHA GEMINATE_SIGN  * HWESTA GEMINATE_SIGN
    
     [{L3_1G_S}]        --> [{L3_1G_T}] 
-    [{L3_1G_S}]{V_D}   --> [{L3_1G_T}]{T_S_D} 
+    [{L3_1G_S}]{V_D}   --> [{L3_1G_T}]{_V_D_} 
     [{L3_2G_S}]        --> [{L3_2G_T}] 
-    [{L3_2G_S}]{V_D}   --> [{L3_2G_T}]{T_L_D} 		
+    [{L3_2G_S}]{V_D}   --> [{L3_2G_T}]{_V_D_} 		
 
-    {L3_1N_S}          === (nth,nþ)          * (nf,mf,mph)      
-    {L3_1N_T}          === SULE DASH_SUP_S   * FORMEN DASH_SUP_S  
+    {L3_1N_S}          === (nth,nþ)           * (nf,mf,mph)      
+    {L3_1N_T}          === SULE NASALIZE_SIGN * FORMEN NASALIZE_SIGN  
    
     {L3_2N_S}          === nsh               * (n,ñ)kh     
-    {L3_2N_T}          === AHA DASH_SUP_S    * HWESTA DASH_SUP_S
+    {L3_2N_T}          === AHA NASALIZE_SIGN * HWESTA NASALIZE_SIGN
    
     [{L3_1N_S}]        --> [{L3_1N_T}] 
-    [{L3_1N_S}]{V_D}   --> [{L3_1N_T}]{T_S_D} 
+    [{L3_1N_S}]{V_D}   --> [{L3_1N_T}]{_V_D_} 
     [{L3_2N_S}]        --> [{L3_2N_T}] 
-    [{L3_2N_S}]{V_D}   --> [{L3_2N_T}]{T_L_D} 
+    [{L3_2N_S}]{V_D}   --> [{L3_2N_T}]{_V_D_} 
 
     {L4_S}            === (dh,ð)    * v   	* zh	  * gh
     {L4_T}            === ANTO      * AMPA  * ANCA	* UNQUE
 		
     [{L4_S}]          --> [{L4_T}] 
-    [{L4_S}]{V_D}     --> [{L4_T}]{T_XL_D} 
+    [{L4_S}]{V_D}     --> [{L4_T}]{_V_D_} 
 
-    {L4_G_S}            === (dh,ð)(dh,ð)     * vv               * (zhzh,zzh)	      * (ghgh,ggh)
-    {L4_G_T}            === ANTO DASH_INF_L  * AMPA DASH_INF_L  * ANCA DASH_INF_L	  * UNQUE DASH_INF_L
+    {L4_G_S}            === (dh,ð)(dh,ð)        * vv                  * (zhzh,zzh)	        * (ghgh,ggh)
+    {L4_G_T}            === ANTO GEMINATE_SIGN  * AMPA GEMINATE_SIGN  * ANCA GEMINATE_SIGN  * UNQUE GEMINATE_SIGN
 		
     [{L4_G_S}]          --> [{L4_G_T}] 
-    [{L4_G_S}]{V_D}     --> [{L4_G_T}]{T_XL_D} 
+    [{L4_G_S}]{V_D}     --> [{L4_G_T}]{_V_D_} 
 
-    {L4_N_S}            === n(dh,ð)          * (mv,nv)          * nzh	              * (n,ñ)gh
-    {L4_N_T}            === ANTO DASH_SUP_L  * AMPA DASH_SUP_L  * ANCA DASH_SUP_L	  * UNQUE DASH_SUP_L
+    {L4_N_S}            === n(dh,ð)             * (mv,nv)             * nzh	                * (n,ñ)gh
+    {L4_N_T}            === ANTO NASALIZE_SIGN  * AMPA NASALIZE_SIGN  * ANCA NASALIZE_SIGN  * UNQUE NASALIZE_SIGN
 		
     [{L4_N_S}]          --> [{L4_N_T}] 
-    [{L4_N_S}]{V_D}     --> [{L4_N_T}]{T_XL_D} 
+    [{L4_N_S}]{V_D}     --> [{L4_N_T}]{_V_D_} 
 
     {L5_S}            === n     * m     * ny     * ñ
     {L5_T}            === NUMEN * MALTA * NOLDO  * NWALME
 		
     [{L5_S}]          --> [{L5_T}] 
-    [{L5_S}]{V_D}     --> [{L5_T}]{T_XL_D} 
+    [{L5_S}]{V_D}     --> [{L5_T}]{_V_D_} 
 
     {L5_G_S}            === nn      * mn      * (nyny,nny)   * ññ
     {L5_G_T}            === NUMEN   * MALTA   * NOLDO        * NWALME
 		
     [{L5_G_S}]          --> [{L5_G_T}] 
-    [{L5_G_S}]{V_D}     --> [{L5_G_T}]{T_XL_D} 
+    [{L5_G_S}]{V_D}     --> [{L5_G_T}]{_V_D_} 
 		
-    {L6_S}            === w  	  * y     * rr                * ww         	   * yy
-    {L6_T}            === VALA  * ANNA  * ROMEN DASH_INF_S  * VALA DASH_INF_S  * ANNA DASH_INF_S
+    {L6_S}            === w  	  * y     * rr                  * ww         	        * yy
+    {L6_T}            === VALA  * ANNA  * ROMEN GEMINATE_SIGN * VALA GEMINATE_SIGN  * ANNA GEMINATE_SIGN
     [r * {L6_S}]      --> [ ORE   * {L6_T}] 
-    [r * {L6_S}]{V_D} --> [ ROMEN * {L6_T}]{T_S_D} 
+    [r * {L6_S}]{V_D} --> [ ROMEN * {L6_T}]{_V_D_} 
 
     \** This one is not useful (redundant with higher) **\
     \** Keep it for clarity of mind **\
     r_                --> ORE
 
-    s{V_D}            --> SILME_NUQUERNA {T_S_D}  \** Before a vowel goes down **\
+    s{V_D}            --> SILME_NUQUERNA {_V_D_}  \** Before a vowel goes down **\
     s                 --> SILME                   \** Any other pos, up **\
-    z{V_D}            --> ESSE_NUQUERNA {T_S_D}   \** Before a vowel goes down **\
+    z{V_D}            --> ESSE_NUQUERNA {_V_D_}   \** Before a vowel goes down **\
     z                 --> ESSE                    \** Any other pos, up **\
 		
-    ns{V_D}           --> SILME_NUQUERNA DASH_SUP_S {T_S_D}
-    ns                --> SILME_NUQUERNA DASH_SUP_S                   
-    nz{V_D}           --> ESSE_NUQUERNA DASH_SUP_S {T_S_D}   
-    nz                --> ESSE_NUQUERNA DASH_SUP_S                
+    ns{V_D}           --> SILME_NUQUERNA NASALIZE_SIGN {_V_D_}
+    ns                --> SILME_NUQUERNA NASALIZE_SIGN                   
+    nz{V_D}           --> ESSE_NUQUERNA NASALIZE_SIGN {_V_D_}   
+    nz                --> ESSE_NUQUERNA NASALIZE_SIGN                
 
-    ts                --> TINCO SHOOK_RIGHT_L
-    ps                --> PARMA SHOOK_RIGHT_L
-    (ks,cs,x)         --> QUESSE SHOOK_LEFT_L
+    ts                --> TINCO ALVEOLAR_SIGN
+    ps                --> PARMA ALVEOLAR_SIGN
+    (ks,cs,x)         --> QUESSE ALVEOLAR_SIGN
 
-    ts{V_D}           --> TINCO {T_L_D} SHOOK_RIGHT_L 
-    ps{V_D}           --> PARMA {T_L_D} SHOOK_RIGHT_L
-    (ks,cs,x){V_D}    --> QUESSE SHOOK_LEFT_L {T_S_D}	
+    ts{V_D}           --> TINCO {_V_D_} ALVEOLAR_SIGN 
+    ps{V_D}           --> PARMA {_V_D_} ALVEOLAR_SIGN
+    (ks,cs,x){V_D}    --> QUESSE ALVEOLAR_SIGN {_V_D_}	
 
-    h{V_D}            --> HYARMEN {T_XS_D}
+    h{V_D}            --> HYARMEN {_V_D_}
     h                 --> HYARMEN
-    hh{V_D}           --> HYARMEN DASH_INF_L {T_XS_D}
-    hh                --> HYARMEN DASH_INF_L
+    hh{V_D}           --> HYARMEN GEMINATE_SIGN {_V_D_}
+    hh                --> HYARMEN GEMINATE_SIGN
                       
-    l{V_D}            --> LAMBE {T_L_D}
+    l{V_D}            --> LAMBE {_V_D_}
     l                 --> LAMBE
                       
-    ll{V_D}           --> LAMBE LAMBE_MARK_TILD {T_L_D}
+    ll{V_D}           --> LAMBE LAMBE_MARK_TILD {_V_D_}
     ll                --> LAMBE LAMBE_MARK_TILD
 		
-    (hl,lh){V_D}      --> ALDA {T_XL_D}
+    (hl,lh){V_D}      --> ALDA {_V_D_}
     (hl,lh)           --> ALDA		
 
-    (hr,rh){V_D}      --> ARDA {T_XL_D}
+    (hr,rh){V_D}      --> ARDA {_V_D_}
     (hr,rh)           --> ARDA	
 		
   \end
@@ -342,3 +339,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   
 \end
 
+\beg postprocessor
+  \resolve_virtuals
+\end

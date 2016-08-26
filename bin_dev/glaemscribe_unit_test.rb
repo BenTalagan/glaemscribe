@@ -168,6 +168,9 @@ Glaemscribe::API::ResourceManager::loaded_modes.each{ |name,mode|
     next
   end
 }
-  
-unit_test_directory(SCRIPT_PATH + "/../unit_tests/glaemscrafu")
-#dump_test_directory(SCRIPT_PATH + "/../unit_tests/glaemscrafu", SCRIPT_PATH + "/../unit_tests_dumped/glaemscrafu" )
+ 
+if ARGV[0] == "--dump" 
+  dump_test_directory(SCRIPT_PATH + "/../unit_tests/glaemscrafu", SCRIPT_PATH + "/../unit_tests_dumped/glaemscrafu" )
+else
+  unit_test_directory(SCRIPT_PATH + "/../unit_tests/glaemscrafu")
+end

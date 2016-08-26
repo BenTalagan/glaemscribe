@@ -34,7 +34,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 \version  0.0.3
 \authors  "Talagan (Benjamin Babut)"
 
-\charset  tengwar_ds true
+\charset  tengwar_ds         true
+\charset  tengwar_ds_eldamar false
 
 \beg      options
   \option reverse_numbers true

@@ -30,7 +30,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 \version  "0.0.1"
 \authors  "Talagan (Benjamin Babut)"
 
-\charset  tengwar_ds true
+\** TODO : NEEDS PORTING TO VIRTUAL CHARS, BUT NEEDS A NEW CHARSET FOR ANNATAR FOR THAT **\
+
+\charset  tengwar_ds         true
 
 \beg      options
   \option reverse_numbers true
