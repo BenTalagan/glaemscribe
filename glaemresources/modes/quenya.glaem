@@ -133,7 +133,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
     \if implicit_a
       {_A_}              === {NULL}
-      {_NVOWEL_}         === NO_VOWEL
+      {_NVOWEL_}         === NO_VOWEL_DOT
     \else
       {_A_}              === {A_SHAPE}
       {_NVOWEL_}         === {NULL}
