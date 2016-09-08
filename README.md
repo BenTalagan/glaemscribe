@@ -58,7 +58,7 @@ Glǽmscribe is released under the terms of the GNU Affero General Public License
 Acknowledgments and thanks
 --------------------------
 
-**_Glǽmscribe_** would never have been possible without the unworthy and unconditional help and wisdom of **_Bertrand Bellet_**.
+**_Glǽmscribe_** would never have been possible without the invaluable and unconditional help and wisdom of **_Bertrand Bellet_**.
 
 Special thanks to **_Måns Björkman_** author of the outstanding website Amanyë Tenceli and its typefaces, a precious resource for **_Glǽmscribe_**'s development, and **_Didier Willis_** for having ignited the inspiration of this project.
 
