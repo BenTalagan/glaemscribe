@@ -24,11 +24,11 @@ Here is [**_the installation and integration documentation_**](http://bentalagan
 Changelog
 ---------
 
-| 1.0.19 | (06/09/2016) | <ul><li>[Quenya] Removed unutixe under óre for coherency in implicit a submode.</li><li>[Sindarin Angerthas Daeron] Fixed h,ch,hw.</li></ul>
-| 1.0.18 | (02/09/2016) | Fixed 'implicit a' option for quenya mode broken in 1.0.17. Thanks to Dmitry Kourmyshov for noticing.
-| 1.0.17 | (26/08/2016) | Ported modes to virtual chars, added a dedicated charset for tengwar eldamar for better rendering of tehtar and diacritics.
-| 1.0.16 | (16/08/2016) | Introduces virtual chars in charsets for easier tehtar and diacritic variant uses. 
-| 1.0.15 | ... | Unlogged (see mode changelogs)
+| 1.0.19 | (06/09/2016) | <ul><li>[Quenya] Removed unutixe under óre for coherency in implicit a submode.</li><li>[Sindarin Angerthas Daeron] Fixed h,ch,hw.</li></ul> |
+| 1.0.18 | (02/09/2016) | Fixed 'implicit a' option for quenya mode broken in 1.0.17. Thanks to Dmitry Kourmyshov for noticing. |
+| 1.0.17 | (26/08/2016) | Ported modes to virtual chars, added a dedicated charset for tengwar eldamar for better rendering of tehtar and diacritics. |
+| 1.0.16 | (16/08/2016) | Introduces virtual chars in charsets for easier tehtar and diacritic variant uses. |
+| 1.0.15 | ... | Unlogged (see mode changelogs) |
 
 License
 -------
