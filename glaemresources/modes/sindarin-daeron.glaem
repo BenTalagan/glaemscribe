@@ -24,14 +24,16 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 \** Sindarin Angerthas Daeron mode for glaemscribe **\
 
-\** changelog **\
-\** 0.0.2 : Added thorn as equivalent for th **\
-\** 0.0.3 : Moved out space to general element **\
+\beg changelog
+  \entry 0.0.2 "Added thorn as equivalent for th"
+  \entry 0.0.3 "Moved out space to general element"
+  \entry 0.0.4 "Fixed wrong ch, hw, h"
+\end
 
 \language "Sindarin"
 \writing  "Cirth"
 \mode     "Angerthas Daeron"
-\version  "0.0.3"
+\version  "0.0.4"
 \authors  "Talagan (Benjamin Babut)"
 
 \charset  cirth_ds true
@@ -63,37 +65,61 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 \beg      processor
   
   \beg    rules litteral
+  
+    \** Vowels **\
+  
     a     --> CIRTH_48
     á     --> CIRTH_49
-
-    b     --> CIRTH_2
-    bh    --> CIRTH_4
-    c     --> CIRTH_18
-    ch    --> CIRTH_13
+  
+    e     --> CIRTH_46
+    é     --> CIRTH_47
     
-    d     --> CIRTH_9
+    i     --> CIRTH_39
+    í     --> CIRTH_39 CIRTH_39
+    
+    o     --> CIRTH_50
+    ó     --> CIRTH_51 \** Can use CIRTH_51_ALT **\
+    
+    ö     --> CIRTH_52 \** Can use CIRTH_52_ALT **\
+    œ     --> CIRTH_52
+ 
+    u     --> CIRTH_42
+    ú     --> CIRTH_43
+    
+    ü     --> CIRTH_45_ALT \** Can use CIRTH_45 **\
+    y     --> CIRTH_45_ALT \** Can use CIRTH_45 **\
+  
+    \** Consonants **\
 
+    p     --> CIRTH_1
+    b     --> CIRTH_2
+    t     --> CIRTH_8 
+    d     --> CIRTH_9
+  
+    f     --> CIRTH_3
+    v     --> CIRTH_4
+    ff_   --> CIRTH_3
+ 
+    bh    --> CIRTH_4
+    
     dh    --> CIRTH_11
     đ     --> CIRTH_11
     ð     --> CIRTH_11
     ðh    --> CIRTH_11
 
-    e     --> CIRTH_46
-    é     --> CIRTH_47
-    
-    f     --> CIRTH_3
-    ff_   --> CIRTH_3
-
     g     --> CIRTH_19
     gh    --> CIRTH_21
+    (k,c)     --> CIRTH_18
+    (kh,ch)   --> CIRTH_20
+    
     ghw   --> CIRTH_26
     gw    --> CIRTH_24
-    h     --> CIRTH_5 \** . is another one??, V is +h (should be used in combinations, maybe todo) **\
-    i     --> CIRTH_39
-    í     --> CIRTH_39 CIRTH_39
+    
+    h     --> CIRTH_54 \**  13 is more eng. ch like in chin and 15 is more eng. sh like in shoe **\
+    hw    --> CIRTH_5
+    
     j     --> CIRTH_14
-    k     --> CIRTH_18
-    kh    --> CIRTH_20
+    
     khw   --> CIRTH_25
     kw    --> CIRTH_23
     l     --> CIRTH_31
@@ -113,23 +139,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     nw    --> CIRTH_28
     ngw   --> CIRTH_27
     nj    --> CIRTH_17
-    o     --> CIRTH_50
-    ó     --> CIRTH_51 \** Can use CIRTH_51_ALT **\
-    ö     --> CIRTH_52 \** Can use CIRTH_52_ALT **\
-    œ     --> CIRTH_52
-    p     --> CIRTH_1
     r     --> CIRTH_29
     rh    --> CIRTH_30
     s     --> CIRTH_34 \** Can use CIRTH_35 **\
     sh    --> CIRTH_15
     ss    --> CIRTH_36
-    t     --> CIRTH_8
     (þ,th) --> CIRTH_10
-    u     --> CIRTH_42
-    ú     --> CIRTH_43
-    ü     --> CIRTH_45_ALT \** Can use CIRTH_45 **\
-    y     --> CIRTH_45_ALT \** Can use CIRTH_45 **\
-    v     --> CIRTH_4
     w     --> CIRTH_44
     zh    --> CIRTH_16
   \end
