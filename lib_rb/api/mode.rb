@@ -36,6 +36,8 @@ module Glaemscribe
       
       attr_accessor :supported_charsets
       attr_accessor :default_charset
+      
+      attr_reader   :latest_option_values
          
       def initialize(name)
         @name               = name
@@ -95,10 +97,12 @@ module Glaemscribe
             }
           end
         }   
+        
+        @latest_option_values = trans_options_converted
            
-        @pre_processor.finalize(trans_options_converted)
-        @post_processor.finalize(trans_options_converted)
-        @processor.finalize(trans_options_converted)
+        @pre_processor.finalize(@latest_option_values)
+        @post_processor.finalize(@latest_option_values)
+        @processor.finalize(@latest_option_values)
         
         self
       end

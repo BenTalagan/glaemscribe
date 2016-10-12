@@ -13,6 +13,23 @@ Object.defineProperty(Object.prototype, "glaem_each", {
   }   
 });
 
+Object.defineProperty(Object.prototype, "glaem_each_reversed", {
+  enumerable: false,
+  value:  function (callback) {
+    if(!this instanceof Array)
+      return this.glaem_each(callback);
+      
+    for(var o = this.length-1;o>=0;o--)
+    {
+      if(!this.hasOwnProperty(o))
+        continue;
+      var res = callback(o,this[o]);
+      if(res == false)
+        break;
+    }
+  }   
+});
+
 Object.defineProperty(Object.prototype, "glaem_merge", {
   enumerable: false,
   value:  function (other_object) {

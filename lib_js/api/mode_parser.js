@@ -266,20 +266,18 @@ Glaemscribe.ModeParser.prototype.parse_raw = function(mode_name, raw, mode_optio
   mode.authors     = doc.root_node.gpath('authors')[0].args[0]
   mode.version     = doc.root_node.gpath('version')[0].args[0]
   
-  var option_elements = doc.root_node.gpath('options.option');
-  for(var o=0;o<option_elements.length;o++)
-  {
-    var option_element  = option_elements[o];
-    var values          = {}
-    var value_elements  = option_element.gpath('value');
+  doc.root_node.gpath('options.option').glaem_each(function(_,option_element) {
+
+    var values          = {};
+    var visibility      = null;
     
-    for(var ov=0; ov< value_elements.length; ov++)
-    {
-      var value_element             = value_elements[ov];
-      
+    option_element.gpath('value').glaem_each(function(_, value_element) {   
       var value_name                = value_element.args[0];
       values[value_name]            = parseInt(value_element.args[1]);    
-    }
+    });
+    option_element.gpath('visible_when').glaem_each(function(_, visible_element) {   
+      visibility = visible_element.args[0];
+    });    
       
     var option_name_at          = option_element.args[0];
     var option_default_val_at   = option_element.args[1];
@@ -290,9 +288,9 @@ Glaemscribe.ModeParser.prototype.parse_raw = function(mode_name, raw, mode_optio
       mode.errors.push(new Glaemscribe.Glaeml.Error(option_element.line, "Missing option 'default' value."));
     }
     
-    option                    = new Glaemscribe.Option(option_name_at, option_default_val_at, values);
+    option                    = new Glaemscribe.Option(mode, option_name_at, option_default_val_at, values, visibility);
     mode.options[option.name] = option;
-  }  
+  }); 
   
   var charset_elements   = doc.root_node.gpath('charset');
  

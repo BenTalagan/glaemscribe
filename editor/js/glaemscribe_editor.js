@@ -650,6 +650,11 @@ GlaemscribeEditor.prototype.serializeCurrentCharset = function()
     if(c.is_virtual())
     {
       content += "\\beg virtual " + c.names.join(" ") + "\n";
+      if(c.reversed)
+        content += "  \\reversed\n";
+      if(c.default)
+        content += "  \\default " + c.default + "\n";
+      
       c.classes.glaem_each(function(_, vc) {
         content += "\\class " + vc.target + "\t\t" + vc.triggers.join(" ") + "\n";
       });
@@ -914,7 +919,7 @@ GlaemscribeEditor.prototype.genericRefreshTranscription = function(entry_selecto
       
     if(editor.mode.errors.length == 0)
     {
-      var tinfo     = editor.mode.transcribe(entry_selector.val());
+      var tinfo     = editor.mode.transcribe(entry_selector.val(),editor.charset);
       var success   = tinfo[0];
       var ret       = tinfo[1];
       var dbg_ctx   = tinfo[2];
@@ -1104,6 +1109,8 @@ GlaemscribeEditor.prototype.charEditorAskedOn = function(char_row, char_num)
     else
     {
       $(".virtual_char_names_edit").val(char.names.join(" "));
+      $(".virtual_char_default_edit").val(char.default);
+      $(".virtual_char_reversed_edit").prop("checked",char.reversed);
       char.classes.glaem_each(function(c,vclass) {
         var row = $(".class_edit[data-num='" + c +"']");
         row.find(".class_target").val(vclass.target);
@@ -1169,15 +1176,19 @@ GlaemscribeEditor.prototype.confirmCharEdition = function()
       if(vc.target != "" || vc.triggers.length > 0)
         classes.push(vc);
     }
+    var reversed  = $("#virtual_char_reversed_edit").is(":checked");
+    var deflt     = $("#virtual_char_default_edit").val().trim();
     
     if(editor.last_edited_char_num == -2)
     {
-      edited_char = editor.charset.add_virtual_char(0,classes,names);
+      edited_char = editor.charset.add_virtual_char(0,classes,names,reversed,deflt);
     }
     else
     {
-      edited_char.classes = classes;
-      edited_char.names   = names
+      edited_char.classes   = classes;
+      edited_char.names     = names;
+      edited_char.reversed  = reversed;
+      edited_char.default   = deflt;
     }
   }
 

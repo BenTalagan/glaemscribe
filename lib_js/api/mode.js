@@ -39,6 +39,7 @@ Glaemscribe.Mode = function(mode_name) {
   this.options              = {};
   this.errors               = [];
   this.warnings             = [];
+  this.latest_option_values = {};
 
   this.pre_processor    = new Glaemscribe.TranscriptionPreProcessor(this);
   this.processor        = new Glaemscribe.TranscriptionProcessor(this);
@@ -91,10 +92,14 @@ Glaemscribe.Mode.prototype.finalize = function(options) {
       });
     }
   });   
+  
+  this.latest_option_values = trans_options_converted;
     
-  this.pre_processor.finalize(trans_options_converted);
-  this.post_processor.finalize(trans_options_converted);
-  this.processor.finalize(trans_options_converted);
+  this.pre_processor.finalize(this.latest_option_values);
+  this.post_processor.finalize(this.latest_option_values);
+  this.processor.finalize(this.latest_option_values);
+  
+  return this;
 }
 
 Glaemscribe.Mode.prototype.transcribe = function(content, charset) {

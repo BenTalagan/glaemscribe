@@ -235,7 +235,7 @@ html, body, .glaemscribe { height:100%; width:100%; margin:0px; padding:0px; bac
 
 .virtual_char_editor {
   margin:auto 50px auto 50px;
-  height:350px;
+  height:382px;
 }
 
 .class_edit {
@@ -274,6 +274,9 @@ html, body, .glaemscribe { height:100%; width:100%; margin:0px; padding:0px; bac
   color: white;
   padding: 0px 5px;
   color: #87A4EA;
+}
+
+.class_edit_target input, .class_edit_triggers input {
   width: calc(100% - 10px);
 }
 
@@ -519,13 +522,19 @@ html, body, .glaemscribe { height:100%; width:100%; margin:0px; padding:0px; bac
   height: 15px;
   padding:5px;
 }
-.virtual_char_names_edit {
-  width:calc(100% - 10px);
+.virtual_char_names_edit, .virtual_char_default_edit {
   background-color: #000;
   color: #CCF;
   border: 1px solid #808080;
   height: 15px;
   padding:5px; 
+}
+
+ 
+
+
+.virtual_char_names_edit {
+  width:calc(100% - 10px);
 }
 
 .code_toolbar .input.sm input {

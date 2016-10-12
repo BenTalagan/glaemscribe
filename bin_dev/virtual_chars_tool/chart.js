@@ -19,7 +19,14 @@ function dump(char, similars) {
     
   $.each(similars,function(index, slave_name) {
     
-    ret += "\\beg virtual " + DIACRITIC_TABLE[slave_name]['names'].join(" ") + "\n";
+    var slave_char = DIACRITIC_TABLE[slave_name];
+    
+    ret += "\\beg virtual " + slave_char['names'].join(" ") + "\n";
+  
+    if(slave_char['reversed'])
+      ret += "  \\reversed\n";
+    if(slave_char['default'])
+      ret += "  \\default " + slave_char['default'] + "\n";
   
     for(var i=0;i < master_classes.length ; i++) 
     {

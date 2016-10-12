@@ -41,6 +41,8 @@ Glaemscribe.VirtualChar = function()
 {
   this.classes      = [];
   this.lookup_table = {};
+  this.reversed     = false;
+  this.default      = null;
   return this;
 }
 
@@ -57,7 +59,11 @@ Glaemscribe.VirtualChar.prototype.is_virtual = function()
 
 Glaemscribe.VirtualChar.prototype.output = function()
 {
-  return Glaemscribe.VIRTUAL_CHAR_OUTPUT;
+  var vc = this;
+  if(vc.default)
+    return vc.charset.n2c(vc.default).output();
+  else
+    return Glaemscribe.VIRTUAL_CHAR_OUTPUT;
 }
 
 Glaemscribe.VirtualChar.prototype.finalize = function()
@@ -86,10 +92,7 @@ Glaemscribe.VirtualChar.prototype.finalize = function()
         else if(tc == null) {
           vc.charset.errors.push(new Glaemscribe.Glaeml.Error(vc.line, "Unknown trigger char " + trigger_char + "."));
         }
-        else if(tc instanceof Glaemscribe.VirtualChar) {
-          vc.charset.errors.push(new Glaemscribe.Glaeml.Error(vc.line, "Trigger char " + trigger_char + " is virtual. This is not supported!"));          
-        }
-        else if(tc instanceof Glaemscribe.VirtualChar) {
+        else if(rc instanceof Glaemscribe.VirtualChar) {
           vc.charset.errors.push(new Glaemscribe.Glaeml.Error(vc.line, "Trigger char " + trigger_char + " points to another virtual char " + result_char + ". This is not supported!"));          
         }
         else {
@@ -100,6 +103,14 @@ Glaemscribe.VirtualChar.prototype.finalize = function()
       }
     });
   });
+  if(vc.default)
+  {
+    var c = vc.charset.lookup_table[vc.default];
+    if(!c)
+      vc.charset.errors.push(new Glaemscribe.Glaeml.Error(vc.line, "Default char "+ vc.default + " does not match any real character in the charset."));
+    else if(c.is_virtual())
+      vc.charset.errors.push(new Glaemscribe.Glaeml.Error(vc.line, "Default char "+ vc.default + " is virtual, it should be real only."));
+  }
 }
 
 Glaemscribe.VirtualChar.prototype.n2c = function(trigger_char_name) {
@@ -128,16 +139,18 @@ Glaemscribe.Charset.prototype.add_char = function(line, code, names)
   this.chars.push(c);
 }
 
-Glaemscribe.Charset.prototype.add_virtual_char = function(line, classes, names)
+Glaemscribe.Charset.prototype.add_virtual_char = function(line, classes, names, reversed, deflt)
 {
   if(names == undefined || names.length == 0 || names.indexOf("?") != -1) // Ignore characters with '?'
     return;
  
-  var c     = new Glaemscribe.VirtualChar();    
-  c.line    = line;
-  c.names   = names;
-  c.classes = classes; // We'll check errors in finalize
-  c.charset = this;
+  var c      = new Glaemscribe.VirtualChar();    
+  c.line     = line;
+  c.names    = names;
+  c.classes  = classes; // We'll check errors in finalize
+  c.charset  = this;
+  c.default  = deflt;
+  c.reversed = reversed;
   this.chars.push(c);  
 }
 

@@ -40,6 +40,8 @@ module Glaemscribe
           return @charset
         end
         
+        # TODO : verify charset glaeml like we do with modes
+        
         doc.root_node.gpath("char").each { |char_element|
           code   = char_element.args[0].hex
           names  = char_element.args[1..-1].map{|cname| cname.strip }.reject{ |cname| cname.empty? }
@@ -47,15 +49,25 @@ module Glaemscribe
         }
         
         doc.root_node.gpath("virtual").each { |virtual_element|
-          names   = virtual_element.args
-          classes = []
+          names     = virtual_element.args
+          reversed  = false        
+          default   = nil
+          classes   = []
+          
           virtual_element.gpath("class").each { |class_element|
             vc =  Charset::VirtualChar::VirtualClass.new
             vc.target    = class_element.args[0]
             vc.triggers  = class_element.args[1..-1].map{|cname| cname.strip }.reject{ |cname| cname.empty? }     
             classes << vc
           }
-          @charset.add_virtual_char(virtual_element.line,classes,names)
+          virtual_element.gpath("reversed").each { |reversed_element| 
+            reversed = true
+          }
+          virtual_element.gpath("default").each { |default_element| 
+            default  = default_element.args[0]
+          }
+          
+          @charset.add_virtual_char(virtual_element.line,classes,names,reversed,default)
         }
         
         @charset.finalize

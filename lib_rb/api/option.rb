@@ -24,21 +24,25 @@ module Glaemscribe
   module API
     
     class Option
+      attr_reader   :mode
       attr_reader   :name
       attr_reader   :type
       attr_reader   :default_value_name      
       attr_reader   :values
+
     
       class Type
         ENUM = "ENUM"
         BOOL = "BOOL"
       end
          
-      def initialize(name, default_value_name, values)
+      def initialize(mode, name, default_value_name, values, visibility = nil)
+        @mode               = mode
         @name               = name
         @default_value_name = default_value_name
         @type               = (values.keys.count == 0)?(Type::BOOL):(Type::ENUM)
         @values             = values
+        @visibility         = visibility
       end
       
       def default_value
@@ -57,6 +61,16 @@ module Glaemscribe
         else
           return @values[val_name]
         end
+      end
+      
+      def visible?
+        if_eval = Eval::Parser.new()
+        
+        begin
+          (if_eval.parse(@visibility || "true", @mode.latest_option_values || {}) == true)
+        rescue Eval::IfEvalError => e
+          nil
+        end       
       end
       
     end

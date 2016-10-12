@@ -214,10 +214,15 @@ module Glaemscribe
         @mode.version     = doc.root_node.gpath('version').first.args.first
                 
         doc.root_node.gpath("options.option").each{ |option_element|
-          values  = {}
+          values      = {}
+          visibility  = nil
+  
           option_element.gpath("value").each{ |value_element|
             value_name                = value_element.args.first
             values[value_name]        = value_element.args.last.to_i
+          }
+          option_element.gpath("visible_when").each{ |visible_element|
+            visibility = visible_element.args.first
           }
         
           option_name_at          = option_element.args[0]
@@ -228,7 +233,7 @@ module Glaemscribe
             @mode.errors << Glaeml::Error.new(option_element.line, "Missing option default value.")
           end
             
-          option        = Option.new(option_name_at, option_default_val_at, values)
+          option        = Option.new(@mode, option_name_at, option_default_val_at, values, visibility)
           @mode.options[option.name] = option
         }
         

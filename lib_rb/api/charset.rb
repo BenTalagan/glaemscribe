@@ -50,6 +50,8 @@ module Glaemscribe
         attr_accessor :names
         attr_accessor :classes
         attr_accessor :charset
+        attr_accessor :reversed
+        attr_accessor :default
         
         class VirtualClass
           attr_accessor :target
@@ -57,12 +59,20 @@ module Glaemscribe
         end
         
         def initialize
-          @classes = {} # result_char_1 => [trigger_char_1, trigger_char_2 ...] , result_char_1 => ...
+          @classes      = {} # result_char_1 => [trigger_char_1, trigger_char_2 ...] , result_char_1 => ...
           @lookup_table = {}
+          @reversed     = false
+          @default      = nil
         end
         
         def str
-          VIRTUAL_CHAR_OUTPUT
+          
+          # Will be called if the virtual char could not be replaced and still exists at the end of the transcription chain
+          if @default
+            @charset[@default].str
+          else
+            VIRTUAL_CHAR_OUTPUT
+          end
         end
         
         def finalize
@@ -83,9 +93,7 @@ module Glaemscribe
                 if rc.nil?
                   @charset.errors << Glaeml::Error.new(@line, "Trigger char #{trigger_char} points to unknown result char #{result_char}.")
                 elsif tc.nil?
-                  @charset.errors << Glaeml::Error.new(@line, "Unknown trigger char #{trigger_char}.")
-                elsif tc.class == VirtualChar
-                  @charset.errors << Glaeml::Error.new(@line, "Trigger char #{trigger_char} is virtual. This is not supported!")    
+                  @charset.errors << Glaeml::Error.new(@line, "Unknown trigger char #{trigger_char}.")  
                 elsif rc.class == VirtualChar
                   @charset.errors << Glaeml::Error.new(@line, "Trigger char #{trigger_char} points to another virtual char #{result_char}. This is not supported!")
                 else
@@ -96,6 +104,14 @@ module Glaemscribe
               end              
             }
           }
+          if @default
+            c = @charset[@default]
+            if !c
+              @charset.errors << Glaeml::Error.new(@line, "Default char #{@default} does not match any real character in the charset.")             
+            elsif c.virtual?
+              @charset.errors << Glaeml::Error.new(@line, "Default char #{@default} is virtual, it should be real only.")
+            end
+          end
         end
         
         def [](trigger_char_name)
@@ -127,14 +143,16 @@ module Glaemscribe
         @chars << c
       end
       
-      def add_virtual_char(line, classes, names)
+      def add_virtual_char(line, classes, names, reversed = false, default = nil)
         return if names.empty? || names.include?("?") # Ignore characters with '?'
         
-        c         = VirtualChar.new
-        c.line    = line
-        c.names   = names
-        c.classes = classes # We'll check errors in finalize
-        c.charset = self
+        c           = VirtualChar.new
+        c.line      = line
+        c.names     = names
+        c.classes   = classes # We'll check errors in finalize
+        c.charset   = self
+        c.reversed  = reversed
+        c.default   = default
         @chars << c   
       end
       

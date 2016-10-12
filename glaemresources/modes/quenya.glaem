@@ -53,9 +53,21 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 \charset  tengwar_ds         true
 \charset  tengwar_ds_eldamar false
+\charset  tengwar_ds_annatar false
 
 \beg      options
   \option implicit_a false
+  
+  \** Keep next option for later maybe **\
+  \**  
+  \beg option implicit_a_unutixe IA_UNUTIXE_LAZY
+    \visible_when 'implicit_a == true'
+    \value IA_UNUTIXE_FULL 1
+    \value IA_UNUTIXE_LAZY 2
+    \value IA_UNUTIXE_NONE 3
+  \end
+  **\
+  
   \beg option a_tetha_shape A_SHAPE_THREE_DOTS
     \value A_SHAPE_THREE_DOTS 1
     \value A_SHAPE_CIRCUMFLEX 2

@@ -45,37 +45,47 @@ Glaemscribe.ResolveVirtualsPostProcessorOperator.prototype.reset_trigger_states 
   });
 }
 
-
-Glaemscribe.ResolveVirtualsPostProcessorOperator.prototype.apply = function(tokens, charset)
-{   
+Glaemscribe.ResolveVirtualsPostProcessorOperator.prototype.apply_loop = function(charset, tokens, reversed, token, idx) {
   var op = this;
+  if(token == '*SPACE') {
+    op.reset_trigger_states(charset);
+    return; // continue
+  }
+  var c = charset.n2c(token);
+
+  if(c == null)
+    return;
+  
+  if(c.is_virtual() && (reversed == c.reversed)) {
+    
+    // Try to replace
+    var last_trigger = op.last_triggers[c.object_reference];
+    if(last_trigger != null) {
+      tokens[idx] = last_trigger.names[0]; // Take the first name of the non-virtual replacement.
+    };
+  }
+  else {
+    // Update states of virtual classes
+    charset.virtual_chars.glaem_each(function(_,vc) {
+      var rc = vc.n2c(token);
+      if(rc != null)
+        op.last_triggers[vc.object_reference] = rc;
+    });
+  }  
+}
+
+
+Glaemscribe.ResolveVirtualsPostProcessorOperator.prototype.apply = function(tokens, charset) {   
+  var op = this;
+  
   op.reset_trigger_states(charset);
   tokens.glaem_each(function(idx,token) {
-    if(token == '*SPACE') {
-      op.reset_trigger_states(charset);
-      return true; // continue
-    }
-    var c = charset.n2c(token);
+    op.apply_loop(charset,tokens,false,token,idx);
+  });
   
-    if(c == null)
-      return true;
-    
-    if(c.is_virtual()) {
-      // Try to replace
-      var last_trigger = op.last_triggers[c.object_reference];
-      if(last_trigger != null) {
-        tokens[idx] = last_trigger.names[0]; // Take the first name of the non-virtual replacement.
-      };
-    }
-    else {
-      // Update states of virtual classes
-      charset.virtual_chars.glaem_each(function(_,vc) {
-        var rc = vc.n2c(token);
-        if(rc != null)
-          op.last_triggers[vc.object_reference] = rc;
-      });
-    }
-    
+  op.reset_trigger_states(charset);
+  tokens.glaem_each_reversed(function(idx,token) {
+    op.apply_loop(charset,tokens,true,token,idx);    
   });
   return tokens;
 }  

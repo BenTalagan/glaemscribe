@@ -49,15 +49,23 @@ Glaemscribe.CharsetParser.prototype.parse_raw = function(charset_name, raw)
   }  
   
   doc.root_node.gpath("virtual").glaem_each(function(_,virtual_element) { 
-    var names = virtual_element.args;
-    var classes = [];
+    var names     = virtual_element.args;
+    var classes   = [];
+    var reversed  = false;
+    var deflt     = null;
     virtual_element.gpath("class").glaem_each(function(_,class_element) {
       var vc        = new Glaemscribe.VirtualChar.VirtualClass();
       vc.target     = class_element.args[0];
       vc.triggers   = class_element.args.slice(1);   
       classes.push(vc);
     });
-    charset.add_virtual_char(virtual_element.line,classes,names);
+    virtual_element.gpath("reversed").glaem_each(function(_,reversed_element) {
+      reversed = true;
+    });
+    virtual_element.gpath("default").glaem_each(function(_,default_element) {
+      deflt = default_element.args[0];
+    });
+    charset.add_virtual_char(virtual_element.line,classes,names,reversed,deflt);
   });
   
   charset.finalize(); 

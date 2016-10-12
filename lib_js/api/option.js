@@ -22,12 +22,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 */
 
-Glaemscribe.Option = function(name, default_value_name, values)
+Glaemscribe.Option = function(mode, name, default_value_name, values, visibility)
 {
+  this.mode               = mode;
   this.name               = name;
   this.default_value_name = default_value_name;
   this.type               = (Object.keys(values).length == 0)?(Glaemscribe.Option.Type.BOOL):(Glaemscribe.Option.Type.ENUM);
   this.values             = values;
+  this.visibility         = visibility;
   
   return this;
 }
@@ -60,4 +62,21 @@ Glaemscribe.Option.prototype.value_for_value_name = function(val_name)
   {
     return this.values[val_name];
   }
+}
+
+Glaemscribe.Option.prototype.is_visible = function() {
+  var if_eval = new Glaemscribe.Eval.Parser;
+        
+  var res = false;
+  
+  try
+  {
+    res = if_eval.parse(this.visibility || "true", this.mode.latest_option_values || {});
+    return (res == true);
+  }
+  catch(err)
+  {
+    console.log(err);
+    return null;
+  }                
 }

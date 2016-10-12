@@ -37,33 +37,40 @@ module Glaemscribe
         }
       end
       
+      def apply_loop(charset, tokens, reversed, token, idx)
+        if token == '*SPACE'
+          reset_trigger_states(charset)
+          return
+        end
+        
+        # Check if token is a virtual char
+        c = charset[token]
+        return if c.nil? # May happen for empty tokens
+        if c.virtual? && (reversed == c.reversed)
+          # Try to replace
+          last_trigger = @last_triggers[c]
+          if last_trigger != nil
+            tokens[idx] = last_trigger.names.first # Take the first name of the non-virtual replacement.
+          end
+        else
+          # Update states of virtual classes
+          charset.virtual_chars.each{|vc|
+            rc                  = vc[token]
+            @last_triggers[vc]  = rc if rc != nil 
+          }
+        end        
+      end
+      
       def apply(tokens,charset)
-        
-        reset_trigger_states(charset)
-        
+        # Handle l to r virtuals (diacritics ?)
+        reset_trigger_states(charset)       
         tokens.each_with_index{ |token,idx|
-          
-          if token == '*SPACE'
-            reset_trigger_states(charset)
-            next
-          end
-          
-          # Check if token is a virtual char
-          c = charset[token]
-          next if c.nil? # May happen for empty tokens
-          if c.virtual?
-            # Try to replace
-            last_trigger = @last_triggers[c]
-            if last_trigger != nil
-              tokens[idx] = last_trigger.names.first # Take the first name of the non-virtual replacement.
-            end
-          else
-            # Update states of virtual classes
-            charset.virtual_chars.each{|vc|
-              rc                  = vc[token]
-              @last_triggers[vc]  = rc if rc != nil 
-            }
-          end
+          apply_loop(charset,tokens,false,token,idx)
+        }
+        # Handle r to l virtuals (ligatures ?)
+        reset_trigger_states(charset)       
+        tokens.reverse_each.with_index{ |token,idx|
+          apply_loop(charset,tokens,true,token,idx)
         }
         tokens
       end
