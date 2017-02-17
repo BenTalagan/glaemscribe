@@ -1,10 +1,13 @@
-dir     = File.absolute_path(File.dirname(__FILE__))
-version = File.open(dir+ "/../../version","rb:utf-8") { |f| f.read }
+require 'json'
+
+dir           = File.absolute_path(File.dirname(__FILE__))
+version_info  = JSON.parse(File.open(dir+ "/../../version","rb:utf-8") { |f| f.read })
+
 
 Gem::Specification.new do |s|
   s.name        = 'glaemscribe'
-  s.version     = version
-  s.date        = '2016-09-06'
+  s.version     = version_info['version']
+  s.date        = version_info['date']
   s.summary     = "Glǽmscribe"
   
   s.description = 
@@ -20,7 +23,7 @@ Gem::Specification.new do |s|
   
   s.executables << "glaemscribe"
   
-  s.homepage    = 'http://jrrvf.com/~glaemscrafu/english/glaemscribe.html'
+  s.homepage    = 'https://jrrvf.com/~glaemscrafu/english/glaemscribe.html'
   s.license     = 'AGPL-3.0'
   
   s.add_runtime_dependency 'commander', '~> 4.3'

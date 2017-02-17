@@ -19,7 +19,7 @@ GNU Affero General Public License for more details.
 You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-Version : 1.0.19
+Version : 1.0.20
 */
 
 /*
@@ -203,6 +203,23 @@ Object.defineProperty(Object.prototype, "glaem_each", {
   }   
 });
 
+Object.defineProperty(Object.prototype, "glaem_each_reversed", {
+  enumerable: false,
+  value:  function (callback) {
+    if(!this instanceof Array)
+      return this.glaem_each(callback);
+      
+    for(var o = this.length-1;o>=0;o--)
+    {
+      if(!this.hasOwnProperty(o))
+        continue;
+      var res = callback(o,this[o]);
+      if(res == false)
+        break;
+    }
+  }   
+});
+
 Object.defineProperty(Object.prototype, "glaem_merge", {
   enumerable: false,
   value:  function (other_object) {
@@ -371,6 +388,8 @@ Glaemscribe.VirtualChar = function()
 {
   this.classes      = [];
   this.lookup_table = {};
+  this.reversed     = false;
+  this.default      = null;
   return this;
 }
 
@@ -387,7 +406,11 @@ Glaemscribe.VirtualChar.prototype.is_virtual = function()
 
 Glaemscribe.VirtualChar.prototype.output = function()
 {
-  return Glaemscribe.VIRTUAL_CHAR_OUTPUT;
+  var vc = this;
+  if(vc.default)
+    return vc.charset.n2c(vc.default).output();
+  else
+    return Glaemscribe.VIRTUAL_CHAR_OUTPUT;
 }
 
 Glaemscribe.VirtualChar.prototype.finalize = function()
@@ -416,10 +439,7 @@ Glaemscribe.VirtualChar.prototype.finalize = function()
         else if(tc == null) {
           vc.charset.errors.push(new Glaemscribe.Glaeml.Error(vc.line, "Unknown trigger char " + trigger_char + "."));
         }
-        else if(tc instanceof Glaemscribe.VirtualChar) {
-          vc.charset.errors.push(new Glaemscribe.Glaeml.Error(vc.line, "Trigger char " + trigger_char + " is virtual. This is not supported!"));          
-        }
-        else if(tc instanceof Glaemscribe.VirtualChar) {
+        else if(rc instanceof Glaemscribe.VirtualChar) {
           vc.charset.errors.push(new Glaemscribe.Glaeml.Error(vc.line, "Trigger char " + trigger_char + " points to another virtual char " + result_char + ". This is not supported!"));          
         }
         else {
@@ -430,6 +450,14 @@ Glaemscribe.VirtualChar.prototype.finalize = function()
       }
     });
   });
+  if(vc.default)
+  {
+    var c = vc.charset.lookup_table[vc.default];
+    if(!c)
+      vc.charset.errors.push(new Glaemscribe.Glaeml.Error(vc.line, "Default char "+ vc.default + " does not match any real character in the charset."));
+    else if(c.is_virtual())
+      vc.charset.errors.push(new Glaemscribe.Glaeml.Error(vc.line, "Default char "+ vc.default + " is virtual, it should be real only."));
+  }
 }
 
 Glaemscribe.VirtualChar.prototype.n2c = function(trigger_char_name) {
@@ -458,16 +486,18 @@ Glaemscribe.Charset.prototype.add_char = function(line, code, names)
   this.chars.push(c);
 }
 
-Glaemscribe.Charset.prototype.add_virtual_char = function(line, classes, names)
+Glaemscribe.Charset.prototype.add_virtual_char = function(line, classes, names, reversed, deflt)
 {
   if(names == undefined || names.length == 0 || names.indexOf("?") != -1) // Ignore characters with '?'
     return;
  
-  var c     = new Glaemscribe.VirtualChar();    
-  c.line    = line;
-  c.names   = names;
-  c.classes = classes; // We'll check errors in finalize
-  c.charset = this;
+  var c      = new Glaemscribe.VirtualChar();    
+  c.line     = line;
+  c.names    = names;
+  c.classes  = classes; // We'll check errors in finalize
+  c.charset  = this;
+  c.default  = deflt;
+  c.reversed = reversed;
   this.chars.push(c);  
 }
 
@@ -551,15 +581,23 @@ Glaemscribe.CharsetParser.prototype.parse_raw = function(charset_name, raw)
   }  
   
   doc.root_node.gpath("virtual").glaem_each(function(_,virtual_element) { 
-    var names = virtual_element.args;
-    var classes = [];
+    var names     = virtual_element.args;
+    var classes   = [];
+    var reversed  = false;
+    var deflt     = null;
     virtual_element.gpath("class").glaem_each(function(_,class_element) {
       var vc        = new Glaemscribe.VirtualChar.VirtualClass();
       vc.target     = class_element.args[0];
       vc.triggers   = class_element.args.slice(1);   
       classes.push(vc);
     });
-    charset.add_virtual_char(virtual_element.line,classes,names);
+    virtual_element.gpath("reversed").glaem_each(function(_,reversed_element) {
+      reversed = true;
+    });
+    virtual_element.gpath("default").glaem_each(function(_,default_element) {
+      deflt = default_element.args[0];
+    });
+    charset.add_virtual_char(virtual_element.line,classes,names,reversed,deflt);
   });
   
   charset.finalize(); 
@@ -909,6 +947,7 @@ Glaemscribe.Mode = function(mode_name) {
   this.options              = {};
   this.errors               = [];
   this.warnings             = [];
+  this.latest_option_values = {};
 
   this.pre_processor    = new Glaemscribe.TranscriptionPreProcessor(this);
   this.processor        = new Glaemscribe.TranscriptionProcessor(this);
@@ -961,10 +1000,14 @@ Glaemscribe.Mode.prototype.finalize = function(options) {
       });
     }
   });   
+  
+  this.latest_option_values = trans_options_converted;
     
-  this.pre_processor.finalize(trans_options_converted);
-  this.post_processor.finalize(trans_options_converted);
-  this.processor.finalize(trans_options_converted);
+  this.pre_processor.finalize(this.latest_option_values);
+  this.post_processor.finalize(this.latest_option_values);
+  this.processor.finalize(this.latest_option_values);
+  
+  return this;
 }
 
 Glaemscribe.Mode.prototype.transcribe = function(content, charset) {
@@ -1007,12 +1050,14 @@ Glaemscribe.Mode.prototype.transcribe = function(content, charset) {
 */
 
 
-Glaemscribe.Option = function(name, default_value_name, values)
+Glaemscribe.Option = function(mode, name, default_value_name, values, visibility)
 {
+  this.mode               = mode;
   this.name               = name;
   this.default_value_name = default_value_name;
   this.type               = (Object.keys(values).length == 0)?(Glaemscribe.Option.Type.BOOL):(Glaemscribe.Option.Type.ENUM);
   this.values             = values;
+  this.visibility         = visibility;
   
   return this;
 }
@@ -1046,6 +1091,24 @@ Glaemscribe.Option.prototype.value_for_value_name = function(val_name)
     return this.values[val_name];
   }
 }
+
+Glaemscribe.Option.prototype.is_visible = function() {
+  var if_eval = new Glaemscribe.Eval.Parser;
+        
+  var res = false;
+  
+  try
+  {
+    res = if_eval.parse(this.visibility || "true", this.mode.latest_option_values || {});
+    return (res == true);
+  }
+  catch(err)
+  {
+    console.log(err);
+    return null;
+  }                
+}
+
 
 /*
   Adding api/mode_parser.js 
@@ -1296,20 +1359,18 @@ Glaemscribe.ModeParser.prototype.parse_raw = function(mode_name, raw, mode_optio
   mode.authors     = doc.root_node.gpath('authors')[0].args[0]
   mode.version     = doc.root_node.gpath('version')[0].args[0]
   
-  var option_elements = doc.root_node.gpath('options.option');
-  for(var o=0;o<option_elements.length;o++)
-  {
-    var option_element  = option_elements[o];
-    var values          = {}
-    var value_elements  = option_element.gpath('value');
+  doc.root_node.gpath('options.option').glaem_each(function(_,option_element) {
+
+    var values          = {};
+    var visibility      = null;
     
-    for(var ov=0; ov< value_elements.length; ov++)
-    {
-      var value_element             = value_elements[ov];
-      
+    option_element.gpath('value').glaem_each(function(_, value_element) {   
       var value_name                = value_element.args[0];
       values[value_name]            = parseInt(value_element.args[1]);    
-    }
+    });
+    option_element.gpath('visible_when').glaem_each(function(_, visible_element) {   
+      visibility = visible_element.args[0];
+    });    
       
     var option_name_at          = option_element.args[0];
     var option_default_val_at   = option_element.args[1];
@@ -1320,9 +1381,9 @@ Glaemscribe.ModeParser.prototype.parse_raw = function(mode_name, raw, mode_optio
       mode.errors.push(new Glaemscribe.Glaeml.Error(option_element.line, "Missing option 'default' value."));
     }
     
-    option                    = new Glaemscribe.Option(option_name_at, option_default_val_at, values);
+    option                    = new Glaemscribe.Option(mode, option_name_at, option_default_val_at, values, visibility);
     mode.options[option.name] = option;
-  }  
+  }); 
   
   var charset_elements   = doc.root_node.gpath('charset');
  
@@ -3017,37 +3078,47 @@ Glaemscribe.ResolveVirtualsPostProcessorOperator.prototype.reset_trigger_states 
   });
 }
 
-
-Glaemscribe.ResolveVirtualsPostProcessorOperator.prototype.apply = function(tokens, charset)
-{   
+Glaemscribe.ResolveVirtualsPostProcessorOperator.prototype.apply_loop = function(charset, tokens, reversed, token, idx) {
   var op = this;
+  if(token == '*SPACE') {
+    op.reset_trigger_states(charset);
+    return; // continue
+  }
+  var c = charset.n2c(token);
+
+  if(c == null)
+    return;
+  
+  if(c.is_virtual() && (reversed == c.reversed)) {
+    
+    // Try to replace
+    var last_trigger = op.last_triggers[c.object_reference];
+    if(last_trigger != null) {
+      tokens[idx] = last_trigger.names[0]; // Take the first name of the non-virtual replacement.
+    };
+  }
+  else {
+    // Update states of virtual classes
+    charset.virtual_chars.glaem_each(function(_,vc) {
+      var rc = vc.n2c(token);
+      if(rc != null)
+        op.last_triggers[vc.object_reference] = rc;
+    });
+  }  
+}
+
+
+Glaemscribe.ResolveVirtualsPostProcessorOperator.prototype.apply = function(tokens, charset) {   
+  var op = this;
+  
   op.reset_trigger_states(charset);
   tokens.glaem_each(function(idx,token) {
-    if(token == '*SPACE') {
-      op.reset_trigger_states(charset);
-      return true; // continue
-    }
-    var c = charset.n2c(token);
+    op.apply_loop(charset,tokens,false,token,idx);
+  });
   
-    if(c == null)
-      return true;
-    
-    if(c.is_virtual()) {
-      // Try to replace
-      var last_trigger = op.last_triggers[c.object_reference];
-      if(last_trigger != null) {
-        tokens[idx] = last_trigger.names[0]; // Take the first name of the non-virtual replacement.
-      };
-    }
-    else {
-      // Update states of virtual classes
-      charset.virtual_chars.glaem_each(function(_,vc) {
-        var rc = vc.n2c(token);
-        if(rc != null)
-          op.last_triggers[vc.object_reference] = rc;
-      });
-    }
-    
+  op.reset_trigger_states(charset);
+  tokens.glaem_each_reversed(function(idx,token) {
+    op.apply_loop(charset,tokens,true,token,idx);    
   });
   return tokens;
 }  

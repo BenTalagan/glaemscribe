@@ -137,5 +137,4 @@ for(var mode_name in Glaemscribe.resource_manager.loaded_modes)
 
 unit_test_directory(__dirname + "/../unit_tests/glaemscrafu")
 // unit_test_directory(__dirname + "/../unit_tests/old")
-
-
+// console.log(Glaemscribe.resource_manager.loaded_modes['quenya'].finalize({"implicit_a" : "false"}).options['implicit_a_unutixe'].is_visible())

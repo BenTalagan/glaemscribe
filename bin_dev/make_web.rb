@@ -9,8 +9,9 @@ BUILD_JS_PATH   = "../build/web/glaemscribe/js/"
 
 Dir.chdir(SCRIPT_PATH)
 
-$license = File.open("../LICENSE.txt","rb:utf-8") { |f| f.read }
-$version = File.open("../version","rb:utf-8") { |f| f.read }
+$license      = File.open("../LICENSE.txt","rb:utf-8") { |f| f.read }
+$version_info = JSON.parse(File.open("../version","rb:utf-8") { |f| f.read })
+$version      = $version_info['version']
 
 JS_FILES = [
   "utils/string_list_to_clean_array.js",

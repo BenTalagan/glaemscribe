@@ -174,3 +174,5 @@ if ARGV[0] == "--dump"
 else
   unit_test_directory(SCRIPT_PATH + "/../unit_tests/glaemscrafu")
 end
+
+# puts Glaemscribe::API::ResourceManager::loaded_modes['quenya'].finalize("implicit_a" => "true").options['implicit_a_unutixe'].visible?
