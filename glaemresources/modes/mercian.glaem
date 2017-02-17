@@ -33,6 +33,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 \authors  "Talagan (Benjamin Babut)"
 
 \charset  tengwar_ds_eldamar true
+\** Other charsets cannot handle all diacritics we are using here ... **\
 
 \beg      preprocessor
   \** Work exclusively downcase **\

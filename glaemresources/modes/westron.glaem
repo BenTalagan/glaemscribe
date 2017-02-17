@@ -23,8 +23,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 **\
 
 \beg changelog
-  \entry 0.0.2 "Correcting ts/ps sequences to work better with eldamar"
-  \entry 0.0.3 "Porting to virtual chars"
+  \entry "0.0.2" "Correcting ts/ps sequences to work better with eldamar"
+  \entry "0.0.3" "Porting to virtual chars"
+  \entry "0.0.4" "Added charset support for Annatar"
 \end
 
 \**  Westron mode for glaemscribe (MAY BE INCOMPLETE) **\
@@ -36,6 +37,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 \charset  tengwar_ds         true
 \charset  tengwar_ds_eldamar false
+\charset  tengwar_ds_annatar false
 
 \beg      options
   \option reverse_numbers true

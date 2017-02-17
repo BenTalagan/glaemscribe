@@ -33,6 +33,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 \authors  "Talagan (Benjamin Babut)"
 
 \charset  tengwar_ds_eldamar true
+\** Other charsets cannot handle all diacritics we are using here ... **\
 
 \beg      preprocessor
   \** Work exclusively downcase **\
@@ -141,9 +142,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
   
     {S_VOWELS_WN}[{L1_KER_1}]{S_VOWELS_WN}  --> 2,1,3 --> [{L1_IMG_1}]{_S_VOWELS_UP_WN_}{_S_VOWELS_DN_WN_}
-    {S_VOWELS_WN}[{L1_KER_1_GEMS}]              --> 2,1   --> [{L1_IMG_1_GEMS}]{_S_VOWELS_UP_WN_}
+    {S_VOWELS_WN}[{L1_KER_1_GEMS}]          --> 2,1   --> [{L1_IMG_1_GEMS}]{_S_VOWELS_UP_WN_}
     {S_VOWELS_WN}[{L1_KER_2}]{S_VOWELS_WN}  --> 2,1,3 --> [{L1_IMG_2}]{_S_VOWELS_UP_WN_}{_S_VOWELS_DN_WN_}
-    {S_VOWELS_WN}[{L1_KER_2_GEMS}]              --> 2,1   --> [{L1_IMG_2_GEMS}]{_S_VOWELS_UP_WN_}
+    {S_VOWELS_WN}[{L1_KER_2_GEMS}]          --> 2,1   --> [{L1_IMG_2_GEMS}]{_S_VOWELS_UP_WN_}
 
     {S_VOWELS_WN}[ nt * mp ]{S_VOWELS_WN}   --> 2,1,3 -->  [ TINCO TILD_SUP_S * PARMA TILD_SUP_S  ]{_S_VOWELS_UP_WN_}{_S_VOWELS_DN_WN_}
     {S_VOWELS_WN}[ nċ * nc ]{S_VOWELS_WN}   --> 2,1,3 -->  [ CALMA TILD_SUP_S * QUESSE TILD_SUP_S ]{_S_VOWELS_UP_WN_}{_S_VOWELS_DN_WN_}

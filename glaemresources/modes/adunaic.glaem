@@ -23,19 +23,21 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 **\
 
 \beg changelog
- \entry "0.0.2", "Added option for o/u tehtar loop orientation"
- \entry "0.0.3", "Normalizing to virtual chars" 
+ \entry "0.0.2" "Added option for o/u tehtar loop orientation"
+ \entry "0.0.3" "Normalizing to virtual chars" 
+ \entry "0.0.4" "Added charset support for Annatar"
 \end
 
 \**  Adunaic mode for glaemscribe (MAY BE INCOMPLETE) **\
 \language Adûnaic
 \writing  Tengwar
 \mode     Glaemscrafu
-\version  0.0.3
+\version  0.0.4
 \authors  "Talagan (Benjamin Babut)"
 
 \charset  tengwar_ds         true
 \charset  tengwar_ds_eldamar false
+\charset  tengwar_ds_annatar false
 
 \beg      options
   \option reverse_numbers true

@@ -25,18 +25,21 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 \** Telerin mode for glaemscribe (MAY BE INCOMPLETE) - Derived from Quenya **\
 
 \beg changelog
-  \entry 0.0.2 "Correcting ts/ps sequences to work better with eldamar"
-  \entry 0.0.3 "Porting to virtual chars"
+  \entry "0.0.2" "Correcting ts/ps sequences to work better with eldamar"
+  \entry "0.0.3" "Porting to virtual chars"
+  \entry "0.0.4" "Added charset support for Annatar"
 \end
 
 \language "Telerin"
 \writing  "Tengwar"
 \mode     "Glaemscrafu"
-\version  "0.0.3"
+\version  "0.0.4"
 \authors  "Talagan (Benjamin Babut)"
 
 \charset  tengwar_ds         true
 \charset  tengwar_ds_eldamar false
+\charset  tengwar_ds_annatar false
+
 
 \beg      options
   \option reverse_numbers true

@@ -25,22 +25,25 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 \** Sindarin Classical mode for glaemscribe (MAY BE INCOMPLETE) **\
 
 \beg changelog
-  \entry 0.0.2 "Fixed some tehtar versions which did not look quite nice for ch, dh, v, mb. Reworked the problem of labialized consonnants (+w), adding an option for treating the u-curl + tehta combination."
-  \entry 0.0.3 "Extended the labialized consonnants option."
-  \entry 0.0.4 "Fixed nw (BUG : was using ORE from the beleriand mode), added lw"
-  \entry 0.0.5 "Added thorn as equivalent for th"
-  \entry 0.0.6 "Porting to virtual chars to simplify and beautify"
+  \entry "0.0.2" "Fixed some tehtar versions which did not look quite nice for ch, dh, v, mb. Reworked the problem of labialized consonnants (+w), adding an option for treating the u-curl + tehta combination."
+  \entry "0.0.3" "Extended the labialized consonnants option."
+  \entry "0.0.4" "Fixed nw (BUG : was using ORE from the beleriand mode), added lw"
+  \entry "0.0.5" "Added thorn as equivalent for th"
+  \entry "0.0.6" "Porting to virtual chars to simplify and beautify"
+  \entry "0.0.7" "Added charset support for Annatar"
 \end
 
 
 \language "Sindarin"
 \writing  "Tengwar"
 \mode     "Classical"
-\version  "0.0.6"
+\version  "0.0.7"
 \authors  "Talagan (Benjamin Babut)"
 
 \charset  tengwar_ds         true
 \charset  tengwar_ds_eldamar false
+\charset  tengwar_ds_annatar false
+
 
 \beg      options
   \option reverse_numbers true

@@ -24,19 +24,21 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 \** Sindarin Beleriand mode for glaemscribe (MAY BE INCOMPLETE) **\
 \beg changelog
-  \entry 0.0.2 "Added lw"
-  \entry 0.0.3 "Added thorn as equivalent for th"
-  \entry 0.0.4 "Porting to virtual chars to simplify and beautify"
+  \entry "0.0.2" "Added lw"
+  \entry "0.0.3" "Added thorn as equivalent for th"
+  \entry "0.0.4" "Porting to virtual chars to simplify and beautify"
+  \entry "0.0.5" "Added charset support for Annatar"
 \end
 
 \language "Sindarin"
 \writing  "Tengwar"
 \mode     "Beleriand"
-\version  "0.0.4"
+\version  "0.0.5"
 \authors  "Talagan (Benjamin Babut)"
 
 \charset  tengwar_ds         true
 \charset  tengwar_ds_eldamar false
+\charset  tengwar_ds_annatar false
 
 \beg      options
   \option reverse_numbers true
