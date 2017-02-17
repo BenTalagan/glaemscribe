@@ -1,6 +1,6 @@
 # Glǽmscribe
 
-[**_Glǽmscribe_**](http://jrrvf.com/~glaemscrafu/english/glaemscribe.html) (also written **_Glaemscribe_**) is a software dedicated to
+[**_Glǽmscribe_**](https://jrrvf.com/~glaemscrafu/english/glaemscribe.html) (also written **_Glaemscribe_**) is a software dedicated to
 the transcription of texts between writing systems, and more 
 specifically dedicated to the transcription of J.R.R. Tolkien's 
 invented languages to some of his devised writing systems.
@@ -9,12 +9,12 @@ invented languages to some of his devised writing systems.
 Official integration
 --------------------
 
-Here is [**_the official integration of Glǽmscribe's engine_**](http://jrrvf.com/~glaemscrafu/english/glaemscribe.html).
+Here is [**_the official integration of Glǽmscribe's engine_**](https://jrrvf.com/~glaemscrafu/english/glaemscribe.html).
 
 Mode development
 ----------------
 
-If you're interested in developing a mode for Glǽmscribe, please read [**_the mode development documentation_**](http://jrrvf.com/~glaemscrafu/english/glaemscribe-mode-authoring.html).
+If you're interested in developing a mode for Glǽmscribe, please read [**_the mode development documentation_**](https://jrrvf.com/~glaemscrafu/english/glaemscribe-mode-authoring.html).
 
 Installation and integration
 ----------------------------
@@ -26,6 +26,7 @@ Changelog
 
 | Version | Date | Comment |
 |---------|------|---------| 
+| 1.0.20 | 17/02/2016 | [Quenya] Added double tehtar option.<br>Added reversed virtual chars.<br>Added charset for Annatar.<br>Added ligatures.<br>Added LAMBE ligature for Annatar charset.<br> Enhanced existing charsets. |
 | 1.0.19 | 06/09/2016 | [Quenya] Removed unutixe under óre for coherency in implicit a submode.<br>[Sindarin Angerthas Daeron] Fixed h,ch,hw. |
 | 1.0.18 | 02/09/2016 | Fixed 'implicit a' option for quenya mode broken in 1.0.17. Thanks to Dmitry Kourmyshov for noticing. |
 | 1.0.17 | 26/08/2016 | Ported modes to virtual chars, added a dedicated charset for tengwar eldamar for better rendering of tehtar and diacritics. |
