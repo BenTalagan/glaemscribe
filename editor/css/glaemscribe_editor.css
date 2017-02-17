@@ -190,15 +190,15 @@ html, body, .glaemscribe { height:100%; width:100%; margin:0px; padding:0px; bac
 .charset_table .edit_char_button:hover, .charset_table .add_char_button:hover {
   background-color:#612E79;
 }
-.charset_table table tr td:nth-child(2) {
+.charset_table table tr td:nth-child(1) {
   color:#E39045;
   width: 30px;
 }
-.charset_table table tr td:nth-child(3) {
+.charset_table table tr td:nth-child(2) {
   color:#93C263;
   width:20px;
 }
-.charset_table table tr td:nth-child(4) {
+.charset_table table tr td:nth-child(3) {
   color:#87A4EA;
   font-size: 11px;
 }

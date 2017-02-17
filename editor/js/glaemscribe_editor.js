@@ -200,12 +200,14 @@ GlaemscribeEditor.prototype.installCallbacks = function()
   $("#export_mode_js_button").click(function() {
     editor.exportMode(true);
   });
+  /*
   $("#export_charset_button").click(function() {
     editor.exportCharset();
   });
   $("#export_charset_js_button").click(function() {
     editor.exportCharset(true);
   });
+  */
   
   $(".char_editor_button.cancel").click(function() {
     editor.cancelCharEdition();
@@ -638,6 +640,7 @@ GlaemscribeEditor.prototype.exportSession = function()
   dlink[0].click();
 }
 
+
 GlaemscribeEditor.prototype.serializeCurrentCharset = function() 
 {
   var editor        = this;
@@ -666,6 +669,7 @@ GlaemscribeEditor.prototype.serializeCurrentCharset = function()
   return content;
 }
 
+/*
 GlaemscribeEditor.prototype.exportCharset = function(is_js)
 {
   var editor        = this;    
@@ -693,7 +697,7 @@ GlaemscribeEditor.prototype.exportCharset = function(is_js)
   });
   dlink[0].click()  
 }
-
+*/
 //=====//
 // GUI //
 //=====//
@@ -735,6 +739,9 @@ GlaemscribeEditor.prototype.refreshCharset = function()
   t.html("");
     
   var tr = $("<tr/>");
+  
+  /* 
+  // CHARSET EDITOR REMOVED, TO BE REWRITTEN
   var th = $("<th id='add_char_button' class='add_char_button'><div class='fa fa-plus'></div</th>");  
   
   th.click(function() {
@@ -742,6 +749,7 @@ GlaemscribeEditor.prototype.refreshCharset = function()
   });
   
   tr.append(th);
+  */
   tr.append("<th>U+X</th><th>C</th><th class='left'>Names</th>");
   
   t.append(tr);  
@@ -753,6 +761,9 @@ GlaemscribeEditor.prototype.refreshCharset = function()
       continue;
     
     var tr = $("<tr class='char_entry' data-num='" + i + "'/>");
+    
+    /* 
+    // CHARSET EDITOR REMOVED, TO BE REWRITTEN
     var edit_button = $("<td class='edit_char_button'><div class='fa fa-pencil'></div></td>");
     
     edit_button.click(function() {
@@ -761,11 +772,15 @@ GlaemscribeEditor.prototype.refreshCharset = function()
     });
     
     tr.append(edit_button);
+    */
     tr.append("<td>" + parseInt(c.code).toString(16) + "</td><td class='char'>" + c.str + "</td><td class='left'>" + c.names.join("<br>") + "</td>");
     t.append(tr);
   }
   
   var tr = $("<tr/>");
+  
+  /* 
+  // CHARSET EDITOR REMOVED, TO BE REWRITTEN
   var th = $("<th id='add_virtual_char_button' class='add_char_button'><div class='fa fa-plus'></div</th>");  
   
   th.click(function() {
@@ -773,6 +788,7 @@ GlaemscribeEditor.prototype.refreshCharset = function()
   });
   
   tr.append(th);
+  */
   tr.append("<th>V</th><th></th><th class='left'>Virtual Char names</th>");
   
   t.append(tr);  
@@ -784,14 +800,17 @@ GlaemscribeEditor.prototype.refreshCharset = function()
       continue;
     
     var tr = $("<tr class='char_entry' data-num='" + i + "'/>");
+    
+    /* 
+    // CHARSET EDITOR REMOVED, TO BE REWRITTEN
     var edit_button = $("<td class='edit_char_button'><div class='fa fa-pencil'></div></td>");
     
     edit_button.click(function() {
       var elt=$(this);
       editor.charEditorAskedOn(elt,parseInt(elt.parent().data("num")));
     });
-    
     tr.append(edit_button);
+    */
     tr.append("<td>X</td><td class='char'></td><td class='left'>" + c.names.join("<br>") + "</td>");
     t.append(tr);
   }
@@ -1054,7 +1073,8 @@ GlaemscribeEditor.prototype.refreshDebuggerPlusPostLabels = function()
   var editor = this;
   $(".debugger_plus_post").toggle(editor.debuggerShouldApplyPostProcessor());
 }
-
+/* 
+// CHARSET EDITOR REMOVED, TO BE REWRITTEN
 GlaemscribeEditor.prototype.charEditorAskedOn = function(char_row, char_num)
 {
   var editor      = this;
@@ -1122,7 +1142,10 @@ GlaemscribeEditor.prototype.charEditorAskedOn = function(char_row, char_num)
   
   editor.charEditor.show();
 }
+*/
 
+/* 
+// CHARSET EDITOR REMOVED, TO BE REWRITTEN
 GlaemscribeEditor.prototype.charCodeChanging = function()
 {
   var editor = this;
@@ -1132,13 +1155,19 @@ GlaemscribeEditor.prototype.charCodeChanging = function()
   
   $("#char_preview").html(String.fromCodePoint(code)); 
 }
+*/
 
+/* 
+// CHARSET EDITOR REMOVED, TO BE REWRITTEN
 GlaemscribeEditor.prototype.cancelCharEdition = function()
 {
   var editor = this;
   editor.closeSubEditors();
 }
+*/
 
+/* 
+// CHARSET EDITOR REMOVED, TO BE REWRITTEN
 GlaemscribeEditor.prototype.confirmCharEdition = function()
 {
   var editor = this;
@@ -1199,7 +1228,10 @@ GlaemscribeEditor.prototype.confirmCharEdition = function()
   editor.refreshTranscription();
   editor.closeSubEditors();
 }
+*/
 
+/* 
+// CHARSET EDITOR REMOVED, TO BE REWRITTEN
 GlaemscribeEditor.prototype.trashCharEdition = function()
 {
   var editor = this;
@@ -1231,7 +1263,7 @@ GlaemscribeEditor.prototype.trashCharEdition = function()
     else {}
   });  
 }
-
+*/
 //////////////
 // SESSIONS //
 //////////////
