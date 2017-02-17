@@ -70,7 +70,7 @@ module Glaemscribe
         # Handle r to l virtuals (ligatures ?)
         reset_trigger_states(charset)       
         tokens.reverse_each.with_index{ |token,idx|
-          apply_loop(charset,tokens,true,token,idx)
+          apply_loop(charset,tokens,true,token,tokens.count - 1 - idx)
         }
         tokens
       end
