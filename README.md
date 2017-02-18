@@ -5,11 +5,24 @@ the transcription of texts between writing systems, and more
 specifically dedicated to the transcription of J.R.R. Tolkien's 
 invented languages to some of his devised writing systems.
 
-
 Official integration
 --------------------
 
 Here is [**_the official integration of Glǽmscribe's engine_**](https://jrrvf.com/~glaemscrafu/english/glaemscribe.html).
+
+Features
+--------
+
+* Handles a large variety of writings (Tengwar, Cirth, Sarati and more).
+* Offers modes for a large variety of fictional languages (Quenya, Sindarin, Khuzdul, Black Speech, Adûnaic, Telerin, Noldorin, Valarin, Westron) and non-fictional languages (Old English, Old Norse).
+* Extensible through a custom programmation language dedicated to the writing of modes.
+* Allow modes to be designed and programmed to have conditional behaviours depending on completely custom options.
+* Separates the handling of modes and charsets, making the mode files purely 'logical' and compliant with all fonts, and pushing back font issues to charset files.
+* Compliant with opentype and non-opentype fonts, so that we can do the transition from old-gen fonts to new-gen ones.
+* Offers a mechanism to compensate diacritic and ligature issues for non-opentype fonts through 'virtual characters', allowing mode files to be generic and far more simple to write.
+* Has an official graphical, friendly integration (see above).
+* Has a graphical IDE for helping users to write mode files.
+* Exists as a javascript implementation or a ruby implementation.
 
 Mode development
 ----------------
@@ -32,6 +45,12 @@ Changelog
 | 1.0.17 | 26/08/2016 | Ported modes to virtual chars, added a dedicated charset for tengwar eldamar for better rendering of tehtar and diacritics. |
 | 1.0.16 | 16/08/2016 | Introduces virtual chars in charsets for easier tehtar and diacritic variant uses. |
 | 1.0.15 | ... | Unlogged (see mode changelogs) |
+
+Prior todos
+-----------
+
+* Write charsets for integrating fonts from the Free Tengwar Font Project ; integrate Tengwar Telcontar.
+* Design a full-featured opentype Tengwar font by extending the Free Tengwar Font Project specifications.
 
 License
 -------
@@ -62,25 +81,16 @@ Glǽmscribe is released under the terms of the GNU Affero General Public License
 Acknowledgments and thanks
 --------------------------
 
-**_Glǽmscribe_** would never have been possible without the invaluable and unconditional help and wisdom of **_Bertrand Bellet_**.
-
-Special thanks to **_Måns Björkman_** author of the outstanding website Amanyë Tenceli and its typefaces, a precious resource for **_Glǽmscribe_**'s development, and **_Didier Willis_** for having ignited the inspiration of this project.
-
-Many thanks to **_Paul Strack_** for all his suggestions and careful examinations on the tengwar modes during his integration of **_Glǽmscribe_**'s engine into his [**_eldamo_**](http://eldamo.org) project!
-
-**_Glǽmscribe_** would never have come to be without the ceaseless and continuously renewed work of the great family of Internet Tolkienists, both on technologies (with several generations of transcribers and typefaces) and on knowledge shared and gathered on websites and forums. Neither would it exist without the devoted labour of all those that make the publication of Tolkien's linguistic works possible. A very big thank you to them all!
-
-**_Glǽmscribe_**'s engine uses [**_shellwords.js_**](https://github.com/jimmycuadra/shellwords) for parsing purposes in its javascript version. Thanks to **_Jimmy Cuadra_**.
-
-**_Glǽmscribe_**'s IDE uses [**_CodeMirror_**](https://codemirror.net/) for its code writing widgets.
-
-**_Glǽmscribe_**'s IDE uses [**_d3.js_**](https://d3js.org/) for the whole SVG behaviour of its debugger UI. Thanks to **_Mike Bostock_** for D3 (truly awesome)!
-
-**_Glǽmscribe_**'s IDE uses [**_tipsy_**](http://onehackoranother.com/projects/jquery/tipsy/#download) for tooltips in its debugger UI. Thanks to **_Jason Frame_**!
-
-**_Glǽmscribe_**'s IDE uses [**_alertify.js_**](http://fabien-d.github.io/alertify.js/). Thanks to **_Fabien Doiron_**!
-
-**_Glǽmscribe_**'s IDE uses [**_Font Awesome_**](https://fortawesome.github.io/Font-Awesome/). Thanks to **_Dave Gandy_**!
+* **_Glǽmscribe_** would never have been possible without the invaluable and unconditional help and wisdom of **_Bertrand Bellet_**.
+* Special thanks to **_Måns Björkman_** author of the outstanding website Amanyë Tenceli and its typefaces, a precious resource for **_Glǽmscribe_**'s development, and **_Didier Willis_** for having ignited the inspiration of this project.
+* Many thanks to **_Paul Strack_** for all his suggestions and careful examinations on the tengwar modes during his integration of **_Glǽmscribe_**'s engine into his [**_eldamo_**](http://eldamo.org) project!
+* **_Glǽmscribe_** would never have come to be without the ceaseless and continuously renewed work of the great family of Internet Tolkienists, both on technologies (with several generations of transcribers and typefaces) and on knowledge shared and gathered on websites and forums. Neither would it exist without the devoted labour of all those that make the publication of Tolkien's linguistic works possible. A very big thank you to them all!
+* **_Glǽmscribe_**'s engine uses [**_shellwords.js_**](https://github.com/jimmycuadra/shellwords) for parsing purposes in its javascript version. Thanks to **_Jimmy Cuadra_**.
+* **_Glǽmscribe_**'s IDE uses [**_CodeMirror_**](https://codemirror.net/) for its code writing widgets.
+* **_Glǽmscribe_**'s IDE uses [**_d3.js_**](https://d3js.org/) for the whole SVG behaviour of its debugger UI. Thanks to **_Mike Bostock_** for D3 (truly awesome)!
+* **_Glǽmscribe_**'s IDE uses [**_tipsy_**](http://onehackoranother.com/projects/jquery/tipsy/#download) for tooltips in its debugger UI. Thanks to **_Jason Frame_**!
+* **_Glǽmscribe_**'s IDE uses [**_alertify.js_**](http://fabien-d.github.io/alertify.js/). Thanks to **_Fabien Doiron_**!
+* **_Glǽmscribe_**'s IDE uses [**_Font Awesome_**](https://fortawesome.github.io/Font-Awesome/). Thanks to **_Dave Gandy_**!
 
 
 Author
