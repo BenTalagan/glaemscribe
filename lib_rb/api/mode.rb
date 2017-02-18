@@ -45,6 +45,7 @@ module Glaemscribe
         @warnings           = []
         @supported_charsets = {}
         @options            = {}
+        @last_raw_options   = nil
        
         @pre_processor    = TranscriptionPreProcessor.new(self)
         @processor        = TranscriptionProcessor.new(self)
@@ -60,6 +61,13 @@ module Glaemscribe
       end
       
       def finalize(options={})
+              
+        if options == @last_raw_options
+          # Small optimization : don't refinalize if options are the same as before
+          return
+        end      
+              
+        @last_raw_options = options      
               
         # Hash: option_name => value_name
         trans_options = {}
