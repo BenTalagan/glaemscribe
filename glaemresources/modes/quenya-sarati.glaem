@@ -65,9 +65,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   \substitute   "oi" "oy"
   \substitute   "ui" "uy"
 
-  \substitute   "á" "aa" \** Split long a  **\
+  \** Split long a  **\
+  \substitute   "á" "aa" 
 
-  \substitute   "qu" "q" \** Dis-ambiguate qu **\
+  \** Dis-ambiguate qu **\
+  \substitute   "qu" "q" 
 \end
 
 \beg      processor

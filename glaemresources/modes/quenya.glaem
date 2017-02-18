@@ -136,7 +136,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   \rxsubstitute "(ū|û|uu)" "ú"
   \rxsubstitute "(ȳ|ŷ|yy)" "ý"
 
-  \substitute   "qu" "q" \** Dis-ambiguate qu **\
+  \** Dis-ambiguate qu **\
+  \substitute   "qu" "q" 
 
   \elvish_numbers "\\eval numbers_base" "\\eval reverse_numbers"
 \end
