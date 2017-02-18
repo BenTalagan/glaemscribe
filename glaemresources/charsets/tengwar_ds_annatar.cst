@@ -22,9 +22,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 **\
 
-\** Charset for Dan Smith layout based fonts **\ 
+\** Charset specially customized for Tengwar Annatar (Glaemscrafu patched version) **\ 
 
-\version 0.0.2
+\version 0.0.3
 
 
 \**   **\ \char 20 SPACE              
