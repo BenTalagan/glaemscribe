@@ -27,18 +27,49 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 \beg changelog
   \entry 0.0.1 "First version"
   \entry 0.0.2 "Ported to virtual chars."
+  \entry 0.0.3 "Merging with blackspeech Annatar".
+  \entry 0.0.4 "Adding double tehtar handling."
+  \entry 0.0.5 "Fixing ORE/ROMEN, refactoring."
 \end
 
 \language "Black Speech"
 \writing  "Tengwar"
 \mode     "General Use"
-\version  "0.0.2"
+\version  "0.0.5"
 \authors  "Talagan (Benjamin Babut)"
  
 \charset  tengwar_ds         true
 \charset  tengwar_ds_eldamar false
+\charset  tengwar_ds_annatar false
 
 \beg      options
+
+  \beg option reverse_o_u_tehtar O_UP_U_DOWN
+    \value O_UP_U_DOWN 1
+    \value U_UP_O_DOWN 2
+  \end
+
+  \beg option long_vowels_format LONG_VOWELS_USE_LONG_CARRIER
+    \value LONG_VOWELS_USE_LONG_CARRIER 1
+    \value LONG_VOWELS_USE_DOUBLE_TEHTAR 2
+  \end  
+  
+  \beg option double_tehta_a false
+    \visible_when 'long_vowels_format == LONG_VOWELS_USE_DOUBLE_TEHTAR'
+  \end
+  \beg option double_tehta_e false
+    \visible_when 'long_vowels_format == LONG_VOWELS_USE_DOUBLE_TEHTAR'
+  \end
+  \beg option double_tehta_i false
+    \visible_when 'long_vowels_format == LONG_VOWELS_USE_DOUBLE_TEHTAR'
+  \end
+  \beg option double_tehta_o true
+    \visible_when 'long_vowels_format == LONG_VOWELS_USE_DOUBLE_TEHTAR'
+  \end
+  \beg option double_tehta_u true
+    \visible_when 'long_vowels_format == LONG_VOWELS_USE_DOUBLE_TEHTAR'
+  \end
+  
   \option reverse_numbers true
   \beg option numbers_base BASE_12
     \value    BASE_10 10
@@ -65,6 +96,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   \rxsubstitute "(ō|ô|oo)" "ó"
   \rxsubstitute "(ū|û|uu)" "ú"
 
+  \** For ORE/ROMEN **\
+  \rxsubstitute "r(a|e|i|o|u|á|é|í|ó|ú)" "R\\1"
+
   \** Preprocess numbers **\
   \elvish_numbers "\\eval numbers_base" "\\eval reverse_numbers"
 \end
@@ -72,118 +106,148 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 \beg      processor
 
   \beg    rules litteral
-    {A}                 === a
-    {AA}                === á
-    {E}                 === e
-    {EE}                === é
-    {I}                 === i
-    {II}                === í
-    {O}                 === o
-    {OO}                === ó
-    {U}                 === u
-    {UU}                === ú
-    
-    {AI}                === {A}{I} \** attested **\
-    {AU}                === {A}{U} \** attested **\
-    {OI}                === {O}{I} \** Not quite sure (dushgoi) **\
-    
+     
     {K}                 === (c,k)
     
-    {VOWELS}            === {A}          * {E}          * {I}         * {O}       * {U}
-    {LVOWELS}           === {AA}         * {EE}         * {II}        * {OO}      * {UU}
+    {VOWELS}            === a               *  e              * i              * o              *  u
+    {LVOWELS}           === á               *  é              * í              * ó              *  ú
     
-    \** Revers o and u **\
-    {TEHTAR}            === A_TEHTA      * E_TEHTA      * I_TEHTA     *  U_TEHTA  * O_TEHTA      
+    \if "reverse_o_u_tehtar == U_UP_O_DOWN"
+      {O_LOOP}        === O_TEHTA
+      {O_LOOP_DOUBLE} === O_TEHTA_DOUBLE
+      {U_LOOP}        === U_TEHTA
+      {U_LOOP_DOUBLE} === U_TEHTA_DOUBLE
+    \else
+      {O_LOOP}        === U_TEHTA
+      {O_LOOP_DOUBLE} === U_TEHTA_DOUBLE
+      {U_LOOP}        === O_TEHTA
+      {U_LOOP_DOUBLE} === O_TEHTA_DOUBLE
+    \endif   
+       
+    {_TEHTAR_}            === A_TEHTA         * E_TEHTA         * I_TEHTA       *  {O_LOOP}  * {U_LOOP}      
      
-    {DIPHTHONGS}         === {AI}            * {AU}            *  {OI}              
-    {_DIPHTHONGS_}         === YANTA A_TEHTA   * URE A_TEHTA     * YANTA U_TEHTA  
+    {DIPHTHONGS}        === ai              * au              * oi          
+    {_DIPHTHONGS_}      === YANTA A_TEHTA   * URE A_TEHTA     * YANTA {O_LOOP}  
+    {WDIPHTHONGS}       === * {DIPHTHONGS}
+    {_WDIPHTHONGS_}     === * {_DIPHTHONGS_}
+      
+		{WLONG}     === {NULL} \** long vowels that can be used as tehtar **\
+    {_WLONG_}   === {NULL} \** tehtar of long vowels that can be used as tehtar **\
+		
+		{_LONG_A_}      === ARA A_TEHTA
+		{_LONG_E_}      === ARA E_TEHTA	
+		{_LONG_I_}      === ARA I_TEHTA
+		{_LONG_O_}      === ARA {O_LOOP}	
+		{_LONG_U_}      === ARA {U_LOOP}
+		{_LONE_LONG_A_} === {_LONG_A_}
+		{_LONE_LONG_E_} === {_LONG_E_}
+		{_LONE_LONG_I_} === {_LONG_I_}
+		{_LONE_LONG_O_} === {_LONG_O_}
+		{_LONE_LONG_U_} === {_LONG_U_}
+    
+		\if "long_vowels_format == LONG_VOWELS_USE_DOUBLE_TEHTAR"
+	    \if "double_tehta_a"
+		    {_LONG_A_}       === A_TEHTA_DOUBLE
+			  {_LONE_LONG_A_}  === TELCO {_LONG_A_}
+				{WLONG}          === {WLONG}   * á
+        {_WLONG_}        === {_WLONG_} * {_LONG_A_}
+  	  \endif		
+	    \if double_tehta_e
+		    {_LONG_E_}       === E_TEHTA_DOUBLE
+		    {_LONE_LONG_E_}  === TELCO {_LONG_E_}
+				{WLONG}          === {WLONG}   * é
+        {_WLONG_}        === {_WLONG_} * {_LONG_E_}
+			\endif
+		  \if double_tehta_i
+		    {_LONG_I_}       === I_TEHTA_DOUBLE
+		    {_LONE_LONG_I_}  === TELCO {_LONG_I_}
+				{WLONG}          === {WLONG}   * í             
+        {_WLONG_}        === {_WLONG_} * {_LONG_I_}
+		  \endif
+		  \if double_tehta_o
+		    {_LONG_O_}       === {O_LOOP_DOUBLE}
+		    {_LONE_LONG_O_}  === TELCO {_LONG_O_}
+				{WLONG}          === {WLONG}   * ó             
+        {_WLONG_}        === {_WLONG_} * {_LONG_O_}
+		  \endif
+		  \if double_tehta_u
+		    {_LONG_U_}       === {U_LOOP_DOUBLE}
+		    {_LONE_LONG_U_}  === TELCO {_LONG_U_}
+				{WLONG}          === {WLONG}   * ú            
+        {_WLONG_}        === {_WLONG_} * {_LONG_U_}
+		  \endif
+    \endif  
+			
+		{_LTEHTAR_}     === {_LONG_A_} * {_LONG_E_} * {_LONG_I_} * {_LONG_O_} * {_LONG_U_}
          
-    [{VOWELS}]        -->   TELCO [{TEHTAR}]  \** Replace isolated short vowels **\
-    [{LVOWELS}]       -->   ARA [{TEHTAR}]  \**  Replace long vowels **\
-    [{DIPHTHONGS}]    -->  [{_DIPHTHONGS_}]  \**  Replace diphthongs **\
+    {V_D}           === [ {VOWELS} {WLONG}  ]
+    {V_D_WN}        === [ {VOWELS} {WLONG} * {NULL} ]
 
-    b             --> UMBAR
-    [{VOWELS}] b  --> UMBAR [{TEHTAR}]
-
-    d             --> ANDO
-    [{VOWELS}] d  --> ANDO [{TEHTAR}]
+    {_V_D_}         === [ {_TEHTAR_} {_WLONG_} ]
+    {_V_D_WN_}      === [ {_TEHTAR_} {_WLONG_} * {NULL} ]
+		
+		\** LONE SHORT VOWELS **\
+    [{VOWELS}]    --> TELCO [{_TEHTAR_}]  \** Replace isolated short vowels **\
     
-    f             --> FORMEN 
-    [{VOWELS}] f  --> FORMEN_EXT [{TEHTAR}] \** Beware. **\ 
-
-    g             --> UNGWE
-    [{VOWELS}] g  --> UNGWE [{TEHTAR}]
-
-    gh            --> UNGWE_EXT
-    [{VOWELS}] gh --> UNGWE_EXT [{TEHTAR}]
-
-    h             --> HYARMEN
-    [{VOWELS}] h  --> HYARMEN [{TEHTAR}]
-
-    \** ======================== **\
-
-    {K}             --> QUESSE
-    [{VOWELS}]{K}   --> QUESSE [{TEHTAR}] 
-
-    {K}h            --> HWESTA
-    [{VOWELS}]{K}h  --> HWESTA_EXT [{TEHTAR}] \** Take care. **\  
+		\** LONE LONG VOWELS **\	
+		[{LVOWELS}]   --> [{_LONE_LONG_A_} * {_LONE_LONG_E_} * {_LONE_LONG_I_} * {_LONE_LONG_O_} * {_LONE_LONG_U_}]
+    
+    [{DIPHTHONGS}] -->   [{_DIPHTHONGS_}]     \**  Replace diphthongs **\
+    
+    \** ========================= **\
+    
+    {V_D_WN}p     --> PARMA {_V_D_WN_}
+    {V_D_WN}t     --> TINCO {_V_D_WN_}
+    {V_D_WN}{K}   --> QUESSE {_V_D_WN_}
+  
+    {V_D_WN} b  --> UMBAR {_V_D_WN_}
+    {V_D_WN} d  --> ANDO {_V_D_WN_}
+    {V_D_WN} f  --> FORMEN_EXT {_V_D_WN_} \** Beware. **\ 
+    {V_D_WN} g  --> UNGWE {_V_D_WN_}
+    {V_D_WN} gh --> UNGWE_EXT {_V_D_WN_}
+    {V_D_WN} h  --> HYARMEN {_V_D_WN_}
 
     \** ======================== **\
 
-    l             --> LAMBE
-    [{VOWELS}] l  --> LAMBE [{TEHTAR}] 
+    {K}h          --> HWESTA
+    {V_D}{K}h     --> HWESTA_EXT {_V_D_} \** Take care. **\  
 
     \** ======================== **\
 
-    m             --> MALTA
-    [{VOWELS}] m  --> MALTA [{TEHTAR}]
+    {V_D_WN} l  --> LAMBE {_V_D_WN_} 
 
-    mb            --> UMBAR NASALIZE_SIGN_TILD
-    [{VOWELS}] mb --> UMBAR NASALIZE_SIGN_TILD [{TEHTAR}]
+    \** ======================== **\
 
-    mp            --> PARMA NASALIZE_SIGN_TILD
-    [{VOWELS}] mp --> PARMA NASALIZE_SIGN_TILD [{TEHTAR}]
+    {V_D_WN} m  --> MALTA {_V_D_WN_}
+    {V_D_WN} mb --> UMBAR NASALIZE_SIGN_TILD {_V_D_WN_}
+    {V_D_WN} mp --> PARMA NASALIZE_SIGN_TILD {_V_D_WN_}
 
     \** ======================== **\
     
-    n               --> NUMEN
-    [{VOWELS}]n     --> NUMEN [{TEHTAR}] 
-
-    n{K}            --> QUESSE NASALIZE_SIGN_TILD
-    [{VOWELS}]n{K}  --> QUESSE NASALIZE_SIGN_TILD [{TEHTAR}] 
+    {V_D_WN}n   --> NUMEN {_V_D_WN_} 
+    {V_D_WN}n{K}  --> QUESSE NASALIZE_SIGN_TILD {_V_D_WN_} 
 
     \** ======================== **\
     
-    p             --> PARMA
-
-    r             --> ROMEN
-    r_            --> ORE
-    [{VOWELS}]r   --> ORE [{TEHTAR}]
-
-    [{VOWELS}]rb  --> ORE [{TEHTAR}] UMBAR
-    [{LVOWELS}]rb --> ARA [{TEHTAR}] ORE UMBAR
-
-    [{VOWELS}]rz  --> ORE [{TEHTAR}] ESSE
-    [{LVOWELS}]rz --> ARA [{TEHTAR}] ORE ESSE
+    \** ROMEN / ORE handling probably not accurate **\
+    {V_D_WN}r   --> ORE   {_V_D_WN_}
+    {V_D_WN}R   --> ROMEN {_V_D_WN_}
     
     \** ======================== **\
 
     s             --> SILME
+    z             --> ESSE    
+    {V_D} z       --> ESSE_NUQUERNA {_V_D_}
 
     \** ======================== **\
 
     sh            --> AHA             
-    [{VOWELS}] sh --> AHA_EXT [{TEHTAR}] \** BEWARE. **\
+    {V_D} sh      --> AHA_EXT {_V_D_} \** BEWARE. **\
     
-    t             --> TINCO
-    [{VOWELS}]t   --> TINCO [{TEHTAR}]
 
     th            --> SULE
     
     y             --> ANNA
-    
-    z             --> ESSE    
-    [{VOWELS}] z  --> ESSE_NUQUERNA [{TEHTAR}]
 
   \end
   
