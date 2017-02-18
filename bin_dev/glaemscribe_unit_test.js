@@ -31,34 +31,70 @@ function unit_test_directory(directory) {
 
   console.log("Testing now test base + directory");
 
-  for(var mode_name in Glaemscribe.resource_manager.loaded_modes)
-  { 
+  var udirs  = Glob.sync(directory + "/sources/*/", {});
+
+  for(var d=0;d<udirs.length;d++)
+  {
+    var dirent    = udirs[d];
+    var full_name = Path.basename(dirent);
+    var mode_name = full_name.split(".")[0];
+    
     var mode    = Glaemscribe.resource_manager.loaded_modes[mode_name];
+    
+    if(!mode)
+    {
+      console.log("[    ]" + full_name + " : this mode is not loaded.");
+      continue;
+    }
   
     if(mode.errors.length > 0)
+    {
+      console.log("[    ]" + full_name + " : his mode has some errors.");
       continue;
+    }
+    
+    var mode_options = {};
+    var charset_name = null;
+    var opt_file = dirent.substring(0,dirent.length-1) + ".options";
+    
+    if(Fs.existsSync(opt_file)) {
+      
+      var ofl = Fs.readFileSync(opt_file,'utf-8').split("\n");
+      var charset_name = ofl[0].trim();
+      var opt_line     = ofl[1].trim();
   
-    var ufiles  = Glob.sync(directory + "/sources/" + mode_name + "/*", {});
+      var a = opt_line.trim().split(",").map(function(o) { return o.split(":")} );
+      a.glaem_each(function(_,opt_val_pair) {
+        mode_options[opt_val_pair[0].trim()] = opt_val_pair[1].trim();
+      });
+    }
+    
+    mode.finalize(mode_options);
+    charset = mode.supported_charsets[charset_name];
+    if(!charset)
+      charset = mode.default_charset;
+      
+    var ufiles  = Glob.sync(directory + "/sources/" + full_name + "/*", {});
   
     for(var u = 0; u < ufiles.length; u++)
     {
       var path    = ufiles[u];
       var bfname  = Path.basename(path);
-      var prefix  = mode_name + " : " + bfname + " : ";
+      var prefix  = full_name + " : " + bfname + " : ";
     
       var true_teng = "";
       var teng      = "";
       var source    = "";
     
-      source    = Fs.readFileSync(directory + "/sources/" + mode_name + "/" + bfname,'utf-8');
-      true_teng = Fs.readFileSync(directory + "/expecteds/" + mode_name + "/" + bfname,'utf-8');
+      source    = Fs.readFileSync(directory + "/sources/" + full_name + "/" + bfname,'utf-8');
+      true_teng = Fs.readFileSync(directory + "/expecteds/" + full_name + "/" + bfname,'utf-8');
     
       if(true_teng.trim() == "")
         console.log("[    ]" + prefix + "Expected file is empty!!");
 
       true_teng = true_teng.split("\n").map(function(l) { return l.trim(); }).join("\n").trim();
       source    = source.split("\n").map(function(l) { return l.trim(); }).join("\n").trim();
-      var tinfo = mode.transcribe(source, mode.default_charset);
+      var tinfo = mode.transcribe(source, charset);
     
       success = tinfo[0]
       teng    = tinfo[1].trim();
@@ -112,7 +148,7 @@ function unit_test_directory(directory) {
       } 
       else
         console.log("[ OK ] " + prefix + "Yay.");
-    }
+    }   
   }
 }
 

@@ -32,28 +32,60 @@ def unit_test_directory(directory)
   
   puts "Testing now test base : #{directory}"
   
-  Glaemscribe::API::ResourceManager::loaded_modes.each{ |name,mode|  
+  Dir.glob(directory + "/sources/*/" ) { |dirent|
     
-    next if mode.errors.any?
+    full_name    = File.basename(dirent)    
+    mode_name    = full_name.split(".")[0]
+     
+    mode      = Glaemscribe::API::ResourceManager::loaded_modes[mode_name]
+    if !mode
+      puts "[    ] " + full_name + " : this mode is not loaded."
+      next      
+    end
     
-    Dir.glob(directory + "/sources/" + name + "/*") { |fok|
+    if mode.errors.any?
+      puts "[    ] " + full_name + " : this mode has some errors."
+      next     
+    end
+    
+    mode_options = {}
+    charset_name = nil
+    opt_file  = dirent[0..dirent.length-2] + ".options"
+    if File.exists? opt_file
+      # There is an option file, parse it
+      File.open(opt_file,"rb") { |f|
+          ofl = f.read.lines
+          charset_name = ofl[0].strip
+          opt_line     = ofl[1].strip
+          a = opt_line.strip.split(",").map{ |o| o.split(":") }.flatten.map{|s| s.strip }
+          mode_options = Hash[*a]    
+      }
+    end
+    
+    mode.finalize(mode_options)    
+    charset = mode.supported_charsets[charset_name]
+    if !charset
+      charset = mode.default_charset
+    end
+  
+    Dir.glob(directory + "/sources/" + full_name + "/*") { |fok|
     
       bfname = File.basename(fok)
-      prefix = "#{name} : #{bfname} : "
+      prefix = "#{full_name} : #{bfname} : "
     
       true_teng = ""
       teng      = ""
       source    = ""
     
       begin
-        File.open( directory + "/sources/" + name + "/" + bfname,"rb:utf-8") { |f| source = f.read}
+        File.open( directory + "/sources/" + full_name + "/" + bfname,"rb:utf-8") { |f| source = f.read}
       rescue Exception
         puts "[    ] " + prefix + "Could not open source file."
         next
       end
     
       begin
-        File.open( directory + "/expecteds/" + name + "/" + bfname,"rb:utf-8") { |f| true_teng = f.read}
+        File.open( directory + "/expecteds/" + full_name + "/" + bfname,"rb:utf-8") { |f| true_teng = f.read}
       rescue Exception
         puts "[    ] " + prefix + "Could not open expected file."
         next
@@ -64,9 +96,9 @@ def unit_test_directory(directory)
         next
       end
     
-      true_teng          = true_teng.lines.map{|l| l.strip }.join("\n").strip
       source             = source.lines.map{|l| l.strip }.join("\n").strip
-      success, teng      = mode.transcribe(source, mode.default_charset)
+      true_teng          = true_teng.lines.map{|l| l.strip }.join("\n").strip
+      success, teng      = mode.transcribe(source, charset)
    
       if !success
         puts "[****]" + teng
@@ -114,6 +146,7 @@ def unit_test_directory(directory)
       end
     }  
   }
+      
 end
 
 
@@ -121,36 +154,70 @@ def dump_test_directory(directory, dump_directory)
   
   puts "Dumping now test base : #{directory}"
   
-  Glaemscribe::API::ResourceManager::loaded_modes.each{ |name,mode|  
-    
-    next if mode.errors.any?
-    
-    FileUtils.mkdir_p( dump_directory + "/sources/" + name)
-    FileUtils.mkdir_p( dump_directory + "/expecteds/" + name)
   
+  Dir.glob(directory + "/sources/*/" ) { |dirent|
+    
+    full_name    = File.basename(dirent)    
+    mode_name    = full_name.split(".")[0]
+     
+    mode      = Glaemscribe::API::ResourceManager::loaded_modes[mode_name]
+    if !mode
+      puts "[    ] " + full_name + " : this mode is not loaded."
+      next      
+    end
+    
+    if mode.errors.any?
+      puts "[    ] " + full_name + " : this mode has some errors."
+      next     
+    end
+    
+    mode_options = {}
+    charset_name = nil
+    opt_file  = dirent[0..dirent.length-2] + ".options"
+    if File.exists? opt_file
+      # There is an option file, parse it
+      File.open(opt_file,"rb") { |f|
+          ofl = f.read.lines
+          charset_name = ofl[0].strip
+          opt_line     = ofl[1].strip
+          a = opt_line.strip.split(",").map{ |o| o.split(":") }.flatten.map{|s| s.strip }
+          mode_options = Hash[*a]    
+      }
+    end
+    
+    mode.finalize(mode_options)    
+    charset = mode.supported_charsets[charset_name]
+    if !charset
+      charset = mode.default_charset
+    end
+    
+    FileUtils.mkdir_p( dump_directory + "/sources/"   + full_name)
+    FileUtils.mkdir_p( dump_directory + "/expecteds/" + full_name)
+ 
   
-    Dir.glob(directory + "/sources/" + name + "/*") { |fok|
+    Dir.glob(directory + "/sources/" + full_name + "/*") { |fok|
     
       bfname = File.basename(fok)
-      prefix = "#{name} : #{bfname} : "
-      
+      prefix = "#{full_name} : #{bfname} : "
+  
       source = "" 
       begin
-        File.open( directory + "/sources/" + name + "/" + bfname,"rb:utf-8") { |f| source = f.read}
+        File.open( directory + "/sources/" + full_name + "/" + bfname,"rb:utf-8") { |f| source = f.read}
       rescue Exception
         puts "[    ] " + prefix + "Could not open source file."
         next
       end
     
-      File.open( dump_directory + "/sources/"   + name + "/" + bfname,"wb:utf-8") { |fw|    
+      File.open( dump_directory + "/sources/"   + full_name + "/" + bfname,"wb:utf-8") { |fw|    
         fw << source 
       }
     
-      File.open( dump_directory + "/expecteds/" + name + "/" + bfname,"wb:utf-8") { |fw|    
-        success, teng      = mode.transcribe(source, mode.default_charset)
+      File.open( dump_directory + "/expecteds/" + full_name + "/" + bfname,"wb:utf-8") { |fw|    
+        success, teng      = mode.transcribe(source, charset)
         fw << teng 
       }
     }  
+    
   }
 end
 
