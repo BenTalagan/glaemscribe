@@ -1,9 +1,7 @@
 # Glǽmscribe
 
 [**_Glǽmscribe_**](https://jrrvf.com/~glaemscrafu/english/glaemscribe.html) (also written **_Glaemscribe_**) is a software dedicated to
-the transcription of texts between writing systems, and more 
-specifically dedicated to the transcription of J.R.R. Tolkien's 
-invented languages to some of his devised writing systems.
+the transcription of texts between writing systems, and more specifically dedicated to the transcription of J.R.R. Tolkien's invented languages to some of his devised writing systems.
 
 Official integration
 --------------------
@@ -18,11 +16,12 @@ Features
 * Extensible through a custom programmation language dedicated to the writing of modes.
 * Allow modes to be designed and programmed to have conditional behaviours depending on completely custom options.
 * Separates the handling of modes and charsets, making the mode files purely 'logical' and compliant with all fonts, and pushing back font issues to charset files.
-* Compliant with opentype and non-opentype fonts, so that we can do the transition from old-gen fonts to new-gen ones.
+* Compliant with opentype and non-opentype fonts, so that we can handle old-gen fonts as well as new-gen ones and do a smooth transition between them.
 * Offers a mechanism to compensate diacritic and ligature issues for non-opentype fonts through 'virtual characters', allowing mode files to be generic and far more simple to write.
 * Has an official graphical, friendly integration (see above).
 * Has a graphical IDE for helping users to write mode files.
 * Exists as a javascript implementation or a ruby implementation.
+* Has a command-line implementation.
 
 Mode development
 ----------------
@@ -39,7 +38,7 @@ Changelog
 
 | Version | Date | Comment |
 |---------|------|---------| 
-| 1.0.20 | 17/02/2016 | [Quenya] Added double tehtar option.<br>Added reversed virtual chars.<br>Added charset for Annatar.<br>Added ligatures.<br>Added LAMBE ligature for Annatar charset.<br> Enhanced existing charsets. |
+| 1.0.20 | 17/02/2016 | [Quenya] Added double tehtar option.<br>Added reversed virtual chars.<br>Added charset for Annatar.<br>Added ligatures.<br>Added LAMBE ligature for Annatar charset.<br> Enhanced existing charsets.<br>Merged Blackspeech modes |
 | 1.0.19 | 06/09/2016 | [Quenya] Removed unutixe under óre for coherency in implicit a submode.<br>[Sindarin Angerthas Daeron] Fixed h,ch,hw. |
 | 1.0.18 | 02/09/2016 | Fixed 'implicit a' option for quenya mode broken in 1.0.17. Thanks to Dmitry Kourmyshov for noticing. |
 | 1.0.17 | 26/08/2016 | Ported modes to virtual chars, added a dedicated charset for tengwar eldamar for better rendering of tehtar and diacritics. |
@@ -51,6 +50,7 @@ Prior todos
 
 * Write charsets for integrating fonts from the Free Tengwar Font Project ; integrate Tengwar Telcontar.
 * Design a full-featured opentype Tengwar font by extending the Free Tengwar Font Project specifications.
+* Rewrite the charset editor which is now obsolete since the introduction of virtual chars.
 
 License
 -------
