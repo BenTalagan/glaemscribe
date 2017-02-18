@@ -38,9 +38,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 \version  "0.0.5"
 \authors  "Talagan (Benjamin Babut)"
  
-\charset  tengwar_ds         true
+\charset  tengwar_ds         false
 \charset  tengwar_ds_eldamar false
-\charset  tengwar_ds_annatar false
+\charset  tengwar_ds_annatar true
 
 \beg      options
 
@@ -49,18 +49,18 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     \value U_UP_O_DOWN 2
   \end
 
-  \beg option long_vowels_format LONG_VOWELS_USE_LONG_CARRIER
+  \beg option long_vowels_format LONG_VOWELS_USE_DOUBLE_TEHTAR
     \value LONG_VOWELS_USE_LONG_CARRIER 1
     \value LONG_VOWELS_USE_DOUBLE_TEHTAR 2
   \end  
   
-  \beg option double_tehta_a false
+  \beg option double_tehta_a true
     \visible_when 'long_vowels_format == LONG_VOWELS_USE_DOUBLE_TEHTAR'
   \end
-  \beg option double_tehta_e false
+  \beg option double_tehta_e true
     \visible_when 'long_vowels_format == LONG_VOWELS_USE_DOUBLE_TEHTAR'
   \end
-  \beg option double_tehta_i false
+  \beg option double_tehta_i true
     \visible_when 'long_vowels_format == LONG_VOWELS_USE_DOUBLE_TEHTAR'
   \end
   \beg option double_tehta_o true
