@@ -33,10 +33,19 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 \language "R'lyehian"
 \writing  Tengwar
 \mode     Glaemscrafu
-\version  0.0.1
-\authors  "Fthalagn"
+\version  0.0.3
+\authors  "H.P.Lovecraft & The Great Ancient Gods, impl. Fthalagn"
 
-\charset  tengwar_ds true
+\beg changelog
+  \entry "0.0.1" "First version"
+	\entry 0.0.2 "Ported to virtual chars"
+	\entry 0.0.3 "Ported to various charsets"
+\end
+
+\charset  tengwar_ds         true
+\charset  tengwar_ds_eldamar false
+\charset  tengwar_ds_annatar false
+\charset  tengwar_freemono   false
 
 \beg      options
 \end
@@ -158,38 +167,21 @@ y palatal semi vowel ?
   \beg    rules litteral  
     {VOWELS}            === a               *  e              * i              * o              *  u  * w
 
-    {O_LOOP_XS} === U_TEHTA_XS
-    {O_LOOP_S}  === U_TEHTA_S
-    {O_LOOP_L}  === U_TEHTA_L
-    {O_LOOP_XL} === U_TEHTA_XL
-    {U_LOOP_XS} === O_TEHTA_XS
-    {U_LOOP_S}  === O_TEHTA_S
-    {U_LOOP_L}  === O_TEHTA_L
-    {U_LOOP_XL} === O_TEHTA_XL   
-        
-    {TEHTA_XS}          === A_TEHTA_XS      *  E_TEHTA_XS     *  I_TEHTA_XS    * {O_LOOP_XS}    *  {U_LOOP_XS} * THSUP_SEV_XS
-    {TEHTA__S}          === A_TEHTA_S       *  E_TEHTA_S      *  I_TEHTA_S     * {O_LOOP_S}     *  {U_LOOP_S}  * THSUP_SEV_S
-    {TEHTA__L}          === A_TEHTA_L       *  E_TEHTA_L      *  I_TEHTA_L     * {O_LOOP_L}     *  {U_LOOP_L}  * THSUP_SEV_L
-    {TEHTA_XL}          === A_TEHTA_XL      *  E_TEHTA_XL     *  I_TEHTA_XL    * {O_LOOP_XL}    *  {U_LOOP_XL} * THSUP_SEV_XL
-
-    [{VOWELS}]          --> TELCO [{TEHTA_XS}]  \** Replace isolated short vowels **\
+    {O_LOOP}        === O_TEHTA
+    {U_LOOP}        === U_TEHTA
+       
+    {TEHTAR}            === A_TEHTA      * E_TEHTA      * I_TEHTA    * O_TEHTA     * U_TEHTA * SEV_TEHTA
   
-
+    [{VOWELS}]          --> TELCO [{TEHTAR}]  \** Replace isolated short vowels **\
+  
     {WDIPHTHONGS}       === {NULL} 
     {WDIPHTHENGS}       === {NULL}
       
     {V_D_KER}           === [ {VOWELS} {WDIPHTHONGS} ]
     {V_D_KER_WN}        === [ {VOWELS} {WDIPHTHONGS} * {NULL} ]
 
-    {V_D_IMG_XS}        === [ {TEHTA_XS} {WDIPHTHENGS} ]
-    {V_D_IMG__S}        === [ {TEHTA__L} {WDIPHTHENGS} ]
-    {V_D_IMG__L}        === [ {TEHTA__S} {WDIPHTHENGS} ]
-    {V_D_IMG_XL}        === [ {TEHTA_XL} {WDIPHTHENGS} ]
-    {V_D_IMG_XS_WN}     === [ {TEHTA_XS} {WDIPHTHENGS} * {NULL} ]
-    {V_D_IMG__S_WN}     === [ {TEHTA__L} {WDIPHTHENGS} * {NULL} ]
-    {V_D_IMG__L_WN}     === [ {TEHTA__S} {WDIPHTHENGS} * {NULL} ]
-    {V_D_IMG_XL_WN}     === [ {TEHTA_XL} {WDIPHTHENGS} * {NULL} ]
-  
+    {V_D_IMG}        === [ {TEHTAR} {WDIPHTHENGS} ]
+    {V_D_IMG_WN}     === [ {TEHTAR} {WDIPHTHENGS} * {NULL} ] 
   
     {L1_KER_1}        === t                   * p  
     {L1_IMG_1}        === TINCO               * PARMA
@@ -197,30 +189,30 @@ y palatal semi vowel ?
     {L1_IMG_2}        === CALMA               
     
     \** NORMAL **\
-    [ {L1_KER_1} ] [{NULL} * h] {V_D_KER_WN}  --> [ {L1_IMG_1} ] [{NULL} * TILD_INF_S] {V_D_IMG__S_WN}
-    [ {L1_KER_2} ] [{NULL} * h] {V_D_KER_WN}  --> [ {L1_IMG_2} ] [{NULL} * TILD_INF_S] {V_D_IMG__S_WN}
+    [ {L1_KER_1} ] [{NULL} * h] {V_D_KER_WN}  --> [ {L1_IMG_1} ] [{NULL} * GEMINATE_SIGN_TILD] {V_D_IMG_WN}
+    [ {L1_KER_2} ] [{NULL} * h] {V_D_KER_WN}  --> [ {L1_IMG_2} ] [{NULL} * GEMINATE_SIGN_TILD] {V_D_IMG_WN}
 
     {L2_KER}        === d      * b        * g      
     {L2_IMG}        === ANDO   * UMBAR    * ANGA    
-    [ {L2_KER} ] [{NULL} * h] {V_D_KER_WN}  --> [ {L2_IMG} ] [{NULL} * TILD_INF_L] {V_D_IMG_XL_WN}
+    [ {L2_KER} ] [{NULL} * h] {V_D_KER_WN}  --> [ {L2_IMG} ] [{NULL} * GEMINATE_SIGN_TILD] {V_D_IMG_WN}
   
     {L3_KER} === f
     {L3_IMG} === FORMEN
-    [ {L3_KER} ] [{NULL} * h] {V_D_KER_WN}  --> [ {L3_IMG} ] [{NULL} * TILD_INF_S] {V_D_IMG_XL_WN}
+    [ {L3_KER} ] [{NULL} * h] {V_D_KER_WN}  --> [ {L3_IMG} ] [{NULL} * GEMINATE_SIGN_TILD] {V_D_IMG_WN}
  
     {L5_KER}  === n     * m     
     {L5_IMG}  === NUMEN * MALTA 
-    [ {L5_KER} ] [{NULL} * h] {V_D_KER_WN}  --> [ {L5_IMG} ] [{NULL} * TILD_INF_L] {V_D_IMG_XL_WN}
+    [ {L5_KER} ] [{NULL} * h] {V_D_KER_WN}  --> [ {L5_IMG} ] [{NULL} * GEMINATE_SIGN_TILD] {V_D_IMG_WN}
   
-    r [{NULL} * y * h] {V_D_KER_WN} --> ROMEN [{NULL} * THINF_DDOT_S * LAMBE_MARK_TILD] {V_D_IMG__L_WN}
-    s {V_D_KER_WN} --> SILME_NUQUERNA {V_D_IMG__L_WN}
-    z {V_D_KER_WN} --> ESSE_NUQUERNA {V_D_IMG__L_WN}
+    r [{NULL} * y * h] {V_D_KER_WN} --> ROMEN [{NULL} * PALATAL_SIGN * GEMINATE_SIGN_TILD] {V_D_IMG_WN}
+    s {V_D_KER_WN} --> SILME_NUQUERNA {V_D_IMG_WN}
+    z {V_D_KER_WN} --> ESSE_NUQUERNA {V_D_IMG_WN}
 
-    l [{NULL} * y * h] {V_D_KER_WN} --> LAMBE [{NULL} * LAMBE_MARK_DDOT * LAMBE_MARK_TILD] {V_D_IMG__L_WN}
-    h [{NULL} * y * h] {V_D_KER_WN} --> AHA [{NULL} * THINF_DDOT_L * LAMBE_MARK_TILD] {V_D_IMG_XL_WN}
-    v [{NULL} * y * h] {V_D_KER_WN} --> VALA [{NULL} * THINF_DDOT_L * LAMBE_MARK_TILD] {V_D_IMG__S_WN}
+    l [{NULL} * y * h] {V_D_KER_WN} --> LAMBE [{NULL} * PALATAL_SIGN * GEMINATE_SIGN_TILD] {V_D_IMG_WN}
+    h [{NULL} * y * h] {V_D_KER_WN} --> AHA [{NULL} * PALATAL_SIGN * GEMINATE_SIGN_TILD] {V_D_IMG_WN}
+    v [{NULL} * y * h] {V_D_KER_WN} --> VALA [{NULL} * PALATAL_SIGN * GEMINATE_SIGN_TILD] {V_D_IMG_WN}
  
-    y {V_D_KER_WN} --> VILYA {V_D_IMG__L_WN}
+    y {V_D_KER_WN} --> VILYA {V_D_IMG_WN}
 
     ' --> HARP_SHAPED
     ’ --> HARP_SHAPED
@@ -284,6 +276,10 @@ y palatal semi vowel ?
     A --> NUM_10
     B --> NUM_11   
   \end
-  
+	
 \end
 
+
+\beg postprocessor
+  \resolve_virtuals
+\end  
