@@ -132,7 +132,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 \** © **\ \char a9 TH_SUB_CIRC_XS          
 \** ª **\ \char aa A_TEHTA_INV_XL        
 \** « **\ \char ab DQUOT_OPEN            
-\** ¬ **\ \char ac WAVE_MED_DOUBLE              
+\** ¬ **\ \char ac WAVE_MED_DOUBLE RING_MARK_L RING_MARK_R               
 \** ­ **\ \char ad A_TEHTA_INV_L         
 \** ® **\ \char ae ?                
 \** ¯ **\ \char af A_TEHTA_INV_S         
@@ -286,9 +286,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 \** べ **\ \char 3079 ?                                
 \** ぺ **\ \char 307a ?                                
 \** ア **\ \char 30a2 ?                                
-\** カ **\ \char 30ab RING_MARK_R                                
+\** カ **\ \char 30ab ?                                
 \** ギ **\ \char 30ae ?                                
-\** セ **\ \char 30bb RING_MARK_L                                
+\** セ **\ \char 30bb ?                                
 \** タ **\ \char 30bf ?                                
 \** ツ **\ \char 30c4 ?                                
 \** テ **\ \char 30c6 ?                                
@@ -484,6 +484,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 \beg virtual GEMINATE_SIGN
   \class DASH_INF_S TELCO ARA TINCO PARMA CALMA QUESSE SULE FORMEN AHA HWESTA ORE VALA ANNA VILYA TW_EXT_11 TW_EXT_12 TW_EXT_13 TW_EXT_14 ROMEN ARDA SILME SILME_NUQUERNA ESSE ESSE_NUQUERNA HYARMEN HWESTA_SINDARINWA YANTA URE OSSE SHOOK_BEAUTIFUL HARP_SHAPED AHA_TINCO HWESTA_TINCO
   \class DASH_INF_L ANDO UMBAR ANGA UNGWE ANTO AMPA ANCA UNQUE NUMEN MALTA NOLDO NWALME TW_EXT_21 TW_EXT_22 TW_EXT_23 TW_EXT_24 ANCA_CLOSED
+  \class LAMBE_MARK_TILD LAMBE ALDA
+\end
+
+\beg virtual GEMINATE_SIGN_TILD
+  \class TILD_INF_S TELCO ARA TINCO PARMA CALMA QUESSE SULE FORMEN AHA HWESTA ORE VALA ANNA VILYA TW_EXT_11 TW_EXT_12 TW_EXT_13 TW_EXT_14 ROMEN ARDA SILME SILME_NUQUERNA ESSE ESSE_NUQUERNA HYARMEN HWESTA_SINDARINWA YANTA URE OSSE SHOOK_BEAUTIFUL HARP_SHAPED AHA_TINCO HWESTA_TINCO
+  \class TILD_INF_L ANDO UMBAR ANGA UNGWE ANTO AMPA ANCA UNQUE NUMEN MALTA NOLDO NWALME TW_EXT_21 TW_EXT_22 TW_EXT_23 TW_EXT_24 ANCA_CLOSED
   \class LAMBE_MARK_TILD LAMBE ALDA
 \end
 
