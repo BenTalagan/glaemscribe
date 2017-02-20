@@ -241,9 +241,9 @@ File.open("#{charset.name}.html","wb") { |f|
 end
 
 
-Glaemscribe::API::ResourceManager.load_charsets(["tengwar_ds","tengwar_ds_eldamar","tengwar_ds_annatar","tengwar_ds_parmaite"])
+Glaemscribe::API::ResourceManager.load_charsets(["tengwar_ds_sindarin","tengwar_ds_eldamar","tengwar_ds_annatar","tengwar_ds_parmaite"])
 
-dump_charset_edit_page(Glaemscribe::API::ResourceManager.loaded_charsets["tengwar_ds"],         ["Tengwar Sindarin Glaemscrafu"], TENGWAR_DS_GENERIC_CONF)
+dump_charset_edit_page(Glaemscribe::API::ResourceManager.loaded_charsets["tengwar_ds_sindarin"],["Tengwar Sindarin Glaemscrafu"], TENGWAR_DS_GENERIC_CONF)
 dump_charset_edit_page(Glaemscribe::API::ResourceManager.loaded_charsets["tengwar_ds_parmaite"],["Tengwar Parmaite Glaemscrafu"], TENGWAR_DS_GENERIC_CONF)
 dump_charset_edit_page(Glaemscribe::API::ResourceManager.loaded_charsets["tengwar_ds_eldamar"], ["Tengwar Eldamar Glaemscrafu"], TENGWAR_DS_GENERIC_CONF)
 dump_charset_edit_page(Glaemscribe::API::ResourceManager.loaded_charsets["tengwar_ds_annatar"], ["Tengwar Annatar Italic Glaemscrafu"], TENGWAR_ANNATAR_CONF)

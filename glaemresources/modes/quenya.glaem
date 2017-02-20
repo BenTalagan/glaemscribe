@@ -53,7 +53,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 \version  "0.9.1"
 \authors  "J.R.R. Tolkien, impl. Talagan (Benjamin Babut)"
 
-\charset  tengwar_ds          true
+\charset  tengwar_ds_sindarin true
 \charset  tengwar_ds_parmaite false
 \charset  tengwar_ds_eldamar  false
 \charset  tengwar_ds_annatar  false
