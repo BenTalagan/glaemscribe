@@ -38,11 +38,11 @@ Changelog
 
 | Version | Date | Comment |
 |---------|------|---------| 
-| 1.0.20 | 17/02/2016 | [Quenya] Added double tehtar option.<br>Added reversed virtual chars.<br>Added charset for Annatar.<br>Added ligatures.<br>Added LAMBE ligature for Annatar charset.<br> Enhanced existing charsets.<br>Merged Blackspeech modes.<br>Added support for FreeMonoTengwar<br>. |
-| 1.0.19 | 06/09/2016 | [Quenya] Removed unutixe under óre for coherency in implicit a submode.<br>[Sindarin Angerthas Daeron] Fixed h,ch,hw. |
-| 1.0.18 | 02/09/2016 | Fixed 'implicit a' option for quenya mode broken in 1.0.17. Thanks to Dmitry Kourmyshov for noticing. |
-| 1.0.17 | 26/08/2016 | Ported modes to virtual chars, added a dedicated charset for tengwar eldamar for better rendering of tehtar and diacritics. |
-| 1.0.16 | 16/08/2016 | Introduces virtual chars in charsets for easier tehtar and diacritic variant uses. |
+| 1.1.0 | 03/24/2016 | [Quenya] Added double tehtar option.<br>Added reversed virtual chars.<br>Added charset for Annatar.<br>Added ligatures.<br>Added LAMBE ligature for Annatar charset.<br> Enhanced existing charsets.<br>Merged Blackspeech modes.<br>Added support for FreeMonoTengwar.<br>Added custom, independent charset for Tengwar Parmaite. |
+| 1.0.19 | 09/06/2016 | [Quenya] Removed unutixe under óre for coherency in implicit a submode.<br>[Sindarin Angerthas Daeron] Fixed h,ch,hw. |
+| 1.0.18 | 09/02/2016 | Fixed 'implicit a' option for quenya mode broken in 1.0.17. Thanks to Dmitry Kourmyshov for noticing. |
+| 1.0.17 | 08/26/2016 | Ported modes to virtual chars, added a dedicated charset for tengwar eldamar for better rendering of tehtar and diacritics. |
+| 1.0.16 | 08/16/2016 | Introduces virtual chars in charsets for easier tehtar and diacritic variant uses. |
 | 1.0.15 | ... | Unlogged (see mode changelogs) |
 
 Prior todos
