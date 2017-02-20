@@ -11,17 +11,17 @@ Here is [**_the official integration of Glǽmscribe's engine_**](https://jrrvf.c
 Features
 --------
 
-* Handles a large variety of writings (Tengwar, Cirth, Sarati and more).
+* Handles a large variety of writings (Tengwar, Cirth, Sarati, Runes and more).
 * Offers modes for a large variety of fictional languages (Quenya, Sindarin, Khuzdul, Black Speech, Adûnaic, Telerin, Noldorin, Valarin, Westron) and non-fictional languages (Old English, Old Norse).
 * Extensible through a custom programmation language dedicated to the writing of modes.
-* Allow modes to be designed and programmed to have conditional behaviours depending on completely custom options.
+* Allow modes to be designed and programmed to have conditional behaviours depending on independant, custom options.
 * Separates the handling of modes and charsets, making the mode files purely 'logical' and compliant with all fonts, and pushing back font issues to charset files.
-* Compliant with opentype and non-opentype fonts, so that we can handle old-gen fonts as well as new-gen ones and do a smooth transition between them.
+* Compliant with opentype and non-opentype fonts, so that we can handle old-gen (Parmaite, Eldamar, Annatar...) fonts as well as new-gen ones (FreeMono, Eldamar Sarati - glaemscribe version with opentype features, ...), so that have a smooth transition between technologies.
 * Offers a mechanism to compensate diacritic and ligature issues for non-opentype fonts through 'virtual characters', allowing mode files to be generic and far more simple to write.
 * Has an official graphical, friendly integration (see above).
 * Has a graphical IDE for helping users to write mode files.
-* Exists as a javascript implementation or a ruby implementation.
-* Has a command-line implementation.
+* Exists as a javascript library or a ruby library.
+* Has a command-line tool implementation (in ruby).
 
 Mode development
 ----------------
@@ -38,7 +38,7 @@ Changelog
 
 | Version | Date | Comment |
 |---------|------|---------| 
-| 1.0.20 | 17/02/2016 | [Quenya] Added double tehtar option.<br>Added reversed virtual chars.<br>Added charset for Annatar.<br>Added ligatures.<br>Added LAMBE ligature for Annatar charset.<br> Enhanced existing charsets.<br>Merged Blackspeech modes |
+| 1.0.20 | 17/02/2016 | [Quenya] Added double tehtar option.<br>Added reversed virtual chars.<br>Added charset for Annatar.<br>Added ligatures.<br>Added LAMBE ligature for Annatar charset.<br> Enhanced existing charsets.<br>Merged Blackspeech modes.<br>Added support for FreeMonoTengwar<br>. |
 | 1.0.19 | 06/09/2016 | [Quenya] Removed unutixe under óre for coherency in implicit a submode.<br>[Sindarin Angerthas Daeron] Fixed h,ch,hw. |
 | 1.0.18 | 02/09/2016 | Fixed 'implicit a' option for quenya mode broken in 1.0.17. Thanks to Dmitry Kourmyshov for noticing. |
 | 1.0.17 | 26/08/2016 | Ported modes to virtual chars, added a dedicated charset for tengwar eldamar for better rendering of tehtar and diacritics. |
@@ -48,7 +48,6 @@ Changelog
 Prior todos
 -----------
 
-* Write charsets for integrating fonts from the Free Tengwar Font Project ; integrate Tengwar Telcontar.
 * Design a full-featured opentype Tengwar font by extending the Free Tengwar Font Project specifications.
 * Rewrite the charset editor which is now obsolete since the introduction of virtual chars.
 
