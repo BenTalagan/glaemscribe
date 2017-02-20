@@ -31,6 +31,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   \entry "0.0.5" "Added thorn as equivalent for th"
   \entry "0.0.6" "Porting to virtual chars to simplify and beautify"
   \entry "0.0.7" "Added charset support for Annatar"
+  \entry "0.0.8" "Added support for the FreeMonoTengwar font" 
 \end
 
 
@@ -38,11 +39,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 \writing  "Tengwar"
 \mode     "Classical"
 \version  "0.0.7"
-\authors  "Talagan (Benjamin Babut)"
+\authors  "J.R.R. Tolkien, impl. Talagan (Benjamin Babut)"
 
 \charset  tengwar_ds         true
 \charset  tengwar_ds_eldamar false
 \charset  tengwar_ds_annatar false
+\charset  tengwar_freemono   false
 
 
 \beg      options
@@ -188,7 +190,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
     \** 7TH LINE **\
     {L7}        === r_    * r     * l     * ll                    * w     
-    {_L7_}      === ORE   * ROMEN * LAMBE * LAMBE LAMBE_MARK_TILD * VALA
+    {_L7_}      === ORE   * ROMEN * LAMBE * LAMBE GEMINATE_SIGN * VALA
         
     {V_D_WN}[{L7}] --> 2,1 --> [{_L7_}]{_V_D_WN_}
     

@@ -39,6 +39,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   \entry "0.1.5" "csub removed. Now using virtual chars defined in charsets."
   \entry "0.1.6" "Removing unutixe under óre for coherency in implicit a submode."
   \entry "0.9.0" "Adding double tehtar support"
+  \entry "0.9.1" "Added support for the FreeMonoTengwar font"
 \end
 
 \**
@@ -49,12 +50,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 \language "Quenya"
 \writing  "Tengwar"
 \mode     "Classical"
-\version  "0.9.0"
-\authors  "Talagan (Benjamin Babut)"
+\version  "0.9.1"
+\authors  "J.R.R. Tolkien, impl. Talagan (Benjamin Babut)"
 
 \charset  tengwar_ds         true
 \charset  tengwar_ds_eldamar false
 \charset  tengwar_ds_annatar false
+\charset  tengwar_freemono   false
 
 \beg      options
   \option implicit_a false
@@ -387,7 +389,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     \**     L  LINE RULES     **\
     \** ===================== **\
     {LINE_L}          === l     * ld      * ll
-    {_LINE_L_}        === LAMBE * ALDA    * LAMBE LAMBE_MARK_TILD
+    {_LINE_L_}        === LAMBE * ALDA    * LAMBE GEMINATE_SIGN
 
     [{LINE_L}]{V_D_WN}    --> [{_LINE_L_}]{_V_D_WN_}
 

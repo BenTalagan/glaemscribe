@@ -28,17 +28,19 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   \entry "0.0.3" "Added thorn as equivalent for th"
   \entry "0.0.4" "Porting to virtual chars to simplify and beautify"
   \entry "0.0.5" "Added charset support for Annatar"
+  \entry "0.0.6" "Added support for the FreeMonoTengwar font"
 \end
 
 \language "Sindarin"
 \writing  "Tengwar"
 \mode     "Beleriand"
 \version  "0.0.5"
-\authors  "Talagan (Benjamin Babut)"
+\authors  "J.R.R. Tolkien, impl. Talagan (Benjamin Babut)"
 
 \charset  tengwar_ds         true
 \charset  tengwar_ds_eldamar false
 \charset  tengwar_ds_annatar false
+\charset  tengwar_freemono   false
 
 \beg      options
   \option reverse_numbers true

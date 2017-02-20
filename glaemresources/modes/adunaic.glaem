@@ -26,18 +26,20 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
  \entry "0.0.2" "Added option for o/u tehtar loop orientation"
  \entry "0.0.3" "Normalizing to virtual chars" 
  \entry "0.0.4" "Added charset support for Annatar"
+ \entry "0.0.5" "Added support for the FreeMonoTengwar font"
 \end
 
 \**  Adunaic mode for glaemscribe (MAY BE INCOMPLETE) **\
 \language Adûnaic
 \writing  Tengwar
 \mode     Glaemscrafu
-\version  0.0.4
-\authors  "Talagan (Benjamin Babut)"
+\version  0.0.5
+\authors  "Talagan (Benjamin Babut), based on J.R.R Tolkien"
 
 \charset  tengwar_ds         true
 \charset  tengwar_ds_eldamar false
 \charset  tengwar_ds_annatar false
+\charset  tengwar_freemono   false
 
 \beg      options
   \option reverse_numbers true
