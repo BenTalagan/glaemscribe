@@ -154,7 +154,9 @@ def dump_test_directory(directory, dump_directory)
   
   puts "Dumping now test base : #{directory}"
   
-  
+  FileUtils.rm_rf Dir.glob(dump_directory + '/sources/*')
+  FileUtils.rm_rf Dir.glob(dump_directory + '/expecteds/*')
+   
   Dir.glob(directory + "/sources/*/" ) { |dirent|
     
     full_name    = File.basename(dirent)    
@@ -171,17 +173,27 @@ def dump_test_directory(directory, dump_directory)
       next     
     end
     
+    FileUtils.mkdir_p( dump_directory + "/sources/"   + full_name)
+    FileUtils.mkdir_p( dump_directory + "/expecteds/" + full_name)
+    
     mode_options = {}
     charset_name = nil
     opt_file  = dirent[0..dirent.length-2] + ".options"
     if File.exists? opt_file
+      content = ""
       # There is an option file, parse it
       File.open(opt_file,"rb") { |f|
-          ofl = f.read.lines
-          charset_name = ofl[0].strip
-          opt_line     = ofl[1].strip
-          a = opt_line.strip.split(",").map{ |o| o.split(":") }.flatten.map{|s| s.strip }
-          mode_options = Hash[*a]    
+        content = f.read
+        ofl = content.lines
+        charset_name = ofl[0].strip
+        opt_line     = ofl[1].strip
+        a = opt_line.strip.split(",").map{ |o| o.split(":") }.flatten.map{|s| s.strip }
+        mode_options = Hash[*a]    
+      }
+      # Copyt the option file
+      oname = File.basename(opt_file)
+      File.open( dump_directory + "/sources/" + oname,"wb:utf-8") { |fw|    
+        fw << content
       }
     end
     
@@ -191,10 +203,7 @@ def dump_test_directory(directory, dump_directory)
       charset = mode.default_charset
     end
     
-    FileUtils.mkdir_p( dump_directory + "/sources/"   + full_name)
-    FileUtils.mkdir_p( dump_directory + "/expecteds/" + full_name)
  
-  
     Dir.glob(directory + "/sources/" + full_name + "/*") { |fok|
     
       bfname = File.basename(fok)

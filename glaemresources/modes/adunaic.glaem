@@ -36,10 +36,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 \version  0.0.5
 \authors  "Talagan (Benjamin Babut), based on J.R.R Tolkien"
 
-\charset  tengwar_ds         true
-\charset  tengwar_ds_eldamar false
-\charset  tengwar_ds_annatar false
-\charset  tengwar_freemono   false
+\charset  tengwar_ds          true
+\charset  tengwar_ds_parmaite false
+\charset  tengwar_ds_eldamar  false
+\charset  tengwar_ds_annatar  false
+\charset  tengwar_freemono    false
 
 \beg      options
   \option reverse_numbers true
