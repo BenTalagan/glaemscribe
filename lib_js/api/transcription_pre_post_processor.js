@@ -198,7 +198,11 @@ Glaemscribe.TranscriptionPostProcessor.prototype.apply = function(tokens, out_ch
     case "*LF":
       ret += "\n";
     default:
-      ret += out_charset.n2c(token).output();
+      var c = out_charset.n2c(token);
+      if(!c)
+        ret += Glaemscribe.UNKNOWN_CHAR_OUTPUT; // Should not happen
+      else
+        ret += c.output();
     }    
   }
  

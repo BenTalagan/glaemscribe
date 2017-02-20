@@ -142,7 +142,8 @@ module Glaemscribe
             when "*LF"
                ret += "\n"
             else
-               ret += out_charset[token].str
+              c = out_charset[token]       
+              ret += (c.nil?)?(UNKNOWN_CHAR_OUTPUT):c.str
           end        
         }
         ret
