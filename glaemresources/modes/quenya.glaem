@@ -333,6 +333,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
     \** Override h with vowels (descendent of hy) **\
     _h{V_D}         --> HYARMEN {_V_D_}
+    \** Starting voiced h before long vowels **\
     _h[{LVOWELS}]   --> HYARMEN [{_LTEHTAR_}]
 
     (h,χ)           --> AHA
@@ -376,10 +377,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
     [{L6}]{V_D_WN} --> [{_L6_}]{_V_D_WN_}
 
-		\** Correction for implicit_a **\
-		y[{LVOWELS}]    --> ANNA PALATAL_SIGN [{_LTEHTAR_}]
+		\** Voiced y before long vowels **\
+		y[{LVOWELS}]      --> ANNA PALATAL_SIGN [{_LTEHTAR_}]
 
-    \** r before long vowels is voiced **\
+    \** Voiced r before long vowels **\
     r[{LVOWELS}]      --> ROMEN [{_LTEHTAR_}]
 
     \** Override rule r + null **\
