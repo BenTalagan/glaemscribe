@@ -56,7 +56,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     \value LONG_VOWELS_USE_DOUBLE_TEHTAR 2
   \end  
   
-  \beg option double_tehta_a true
+  \beg option double_tehta_a false
     \visible_when 'long_vowels_format == LONG_VOWELS_USE_DOUBLE_TEHTAR'
   \end
   \beg option double_tehta_e true
