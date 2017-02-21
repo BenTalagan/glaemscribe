@@ -409,8 +409,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     {_L8_TEHTAR_}     === SILME_NUQUERNA  * ESSE_NUQUERNA
     {_L8_NO_TEHTAR_}  === SILME           * ESSE
 
-    [{L8}][{VOWELS}]    --> [{_L8_TEHTAR_}][{_TEHTAR_}]
-    [{L8}][{LTEHTAR}]   --> [{_L8_TEHTAR_}][{_LTEHTAR_}]
+    [{L8}][{VOWELS}]   --> [{_L8_TEHTAR_}][{_TEHTAR_}]
+    [{L8}][{LTEHTAR}]  --> [{_L8_TEHTAR_}][{_LTEHTAR_}]
     
     {L8}               --> {_L8_NO_TEHTAR_}
     {L8}[{DIPHTHONGS}] --> {_L8_NO_TEHTAR_}[{_DIPHTHONGS_}]
