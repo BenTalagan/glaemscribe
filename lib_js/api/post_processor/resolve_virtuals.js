@@ -45,7 +45,7 @@ Glaemscribe.ResolveVirtualsPostProcessorOperator.prototype.reset_trigger_states 
   });
 }
 
-Glaemscribe.ResolveVirtualsPostProcessorOperator.prototype.apply_loop = function(charset, tokens, reversed, token, idx) {
+Glaemscribe.ResolveVirtualsPostProcessorOperator.prototype.apply_loop = function(charset, tokens, new_tokens, reversed, token, idx) {
   var op = this;
   if(token == '*SPACE') {
     op.reset_trigger_states(charset);
@@ -61,7 +61,7 @@ Glaemscribe.ResolveVirtualsPostProcessorOperator.prototype.apply_loop = function
     // Try to replace
     var last_trigger = op.last_triggers[c.object_reference];
     if(last_trigger != null) {
-      tokens[idx] = last_trigger.names[0]; // Take the first name of the non-virtual replacement.
+      new_tokens[idx] = last_trigger.names[0]; // Take the first name of the non-virtual replacement.
     };
   }
   else {
@@ -78,16 +78,19 @@ Glaemscribe.ResolveVirtualsPostProcessorOperator.prototype.apply_loop = function
 Glaemscribe.ResolveVirtualsPostProcessorOperator.prototype.apply = function(tokens, charset) {   
   var op = this;
   
+  // Clone the array so that we can perform diacritics and ligatures without interfering
+  var new_tokens = tokens.slice(0);
+  
   op.reset_trigger_states(charset);
   tokens.glaem_each(function(idx,token) {
-    op.apply_loop(charset,tokens,false,token,idx);
+    op.apply_loop(charset,tokens,new_tokens,false,token,idx);
   });
   
   op.reset_trigger_states(charset);
   tokens.glaem_each_reversed(function(idx,token) {
-    op.apply_loop(charset,tokens,true,token,idx);    
+    op.apply_loop(charset,tokens,new_tokens,true,token,idx);    
   });
-  return tokens;
+  return new_tokens;
 }  
 
 Glaemscribe.resource_manager.register_post_processor_class("resolve_virtuals", Glaemscribe.ResolveVirtualsPostProcessorOperator);    

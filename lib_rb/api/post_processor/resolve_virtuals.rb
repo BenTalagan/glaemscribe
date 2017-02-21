@@ -37,7 +37,7 @@ module Glaemscribe
         }
       end
       
-      def apply_loop(charset, tokens, reversed, token, idx)
+      def apply_loop(charset, tokens, new_tokens, reversed, token, idx)
         if token == '*SPACE'
           reset_trigger_states(charset)
           return
@@ -50,7 +50,7 @@ module Glaemscribe
           # Try to replace
           last_trigger = @last_triggers[c]
           if last_trigger != nil
-            tokens[idx] = last_trigger.names.first # Take the first name of the non-virtual replacement.
+            new_tokens[idx] = last_trigger.names.first # Take the first name of the non-virtual replacement.
           end
         else
           # Update states of virtual classes
@@ -62,17 +62,21 @@ module Glaemscribe
       end
       
       def apply(tokens,charset)
+        
+        # Clone the tokens so that we can perform ligatures AND diacritics without interferences
+        new_tokens = tokens.clone
+        
         # Handle l to r virtuals (diacritics ?)
         reset_trigger_states(charset)       
         tokens.each_with_index{ |token,idx|
-          apply_loop(charset,tokens,false,token,idx)
+          apply_loop(charset,tokens,new_tokens,false,token,idx)
         }
         # Handle r to l virtuals (ligatures ?)
         reset_trigger_states(charset)       
         tokens.reverse_each.with_index{ |token,idx|
-          apply_loop(charset,tokens,true,token,tokens.count - 1 - idx)
+          apply_loop(charset,tokens,new_tokens,true,token,tokens.count - 1 - idx)
         }
-        tokens
+        new_tokens
       end
     end
 
