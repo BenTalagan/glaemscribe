@@ -57,7 +57,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 \charset  tengwar_ds_parmaite false
 \charset  tengwar_ds_eldamar  false
 \charset  tengwar_ds_annatar  false
-\charset  tengwar_freemono    false
+\** \charset  tengwar_freemono    false **\
 
 \beg      options
   \option implicit_a false
@@ -149,7 +149,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 \beg processor
 
   \beg    rules litteral
-
+    
     {K}                 ===  (c,k)
     {SS}                ===  (z,ss)
 
@@ -193,7 +193,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
       {WDIPHTHONGS}     === * {DIPHTHONGS}   \** groovy! **\
       {_WDIPHTHONGS_}   === * {_DIPHTHONGS_} \** same thing **\
     \endif
-      
+    
 		{_LONG_A_}      === ARA {A_SHAPE}
 		{_LONG_E_}      === ARA E_TEHTA	
 		{_LONG_I_}      === ARA I_TEHTA
@@ -204,51 +204,55 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 		{_LONE_LONG_I_} === {_LONG_I_}
 		{_LONE_LONG_O_} === {_LONG_O_}
 		{_LONE_LONG_U_} === {_LONG_U_}
-			
-		{WLONG}     === {NULL} \** long vowels that can be used as tehtar **\
-    {_WLONG_}   === {NULL} \** tehtar of long vowels that can be used as tehtar **\
-		
+    
+    {LTEHTAR}       === {NULL}
+    {_LTEHTAR_}     === {NULL} 				
+    	
 		\if implicit_a
      	{_LONG_A_}         === {A_SHAPE}        \** Eat the long a **\
   		{_LONE_LONG_A_}    === TELCO {A_SHAPE}  \** Eat the long a **\
-			{WLONG}            === {WLONG}   * á
-      {_WLONG_}          === {_WLONG_} * {_LONG_A_}
+      {LTEHTAR}          === {LTEHTAR}   * á
+      {_LTEHTAR_}        === {_LTEHTAR_} * {_LONG_A_}
     \endif
  		
 		\if "long_vowels_format == LONG_VOWELS_USE_DOUBLE_TEHTAR"
 	    \if "double_tehta_a && !implicit_a"
 		    {_LONG_A_}       === A_TEHTA_DOUBLE
 			  {_LONE_LONG_A_}  === TELCO {_LONG_A_}
-				{WLONG}          === {WLONG}   * á
-        {_WLONG_}        === {_WLONG_} * {_LONG_A_}
+        {LTEHTAR}        === {LTEHTAR}   * á
+        {_LTEHTAR_}      === {_LTEHTAR_} * {_LONG_A_}
   	  \endif		
 	    \if double_tehta_e
 		    {_LONG_E_}       === E_TEHTA_DOUBLE
 		    {_LONE_LONG_E_}  === TELCO {_LONG_E_}
-				{WLONG}          === {WLONG}   * é
-        {_WLONG_}        === {_WLONG_} * {_LONG_E_}
+        {LTEHTAR}        === {LTEHTAR}   * é
+        {_LTEHTAR_}      === {_LTEHTAR_} * {_LONG_E_}
 			\endif
 		  \if double_tehta_i
 		    {_LONG_I_}       === I_TEHTA_DOUBLE
 		    {_LONE_LONG_I_}  === TELCO {_LONG_I_}
-				{WLONG}          === {WLONG}   * í             
-        {_WLONG_}        === {_WLONG_} * {_LONG_I_}
+        {LTEHTAR}        === {LTEHTAR}   * í
+        {_LTEHTAR_}      === {_LTEHTAR_} * {_LONG_I_}
 		  \endif
 		  \if double_tehta_o
 		    {_LONG_O_}       === {O_LOOP_DOUBLE}
 		    {_LONE_LONG_O_}  === TELCO {_LONG_O_}
-				{WLONG}          === {WLONG}   * ó             
-        {_WLONG_}        === {_WLONG_} * {_LONG_O_}
+        {LTEHTAR}        === {LTEHTAR}   * ó
+        {_LTEHTAR_}      === {_LTEHTAR_} * {_LONG_O_}
 		  \endif
 		  \if double_tehta_u
 		    {_LONG_U_}       === {U_LOOP_DOUBLE}
 		    {_LONE_LONG_U_}  === TELCO {_LONG_U_}
-				{WLONG}          === {WLONG}   * ú            
-        {_WLONG_}        === {_WLONG_} * {_LONG_U_}
+        {LTEHTAR}        === {LTEHTAR}   * ú
+        {_LTEHTAR_}      === {_LTEHTAR_} * {_LONG_U_}
 		  \endif
     \endif  
-			
-		{_LTEHTAR_}          === {_LONG_A_} * {_LONG_E_} * {_LONG_I_} * {_LONG_O_} * {_LONG_U_}
+       		
+    \** images of long vowels, either tehtar or ara versions **\
+    {_LVOWELS_}     === {_LONG_A_} * {_LONG_E_} * {_LONG_I_} * {_LONG_O_} * {_LONG_U_}      
+
+		{WLONG}         === * {LVOWELS} 
+		{_WLONG_}       === * {_LVOWELS_}
 
     {V_D}           === [ {VOWELS} {WLONG} {WDIPHTHONGS} ]
     {V_D_WN}        === [ {VOWELS} {WLONG} {WDIPHTHONGS} * {NULL} ]
@@ -334,7 +338,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     \** Override h with vowels (descendent of hy) **\
     _h{V_D}         --> HYARMEN {_V_D_}
     \** Starting voiced h before long vowels **\
-    _h[{LVOWELS}]   --> HYARMEN [{_LTEHTAR_}]
+    _h[{LVOWELS}]   --> HYARMEN [{_LVOWELS_}]
 
     (h,χ)           --> AHA
 
@@ -377,12 +381,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
     [{L6}]{V_D_WN} --> [{_L6_}]{_V_D_WN_}
 
-		\** Voiced y before long vowels **\
-		y[{LVOWELS}]      --> ANNA PALATAL_SIGN [{_LTEHTAR_}]
-
-    \** Voiced r before long vowels **\
-    r[{LVOWELS}]      --> ROMEN [{_LTEHTAR_}]
-
     \** Override rule r + null **\
     r                 --> {_LONE_R_}
 
@@ -405,20 +403,18 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     \** ===================== **\
     \**   S/Z LINE RULES      **\
     \** ===================== **\
-    {L8}        === s               * {SS}
-    {_L8_}      === SILME_NUQUERNA  * ESSE_NUQUERNA
+    
+    \** SILME is a bit tricky : the shape is not linked to voicing but to a tehta presence or not **\
+    {L8}              === s               * {SS}
+    {_L8_TEHTAR_}     === SILME_NUQUERNA  * ESSE_NUQUERNA
+    {_L8_NO_TEHTAR_}  === SILME           * ESSE
 
-    [{L8}]{V_D_WN} --> [{_L8_}]{_V_D_WN_}
-
-    \** Override lonely s / ss / before consonant **\
-    s               --> SILME
-    {SS}            --> ESSE
-
-    \if implicit_a
-      sá            --> SILME_NUQUERNA {A_SHAPE}
-      {SS}á         --> ESSE_NUQUERNA {A_SHAPE}
-    \endif
-
+    [{L8}][{VOWELS}]    --> [{_L8_TEHTAR_}][{_TEHTAR_}]
+    [{L8}][{LTEHTAR}]   --> [{_L8_TEHTAR_}][{_LTEHTAR_}]
+    
+    {L8}               --> {_L8_NO_TEHTAR_}
+    {L8}[{DIPHTHONGS}] --> {_L8_NO_TEHTAR_}[{_DIPHTHONGS_}]
+    
   \end
 
   \beg    rules punctuation

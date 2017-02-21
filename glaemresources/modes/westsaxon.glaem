@@ -160,7 +160,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     
 
     {S_VOWELS_WN}[{L2_KER}]{S_VOWELS_WN}            --> 2,1,3 --> [{L2_IMG}]{_S_VOWELS_UP_WN_}{_S_VOWELS_DN_WN_}
-    {S_VOWELS_WN}[{L2_KER_GEMS}]                        --> 2,1   --> [{L2_IMG_GEMS}]{_S_VOWELS_UP_WN_}
+    {S_VOWELS_WN}[{L2_KER_GEMS}]                    --> 2,1   --> [{L2_IMG_GEMS}]{_S_VOWELS_UP_WN_}
 
     {S_VOWELS_WN}[ nd * mb * nġ * ng ]{S_VOWELS_WN} --> 2,1,3 -->  [ ANDO TILD_SUP_L * UMBAR TILD_SUP_L * ANGA TILD_SUP_L * UNGWE TILD_SUP_L ]{_S_VOWELS_UP_WN_}{_S_VOWELS_DN_WN_}
 

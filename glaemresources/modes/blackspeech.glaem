@@ -239,6 +239,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     \** ======================== **\
 
     s             --> SILME
+    {V_D} s       --> SILME_NUQUERNA {_V_D_}
     z             --> ESSE    
     {V_D} z       --> ESSE_NUQUERNA {_V_D_}
 
