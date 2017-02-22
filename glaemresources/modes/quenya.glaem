@@ -287,8 +287,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     ty{V_D_WN}          --> TINCO PALATAL_SIGN {_V_D_WN_}
     py{V_D_WN}          --> PARMA PALATAL_SIGN {_V_D_WN_}
 
-    ts{V_D_WN}          --> TINCO {_V_D_WN_} ALVEOLAR_SIGN
-    ps{V_D_WN}          --> PARMA {_V_D_WN_} ALVEOLAR_SIGN
+    ts{V_D_WN}          --> TINCO ALVEOLAR_SIGN {_V_D_WN_} 
+    ps{V_D_WN}          --> PARMA ALVEOLAR_SIGN {_V_D_WN_} 
     {K}s{V_D_WN}        --> CALMA ALVEOLAR_SIGN {_V_D_WN_}   
     x{V_D_WN}           --> CALMA ALVEOLAR_SIGN {_V_D_WN_}   \** render ks for x **\
 
