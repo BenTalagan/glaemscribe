@@ -137,7 +137,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 \char e054  ?
 \char e055  A_TEHTA_CIRCUM  
 \char e056  A_TEHTA_REVERSED A_TEHTA_DOUBLE
-\char e057  SEV_TEHTA_INF
+\char e057  SEV_TEHTA_INF THINF_STROKE
 
 \** THE TWO FOLLOWING ONES ARE HIGHLY DISCUSSABLE, MAYBE WE SHOULD ADD A VIRTUAL CHAR FOR THESE **\
 \char e058  SHOOK_LEFT_L

@@ -310,7 +310,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     \if "voiced_plosives_treatment == VOICED_PLOSIVES_AS_NASALIZED"
       [{L2_UN}]{V_D_WN}   --> [{_L2_}] {_V_D_WN_}
     \elsif "voiced_plosives_treatment == VOICED_PLOSIVES_WITH_STROKE"
-      [{L2_UN}]{V_D_WN}   --> [{_L2_}] THINF_STROKE_XL {_V_D_WN_}
+      [{L2_UN}]{V_D_WN}   --> [{_L2_}] THINF_STROKE {_V_D_WN_}
     \else
       {_L2_UN_}            === TW_EXT_21 * TW_EXT_22 * TW_EXT_23 * TW_EXT_24
       [{L2_UN}]{V_D_WN}    --> [{_L2_UN_}] {_V_D_WN_}
