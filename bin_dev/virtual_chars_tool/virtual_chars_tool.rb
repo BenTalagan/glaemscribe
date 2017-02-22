@@ -27,7 +27,7 @@ VIRTUALS_DS = {
   "O_TEHTA_INF"         => { names: ["O_TEHTA_INF"] ,                 classes:  ["THINF_CURL_XS", "THINF_CURL_S", "THINF_CURL_L", "THINF_CURL_XL"] },
   "U_TEHTA_INF"         => { names: ["U_TEHTA_INF"] ,                 classes:  ["THINF_CURL_INV_XS", "THINF_CURL_INV_S", "THINF_CURL_INV_L", "THINF_CURL_INV_XL"] },
   "CIRC_TEHTA_INF"      => { names: ["CIRC_TEHTA_INF"] ,              classes:  ["TH_SUB_CIRC_XS", "TH_SUB_CIRC_S", "TH_SUB_CIRC_L", "TH_SUB_CIRC_XL"] },
-  "SEV_TEHTA_INF"       => { names: ["SEV_TEHTA_INF"] ,               classes:  ["THINF_STROKE_XS", "THINF_STROKE_S", "THINF_STROKE_L", "THINF_STROKE_XL"] },
+  "SEV_TEHTA_INF"       => { names: ["SEV_TEHTA_INF","THINF_STROKE"] ,               classes:  ["THINF_STROKE_XS", "THINF_STROKE_S", "THINF_STROKE_L", "THINF_STROKE_XL"] },
                                                                       
   "Y_TEHTA_INF"         => { names: ["Y_TEHTA_INF","PALATAL_SIGN "] ,           classes: ["THINF_DDOT_XS", "THINF_DDOT_S", "THINF_DDOT_L", "THINF_DDOT_XL", "LAMBE_MARK_DDOT"] },
   "E_TEHTA_DOUBLE_INF"  => { names: ["E_TEHTA_DOUBLE_INF","GEMINATE_DOUBLE"],   classes: ["THINF_DSTROKE_XS" , "THINF_DSTROKE_S" ,"THINF_DSTROKE_L" , "THINF_DSTROKE_XL"  , "LAMBE_MARK_DSTROKE"] },
