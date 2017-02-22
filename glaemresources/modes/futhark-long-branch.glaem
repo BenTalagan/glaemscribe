@@ -1,0 +1,101 @@
+\**
+
+Glǽmscribe (also written Glaemscribe) is a software dedicated to
+the transcription of texts between writing systems, and more 
+specifically dedicated to the transcription of J.R.R. Tolkien's 
+invented languages to some of his devised writing systems.
+
+Copyright (C) 2015 Benjamin Babut (Talagan).
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU Affero General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Affero General Public License for more details.
+
+You should have received a copy of the GNU Affero General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+**\
+
+\language "Old Norse"
+\writing  "Runes"
+\mode     "Futhark Long Branch"
+\version  "0.0.1"
+\authors  "Historical impl. Bertrand Bellet"
+
+\charset  unicode_runes true
+
+\beg      preprocessor
+  \downcase
+  
+  \** Dis-ambiguate q,c,k **\
+  \rxsubstitute "(q|c|k)" "k"
+\end
+
+\beg      processor
+    
+  \beg    rules litteral
+    {A}       === (a,á,æ,ǽ,ę) 
+    {I}       === (i,í,j,e,é)
+    {O}       === (ą,ö,ǫ,ǫ́,ǭ)
+    {U}       === (u,ú,o,ó,y,ý,ø,ǿ,œ)
+    {AI}      === (æi,ei)
+  	{AU}      === (au,ǫu,ey,æy,øy,œy)
+    
+    \**  VOWELS **\
+    
+    {A}       --> LONG_BRANCH_AR
+    {I}       --> ISS 
+    {O}       --> LONG_BRANCH_OSS
+    {U}       --> UR
+    {AI}      --> LONG_BRANCH_AR ISS 
+	  {AU}      --> LONG_BRANCH_OSS UR
+
+
+    \**  CONSONANTS **\
+  
+    (b,bb,mb,p,pp,mp) --> BJARKAN
+    (f,ff)            --> FE
+    _g                --> KAUN \** # Initial / After prefix **\
+    (g,g_)            --> LONG_BRANCH_HAGALL \** # Median / Final Spirant **\
+    (h,hh)            --> LONG_BRANCH_HAGALL
+    (k,nk,kk,gg,ng)   --> KAUN
+    (l,ll)            --> LOGR
+    (m,mm)            --> LONG_BRANCH_MADR
+    (n,nn)            --> NAUD
+    (r,rr)            --> REID
+    (ř)               --> LONG_BRANCH_YR \**  ř < Germanic z **\
+    (s,ss)            --> LONG_BRANCH_SOL
+		(t,tt,nt,d,dd,nd) --> TYR
+    (þ,þþ,ð,ðð)       --> THURS
+    (v,vv,w,ww)       --> URUZ
+    x                 --> KAUN LONG_BRANCH_SOL                 
+    z                 --> TYR LONG_BRANCH_SOL
+		
+ 
+     \**  nasalization of a **\
+
+		{A}(m,mm)           --> LONG_BRANCH_OSS LONG_BRANCH_MADR
+		{A}(n,nn)           --> LONG_BRANCH_OSS NAUD
+		{A}(mp,mb,pp)       --> LONG_BRANCH_OSS BJARKAN
+		{A}(nt,nd,tt)       --> LONG_BRANCH_OSS TYR
+		{A}(nk,ng,kk) --> LONG_BRANCH_OSS KAUN				
+  \end
+  
+  \beg    rules  punctuation
+    , --> RUNIC_SINGLE_PUNCTUATION
+    ; --> RUNIC_SINGLE_PUNCTUATION
+    : --> RUNIC_MULTIPLE_PUNCTUATION
+    . --> RUNIC_MULTIPLE_PUNCTUATION
+    ! --> RUNIC_MULTIPLE_PUNCTUATION
+    ? --> RUNIC_CROSS_PUNCTUATION	
+  \end
+\end
+  
+    
+      

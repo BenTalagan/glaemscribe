@@ -90,7 +90,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 \char e02F  ?      
 
 \char e030  REVERSED_OSSE
-\char e031  BOMBADIL_W HARP_SHAPED
+\char e031  BOMBADIL_W 
 \char e032  OSSE
 \char e033  ?
 
@@ -104,7 +104,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 \char e03A  MALTA_W_HOOK TW_MH
 \char e03B  VALA_W_HOOK TW_MH_BELERIANDIC
 
-\char e03C  TW_HW_LOWDHAM
+\char e03C  TW_HW_LOWDHAM HARP_SHAPED
 \char e03D  VAIYA
 \char e03E  ?
 \char e03F  ?      

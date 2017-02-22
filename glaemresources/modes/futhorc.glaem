@@ -1,0 +1,123 @@
+\**
+
+Glǽmscribe (also written Glaemscribe) is a software dedicated to
+the transcription of texts between writing systems, and more 
+specifically dedicated to the transcription of J.R.R. Tolkien's 
+invented languages to some of his devised writing systems.
+
+Copyright (C) 2015 Benjamin Babut (Talagan).
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU Affero General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Affero General Public License for more details.
+
+You should have received a copy of the GNU Affero General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+**\
+
+\language "Old English"
+\writing  "Runes"
+\mode     "Futhorc"
+\version  "0.0.1"
+\authors  "Historical impl. Bertrand Bellet"
+
+\charset  unicode_runes true
+
+\beg      preprocessor
+  \downcase
+\end
+
+\beg      processor
+    
+  \beg    rules litteral
+    {A}       === (a,á) 
+    {E}       === (e,é) 
+    {I}       === (i,í)
+    {O}       === (o,ó)
+    {U}       === (u,ú)
+    {Y}       === (y,ý)
+    {AE}      === (æ,ǽ)
+    {OE}      === (œ,œ́)
+		{EA}      === (ea,éa)
+		{EO}      === (eo,éo)
+		{IO}      === (io,ío)
+
+    \**  VOWELS **\
+
+    {A}       --> AC
+    {E}       --> EH
+    {I}       --> IS 
+    {O}       --> OS
+    {U}       --> UR
+    {Y}       --> YR
+    {AE}      --> AESC
+    {OE}      --> ETHEL
+		{EA}      --> EAR
+		{EO}      --> EOH
+		{IO}      --> IOR                    
+
+    \**  IOTATED VOWELS **\
+
+    i{A}      --> GER AC
+    i{E}      --> GER EH
+    i{O}      --> GER OS
+    i{U}      --> GER UR
+    i{Y}      --> GER YR
+    i{AE}     --> GER AESC
+    i{OE}     --> GER ETHEL
+		i{EA}     --> GER EAR
+		i{EO}     --> GER EOH   
+
+    \**  CONSONANTS **\
+  
+    (b,bb)         --> BEORC
+		(c,cc,k,kk)    --> CALC
+    (ċ,ċċ)         --> CEN
+    (d,dd)         --> DAEG
+    (ð,ðð)         --> THORN
+    (f,ff)         --> FEOH
+    (ȝ,ġ,ġġ,ċġ)    --> GYFU
+		(g,gg,cg)      --> GAR    
+    (h,hh)         --> HAEGL
+    (l,ll)         --> LAGU
+    (m,mm)         --> MAN
+    (n,nn)         --> NYD
+    (p,pp)         --> PEORTH
+    (r,rr)         --> RAD
+    (s,ss)         --> SIGEL
+    (t,tt)         --> TIR
+    (þ,þþ)         --> THORN
+    (w,ww)         --> WYNN
+		
+    \**  CLUSTERS **\		
+
+    ng       --> ING GAR
+		nġ       --> ING GYFU
+		nc       --> ING CALC
+		nċ       --> ING CEN
+	  (cw,qu)  --> CWEORTH
+		x        --> EOLHX
+		(z,ts)   --> TIR SIGEL
+		st       --> STAN
+		
+  \end
+  
+  \beg    rules  punctuation
+    , --> RUNIC_SINGLE_PUNCTUATION
+    ; --> RUNIC_SINGLE_PUNCTUATION
+    : --> RUNIC_MULTIPLE_PUNCTUATION
+    . --> RUNIC_MULTIPLE_PUNCTUATION
+    ! --> RUNIC_MULTIPLE_PUNCTUATION
+    ? --> RUNIC_CROSS_PUNCTUATION	
+  \end
+\end
+  
+    
+      
