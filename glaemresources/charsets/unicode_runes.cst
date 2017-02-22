@@ -81,6 +81,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 \** ᛐ **\ \char 16D0 SHORT_TWIG_TYR 
 \** ᛑ **\ \char 16D1 RUNIC_D 
 \** ᛒ **\ \char 16D2 BERKANAN BEORC BJARKAN 
+\** ᛓ **\ \char 16D3 SHORT_TWIG_BERKANAN SHORT_TWIG_BEORC SHORT_TWIG_BJARKAN
 \** ᛔ **\ \char 16D4 DOTTED_P 
 \** ᛕ **\ \char 16D5 OPEN_P 
 \** ᛖ **\ \char 16D6 EHWAZ EH 
