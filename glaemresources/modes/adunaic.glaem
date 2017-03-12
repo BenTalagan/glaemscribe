@@ -27,13 +27,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
  \entry "0.0.3" "Normalizing to virtual chars" 
  \entry "0.0.4" "Added charset support for Annatar"
  \entry "0.0.5" "Added support for the FreeMonoTengwar font"
+ \entry "0.0.6" "Added wave/bar option for consonant modifications sign"
 \end
 
 \**  Adunaic mode for glaemscribe (MAY BE INCOMPLETE) **\
 \language Adûnaic
 \writing  Tengwar
 \mode     Glaemscrafu
-\version  0.0.5
+\version  "0.1.0"
 \authors  "Talagan (Benjamin Babut), based on J.R.R Tolkien"
 
 \charset  tengwar_ds_sindarin true
@@ -43,15 +44,22 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 \charset  tengwar_freemono    false
 
 \beg      options
+  \beg option reverse_o_u_tehtar O_UP_U_DOWN
+    \value O_UP_U_DOWN 1
+    \value U_UP_O_DOWN 2
+  \end
+
+  \beg option consonant_modification_style CONSONANT_MODIFICATION_STYLE_BAR
+    \value CONSONANT_MODIFICATION_STYLE_WAVE 0
+    \value CONSONANT_MODIFICATION_STYLE_BAR 1
+  \end
+
   \option reverse_numbers true
   \beg option numbers_base BASE_12
     \value    BASE_10 10
     \value    BASE_12 12
   \end
-  \beg option reverse_o_u_tehtar O_UP_U_DOWN
-    \value O_UP_U_DOWN 1
-    \value U_UP_O_DOWN 2
-  \end
+
 \end
 
 \beg      preprocessor
@@ -81,6 +89,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 \beg      processor
 
   \beg    rules litteral  
+  
+    \if "consonant_modification_style == CONSONANT_MODIFICATION_STYLE_WAVE"
+      {GEMINATE} === GEMINATE_SIGN_TILD
+    \else
+      {GEMINATE} === GEMINATE_SIGN
+    \endif
+  
     {A}   === a
     {AA}  === á
     {E}   === e
@@ -140,24 +155,24 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     {K}   === (c,k)
     {V}   === (v,w)
 
-    {L1_S}         === {K}     * p     * t     * {K}{K}               * pp                   * tt
-    {L1_T}         === QUESSE  * PARMA * TINCO * CALMA GEMINATE_SIGN  * PARMA GEMINATE_SIGN  * TINCO  GEMINATE_SIGN
+    {L1_S}         === {K}     * p     * t     * {K}{K}            * pp                * tt
+    {L1_T}         === QUESSE  * PARMA * TINCO * CALMA {GEMINATE}  * PARMA {GEMINATE}  * TINCO  {GEMINATE}
     
     [{L1_S}]       -->  [ {L1_T} ]
     [{L1_S}]{V_D}  -->  [ {L1_T} ]{_V_D_} 
 
-    {L2_S}         === d    * b     * g     * dd                 * bb                   * gg
-    {L2_T}         === ANDO * UMBAR * UNGWE * ANDO GEMINATE_SIGN * UMBAR GEMINATE_SIGN  * UNGWE GEMINATE_SIGN
+    {L2_S}         === d    * b     * g     * dd              * bb                * gg
+    {L2_T}         === ANDO * UMBAR * UNGWE * ANDO {GEMINATE} * UMBAR {GEMINATE}  * UNGWE {GEMINATE}
     [{L2_S}]       --> [{L2_T}] 
     [{L2_S}]{V_D}  --> [{L2_T}]{_V_D_} 
 
     \** Alignment of tehta is not the same in the font **\
     \** So we need to split the third line unfortunately **\
-    {L3_1_S}          === th    * ph      * (t,th)th             * (p,ph)ph               * (t,th)ph    * (k,kh)ph      * (p,ph)th    * (k,kh)th
-    {L3_1_T}          === SULE  * FORMEN  * SULE GEMINATE_SIGN   * FORMEN GEMINATE_SIGN   * SULE FORMEN * HWESTA FORMEN * FORMEN SULE * HWESTA SULE
+    {L3_1_S}          === th    * ph      * (t,th)th          * (p,ph)ph            * (t,th)ph    * (k,kh)ph      * (p,ph)th    * (k,kh)th
+    {L3_1_T}          === SULE  * FORMEN  * SULE {GEMINATE}   * FORMEN {GEMINATE}   * SULE FORMEN * HWESTA FORMEN * FORMEN SULE * HWESTA SULE
    
-    {L3_2_S}          === sh    * kh      * (k,kh)kh             * (p,ph)kh            * (t,th)kh
-    {L3_2_T}          === AHA   * HWESTA  * HWESTA GEMINATE_SIGN * FORMEN HWESTA       * SULE HWESTA
+    {L3_2_S}          === sh    * kh      * (k,kh)kh          * (p,ph)kh            * (t,th)kh
+    {L3_2_T}          === AHA   * HWESTA  * HWESTA {GEMINATE} * FORMEN HWESTA       * SULE HWESTA
    
     [{L3_1_S}]        --> [{L3_1_T}] 
     [{L3_1_S}]{V_D}   --> [{L3_1_T}]{_V_D_} 
@@ -169,13 +184,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     [{L4_S}]          --> [{L4_T}] 
     [{L4_S}]{V_D}     --> [{L4_T}]{_V_D_} 
 
-    {L5_S}            === n     * m     * nn                    * mm
-    {L5_T}            === NUMEN * MALTA * NUMEN GEMINATE_SIGN   * MALTA GEMINATE_SIGN
+    {L5_S}            === n     * m     * nn                 * mm
+    {L5_T}            === NUMEN * MALTA * NUMEN {GEMINATE}   * MALTA {GEMINATE}
     [{L5_S}]          --> [{L5_T}] 
     [{L5_S}]{V_D}     --> [{L5_T}]{_V_D_} 
 
-    {L6_S}            === {V}   * y     * rr                    * {V}{V}                * yy
-    {L6_T}            === VALA  * ANNA  * ROMEN GEMINATE_SIGN   * VALA GEMINATE_SIGN    * ANNA GEMINATE_SIGN
+    {L6_S}            === {V}   * y     * rr                 * {V}{V}             * yy
+    {L6_T}            === VALA  * ANNA  * ROMEN {GEMINATE}   * VALA {GEMINATE}    * ANNA {GEMINATE}
     [r * {L6_S}]      --> [ ORE   * {L6_T}] 
     [r * {L6_S}]{V_D} --> [ ROMEN * {L6_T}]{_V_D_} 
 
@@ -190,14 +205,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
     h{V_D}            --> HYARMEN {_V_D_}
     h                 --> HYARMEN
-    hh{V_D}           --> HYARMEN GEMINATE_SIGN {_V_D_}
-    hh                --> HYARMEN GEMINATE_SIGN
+    hh{V_D}           --> HYARMEN {GEMINATE} {_V_D_}
+    hh                --> HYARMEN {GEMINATE}
                       
     l{V_D}            --> LAMBE {_V_D_}
     l                 --> LAMBE
                       
-    ll{V_D}           --> LAMBE GEMINATE_SIGN {_V_D_}
-    ll                --> LAMBE GEMINATE_SIGN
+    ll{V_D}           --> LAMBE {GEMINATE} {_V_D_}
+    ll                --> LAMBE {GEMINATE}
   
   \end
   
@@ -231,8 +246,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     » --> DQUOT_CLOSE 
     
     - --> PUNCT_DOT    
-    – --> WAVE_MED_SIMPLE  
-    — --> WAVE_MED_DOUBLE
+    – --> PUNCT_TILD  
+    — --> PUNCT_DTILD
  
     [ --> PUNCT_PAREN_L
     ] --> PUNCT_PAREN_R

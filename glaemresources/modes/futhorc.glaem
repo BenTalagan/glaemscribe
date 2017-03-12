@@ -30,6 +30,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 \charset  unicode_runes true
 
+\beg options
+  \option use_cweorth true
+  \option use_stan    true
+  \option use_calc    true
+  \option use_gar     true
+\end
+
 \beg      preprocessor
   \downcase
 \end
@@ -45,9 +52,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     {Y}       === (y,ý)
     {AE}      === (æ,ǽ)
     {OE}      === (œ,œ́)
-		{EA}      === (ea,éa)
-		{EO}      === (eo,éo)
-		{IO}      === (io,ío)
+    {EA}      === (ea,éa)
+    {EO}      === (eo,éo)
+    {IO}      === (io,ío)
 
     \**  VOWELS **\
 
@@ -59,54 +66,86 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     {Y}       --> YR
     {AE}      --> AESC
     {OE}      --> ETHEL
-		{EA}      --> EAR
-		{EO}      --> EOH
-		{IO}      --> IOR                    
+    {EA}      --> EAR
+    {EO}      --> EOH
+    {IO}      --> IOR                    
 
     \**  IOTATED VOWELS **\
-
-    i{A}      --> GER AC
-    i{E}      --> GER EH
-    i{O}      --> GER OS
-    i{U}      --> GER UR
-    i{Y}      --> GER YR
-    i{AE}     --> GER AESC
-    i{OE}     --> GER ETHEL
-		i{EA}     --> GER EAR
-		i{EO}     --> GER EOH   
+    {IOTABLES}    ===  {A}  * {E} * {O} * {U} * {Y} * {AE} * {OE}   * {EA}  * {EO}
+    {_IOTABLES_}  ===  AC   * EH  * OS  * UR  * YR  * AESC * ETHEL  * EAR   * EOH 
+    
+    i [{IOTABLES}] --> GER [{_IOTABLES_} ]  
 
     \**  CONSONANTS **\
-  
     (b,bb)         --> BEORC
-		(c,cc,k,kk)    --> CALC
+    
+	  \** (c,cc,k,kk)    --> CALC **\
+    \** (ċ,ċċ)         --> CEN **\
+    (c,cc,k,kk)    --> CEN
     (ċ,ċċ)         --> CEN
+    \if use_calc
+      \** overload when option is on **\ 
+      (c,cc,k,kk)    --> CALC
+    \endif
+      
     (d,dd)         --> DAEG
-    (ð,ðð)         --> THORN
-    (f,ff)         --> FEOH
+    (f,ff,v)       --> FEOH
+    
+	  \**  (g,gg,cg)      --> GAR  **\  
+    \**  (ȝ,ġ,ġġ,ċġ)    --> GYFU **\
+    (g,gg,cg)      --> GYFU    
     (ȝ,ġ,ġġ,ċġ)    --> GYFU
-		(g,gg,cg)      --> GAR    
-    (h,hh)         --> HAEGL
+    \if use_gar
+      \** overload when option is on **\ 
+      (g,gg,cg)      --> GAR
+    \endif
+    
+    (h,hh,ç,χ)     --> HAEGL
+    (j,jj,ĭ)       --> GER
     (l,ll)         --> LAGU
     (m,mm)         --> MAN
     (n,nn)         --> NYD
     (p,pp)         --> PEORTH
     (r,rr)         --> RAD
-    (s,ss)         --> SIGEL
+    (s,ss,z)       --> SIGEL
     (t,tt)         --> TIR
-    (þ,þþ)         --> THORN
+    (þ,þþ,ð,ðð)    --> THORN
     (w,ww)         --> WYNN
-		
-    \**  CLUSTERS **\		
-
-    ng       --> ING GAR
-		nġ       --> ING GYFU
-		nc       --> ING CALC
-		nċ       --> ING CEN
-	  (cw,qu)  --> CWEORTH
-		x        --> EOLHX
-		(z,ts)   --> TIR SIGEL
-		st       --> STAN
-		
+  
+    \** OLD ENGLISH AND **\
+    
+    ⁊             --> OS NYD DAEG
+      
+    \**  CLUSTERS WITH ING **\    
+    
+    \** ng            --> ING GAR **\
+    \** nġ            --> ING GYFU **\
+    ng            --> ING GYFU
+    nġ            --> ING GYFU
+    \if use_gar
+      ng            --> ING GAR
+    \endif
+      
+    \** nc            --> ING CALC **\
+    \** (nċ,nk,nq)    --> ING CEN  **\
+    nc            --> ING CEN
+    (nċ,nk,nq)    --> ING CEN
+    \if use_calc
+      ng            --> ING CALC
+    \endif     
+      
+    \**  CLUSTERS WITH S **\   
+    x             --> EOLHX
+    (z,ts)        --> TIR SIGEL
+    
+    \**  ADDITIONAL RUNES **\    
+    \if use_cweorth 
+      (cw,qu,ccw,cqu)   --> CWEORTH
+    \endif
+    \if use_stan
+      st                --> STAN
+    \endif
+      
   \end
   
   \beg    rules  punctuation
@@ -115,7 +154,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     : --> RUNIC_MULTIPLE_PUNCTUATION
     . --> RUNIC_MULTIPLE_PUNCTUATION
     ! --> RUNIC_MULTIPLE_PUNCTUATION
-    ? --> RUNIC_CROSS_PUNCTUATION	
+    ? --> RUNIC_CROSS_PUNCTUATION 
   \end
 \end
   

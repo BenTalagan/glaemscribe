@@ -62,16 +62,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 \beg      options
   \option implicit_a false
   
-  \** Keep next option for later maybe **\
-  \**  
-  \beg option implicit_a_unutixe IA_UNUTIXE_LAZY
-    \visible_when 'implicit_a == true'
-    \value IA_UNUTIXE_FULL 1
-    \value IA_UNUTIXE_LAZY 2
-    \value IA_UNUTIXE_NONE 3
-  \end
-  **\
-  
   \beg option a_tetha_shape A_SHAPE_THREE_DOTS
     \value A_SHAPE_THREE_DOTS 1
     \value A_SHAPE_CIRCUMFLEX 2
@@ -85,9 +75,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     \value LONG_VOWELS_USE_DOUBLE_TEHTAR 2
   \end  
   
+  \** REMOVED BECAUSE UNATTESTED
   \beg option double_tehta_a false
     \visible_when 'long_vowels_format == LONG_VOWELS_USE_DOUBLE_TEHTAR'
   \end
+  **\
   \beg option double_tehta_e false
     \visible_when 'long_vowels_format == LONG_VOWELS_USE_DOUBLE_TEHTAR'
   \end
@@ -112,6 +104,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     \value ST_PT_HT_SEPARATED 1
     \value ST_PT_HT_WITH_XTD 2
   \end
+  
+  \beg option consonant_modification_style CONSONANT_MODIFICATION_STYLE_BAR
+    \value CONSONANT_MODIFICATION_STYLE_WAVE 0
+    \value CONSONANT_MODIFICATION_STYLE_BAR 1
+  \end
+  
   \option reverse_numbers true
   \beg option numbers_base BASE_12
     \value    BASE_10 10
@@ -152,6 +150,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     
     {K}                 ===  (c,k)
     {SS}                ===  (z,ss)
+    
+    \if "consonant_modification_style == CONSONANT_MODIFICATION_STYLE_WAVE"
+      {GEMINATE} === GEMINATE_SIGN_TILD
+    \else
+      {GEMINATE} === GEMINATE_SIGN
+    \endif
 
     {VOWELS}            === a               *  e              * i              * o              *  u
     {LVOWELS}           === á               *  é              * í              * ó              *  ú
@@ -216,12 +220,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     \endif
  		
 		\if "long_vowels_format == LONG_VOWELS_USE_DOUBLE_TEHTAR"
+    \** REMOVED BECAUSE UNATTESTED
 	    \if "double_tehta_a && !implicit_a"
 		    {_LONG_A_}       === A_TEHTA_DOUBLE
 			  {_LONE_LONG_A_}  === TELCO {_LONG_A_}
         {LTEHTAR}        === {LTEHTAR}   * á
         {_LTEHTAR_}      === {_LTEHTAR_} * {_LONG_A_}
   	  \endif		
+    **\
 	    \if double_tehta_e
 		    {_LONG_E_}       === E_TEHTA_DOUBLE
 		    {_LONE_LONG_E_}  === TELCO {_LONG_E_}
@@ -277,8 +283,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     {_L1_}        === TINCO * PARMA   * CALMA * QUESSE
 
     \** GEMINATED **\
-    {L1_1_GEMS}   === tt                  * pp                    * {K}{K}
-    {_L1_1_GEMS_} === TINCO GEMINATE_SIGN * PARMA GEMINATE_SIGN   * CALMA GEMINATE_SIGN
+    {L1_1_GEMS}   === tt               * pp                 * {K}{K}
+    {_L1_1_GEMS_} === TINCO {GEMINATE} * PARMA {GEMINATE}   * CALMA {GEMINATE}
 
     \** NORMAL **\
     [ {L1} * {L1_1_GEMS} ] {V_D_WN} --> [ {_L1_} * {_L1_1_GEMS_} ] {_V_D_WN_}
@@ -287,6 +293,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     ty{V_D_WN}          --> TINCO PALATAL_SIGN {_V_D_WN_}
     py{V_D_WN}          --> PARMA PALATAL_SIGN {_V_D_WN_}
 
+    \** For alveolarized consonants, we must put the alveolar_sign just after the tengwa
+        because else, FreeMonoTengwar will not handle well the ligature. Anyway, this is
+        more logical, but the tehta placement will not be perfect for older fonts **\
     ts{V_D_WN}          --> TINCO ALVEOLAR_SIGN {_V_D_WN_} 
     ps{V_D_WN}          --> PARMA ALVEOLAR_SIGN {_V_D_WN_} 
     {K}s{V_D_WN}        --> CALMA ALVEOLAR_SIGN {_V_D_WN_}   
@@ -362,9 +371,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     [{L5}]{V_D_WN}  --> [{_L5_}]{_V_D_WN_}
 
     ny{V_D_WN}          --> NUMEN PALATAL_SIGN {_V_D_WN_}
-    nn{V_D_WN}          --> NUMEN GEMINATE_SIGN   {_V_D_WN_}
+    nn{V_D_WN}          --> NUMEN {GEMINATE}   {_V_D_WN_}
     my{V_D_WN}          --> MALTA PALATAL_SIGN {_V_D_WN_}
-    mm{V_D_WN}          --> MALTA GEMINATE_SIGN   {_V_D_WN_}
+    mm{V_D_WN}          --> MALTA {GEMINATE}   {_V_D_WN_}
 
     \** ===================== **\
     \**     6TH LINE RULES    **\
@@ -384,7 +393,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     \** Override rule r + null **\
     r                 --> {_LONE_R_}
 
-    rr{V_D_WN}        --> ROMEN GEMINATE_SIGN {_V_D_WN_}
+    rr{V_D_WN}        --> ROMEN {GEMINATE} {_V_D_WN_}
     ry{V_D_WN}        --> ROMEN PALATAL_SIGN {_V_D_WN_}
     rd{V_D_WN}        --> ARDA {_V_D_WN_}
 
@@ -392,7 +401,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     \**     L  LINE RULES     **\
     \** ===================== **\
     {LINE_L}          === l     * ld      * ll
-    {_LINE_L_}        === LAMBE * ALDA    * LAMBE GEMINATE_SIGN
+    {_LINE_L_}        === LAMBE * ALDA    * LAMBE {GEMINATE}
 
     [{LINE_L}]{V_D_WN}    --> [{_LINE_L_}]{_V_D_WN_}
 

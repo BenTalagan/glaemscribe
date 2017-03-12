@@ -37,8 +37,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 \language "Sindarin"
 \writing  "Tengwar"
-\mode     "Classical"
-\version  "0.0.7"
+\mode     "General Use"
+\version  "0.0.8"
 \authors  "J.R.R. Tolkien, impl. Talagan (Benjamin Babut)"
 
 \charset  tengwar_ds_sindarin true
@@ -49,16 +49,29 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
 \beg      options
-  \option reverse_numbers true
-  \beg option numbers_base BASE_12
-    \value    BASE_10 10
-    \value    BASE_12 12
+
+  \beg option reverse_o_u_tehtar U_UP_O_DOWN
+    \value O_UP_U_DOWN 1
+    \value U_UP_O_DOWN 2
   \end
+
+  \beg option consonant_modification_style CONSONANT_MODIFICATION_STYLE_BAR
+    \value CONSONANT_MODIFICATION_STYLE_WAVE 0
+    \value CONSONANT_MODIFICATION_STYLE_BAR 1
+  \end
+
   \beg option labialized_consonants_u_curl LABIALIZED_U_CURL_ALWAYS
     \value    LABIALIZED_U_CURL_NONE      1
     \value    LABIALIZED_U_CURL_NO_TEHTAR 2
     \value    LABIALIZED_U_CURL_ALWAYS    3
   \end
+
+  \option reverse_numbers true
+  \beg option numbers_base BASE_12
+    \value    BASE_10 10
+    \value    BASE_12 12
+  \end
+
 \end
 
 \beg preprocessor
@@ -95,6 +108,22 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
   \beg rules litteral
     
+    \if "consonant_modification_style == CONSONANT_MODIFICATION_STYLE_WAVE"
+      {GEMINATE} === GEMINATE_SIGN_TILD
+      {NASAL}    === NASALIZE_SIGN_TILD
+    \else
+      {GEMINATE} === GEMINATE_SIGN
+      {NASAL}    === NASALIZE_SIGN
+    \endif
+    
+    \if "reverse_o_u_tehtar == U_UP_O_DOWN"
+      {O_LOOP}        === O_TEHTA
+      {U_LOOP}        === U_TEHTA
+     \else
+      {O_LOOP}        === U_TEHTA
+      {U_LOOP}        === O_TEHTA
+    \endif
+    
     \** VOWELS **\
     {A}   === a
     {AA}  === á
@@ -123,12 +152,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     {VOWELS}    === {A}             * {E}             * {I}           * {O}         * {U}         * {Y} 
     {LVOWELS}   === {AA}            * {EE}            * {II}          * {OO}        * {UU}        * {YY}   
 
-    {TEHTAR}    === A_TEHTA         * E_TEHTA         * I_TEHTA       * O_TEHTA     * U_TEHTA     * Y_TEHTA 
+    {TEHTAR}    === A_TEHTA         * E_TEHTA         * I_TEHTA       * {O_LOOP}     * {U_LOOP}     * Y_TEHTA 
   
-    {_LTEHTAR_} === ARA A_TEHTA     * ARA E_TEHTA     * ARA I_TEHTA   * ARA O_TEHTA * ARA U_TEHTA * ARA Y_TEHTA 
+    {_LTEHTAR_} === ARA A_TEHTA     * ARA E_TEHTA     * ARA I_TEHTA   * ARA {O_LOOP} * ARA {U_LOOP} * ARA Y_TEHTA 
 
     {DIPHTHONGS}   === {AI}            * {AU}            * {AW}            * {EI}            * {UI}         * {AE}          * {OE}              
-    {_DIPHTHONGS_} === ANNA A_TEHTA    * VALA A_TEHTA    * VALA A_TEHTA    * ANNA E_TEHTA    * ANNA U_TEHTA * YANTA A_TEHTA * YANTA O_TEHTA     
+    {_DIPHTHONGS_} === ANNA A_TEHTA    * VALA A_TEHTA    * VALA A_TEHTA    * ANNA E_TEHTA    * ANNA {U_LOOP} * YANTA A_TEHTA * YANTA {O_LOOP}     
 
     \** Consonants + Vowels, we will often need these ones **\
     {V_D}         === [ {VOWELS} ]
@@ -148,18 +177,18 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
  
     {V_D_WN}[{L1}] --> 2,1 --> [{_L1_}]{_V_D_WN_}
   
-    {V_D_WN}nt   --> TINCO NASALIZE_SIGN {_V_D_WN_}
-    {V_D_WN}mp   --> PARMA NASALIZE_SIGN {_V_D_WN_}
-    {V_D_WN}n{K} --> CALMA NASALIZE_SIGN {_V_D_WN_}
+    {V_D_WN}nt   --> TINCO {NASAL} {_V_D_WN_}
+    {V_D_WN}mp   --> PARMA {NASAL} {_V_D_WN_}
+    {V_D_WN}n{K} --> CALMA {NASAL} {_V_D_WN_}
 
     \** 2ND LINE **\
     {L2}        === d     * b     * g     * ng                    \** * g **\
-    {_L2_}      === ANDO  * UMBAR * UNGWE * UNGWE NASALIZE_SIGN      \** * s **\
+    {_L2_}      === ANDO  * UMBAR * UNGWE * UNGWE {NASAL}      \** * s **\
 
     {V_D_WN}[{L2}] --> 2,1 --> [{_L2_}]{_V_D_WN_}
 
-    {V_D_WN}mb   --> UMBAR  NASALIZE_SIGN {_V_D_WN_}
-    {V_D_WN}nd   --> ANDO   NASALIZE_SIGN {_V_D_WN_}
+    {V_D_WN}mb   --> UMBAR  {NASAL} {_V_D_WN_}
+    {V_D_WN}nd   --> ANDO   {NASAL} {_V_D_WN_}
 
     \** 3RD LINE **\
     {L3}    === (þ,th) * (f,ph,ff) * ch 
@@ -167,10 +196,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
     {V_D_WN}[{L3}] --> 2,1 --> [{_L3_}]{_V_D_WN_} 
    
-    {V_D_WN}nth   --> SULE   NASALIZE_SIGN {_V_D_WN_}
-    {V_D_WN}mph   --> FORMEN NASALIZE_SIGN {_V_D_WN_}
-    {V_D_WN}nf    --> FORMEN NASALIZE_SIGN {_V_D_WN_}
-    {V_D_WN}nch   --> HWESTA NASALIZE_SIGN {_V_D_WN_}
+    {V_D_WN}nth   --> SULE   {NASAL} {_V_D_WN_}
+    {V_D_WN}mph   --> FORMEN {NASAL} {_V_D_WN_}
+    {V_D_WN}nf    --> FORMEN {NASAL} {_V_D_WN_}
+    {V_D_WN}nch   --> HWESTA {NASAL} {_V_D_WN_}
 
     \** 4TH LINE **\
     {L4}        === (đ,ð,ðh,dh)   * (v,bh,f_) \** Some noldorin variants here ... **\
@@ -184,14 +213,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
     {V_D_WN}[{L5}] --> 2,1 --> [{_L5_}]{_V_D_WN_}
 
-    {V_D_WN}nn        --> NUMEN NASALIZE_SIGN {_V_D_WN_}
-    {V_D_WN}mm        --> MALTA NASALIZE_SIGN {_V_D_WN_}
+    {V_D_WN}nn        --> NUMEN {NASAL} {_V_D_WN_}
+    {V_D_WN}mm        --> MALTA {NASAL} {_V_D_WN_}
 
     \** 6TH LINE **\
 
     \** 7TH LINE **\
     {L7}        === r_    * r     * l     * ll                    * w     
-    {_L7_}      === ORE   * ROMEN * LAMBE * LAMBE GEMINATE_SIGN * VALA
+    {_L7_}      === ORE   * ROMEN * LAMBE * LAMBE {GEMINATE} * VALA
         
     {V_D_WN}[{L7}] --> 2,1 --> [{_L7_}]{_V_D_WN_}
     
@@ -204,7 +233,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
     {V_D_WN}[{L8}]  --> 2,1 --> [{_L8_}]{_V_D_WN_}
 
-    {V_D_WN}ns      --> SILME_NUQUERNA NASALIZE_SIGN {_V_D_WN_}
+    {V_D_WN}ns      --> SILME_NUQUERNA {NASAL} {_V_D_WN_}
 
     s --> SILME
 
@@ -232,12 +261,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
       rw   --> ROMEN SEV_TEHTA   
     \endif
 
-    \if "labialized_consonants_u_curl == LABIALIZED_U_CURL_ALWAYS"
-      {V_D}dw   --> ANDO  SEV_TEHTA  {_V_D_}
-      {V_D}gw   --> UNGWE SEV_TEHTA  {_V_D_}
-      {V_D}lw   --> LAMBE SEV_TEHTA  {_V_D_}      
-      {V_D}nw   --> NUMEN SEV_TEHTA  {_V_D_}
-      {V_D}rw   --> ROMEN SEV_TEHTA  {_V_D_}
+    \if "labialized_consonants_u_curl == LABIALIZED_U_CURL_ALWAYS"    
+      {V_D}dw   --> ANDO  SEV_TEHTA {_V_D_}
+      {V_D}gw   --> UNGWE SEV_TEHTA {_V_D_}
+      {V_D}lw   --> LAMBE SEV_TEHTA {_V_D_}   
+      {V_D}nw   --> NUMEN SEV_TEHTA {_V_D_}
+      {V_D}rw   --> ROMEN SEV_TEHTA {_V_D_}
     \endif
   \end
   

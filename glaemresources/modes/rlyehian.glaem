@@ -245,8 +245,8 @@ y palatal semi vowel ?
     » --> DQUOT_CLOSE 
     
     - --> PUNCT_DOT    
-    – --> WAVE_MED_SIMPLE  
-    — --> WAVE_MED_DOUBLE
+    – --> PUNCT_TILD  
+    — --> PUNCT_DTILD
  
     [ --> PUNCT_PAREN_L
     ] --> PUNCT_PAREN_R

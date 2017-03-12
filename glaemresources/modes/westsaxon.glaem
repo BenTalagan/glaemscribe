@@ -29,11 +29,18 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 \language "Old English"
 \writing  "Tengwar"
 \mode     "West Saxon"
-\version  "0.0.2"
+\version  "0.1.0"
 \authors  "J.R.R. Tolkien, impl. Talagan (Benjamin Babut)"
 
 \charset  tengwar_ds_eldamar true
 \** Other charsets cannot handle all diacritics we are using here ... **\
+
+\beg options
+  \beg option consonant_modification_style CONSONANT_MODIFICATION_STYLE_WAVE
+    \value CONSONANT_MODIFICATION_STYLE_WAVE 0
+    \value CONSONANT_MODIFICATION_STYLE_BAR 1
+  \end
+\end
 
 \beg      preprocessor
   \** Work exclusively downcase **\
@@ -66,6 +73,15 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 \beg      processor
 
   \beg rules litteral
+  
+    \if "consonant_modification_style == CONSONANT_MODIFICATION_STYLE_WAVE"
+      {GEMINATE} === GEMINATE_SIGN_TILD
+      {NASAL}    === NASALIZE_SIGN_TILD
+    \else
+      {GEMINATE} === GEMINATE_SIGN
+      {NASAL}    === NASALIZE_SIGN
+    \endif
+  
     {A}   === a
     {AA}  === á
     {E}   === e
@@ -135,9 +151,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     {L1_KER_2}      === ċ     * c       * k
     {L1_IMG_2}      === CALMA * QUESSE  * QUESSE
         
-    {L1_KER_1_GEMS} === tt                      * pp   
+    {L1_KER_1_GEMS} === tt                     * pp   
     {L1_IMG_1_GEMS} === TINCO GEMINATE_DOUBLE  * PARMA GEMINATE_DOUBLE
-    {L1_KER_2_GEMS} === ċċ                      * cc                      * kk 
+    {L1_KER_2_GEMS} === ċċ                     * cc                     * kk 
     {L1_IMG_2_GEMS} === CALMA GEMINATE_DOUBLE  * QUESSE GEMINATE_DOUBLE * QUESSE GEMINATE_DOUBLE
 
   
@@ -178,9 +194,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     {L3_IMG_2_GEMS} === AHA GEMINATE_DOUBLE  * HWESTA GEMINATE_DOUBLE
 
     {S_VOWELS_WN}[{L3_KER_1}]{S_VOWELS_WN}  --> 2,1,3 --> [{L3_IMG_1}]{_S_VOWELS_UP_WN_}{_S_VOWELS_DN_WN_}
-    {S_VOWELS_WN}[{L3_KER_1_GEMS}]              --> 2,1   --> [{L3_IMG_1_GEMS}]{_S_VOWELS_UP_WN_}
+    {S_VOWELS_WN}[{L3_KER_1_GEMS}]          --> 2,1   --> [{L3_IMG_1_GEMS}]{_S_VOWELS_UP_WN_}
     {S_VOWELS_WN}[{L3_KER_2}]{S_VOWELS_WN}  --> 2,1,3 --> [{L3_IMG_2}]{_S_VOWELS_UP_WN_}{_S_VOWELS_DN_WN_}
-    {S_VOWELS_WN}[{L3_KER_2_GEMS}]              --> 2,1   --> [{L3_IMG_2_GEMS}]{_S_VOWELS_UP_WN_}
+    {S_VOWELS_WN}[{L3_KER_2_GEMS}]          --> 2,1   --> [{L3_IMG_2_GEMS}]{_S_VOWELS_UP_WN_}
 
   
     \** ## 4th Line (Voiced fricatives) **\
@@ -194,7 +210,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     
 
     {S_VOWELS_WN}[{L4_KER}]{S_VOWELS_WN}  --> 2,1,3 --> [{L4_IMG}]{_S_VOWELS_UP_WN_}{_S_VOWELS_DN_WN_}
-    {S_VOWELS_WN}[{L4_KER_GEMS}]              --> 2,1   --> [{L4_IMG_GEMS}]{_S_VOWELS_UP_WN_}
+    {S_VOWELS_WN}[{L4_KER_GEMS}]          --> 2,1   --> [{L4_IMG_GEMS}]{_S_VOWELS_UP_WN_}
 
 
     \** ## 5th Line (Nasals) **\
@@ -204,7 +220,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     {L5_IMG}        === NUMEN * MALTA
 
     {S_VOWELS_WN}[{L5_KER}]{S_VOWELS_WN}  --> 2,1,3 --> [{L5_IMG}]{_S_VOWELS_UP_WN_}{_S_VOWELS_DN_WN_}
-    {S_VOWELS_WN}[ nn * mm ]{S_VOWELS_WN}       --> 2,1,3 --> [ NUMEN TILD_SUP_L * MALTA TILD_SUP_L ]{_S_VOWELS_UP_WN_}{_S_VOWELS_DN_WN_}
+    {S_VOWELS_WN}[ nn * mm ]{S_VOWELS_WN} --> 2,1,3 --> [ NUMEN TILD_SUP_L * MALTA TILD_SUP_L ]{_S_VOWELS_UP_WN_}{_S_VOWELS_DN_WN_}
 
 
     \** ## 6th Line (Approximants == fr : Spirantes) **\
@@ -216,7 +232,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     {L6_IMG_GEMS}   === ORE GEMINATE_DOUBLE * ANNA GEMINATE_DOUBLE
 
     {S_VOWELS_WN}[{L6_KER}]{S_VOWELS_WN}  --> 2,1,3 --> [{L6_IMG}]{_S_VOWELS_UP_WN_}{_S_VOWELS_DN_WN_}
-    {S_VOWELS_WN}[{L6_KER_GEMS}]              --> 2,1   --> [{L6_IMG_GEMS}]{_S_VOWELS_UP_WN_}
+    {S_VOWELS_WN}[{L6_KER_GEMS}]          --> 2,1   --> [{L6_IMG_GEMS}]{_S_VOWELS_UP_WN_}
 
 
     \** ## Liquids **\
@@ -262,7 +278,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     \** ## Various **\
     \** ## **\
     {S_VOWELS_WN}h{S_VOWELS_WN}   --> 2,1,3 --> HYARMEN {_S_VOWELS_UP_WN_}{_S_VOWELS_DN_WN_}
-    {S_VOWELS_WN}hh                   --> 2,1   --> HYARMEN GEMINATE_DOUBLE {_S_VOWELS_UP_WN_}
+    {S_VOWELS_WN}hh               --> 2,1   --> HYARMEN GEMINATE_DOUBLE {_S_VOWELS_UP_WN_}
 
 
     \** ## X **\

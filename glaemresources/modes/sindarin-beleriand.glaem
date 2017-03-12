@@ -34,7 +34,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 \language "Sindarin"
 \writing  "Tengwar"
 \mode     "Beleriand"
-\version  "0.0.5"
+\version  "0.1.0"
 \authors  "J.R.R. Tolkien, impl. Talagan (Benjamin Babut)"
 
 \charset  tengwar_ds_sindarin true
@@ -44,6 +44,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 \charset  tengwar_freemono    false
 
 \beg      options
+
+  \beg option consonant_modification_style CONSONANT_MODIFICATION_STYLE_BAR
+    \value CONSONANT_MODIFICATION_STYLE_WAVE 0
+    \value CONSONANT_MODIFICATION_STYLE_BAR 1
+  \end
+
   \option reverse_numbers true
   \beg option numbers_base BASE_12
     \value    BASE_10 10
@@ -84,6 +90,15 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 \beg      processor
 
   \beg    rules litteral
+  
+    \if "consonant_modification_style == CONSONANT_MODIFICATION_STYLE_WAVE"
+      {GEMINATE} === GEMINATE_SIGN_TILD
+      {NASAL}    === NASALIZE_SIGN_TILD
+    \else
+      {GEMINATE} === GEMINATE_SIGN
+      {NASAL}    === NASALIZE_SIGN
+    \endif
+  
     {A}                 === a
     {AA}                === á
     {E}                 === e
@@ -139,9 +154,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
     [{L1}]       --> [{_L1_}]
  
-    nt   --> TINCO NASALIZE_SIGN
-    mp   --> PARMA NASALIZE_SIGN
-    n{K} --> CALMA NASALIZE_SIGN
+    nt   --> TINCO {NASAL}
+    mp   --> PARMA {NASAL}
+    n{K} --> CALMA {NASAL}
 
     \** ======== **\
     \** 2ND LINE **\
@@ -151,8 +166,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
     [{L2}] --> [{_L2_}]
 
-    mb   --> UMBAR  NASALIZE_SIGN
-    nd   --> ANDO   NASALIZE_SIGN
+    mb   --> UMBAR  {NASAL}
+    nd   --> ANDO   {NASAL}
 
     \** ======== **\
     \** 3RD LINE **\
@@ -162,10 +177,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
      
     [{L3}] --> [{_L3_}]
 
-    nth   --> SULE    NASALIZE_SIGN
-    mph   --> FORMEN  NASALIZE_SIGN
-    nf    --> FORMEN  NASALIZE_SIGN
-    nch   --> AHA     NASALIZE_SIGN
+    nth   --> SULE    {NASAL}
+    mph   --> FORMEN  {NASAL}
+    nf    --> FORMEN  {NASAL}
+    nch   --> AHA     {NASAL}
 
     \** ======== **\
     \** 4TH LINE **\
@@ -207,7 +222,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
     [{S_LINE}] --> [{_S_LINE_}]
 
-    ns --> SILME_NUQUERNA NASALIZE_SIGN
+    ns --> SILME_NUQUERNA {NASAL}
 
     \** ======== **\
     \** OTHERS **\

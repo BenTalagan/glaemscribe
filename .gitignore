@@ -6,3 +6,4 @@
 .DS_Store
 *.disabled
 npm-debug.log
+*-ipa.glaem

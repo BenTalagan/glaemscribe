@@ -33,7 +33,7 @@ VIRTUALS_DS = {
   "E_TEHTA_DOUBLE_INF"  => { names: ["E_TEHTA_DOUBLE_INF","GEMINATE_DOUBLE"],   classes: ["THINF_DSTROKE_XS" , "THINF_DSTROKE_S" ,"THINF_DSTROKE_L" , "THINF_DSTROKE_XL"  , "LAMBE_MARK_DSTROKE"] },
   "I_TEHTA_INF"         => { names: ["I_TEHTA_INF","NO_VOWEL_DOT","UNUTIXE"],   classes: ["THINF_DOT_XS" , "THINF_DOT_S" ,"THINF_DOT_L" , "THINF_DOT_XL"  , "LAMBE_MARK_DOT"] },
                                   
-  "GEMINATE_SIGN"       => { names: ["GEMINATE_SIGN"] ,     classes: ["DASH_INF_S",   "DASH_INF_L",  "LAMBE_MARK_TILD"] },
+  "GEMINATE_SIGN"       => { names: ["GEMINATE_SIGN"] ,     classes: ["DASH_INF_S",   "DASH_INF_L",  "LAMBE_MARK_DASH"] },
   "GEMINATE_SIGN_TILD"  => { names: ["GEMINATE_SIGN_TILD"] ,classes: ["TILD_INF_S",   "TILD_INF_L",  "LAMBE_MARK_TILD"] },
   "NASALIZE_SIGN"       => { names: ["NASALIZE_SIGN"] ,     classes: ["DASH_SUP_S",   "DASH_SUP_L"] },
   "NASALIZE_SIGN_TILD"  => { names: ["NASALIZE_SIGN_TILD"], classes: ["TILD_SUP_S",   "TILD_SUP_L"] },

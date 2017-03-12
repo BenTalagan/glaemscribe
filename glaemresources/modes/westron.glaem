@@ -33,7 +33,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 \language Westron
 \writing  Tengwar
 \mode     Glaemscrafu
-\version  0.0.5
+\version  "0.1.0"
 \authors  "Talagan (Benjamin Babut), based on J.R.R. Tolkien"
 
 \charset  tengwar_ds_sindarin true
@@ -43,11 +43,22 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 \charset  tengwar_freemono    false
 
 \beg      options
+
+  \beg option reverse_o_u_tehtar U_UP_O_DOWN
+    \value O_UP_U_DOWN 1
+    \value U_UP_O_DOWN 2
+  \end
+  \beg option consonant_modification_style CONSONANT_MODIFICATION_STYLE_BAR
+    \value CONSONANT_MODIFICATION_STYLE_WAVE 0
+    \value CONSONANT_MODIFICATION_STYLE_BAR 1
+  \end
+
   \option reverse_numbers true
   \beg option numbers_base BASE_12
     \value    BASE_10 10
     \value    BASE_12 12
   \end
+  
 \end
 
 \beg      preprocessor
@@ -77,6 +88,27 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 \beg      processor
 
   \beg    rules litteral  
+  
+    \if "consonant_modification_style == CONSONANT_MODIFICATION_STYLE_WAVE"
+      {GEMINATE} === GEMINATE_SIGN_TILD
+      {NASAL}    === NASALIZE_SIGN_TILD
+    \else
+      {GEMINATE} === GEMINATE_SIGN
+      {NASAL}    === NASALIZE_SIGN
+    \endif
+    
+    \if "reverse_o_u_tehtar == U_UP_O_DOWN"
+      {O_LOOP}        === O_TEHTA
+      {O_LOOP_DOUBLE} === O_TEHTA_DOUBLE
+      {U_LOOP}        === U_TEHTA
+      {U_LOOP_DOUBLE} === U_TEHTA_DOUBLE
+    \else
+      {O_LOOP}        === U_TEHTA
+      {O_LOOP_DOUBLE} === U_TEHTA_DOUBLE
+      {U_LOOP}        === O_TEHTA
+      {U_LOOP_DOUBLE} === O_TEHTA_DOUBLE
+    \endif
+  
     {A}   === a
     {AA}  === á
     {E}   === e
@@ -107,16 +139,16 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     {OOU} === {OO}{U} \** ôu **\
 
     {SDIPHTHONGS}  === {AI}           * {AU}          * {EI} 				    * {EU}        * {IU}        * {OI}          * {OU}        * {UI}
-    {_SDIPHTONGS_} === YANTA A_TEHTA  * URE A_TEHTA   * YANTA E_TEHTA	  * URE E_TEHTA * URE I_TEHTA * YANTA O_TEHTA * URE O_TEHTA * YANTA U_TEHTA                   
+    {_SDIPHTONGS_} === YANTA A_TEHTA  * URE A_TEHTA   * YANTA E_TEHTA	  * URE E_TEHTA * URE I_TEHTA * YANTA {O_LOOP} * URE {O_LOOP} * YANTA {U_LOOP}                   
     
     {LDIPHTHONGS}  === {AAI}              * {AAU}              * {EEI}              * {EEU}            * {OOI}              * {OOU}
-    {_LDIPHTONGS_} === ARA A_TEHTA YANTA  * ARA A_TEHTA URE    * ARA E_TEHTA YANTA  * ARA E_TEHTA URE  * ARA O_TEHTA YANTA  * ARA O_TEHTA URE
+    {_LDIPHTONGS_} === ARA A_TEHTA YANTA  * ARA A_TEHTA URE    * ARA E_TEHTA YANTA  * ARA E_TEHTA URE  * ARA {O_LOOP} YANTA  * ARA {O_LOOP} URE
                    
     {VOWELS}      === {A}      * {E}      * {I}        * {O}        * {U}    
-    {TEHTAR}      === A_TEHTA  * E_TEHTA  * I_TEHTA    * O_TEHTA    * U_TEHTA
+    {TEHTAR}      === A_TEHTA  * E_TEHTA  * I_TEHTA    * {O_LOOP}    * {U_LOOP}
                   
     {LVOWELS}     === {AA}         * {EE}         * {II}         * {OO}         * {UU}
-    {LTETHAR}     === ARA A_TEHTA  * ARA E_TEHTA  * ARA I_TEHTA  * ARA O_TEHTA  * ARA U_TEHTA 
+    {LTETHAR}     === ARA A_TEHTA  * ARA E_TEHTA  * ARA I_TEHTA  * ARA {O_LOOP}  * ARA {U_LOOP} 
 
     \** Let' put all vowels/diphthongs in the same basket **\
     {V_D}         === [ {VOWELS}  * {LVOWELS} * {SDIPHTHONGS} * {LDIPHTHONGS} ]        
@@ -138,14 +170,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     [{L1_S}]       -->  [ {L1_T} ]
     [{L1_S}]{V_D}  -->  [ {L1_T} ]{_V_D_} 
 	
-    {L1_G_S}         === tt			              * pp                  * cch				          * (c,k)(c,k)             
-    {L1_G_T}         === TINCO GEMINATE_SIGN  * PARMA GEMINATE_SIGN * CALMA GEMINATE_SIGN	* QUESSE GEMINATE_SIGN  
+    {L1_G_S}         === tt			           * pp               * cch				        * (c,k)(c,k)             
+    {L1_G_T}         === TINCO {GEMINATE}  * PARMA {GEMINATE} * CALMA {GEMINATE}	* QUESSE {GEMINATE}  
     
     [{L1_G_S}]       -->  [ {L1_G_T} ]
     [{L1_G_S}]{V_D}  -->  [ {L1_G_T} ]{_V_D_} 
 	  
-    {L1_N_S}         === nt			              * mp                    * nch				          * (n,ñ)(c,k)             
-    {L1_N_T}         === TINCO NASALIZE_SIGN  * PARMA NASALIZE_SIGN   * CALMA NASALIZE_SIGN * QUESSE NASALIZE_SIGN  
+    {L1_N_S}         === nt			        * mp              * nch				    * (n,ñ)(c,k)             
+    {L1_N_T}         === TINCO {NASAL}  * PARMA {NASAL}   * CALMA {NASAL} * QUESSE {NASAL}  
     
     [{L1_N_S}]       -->  [ {L1_N_T} ]
     [{L1_N_S}]{V_D}  -->  [ {L1_N_T} ]{_V_D_} 	 
@@ -156,14 +188,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     [{L2_S}]       --> [{L2_T}] 
     [{L2_S}]{V_D}  --> [{L2_T}]{_V_D_} 
 
-    {L2_G_S}         === dd                 * bb                  * jj			            * gg
-    {L2_G_T}         === ANDO GEMINATE_SIGN * UMBAR GEMINATE_SIGN * ANGA GEMINATE_SIGN  * UNGWE GEMINATE_SIGN
+    {L2_G_S}         === dd              * bb               * jj			         * gg
+    {L2_G_T}         === ANDO {GEMINATE} * UMBAR {GEMINATE} * ANGA {GEMINATE}  * UNGWE {GEMINATE}
 		
     [{L2_G_S}]       --> [{L2_G_T}] 
     [{L2_G_S}]{V_D}  --> [{L2_G_T}]{_V_D_} 
 
-    {L2_N_S}         === nd                 * mb                  * nj			            * (n,ñ)g
-    {L2_N_T}         === ANDO NASALIZE_SIGN * UMBAR NASALIZE_SIGN * ANGA NASALIZE_SIGN  * UNGWE NASALIZE_SIGN
+    {L2_N_S}         === nd           * mb            * nj			      * (n,ñ)g
+    {L2_N_T}         === ANDO {NASAL} * UMBAR {NASAL} * ANGA {NASAL}  * UNGWE {NASAL}
 		
     [{L2_N_S}]       --> [{L2_N_T}] 
     [{L2_N_S}]{V_D}  --> [{L2_N_T}]{_V_D_} 
@@ -181,22 +213,22 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     [{L3_2_S}]        --> [{L3_2_T}] 
     [{L3_2_S}]{V_D}   --> [{L3_2_T}]{_V_D_} 
 		
-    {L3_1G_S}         === (thth,tth,þþ)       * (ff,phph,pph)
-    {L3_1G_T}         === SULE GEMINATE_SIGN  * FORMEN GEMINATE_SIGN
+    {L3_1G_S}         === (thth,tth,þþ)    * (ff,phph,pph)
+    {L3_1G_T}         === SULE {GEMINATE}  * FORMEN {GEMINATE}
    
-    {L3_2G_S}          === (shsh,ssh)         * (k,kh)kh
-    {L3_2G_T}          === AHA GEMINATE_SIGN  * HWESTA GEMINATE_SIGN
+    {L3_2G_S}          === (shsh,ssh)      * (k,kh)kh
+    {L3_2G_T}          === AHA {GEMINATE}  * HWESTA {GEMINATE}
    
     [{L3_1G_S}]        --> [{L3_1G_T}] 
     [{L3_1G_S}]{V_D}   --> [{L3_1G_T}]{_V_D_} 
     [{L3_2G_S}]        --> [{L3_2G_T}] 
     [{L3_2G_S}]{V_D}   --> [{L3_2G_T}]{_V_D_} 		
 
-    {L3_1N_S}          === (nth,nþ)           * (nf,mf,mph)      
-    {L3_1N_T}          === SULE NASALIZE_SIGN * FORMEN NASALIZE_SIGN  
+    {L3_1N_S}          === (nth,nþ)     * (nf,mf,mph)      
+    {L3_1N_T}          === SULE {NASAL} * FORMEN {NASAL}  
    
-    {L3_2N_S}          === nsh               * (n,ñ)kh     
-    {L3_2N_T}          === AHA NASALIZE_SIGN * HWESTA NASALIZE_SIGN
+    {L3_2N_S}          === nsh         * (n,ñ)kh     
+    {L3_2N_T}          === AHA {NASAL} * HWESTA {NASAL}
    
     [{L3_1N_S}]        --> [{L3_1N_T}] 
     [{L3_1N_S}]{V_D}   --> [{L3_1N_T}]{_V_D_} 
@@ -209,14 +241,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     [{L4_S}]          --> [{L4_T}] 
     [{L4_S}]{V_D}     --> [{L4_T}]{_V_D_} 
 
-    {L4_G_S}            === (dh,ð)(dh,ð)        * vv                  * (zhzh,zzh)	        * (ghgh,ggh)
-    {L4_G_T}            === ANTO GEMINATE_SIGN  * AMPA GEMINATE_SIGN  * ANCA GEMINATE_SIGN  * UNQUE GEMINATE_SIGN
+    {L4_G_S}            === (dh,ð)(dh,ð)     * vv               * (zhzh,zzh)	     * (ghgh,ggh)
+    {L4_G_T}            === ANTO {GEMINATE}  * AMPA {GEMINATE}  * ANCA {GEMINATE}  * UNQUE {GEMINATE}
 		
     [{L4_G_S}]          --> [{L4_G_T}] 
     [{L4_G_S}]{V_D}     --> [{L4_G_T}]{_V_D_} 
 
-    {L4_N_S}            === n(dh,ð)             * (mv,nv)             * nzh	                * (n,ñ)gh
-    {L4_N_T}            === ANTO NASALIZE_SIGN  * AMPA NASALIZE_SIGN  * ANCA NASALIZE_SIGN  * UNQUE NASALIZE_SIGN
+    {L4_N_S}            === n(dh,ð)       * (mv,nv)       * nzh	          * (n,ñ)gh
+    {L4_N_T}            === ANTO {NASAL}  * AMPA {NASAL}  * ANCA {NASAL}  * UNQUE {NASAL}
 		
     [{L4_N_S}]          --> [{L4_N_T}] 
     [{L4_N_S}]{V_D}     --> [{L4_N_T}]{_V_D_} 
@@ -233,8 +265,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     [{L5_G_S}]          --> [{L5_G_T}] 
     [{L5_G_S}]{V_D}     --> [{L5_G_T}]{_V_D_} 
 		
-    {L6_S}            === w  	  * y     * rr                  * ww         	        * yy
-    {L6_T}            === VALA  * ANNA  * ROMEN GEMINATE_SIGN * VALA GEMINATE_SIGN  * ANNA GEMINATE_SIGN
+    {L6_S}            === w  	  * y     * rr               * ww         	    * yy
+    {L6_T}            === VALA  * ANNA  * ROMEN {GEMINATE} * VALA {GEMINATE}  * ANNA {GEMINATE}
     [r * {L6_S}]      --> [ ORE   * {L6_T}] 
     [r * {L6_S}]{V_D} --> [ ROMEN * {L6_T}]{_V_D_} 
 
@@ -247,10 +279,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     z{V_D}            --> ESSE_NUQUERNA {_V_D_}   \** Before a vowel goes down **\
     z                 --> ESSE                    \** Any other pos, up **\
 		
-    ns{V_D}           --> SILME_NUQUERNA NASALIZE_SIGN {_V_D_}
-    ns                --> SILME_NUQUERNA NASALIZE_SIGN                   
-    nz{V_D}           --> ESSE_NUQUERNA NASALIZE_SIGN {_V_D_}   
-    nz                --> ESSE_NUQUERNA NASALIZE_SIGN                
+    ns{V_D}           --> SILME_NUQUERNA {NASAL} {_V_D_}
+    ns                --> SILME_NUQUERNA {NASAL}                   
+    nz{V_D}           --> ESSE_NUQUERNA {NASAL} {_V_D_}   
+    nz                --> ESSE_NUQUERNA {NASAL}                
 
     ts                --> TINCO ALVEOLAR_SIGN
     ps                --> PARMA ALVEOLAR_SIGN
@@ -262,14 +294,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
     h{V_D}            --> HYARMEN {_V_D_}
     h                 --> HYARMEN
-    hh{V_D}           --> HYARMEN GEMINATE_SIGN {_V_D_}
-    hh                --> HYARMEN GEMINATE_SIGN
+    hh{V_D}           --> HYARMEN {GEMINATE} {_V_D_}
+    hh                --> HYARMEN {GEMINATE}
                       
     l{V_D}            --> LAMBE {_V_D_}
     l                 --> LAMBE
                       
-    ll{V_D}           --> LAMBE GEMINATE_SIGN {_V_D_}
-    ll                --> LAMBE GEMINATE_SIGN
+    ll{V_D}           --> LAMBE {GEMINATE} {_V_D_}
+    ll                --> LAMBE {GEMINATE}
 		
     (hl,lh){V_D}      --> ALDA {_V_D_}
     (hl,lh)           --> ALDA		
@@ -309,8 +341,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     » --> DQUOT_CLOSE 
     
     - --> PUNCT_DOT    
-    – --> WAVE_MED_SIMPLE  
-    — --> WAVE_MED_DOUBLE
+    – --> PUNCT_TILD  
+    — --> PUNCT_DTILD
  
     [ --> PUNCT_PAREN_L
     ] --> PUNCT_PAREN_R

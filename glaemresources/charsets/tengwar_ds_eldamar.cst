@@ -132,18 +132,18 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 \** © **\ \char a9 TH_SUB_CIRC_XS          
 \** ª **\ \char aa A_TEHTA_INV_XL        
 \** « **\ \char ab DQUOT_OPEN            
-\** ¬ **\ \char ac WAVE_MED_DOUBLE RING_MARK_L RING_MARK_R               
+\** ¬ **\ \char ac PUNCT_DTILD RING_MARK_L RING_MARK_R               
 \** ­ **\ \char ad A_TEHTA_INV_L         
 \** ® **\ \char ae ?                
 \** ¯ **\ \char af A_TEHTA_INV_S         
-\** ° **\ \char b0 WAVE_MED_SIMPLE                
+\** ° **\ \char b0 LAMBE_MARK_TILD               
 \** ± **\ \char b1 SQUOT_OPEN            
 \** ² **\ \char b2 SQUOT_CLOSE           
 \** ³ **\ \char b3 ?                
 \** ´ **\ \char b4 LAMBE_MARK_DDOT         
 \** µ **\ \char b5 A_TEHTA_INV_XS        
 \** · **\ \char b7 ?                
-\** ¸ **\ \char b8 LAMBE_MARK_TILD         
+\** ¸ **\ \char b8 LAMBE_MARK_DASH          
 \** ¹ **\ \char b9 ?                
 \** º **\ \char ba ?                
 \** » **\ \char bb DQUOT_CLOSE           
@@ -191,10 +191,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 \** å **\ \char e5 THINF_CURL_L           
 \** æ **\ \char e6 THINF_CURL_S           
 \** ç **\ \char e7 THINF_CURL_XS          
-\** è **\ \char e8 THSUP_SEV_XL           
-\** é **\ \char e9 THSUP_SEV_L           
-\** ê **\ \char ea THSUP_SEV_S           
-\** ë **\ \char eb THSUP_SEV_XS           
+\** è **\ \char e8 SEV_TEHTA_XL           
+\** é **\ \char e9 SEV_TEHTA_L           
+\** ê **\ \char ea SEV_TEHTA_S           
+\** ë **\ \char eb SEV_TEHTA_XS           
 \** ì **\ \char ec ?                                 
 \** í **\ \char ed ?                                 
 \** î **\ \char ee ?                                 
@@ -409,10 +409,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 \end
 
 \beg virtual SEV_TEHTA
-  \class THSUP_SEV_XS TELCO ARA HYARMEN HARP_SHAPED
-  \class THSUP_SEV_S SULE FORMEN TW_EXT_11 TW_EXT_12 SILME_NUQUERNA SILME_NUQUERNA_ALT ESSE_NUQUERNA YANTA OSSE AHA_TINCO HWESTA_TINCO
-  \class THSUP_SEV_L TINCO PARMA CALMA QUESSE ORE VALA ANNA VILYA ROMEN ARDA LAMBE URE
-  \class THSUP_SEV_XL ANDO UMBAR ANGA UNGWE AHA HWESTA ANTO AMPA ANCA UNQUE NUMEN MALTA NOLDO NWALME TW_EXT_13 TW_EXT_14 TW_EXT_21 TW_EXT_22 TW_EXT_23 TW_EXT_24 ALDA SILME ESSE HWESTA_SINDARINWA SHOOK_BEAUTIFUL ANCA_CLOSED
+  \class SEV_TEHTA_XS TELCO ARA HYARMEN HARP_SHAPED
+  \class SEV_TEHTA_S SULE FORMEN TW_EXT_11 TW_EXT_12 SILME_NUQUERNA SILME_NUQUERNA_ALT ESSE_NUQUERNA YANTA OSSE AHA_TINCO HWESTA_TINCO
+  \class SEV_TEHTA_L TINCO PARMA CALMA QUESSE ORE VALA ANNA VILYA ROMEN ARDA LAMBE URE
+  \class SEV_TEHTA_XL ANDO UMBAR ANGA UNGWE AHA HWESTA ANTO AMPA ANCA UNQUE NUMEN MALTA NOLDO NWALME TW_EXT_13 TW_EXT_14 TW_EXT_21 TW_EXT_22 TW_EXT_23 TW_EXT_24 ALDA SILME ESSE HWESTA_SINDARINWA SHOOK_BEAUTIFUL ANCA_CLOSED
 \end
 
 \beg virtual A_TEHTA_INF
@@ -484,7 +484,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 \beg virtual GEMINATE_SIGN
   \class DASH_INF_S TELCO ARA TINCO PARMA CALMA QUESSE SULE FORMEN AHA HWESTA ORE VALA ANNA VILYA TW_EXT_11 TW_EXT_12 TW_EXT_13 TW_EXT_14 ROMEN ARDA SILME SILME_NUQUERNA ESSE ESSE_NUQUERNA HYARMEN HWESTA_SINDARINWA YANTA URE OSSE SHOOK_BEAUTIFUL HARP_SHAPED AHA_TINCO HWESTA_TINCO
   \class DASH_INF_L ANDO UMBAR ANGA UNGWE ANTO AMPA ANCA UNQUE NUMEN MALTA NOLDO NWALME TW_EXT_21 TW_EXT_22 TW_EXT_23 TW_EXT_24 ANCA_CLOSED
-  \class LAMBE_MARK_TILD LAMBE ALDA
+  \class LAMBE_MARK_DASH LAMBE ALDA
 \end
 
 \beg virtual GEMINATE_SIGN_TILD

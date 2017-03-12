@@ -36,7 +36,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 \language "Black Speech"
 \writing  "Tengwar"
 \mode     "General Use"
-\version  "0.0.5"
+\version  "0.1.0"
 \authors  "J.R.R. Tolkien, impl. Talagan (Benjamin Babut)"
  
 \charset  tengwar_ds_sindarin false
@@ -57,9 +57,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     \value LONG_VOWELS_USE_DOUBLE_TEHTAR 2
   \end  
   
-  \beg option double_tehta_a false
-    \visible_when 'long_vowels_format == LONG_VOWELS_USE_DOUBLE_TEHTAR'
-  \end
   \beg option double_tehta_e true
     \visible_when 'long_vowels_format == LONG_VOWELS_USE_DOUBLE_TEHTAR'
   \end
@@ -71,6 +68,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   \end
   \beg option double_tehta_u true
     \visible_when 'long_vowels_format == LONG_VOWELS_USE_DOUBLE_TEHTAR'
+  \end
+  
+  \beg option consonant_modification_style CONSONANT_MODIFICATION_STYLE_WAVE
+    \value CONSONANT_MODIFICATION_STYLE_WAVE 0
+    \value CONSONANT_MODIFICATION_STYLE_BAR 1
   \end
   
   \option reverse_numbers true
@@ -112,6 +114,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
      
     {K}                 === (c,k)
     
+    \if "consonant_modification_style == CONSONANT_MODIFICATION_STYLE_WAVE"
+      {GEMINATE} === GEMINATE_SIGN_TILD
+      {NASAL}    === NASALIZE_SIGN_TILD
+    \else
+      {GEMINATE} === GEMINATE_SIGN
+      {NASAL}    === NASALIZE_SIGN
+    \endif
+    
     {VOWELS}            === a               *  e              * i              * o              *  u
     {LVOWELS}           === á               *  é              * í              * ó              *  ú
     
@@ -127,7 +137,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
       {U_LOOP_DOUBLE} === O_TEHTA_DOUBLE
     \endif   
        
-    {_TEHTAR_}            === A_TEHTA         * E_TEHTA         * I_TEHTA       *  {O_LOOP}  * {U_LOOP}      
+    {_TEHTAR_}          === A_TEHTA         * E_TEHTA         * I_TEHTA       *  {O_LOOP}  * {U_LOOP}      
      
     {DIPHTHONGS}        === ai              * au              * oi          
     {_DIPHTHONGS_}      === YANTA A_TEHTA   * URE A_TEHTA     * YANTA {O_LOOP}  
@@ -149,12 +159,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 		{_LONE_LONG_U_} === {_LONG_U_}
     
 		\if "long_vowels_format == LONG_VOWELS_USE_DOUBLE_TEHTAR"
-	    \if "double_tehta_a"
-		    {_LONG_A_}       === A_TEHTA_DOUBLE
-			  {_LONE_LONG_A_}  === TELCO {_LONG_A_}
-				{WLONG}          === {WLONG}   * á
-        {_WLONG_}        === {_WLONG_} * {_LONG_A_}
-  	  \endif		
 	    \if double_tehta_e
 		    {_LONG_E_}       === E_TEHTA_DOUBLE
 		    {_LONE_LONG_E_}  === TELCO {_LONG_E_}
@@ -222,13 +226,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     \** ======================== **\
 
     {V_D_WN} m  --> MALTA {_V_D_WN_}
-    {V_D_WN} mb --> UMBAR NASALIZE_SIGN_TILD {_V_D_WN_}
-    {V_D_WN} mp --> PARMA NASALIZE_SIGN_TILD {_V_D_WN_}
+    {V_D_WN} mb --> UMBAR {NASAL} {_V_D_WN_}
+    {V_D_WN} mp --> PARMA {NASAL} {_V_D_WN_}
 
     \** ======================== **\
     
     {V_D_WN}n   --> NUMEN {_V_D_WN_} 
-    {V_D_WN}n{K}  --> QUESSE NASALIZE_SIGN_TILD {_V_D_WN_} 
+    {V_D_WN}n{K}  --> QUESSE {NASAL} {_V_D_WN_} 
 
     \** ======================== **\
     

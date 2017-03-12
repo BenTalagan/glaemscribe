@@ -29,12 +29,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   \entry "0.0.3" "Porting to virtual chars"
   \entry "0.0.4" "Added charset support for Annatar"
   \entry "0.0.5" "Added support for the FreeMonoTengwar font" 
+  \entry "0.0.6" "Ported some options from the quenya mode"
 \end
 
 \language "Telerin"
 \writing  "Tengwar"
 \mode     "Glaemscrafu"
-\version  "0.0.4"
+\version  "0.1.0"
 \authors  "Talagan (Benjamin Babut), based on J.R.R Tolkien"
 
 \charset  tengwar_ds_sindarin true
@@ -45,6 +46,35 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
 \beg      options
+
+  \beg option reverse_o_u_tehtar U_UP_O_DOWN
+    \value O_UP_U_DOWN 1
+    \value U_UP_O_DOWN 2
+  \end
+
+  \beg option long_vowels_format LONG_VOWELS_USE_LONG_CARRIER
+    \value LONG_VOWELS_USE_LONG_CARRIER 1
+    \value LONG_VOWELS_USE_DOUBLE_TEHTAR 2
+  \end  
+
+  \beg option double_tehta_e false
+    \visible_when 'long_vowels_format == LONG_VOWELS_USE_DOUBLE_TEHTAR'
+  \end
+  \beg option double_tehta_i false
+    \visible_when 'long_vowels_format == LONG_VOWELS_USE_DOUBLE_TEHTAR'
+  \end
+  \beg option double_tehta_o true
+    \visible_when 'long_vowels_format == LONG_VOWELS_USE_DOUBLE_TEHTAR'
+  \end
+  \beg option double_tehta_u true
+    \visible_when 'long_vowels_format == LONG_VOWELS_USE_DOUBLE_TEHTAR'
+  \end
+  
+  \beg option consonant_modification_style CONSONANT_MODIFICATION_STYLE_BAR
+    \value CONSONANT_MODIFICATION_STYLE_WAVE 0
+    \value CONSONANT_MODIFICATION_STYLE_BAR 1
+  \end
+
   \option reverse_numbers true
   \beg option numbers_base BASE_12
     \value    BASE_10 10
@@ -80,52 +110,109 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 \beg processor
 
   \beg rules litteral
-    {A}                 === a
-    {AA}                === á
-    {E}                 === e
-    {EE}                === é
-    {I}                 === i
-    {II}                === í
-    {O}                 === o
-    {OO}                === ó
-    {U}                 === u
-    {UU}                === ú
-    
-    {AI}                === {A}{I}
-    {AU}                === {A}{U}
-    {EU}                === {E}{U}
-    {IU}                === {I}{U}
-    {OI}                === {O}{I}
-    {UI}                === {U}{I}
-
-                      
+                       
     {K}                 === (c,k)
     {W}                 === (v,w)
     {SS}                === (z,ss)
     
-    \** {MB}                === (b,mb) **\
-    \** {SS}                === (z,ss) **\
+    \if "consonant_modification_style == CONSONANT_MODIFICATION_STYLE_WAVE"
+      {GEMINATE} === GEMINATE_SIGN_TILD
+    \else
+      {GEMINATE} === GEMINATE_SIGN
+    \endif
+    
+    {VOWELS}            === a               *  e              * i              * o              *  u
+    {LVOWELS}           === á               *  é              * í              * ó              *  ú
+
+    \if "reverse_o_u_tehtar == U_UP_O_DOWN"
+      {O_LOOP}        === O_TEHTA
+      {O_LOOP_DOUBLE} === O_TEHTA_DOUBLE
+      {U_LOOP}        === U_TEHTA
+      {U_LOOP_DOUBLE} === U_TEHTA_DOUBLE
+    \else
+      {O_LOOP}        === U_TEHTA
+      {O_LOOP_DOUBLE} === U_TEHTA_DOUBLE
+      {U_LOOP}        === O_TEHTA
+      {U_LOOP_DOUBLE} === O_TEHTA_DOUBLE
+    \endif
+
+    \** Shape of the a, option removed from quenya, may be readded later **\
+    {A_SHAPE}         === A_TEHTA
+
+    \** Implicit a, option removed from quenya, may be readded later **\
+    {_A_}              === {A_SHAPE}
+    {_NVOWEL_}         === {NULL}
   
-    {VOWELS}            === {A}           * {E}         * {I}           * {O}           * {U}
-    {LVOWELS}           === {AA}          * {EE}        * {II}          * {OO}          * {UU}
+    {_TEHTAR_}          === {_A_}      *  E_TEHTA     *  I_TEHTA    * {O_LOOP}    *  {U_LOOP}
+
+    \** Split diphtongs option removed from quenya, may be readded later **\
+    {DIPHTHONGS}      === ai            * au            * eu            * iu             * oi               * ui
+    {_DIPHTHONGS_}    === YANTA {_A_}   * URE {_A_}     * URE E_TEHTA   * URE I_TEHTA    * YANTA {O_LOOP}   * YANTA {U_LOOP}
+    {WDIPHTHONGS}     === * {DIPHTHONGS}   \** groovy! **\
+    {_WDIPHTHONGS_}   === * {_DIPHTHONGS_} \** same thing **\
     
-    {TEHTAR}            === A_TEHTA      * E_TEHTA      * I_TEHTA    * O_TEHTA     * U_TEHTA
-       
-    {DIPHTHONGS}         === {AI}             * {AU}            * {EU}            *  {IU}           * {OI}            * {UI}
-    {_DIPHTHONGS_}       === YANTA A_TEHTA    * URE A_TEHTA     * URE E_TEHTA     * URE I_TEHTA     * YANTA O_TEHTA   * YANTA U_TEHTA
-
-
-    {V_D}         === [ {VOWELS}   * {DIPHTHONGS} ]
-    {_V_D_}       === [ {TEHTAR} * {_DIPHTHONGS_} ]
+		{_LONG_A_}      === ARA {A_SHAPE}
+		{_LONG_E_}      === ARA E_TEHTA	
+		{_LONG_I_}      === ARA I_TEHTA
+		{_LONG_O_}      === ARA {O_LOOP}	
+		{_LONG_U_}      === ARA {U_LOOP}
+		{_LONE_LONG_A_} === {_LONG_A_}
+		{_LONE_LONG_E_} === {_LONG_E_}
+		{_LONE_LONG_I_} === {_LONG_I_}
+		{_LONE_LONG_O_} === {_LONG_O_}
+		{_LONE_LONG_U_} === {_LONG_U_}
     
-    {V_D_WN}      === [ {VOWELS} * {DIPHTHONGS} * {NULL} ]  
-    {_V_D_WN_}    === [ {TEHTAR} * {_DIPHTHONGS_} * {NULL} ]
- 
-    \** VOWEL RULES **\
-    [{VOWELS}]        -->   TELCO[{TEHTAR}] \** Replace isolated short vowels **\
-    [{LVOWELS}]       -->   ARA[{TEHTAR}] \**  Replace long vowels **\
-    [{DIPHTHONGS}]     -->  [{_DIPHTHONGS_}]  \**  Replace diphthongs **\
+    {LTEHTAR}       === {NULL}
+    {_LTEHTAR_}     === {NULL} 				
+ 		
+		\if "long_vowels_format == LONG_VOWELS_USE_DOUBLE_TEHTAR"
+	    \if double_tehta_e
+		    {_LONG_E_}       === E_TEHTA_DOUBLE
+		    {_LONE_LONG_E_}  === TELCO {_LONG_E_}
+        {LTEHTAR}        === {LTEHTAR}   * é
+        {_LTEHTAR_}      === {_LTEHTAR_} * {_LONG_E_}
+			\endif
+		  \if double_tehta_i
+		    {_LONG_I_}       === I_TEHTA_DOUBLE
+		    {_LONE_LONG_I_}  === TELCO {_LONG_I_}
+        {LTEHTAR}        === {LTEHTAR}   * í
+        {_LTEHTAR_}      === {_LTEHTAR_} * {_LONG_I_}
+		  \endif
+		  \if double_tehta_o
+		    {_LONG_O_}       === {O_LOOP_DOUBLE}
+		    {_LONE_LONG_O_}  === TELCO {_LONG_O_}
+        {LTEHTAR}        === {LTEHTAR}   * ó
+        {_LTEHTAR_}      === {_LTEHTAR_} * {_LONG_O_}
+		  \endif
+		  \if double_tehta_u
+		    {_LONG_U_}       === {U_LOOP_DOUBLE}
+		    {_LONE_LONG_U_}  === TELCO {_LONG_U_}
+        {LTEHTAR}        === {LTEHTAR}   * ú
+        {_LTEHTAR_}      === {_LTEHTAR_} * {_LONG_U_}
+		  \endif
+    \endif  
+       		
+    \** images of long vowels, either tehtar or ara versions **\
+    {_LVOWELS_}     === {_LONG_A_} * {_LONG_E_} * {_LONG_I_} * {_LONG_O_} * {_LONG_U_}      
 
+		{WLONG}         === * {LVOWELS} 
+		{_WLONG_}       === * {_LVOWELS_}
+
+    {V_D}           === [ {VOWELS} {WLONG} {WDIPHTHONGS} ]
+    {V_D_WN}        === [ {VOWELS} {WLONG} {WDIPHTHONGS} * {NULL} ]
+
+    {_V_D_}         === [ {_TEHTAR_} {_WLONG_} {_WDIPHTHONGS_} ]
+    {_V_D_WN_}      === [ {_TEHTAR_} {_WLONG_} {_WDIPHTHONGS_} * {_NVOWEL_} ]
+		
+		\** LONE SHORT VOWELS **\
+    [{VOWELS}]    --> TELCO [{_TEHTAR_}]  \** Replace isolated short vowels **\
+    
+		\** LONE LONG VOWELS **\	
+		[{LVOWELS}]   --> [{_LONE_LONG_A_} * {_LONE_LONG_E_} * {_LONE_LONG_I_} * {_LONE_LONG_O_} * {_LONE_LONG_U_}]
+
+    [{DIPHTHONGS}]    -->   [{_DIPHTHONGS_}]     \**  Replace diphthongs **\
+    
+  
     \** TELERIN: changed v/w, removed all y rules **\
     
     \** ===================== **\
@@ -135,7 +222,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     {_L1_}        === CALMA * QUESSE * TINCO   * PARMA
     
     {L1_GEMS}     === {K}{K}              * tt                     * pp
-    {_L1_GEMS_}   === CALMA GEMINATE_SIGN * TINCO GEMINATE_SIGN    * PARMA GEMINATE_SIGN
+    {_L1_GEMS_}   === CALMA {GEMINATE} * TINCO {GEMINATE}    * PARMA {GEMINATE}
 
     \** NORMAL **\
     [ {L1} ] {V_D_WN}         --> [ {_L1_} ] {_V_D_WN_}
@@ -165,9 +252,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     [{L3}]{V_D_WN}  --> [{_L3_}]{_V_D_WN_}
       
     \** Override h with vowels (descendent) **\
-    _h{V_D}                     --> HYARMEN {_V_D_}
-    h[{LVOWELS}]                --> HYARMEN ARA [{TEHTAR}] 
-    h                           --> AHA
+    _h{V_D}         --> HYARMEN {_V_D_}
+    \** Starting voiced h before long vowels **\
+    _h[{LVOWELS}]   --> HYARMEN [{_LVOWELS_}]
+
+    (h,χ)           --> AHA
 
     \** ===================== **\
     \** 4TH LINE RULES **\
@@ -186,8 +275,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
     [{L5}]{V_D_WN}  --> [{_L5_}]{_V_D_WN_}
 
-    nn{V_D_WN}          --> NUMEN GEMINATE_SIGN {_V_D_WN_}
-    mm{V_D_WN}          --> MALTA GEMINATE_SIGN {_V_D_WN_}
+    nn{V_D_WN}          --> NUMEN {GEMINATE} {_V_D_WN_}
+    mm{V_D_WN}          --> MALTA {GEMINATE} {_V_D_WN_}
 
     \** ===================== **\
     \** 6TH LINE RULES **\
@@ -197,32 +286,32 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
     [{L6}]{V_D_WN} --> [{_L6_}]{_V_D_WN_}
 
-    rr{V_D_WN}        --> ROMEN GEMINATE_SIGN {_V_D_WN_}
+    rr{V_D_WN}        --> ROMEN {GEMINATE} {_V_D_WN_}
     rd{V_D_WN}        --> ARDA {_V_D_WN_}
 
     \** ===================== **\
     \** L   LINE RULES **\
     \** ===================== **\
     {LINE_L}          === l     * ld      * ll
-    {_LINE_L_}        === LAMBE * ALDA    * LAMBE GEMINATE_SIGN
+    {_LINE_L_}        === LAMBE * ALDA    * LAMBE {GEMINATE}
 
     [{LINE_L}]{V_D_WN}    --> [{_LINE_L_}]{_V_D_WN_}
+
     hl{V_D_WN}            --> HALLA LAMBE {_V_D_WN_}
     hr{V_D_WN}            --> HALLA ROMEN {_V_D_WN_}
-
+    
     \** ===================== **\
     \** S/Z LINE RULES **\
     \** ===================== **\
-    {L8}        === s               * {SS}   
-    {_L8_}      === SILME_NUQUERNA  * ESSE_NUQUERNA 
+    {L8}              === s               * {SS}
+    {_L8_TEHTAR_}     === SILME_NUQUERNA  * ESSE_NUQUERNA
+    {_L8_NO_TEHTAR_}  === SILME           * ESSE
 
-    [{L8}]{V_D_WN} --> [{_L8_}]{_V_D_WN_}
-
-    \** Override lonely s / ss / before consonant **\
-    s               --> SILME
-    s[{LVOWELS}]    --> SILME ARA [{TEHTAR}] 
-    {SS}            --> ESSE
-    {SS}[{LVOWELS}] --> ESSE ARA [{TEHTAR}] 
+    [{L8}][{VOWELS}]   --> [{_L8_TEHTAR_}][{_TEHTAR_}]
+    [{L8}][{LTEHTAR}]  --> [{_L8_TEHTAR_}][{_LTEHTAR_}]
+    
+    {L8}               --> {_L8_NO_TEHTAR_}
+    {L8}[{DIPHTHONGS}] --> {_L8_NO_TEHTAR_}[{_DIPHTHONGS_}]
   \end
   
   \beg rules punctuation

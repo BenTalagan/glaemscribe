@@ -42,7 +42,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   \beg    rules litteral
     {A}       === (a,á,æ,ǽ,ę) 
     {I}       === (i,í,j,e,é)
-    {O}       === (ą,ö,ǫ,ǫ́,ǭ)
+    {O}       === (ą,ą́ ,ö,ǫ,ǫ́,ǭ)
     {U}       === (u,ú,o,ó,y,ý,ø,ǿ,œ)
     {AI}      === (æi,ei)
   	{AU}      === (au,ǫu,ey,æy,øy,œy)
@@ -61,7 +61,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     (b,bb,mb,p,pp,mp) --> SHORT_TWIG_BJARKAN
     (f,ff)            --> FE
     _g                --> KAUN \** # Initial / After prefix **\
-    (g,g_)            --> SHORT_TWIG_HAGALL \** # Median / Final Spirant **\
+    (g,g_)            --> SHORT_TWIG_HAGALL \** # Median or final spirant **\
     (h,hh)            --> SHORT_TWIG_HAGALL
     (k,nk,kk,gg,ng)   --> KAUN
     (l,ll)            --> LOGR
@@ -70,7 +70,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     (r,rr)            --> REID
     (ř)               --> SHORT_TWIG_YR \**  ř < Germanic z **\
     (s,ss)            --> SHORT_TWIG_SOL
-		(t,tt,nt,d,dd,nd) --> SHORT_TWIG_TYR
+	(t,tt,nt,d,dd,nd) --> SHORT_TWIG_TYR
     (þ,þþ,ð,ðð)       --> THURS
     (v,vv,w,ww)       --> URUZ
     x                 --> KAUN SHORT_TWIG_SOL                 
