@@ -24,11 +24,18 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 \language "Old Norse"
 \writing  "Runes"
-\mode     "Futhark Short Twig"
+\mode     "Younger Futhark"
 \version  "0.0.1"
 \authors  "Historical impl. Bertrand Bellet"
 
 \charset  unicode_runes true
+
+\beg options 
+  \beg option runic_style RUNIC_STYLE_LONG_BRANCH 
+    \value RUNIC_STYLE_LONG_BRANCH 0
+    \value RUNIC_STYLE_SHORT_TWIG  1
+  \end
+\end
 
 \beg      preprocessor
   \downcase
@@ -42,50 +49,70 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   \beg    rules litteral
     {A}       === (a,á,æ,ǽ,ę) 
     {I}       === (i,í,j,e,é)
-    {O}       === (ą,ą́ ,ö,ǫ,ǫ́,ǭ)
+    {O}       === (ą,ą́,ö,ǫ,ǫ́,ǭ)
     {U}       === (u,ú,o,ó,y,ý,ø,ǿ,œ)
     {AI}      === (æi,ei)
   	{AU}      === (au,ǫu,ey,æy,øy,œy)
 
     \**  VOWELS **\
+    \if "runic_style == RUNIC_STYLE_LONG_BRANCH"
+      {AR}      === LONG_BRANCH_AR
+      {OSS}     === LONG_BRANCH_OSS     
+    \else
+      {AR}      === SHORT_TWIG_AR
+      {OSS}     === SHORT_TWIG_OSS
+    \endif
     
-    {A}       --> SHORT_TWIG_AR
+    {A}       --> {AR}
     {I}       --> ISS 
-    {O}       --> SHORT_TWIG_OSS
+    {O}       --> {OSS}
     {U}       --> UR
-    {AI}      --> SHORT_TWIG_AR ISS 
-	  {AU}      --> SHORT_TWIG_OSS UR
-
-
-    \**  CONSONANTS **\
-    (b,bb,mb,p,pp,mp) --> SHORT_TWIG_BJARKAN
+    {AI}      --> {AR} ISS 
+	  {AU}      --> {OSS} UR
+    
+    \** CONSONANTS **\
+    \if "runic_style == RUNIC_STYLE_LONG_BRANCH"
+      {BJARKAN} === BJARKAN
+      {HAGALL}  === LONG_BRANCH_HAGALL
+      {MADR}    === LONG_BRANCH_MADR
+      {NAUD}    === NAUD
+      {YR}      === LONG_BRANCH_YR
+      {SOL}     === LONG_BRANCH_SOL
+      {TYR}     === TYR
+    \else
+      {BJARKAN} === SHORT_TWIG_BJARKAN
+      {HAGALL}  === SHORT_TWIG_HAGALL
+      {MADR}    === SHORT_TWIG_MADR
+      {NAUD}    === SHORT_TWIG_NAUD
+      {YR}      === SHORT_TWIG_YR
+      {SOL}     === SHORT_TWIG_SOL
+      {TYR}     === SHORT_TWIG_TYR
+    \endif
+    
+    (b,bb,mb,p,pp,mp) --> {BJARKAN}
     (f,ff)            --> FE
-    _g                --> KAUN \** # Initial / After prefix **\
-    (g,g_)            --> SHORT_TWIG_HAGALL \** # Median or final spirant **\
-    (h,hh)            --> SHORT_TWIG_HAGALL
+    _g                --> KAUN      \** # Initial / After prefix **\
+    (g,g_)            --> {HAGALL}  \** # Median or final spirant **\
+    (h,hh)            --> {HAGALL}
     (k,nk,kk,gg,ng)   --> KAUN
     (l,ll)            --> LOGR
-    (m,mm)            --> SHORT_TWIG_MADR
-    (n,nn)            --> SHORT_TWIG_NAUD
+    (m,mm)            --> {MADR}
+    (n,nn)            --> {NAUD}
     (r,rr)            --> REID
-    (ř)               --> SHORT_TWIG_YR \**  ř < Germanic z **\
-    (s,ss)            --> SHORT_TWIG_SOL
-	(t,tt,nt,d,dd,nd) --> SHORT_TWIG_TYR
+    (ř)               --> {YR} \**  ř < Germanic z **\
+    (s,ss)            --> {SOL}
+	  (t,tt,nt,d,dd,nd) --> {TYR}
     (þ,þþ,ð,ðð)       --> THURS
     (v,vv,w,ww)       --> URUZ
-    x                 --> KAUN SHORT_TWIG_SOL                 
-    z                 --> SHORT_TWIG_TYR SHORT_TWIG_SOL
-		
- 
-     \**  nasalization of a **\
-
-		{A}(m,mm)           --> SHORT_TWIG_OSS SHORT_TWIG_MADR
-		{A}(n,nn)           --> SHORT_TWIG_OSS NAUD
-		{A}(mp,mb,pp)       --> SHORT_TWIG_OSS BJARKAN
-		{A}(nt,nd,tt)       --> SHORT_TWIG_OSS TYR
-		{A}(nk,ng,kk)       --> SHORT_TWIG_OSS KAUN		
-		
-		
+    x                 --> KAUN {SOL}                 
+    z                 --> {TYR} {SOL}
+	
+    \**  nasalization of a **\
+		{A}(m,mm)        --> {OSS} {MADR}
+		{A}(n,nn)        --> {OSS} {NAUD}
+		{A}(mp,mb)       --> {OSS} {BJARKAN}
+		{A}(nt,nd)       --> {OSS} {TYR}
+		{A}(nk,ng)       --> {OSS} KAUN				
   \end
   
   \beg    rules  punctuation

@@ -40,13 +40,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     {A}       === (a,á) 
     {E}       === (e,é) 
     {I}       === (i,í,j)
-    {O}       === (o,ó,ą,ą́ )
+    {O}       === (o,ó,ą,ą́)
     {U}       === (u,ú)
     {Y}       === (y,ý)
 
     {AE}      === (æ,ǽ,ę)
     {OE}      === (ø,ǿ,œ)
-    {OTREM}   === (ö,ǫ,ǫ́)
+    {OTREM}   === (ö,ǫ,ǫ́,ǭ)
     {AEI}     === (æi,ei)
 
     \**  VOWELS **\
@@ -97,7 +97,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     p         --> DOTTED_P
     \**  pp: ok **\
     \**  mp: ok **\
-    r         --> REID
+    (r,ř)     --> REID
     \**  rr: ok **\
     \**  ř < z = rune ýr, none in this mode **\
     s         --> SIGEL

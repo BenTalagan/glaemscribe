@@ -30,6 +30,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   \entry "0.0.4" "Added charset support for Annatar"
   \entry "0.0.5" "Added support for the FreeMonoTengwar font" 
   \entry "0.0.6" "Ported some options from the quenya mode"
+  \entry "0.1.0" "Added support for the Tengwar Elfica font"
 \end
 
 \language "Telerin"
@@ -42,6 +43,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 \charset  tengwar_ds_parmaite false
 \charset  tengwar_ds_eldamar  false
 \charset  tengwar_ds_annatar  false
+\charset  tengwar_ds_elfica   false
 \charset  tengwar_freemono    false
 
 

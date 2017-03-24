@@ -31,10 +31,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 \charset  unicode_runes true
 
 \beg options
-  \option use_cweorth true
-  \option use_stan    true
-  \option use_calc    true
-  \option use_gar     true
+  \option use_cweorth                     true
+  \option use_stan                        true
+  \option use_calc_and_gar                true
 \end
 
 \beg      preprocessor
@@ -83,7 +82,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     \** (ċ,ċċ)         --> CEN **\
     (c,cc,k,kk)    --> CEN
     (ċ,ċċ)         --> CEN
-    \if use_calc
+    \if use_calc_and_gar
       \** overload when option is on **\ 
       (c,cc,k,kk)    --> CALC
     \endif
@@ -95,7 +94,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     \**  (ȝ,ġ,ġġ,ċġ)    --> GYFU **\
     (g,gg,cg)      --> GYFU    
     (ȝ,ġ,ġġ,ċġ)    --> GYFU
-    \if use_gar
+    \if use_calc_and_gar
       \** overload when option is on **\ 
       (g,gg,cg)      --> GAR
     \endif
@@ -122,7 +121,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     \** nġ            --> ING GYFU **\
     ng            --> ING GYFU
     nġ            --> ING GYFU
-    \if use_gar
+    \if use_calc_and_gar
       ng            --> ING GAR
     \endif
       
@@ -130,7 +129,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     \** (nċ,nk,nq)    --> ING CEN  **\
     nc            --> ING CEN
     (nċ,nk,nq)    --> ING CEN
-    \if use_calc
+    \if use_calc_and_gar
       ng            --> ING CALC
     \endif     
       
