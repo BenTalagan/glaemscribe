@@ -20,7 +20,7 @@ VIRTUALS_DS = {
   "O_TEHTA_DOUBLE"      => { names: ["O_TEHTA_DOUBLE"] ,               classes: ["O_TEHTA_DOUBLE_XS", "O_TEHTA_DOUBLE_S", "O_TEHTA_DOUBLE_L", "O_TEHTA_DOUBLE_XL"] },
   "U_TEHTA"             => { names: ["U_TEHTA"] ,                      classes: ["U_TEHTA_XS",        "U_TEHTA_S",        "U_TEHTA_L",        "U_TEHTA_XL"] },
   "U_TEHTA_DOUBLE"      => { names: ["U_TEHTA_DOUBLE"] ,               classes: ["U_TEHTA_DOUBLE_XS", "U_TEHTA_DOUBLE_S", "U_TEHTA_DOUBLE_L", "U_TEHTA_DOUBLE_XL"] },
-  "SEV_TEHTA"           => { names: ["SEV_TEHTA"] ,                    classes: ["THSUP_SEV_XS",      "THSUP_SEV_S",      "THSUP_SEV_L",      "THSUP_SEV_XL"] },
+  "SEV_TEHTA"           => { names: ["SEV_TEHTA"] ,                    classes: ["SEV_TEHTA_XS",      "SEV_TEHTA_S",      "SEV_TEHTA_L",      "SEV_TEHTA_XL"] },
                                                             
   "A_TEHTA_INF"         => { names: ["A_TEHTA_INF"] ,                 classes:  ["THINF_TDOT_XS", "THINF_TDOT_S", "THINF_TDOT_L", "THINF_TDOT_XL"] },
   "E_TEHTA_INF"         => { names: ["E_TEHTA_INF"] ,                 classes:  ["THINF_ACCENT_XS", "THINF_ACCENT_S", "THINF_ACCENT_L", "THINF_ACCENT_XL"] },
@@ -114,6 +114,9 @@ TENGWAR_ANNATAR_CONF = {
 
 def dump_charset_edit_page(charset, font_list, conf)
   
+  puts "Dumping charset #{charset.name} : "
+  
+  
 File.open("#{charset.name}.html","wb") { |f|
   
   f.puts "<!doctype HTML>";
@@ -202,6 +205,9 @@ File.open("#{charset.name}.html","wb") { |f|
         f.puts "<div class='choice'>"
         
         font_list.each_with_index { |font,i|
+          
+          # puts "#{b}: #{charset[b]}"
+          # puts "#{v}: #{charset[v]}"
           f.puts "<div class='font#{i}'>"
           
           if(reversed)
@@ -241,9 +247,10 @@ File.open("#{charset.name}.html","wb") { |f|
 end
 
 
-Glaemscribe::API::ResourceManager.load_charsets(["tengwar_ds_sindarin","tengwar_ds_eldamar","tengwar_ds_annatar","tengwar_ds_parmaite"])
+Glaemscribe::API::ResourceManager.load_charsets(["tengwar_ds_sindarin","tengwar_ds_eldamar","tengwar_ds_annatar","tengwar_ds_parmaite", "tengwar_ds_elfica"])
 
 dump_charset_edit_page(Glaemscribe::API::ResourceManager.loaded_charsets["tengwar_ds_sindarin"],["Tengwar Sindarin Glaemscrafu"], TENGWAR_DS_GENERIC_CONF)
 dump_charset_edit_page(Glaemscribe::API::ResourceManager.loaded_charsets["tengwar_ds_parmaite"],["Tengwar Parmaite Glaemscrafu"], TENGWAR_DS_GENERIC_CONF)
 dump_charset_edit_page(Glaemscribe::API::ResourceManager.loaded_charsets["tengwar_ds_eldamar"], ["Tengwar Eldamar Glaemscrafu"], TENGWAR_DS_GENERIC_CONF)
 dump_charset_edit_page(Glaemscribe::API::ResourceManager.loaded_charsets["tengwar_ds_annatar"], ["Tengwar Annatar Glaemscrafu"], TENGWAR_ANNATAR_CONF)
+dump_charset_edit_page(Glaemscribe::API::ResourceManager.loaded_charsets["tengwar_ds_elfica"], ["Tengwar Elfica"], TENGWAR_DS_GENERIC_CONF)
