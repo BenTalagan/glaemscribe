@@ -38,7 +38,7 @@ Changelog
 
 | Version | Date | Comment |
 |---------|------|---------| 
-| 1.1.0 | 03/24/2016 | [Quenya] Added double tehtar option. <br>Added reversed virtual chars (for ligatures). <br>Added charset for Annatar. <br>Added LAMBE ligature for Annatar charset. <br>Enhanced existing charsets for better diacritic placement.<br>Merged Blackspeech modes. <br>Added support for FreeMonoTengwar. <br>Added custom, independent charset for Tengwar Parmaite. <br>New runic modes for Old Norse and Old English. <br>Lots of minor fixes. <br>Added small options in tengwar modes (consonant modification diacritic style, o/u curl direction, etc.) |
+| 1.1.0 | 03/24/2016 | [Quenya] Added double tehtar option. <br>Added reversed virtual chars (for ligatures). <br>Added charset for Annatar. <br>Added LAMBE ligature for Annatar charset. <br>Enhanced existing charsets for better diacritic placement.<br>Merged Blackspeech modes. <br>Added support for FreeMonoTengwar. <br>Added custom, independent charset for Tengwar Parmaite. <br>Added charset for Tengwar Elfica. <br>New runic modes for Old Norse and Old English. <br>Lots of minor fixes. <br>Added small options in tengwar modes (consonant modification diacritic style, o/u curl direction, etc.) |
 | 1.0.19 | 09/06/2016 | [Quenya] Removed unutixe under óre for coherency in implicit a submode.<br>[Sindarin Angerthas Daeron] Fixed h,ch,hw. |
 | 1.0.18 | 09/02/2016 | Fixed 'implicit a' option for quenya mode broken in 1.0.17. Thanks to Dmitry Kourmyshov for noticing. |
 | 1.0.17 | 08/26/2016 | Ported modes to virtual chars, added a dedicated charset for tengwar eldamar for better rendering of tehtar and diacritics. |
@@ -48,7 +48,7 @@ Changelog
 Prior todos
 -----------
 
-* Design a full-featured opentype Tengwar font by extending the Free Tengwar Font Project specifications.
+* Deeper integration/design of full-featured OpenType Tengwar fonts.
 * Rewrite the charset editor which is now obsolete since the introduction of virtual chars.
 
 License
@@ -83,6 +83,7 @@ Acknowledgments and thanks
 * **_Glǽmscribe_** would never have been possible without the invaluable and unconditional help and wisdom of **_Bertrand Bellet_**.
 * Special thanks to **_Måns Björkman_** author of the outstanding website Amanyë Tenceli and its typefaces, a precious resource for **_Glǽmscribe_**'s development, and **_Didier Willis_** for having ignited the inspiration of this project.
 * Many thanks to **_Paul Strack_** for all his suggestions and careful examinations on the tengwar modes during his integration of **_Glǽmscribe_**'s engine into his [**_eldamo_**](http://eldamo.org) project!
+* Many thanks to **_J. Mach Wust_** for his clever thoughts and advice on the tengwar modes and fonts.
 * **_Glǽmscribe_** would never have come to be without the ceaseless and continuously renewed work of the great family of Internet Tolkienists, both on technologies (with several generations of transcribers and typefaces) and on knowledge shared and gathered on websites and forums. Neither would it exist without the devoted labour of all those that make the publication of Tolkien's linguistic works possible. A very big thank you to them all!
 * **_Glǽmscribe_**'s engine uses [**_shellwords.js_**](https://github.com/jimmycuadra/shellwords) for parsing purposes in its javascript version. Thanks to **_Jimmy Cuadra_**.
 * **_Glǽmscribe_**'s IDE uses [**_CodeMirror_**](https://codemirror.net/) for its code writing widgets.
