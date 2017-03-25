@@ -1,10 +1,11 @@
 # better code stats eval on github
 
-editor/index.html linguist-vendored
+editor/alertify linguist-vendored
+editor/codemirror linguist-vendored
+editor/d3 linguist-vendored
+editor/font-awesome linguist-vendored
+editor/tipsy linguist-vendored
 
 textmate_bundle/* linguist-vendored
-editor/* linguist-vendored
 build/* linguist-vendored
-textmate_bundle linguist-vendored
-editor linguist-vendored
-build linguist-vendored
+bin_dev/virtual_chars_tool/*.html linguist-vendored
