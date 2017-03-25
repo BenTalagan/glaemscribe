@@ -1,10 +1,10 @@
 # better code stats eval on github
 
-editor/alertify linguist-vendored
-editor/codemirror linguist-vendored
-editor/d3 linguist-vendored
-editor/font-awesome linguist-vendored
-editor/tipsy linguist-vendored
+editor/alertify/* linguist-vendored
+editor/codemirror/* linguist-vendored
+editor/d3/* linguist-vendored
+editor/font-awesome/* linguist-vendored
+editor/tipsy/* linguist-vendored
 
 textmate_bundle/* linguist-vendored
 build/* linguist-vendored
