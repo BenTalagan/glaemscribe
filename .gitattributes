@@ -1,2 +1,4 @@
+# better code stats eval on github
 textmate_bundle/* linguist-vendored
 editor/* linguist-vendored
+_build/* linguist_vendored
