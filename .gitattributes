@@ -2,3 +2,6 @@
 textmate_bundle/* linguist-vendored
 editor/* linguist-vendored
 build/* linguist-vendored
+textmate_bundle linguist-vendored
+editor linguist-vendored
+build linguist-vendored
