@@ -171,10 +171,10 @@ Glaemscribe.Glaeml.Parser.prototype.parse = function(raw_data) {
           else
           {
             name    = rmatch[0];
-       
+            
             try { args    = shellwords.split(rest.substring(name.length)); }
             catch(error) {
-               doc.errors.push(new Glaemscribe.Glaeml.Error(lnum, "Error parsing args (" + error + ")."));
+                doc.errors.push(new Glaemscribe.Glaeml.Error(lnum, "Error parsing glaeml args (" + error + ")."));
             }
           }
           
@@ -208,7 +208,10 @@ Glaemscribe.Glaeml.Parser.prototype.parse = function(raw_data) {
             var args      = [];
             
             try           { args = shellwords.split(l.substring(name.length)); }
-            catch(error)  { doc.errors.push(new Glaemscribe.Glaeml.Error(lnum, "Error parsing args (" + error + ").")); }
+            catch(error)  { 
+              console.log(error.stack)
+              doc.errors.push(new Glaemscribe.Glaeml.Error(lnum, "Error parsing glaeml args (" + error + ").")); 
+            }
                                        
             n             = new Glaemscribe.Glaeml.Node(lnum, Glaemscribe.Glaeml.NodeType.ElementInline, name);
             n.args        = n.args.concat(args);
