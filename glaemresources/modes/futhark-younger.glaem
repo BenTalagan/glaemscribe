@@ -25,10 +25,15 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 \language "Old Norse"
 \writing  "Runes"
 \mode     "Younger Futhark"
-\version  "0.0.1"
+\version  "0.0.2"
 \authors  "Historical impl. Bertrand Bellet"
 
 \charset  unicode_runes true
+
+\beg changelog
+  \entry "0.0.1" "Initial version"
+  \entry "0.0.2" "Adding quotes handling"
+\end
 
 \beg options 
   \beg option runic_style RUNIC_STYLE_LONG_BRANCH 
@@ -122,6 +127,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     . --> RUNIC_MULTIPLE_PUNCTUATION
     ! --> RUNIC_MULTIPLE_PUNCTUATION
     ? --> RUNIC_CROSS_PUNCTUATION	
+    “ --> {NULL}
+    ” --> {NULL}
+    « --> {NULL} 
+    » --> {NULL} 
   \end
 \end
   

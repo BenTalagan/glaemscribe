@@ -27,8 +27,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 \language "Valarin"
 \writing  "Sarati"
 \mode     "Glaemscrafu"
-\version  "0.0.1"
+\version  "0.0.2"
 \authors  "Talagan (Benjamin Babut), based on J.R.R. Tolkien"
+
+\beg changelog
+  \entry "0.0.1" "Initial version"
+  \entry "0.0.2" "Adding quotes handling"
+\end
 
 \charset  sarati_eldamar true
 
@@ -188,6 +193,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     ’ --> {NULL}
     “ --> {NULL}
     ” --> {NULL}
+    « --> {NULL}
+    » --> {NULL}
   \end 
 \end 
 
