@@ -52,7 +52,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 \language "Quenya"
 \writing  "Tengwar"
 \mode     "Classical"
-\version  "0.9.2"
+\version  "0.9.4"
 \authors  "J.R.R. Tolkien, impl. Talagan (Benjamin Babut)"
 
 \charset  tengwar_ds_sindarin true
