@@ -4,7 +4,7 @@ the transcription of texts between writing systems, and more
 specifically dedicated to the transcription of J.R.R. Tolkien's 
 invented languages to some of his devised writing systems.
 
-Copyright (C) 2015 Benjamin Babut (Talagan).
+Copyright (C) 2017 Benjamin Babut (Talagan).
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU Affero General Public License as published by
@@ -19,7 +19,7 @@ GNU Affero General Public License for more details.
 You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-Version : 1.1.0
+Version : 1.1.1
 */
 
 /*
@@ -766,10 +766,10 @@ Glaemscribe.Glaeml.Parser.prototype.parse = function(raw_data) {
           else
           {
             name    = rmatch[0];
-       
+            
             try { args    = shellwords.split(rest.substring(name.length)); }
             catch(error) {
-               doc.errors.push(new Glaemscribe.Glaeml.Error(lnum, "Error parsing args (" + error + ")."));
+                doc.errors.push(new Glaemscribe.Glaeml.Error(lnum, "Error parsing glaeml args (" + error + ")."));
             }
           }
           
@@ -803,7 +803,10 @@ Glaemscribe.Glaeml.Parser.prototype.parse = function(raw_data) {
             var args      = [];
             
             try           { args = shellwords.split(l.substring(name.length)); }
-            catch(error)  { doc.errors.push(new Glaemscribe.Glaeml.Error(lnum, "Error parsing args (" + error + ").")); }
+            catch(error)  { 
+              console.log(error.stack)
+              doc.errors.push(new Glaemscribe.Glaeml.Error(lnum, "Error parsing glaeml args (" + error + ").")); 
+            }
                                        
             n             = new Glaemscribe.Glaeml.Node(lnum, Glaemscribe.Glaeml.NodeType.ElementInline, name);
             n.args        = n.args.concat(args);
@@ -3184,6 +3187,7 @@ THE SOFTWARE.
   };
 
   exports.split = function(line) {
+
     var field, words;
     if (line == null) {
       line = "";
@@ -3191,20 +3195,23 @@ THE SOFTWARE.
     words = [];
     field = "";
     scan(line, /\s*(?:([^\s\\\'\"]+)|'((?:[^\'\\]|\\.)*)'|"((?:[^\"\\]|\\.)*)"|(\\.?)|(\S))(\s|$)?/, function(match) {
+      
       var dq, escape, garbage, raw, seperator, sq, word;
       raw = match[0], word = match[1], sq = match[2], dq = match[3], escape = match[4], garbage = match[5], seperator = match[6];
       if (garbage != null) {
         throw new Error("Unmatched quote");
       }
-      field += word || (sq || dq || escape).replace(/\\(?=.)/, "");
+      field += word || (sq || dq || escape || "").replace(/\\(?=.)/, "");
       if (seperator != null) {
         words.push(field);
         return field = "";
       }
     });
-    if (field) {
+    
+    if (field != null) {
       words.push(field);
     }
+
     return words;
   };
 

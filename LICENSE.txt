@@ -3,7 +3,7 @@ the transcription of texts between writing systems, and more
 specifically dedicated to the transcription of J.R.R. Tolkien's 
 invented languages to some of his devised writing systems.
 
-Copyright (C) 2015 Benjamin Babut (Talagan).
+Copyright (C) 2017 Benjamin Babut (Talagan).
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU Affero General Public License as published by
