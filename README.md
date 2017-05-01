@@ -38,6 +38,7 @@ Changelog
 
 | Version | Date | Comment |
 |---------|------|---------| 
+| 1.1.1 | 05/15/2017 | [Quenya] Added Vanyarin ldy, rdy, lg, rg, ff. <br> Added npm packaging. <br> Minor bug fixes. |
 | 1.1.0 | 03/24/2017 | [Quenya] Added double tehtar option. <br>Added reversed virtual chars (for ligatures). <br>Added charset for Annatar. <br>Added LAMBE ligature for Annatar charset. <br>Enhanced existing charsets for better diacritic placement.<br>Merged Blackspeech modes. <br>Added support for FreeMonoTengwar. <br>Added custom, independent charset for Tengwar Parmaite. <br>Added charset for Tengwar Elfica. <br>New runic modes for Old Norse and Old English. <br>Lots of minor fixes. <br>Added small options in tengwar modes (consonant modification diacritic style, o/u curl direction, etc.) |
 | 1.0.19 | 09/06/2016 | [Quenya] Removed unutixe under óre for coherency in implicit a submode.<br>[Sindarin Angerthas Daeron] Fixed h,ch,hw. |
 | 1.0.18 | 09/02/2016 | Fixed 'implicit a' option for quenya mode broken in 1.0.17. Thanks to Dmitry Kourmyshov for noticing. |
