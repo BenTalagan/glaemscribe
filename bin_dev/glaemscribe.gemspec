@@ -3,7 +3,6 @@ require 'json'
 dir           = File.absolute_path(File.dirname(__FILE__))
 version_info  = JSON.parse(File.open(dir+ "/../../version","rb:utf-8") { |f| f.read })
 
-
 Gem::Specification.new do |s|
   s.name        = 'glaemscribe'
   s.version     = version_info['version']

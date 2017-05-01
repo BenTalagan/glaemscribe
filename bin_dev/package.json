@@ -1,0 +1,25 @@
+{
+  "name": "glaemscribe",
+  "version": null,
+  "description": "Glǽmscribe (also written Glaemscribe) is a software dedicated to the transcription of texts between writing systems, and more specifically dedicated to the transcription of J.R.R. Tolkien's invented languages to some of his devised writing systems.",
+  "main": null,
+  "files" : [
+   "js/*" 
+  ],
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BenTalagan/glaemscribe.git"
+  },
+  "keywords": [
+    "glaemscribe","tolkien","transcription","tengwar","sarati","cirth"
+  ],
+  "author": "Benjamin Talagan Babut",
+  "license": "AGPL-3.0",
+  "bugs": {
+    "url": "https://github.com/BenTalagan/glaemscribe/issues"
+  },
+  "homepage": "https://www.jrrvf.com/glaemscrafu/english/glaemscribe.html"
+}
