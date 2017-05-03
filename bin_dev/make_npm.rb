@@ -18,6 +18,7 @@ end
 def copy_files
   cp_r      Dir.glob("../build/web/glaemscribe/*"),           BUILD_NPM_PATH
   cp_r      "../LICENSE.txt",            BUILD_NPM_PATH
+  cp_r      "./NPM_README.md", BUILD_NPM_PATH + "/README.md"
 end
 
 def copy_pkg_json
@@ -36,6 +37,7 @@ def clean_npm_pkg
   rm_rf("js")
   rm_rf("package.json")
   rm_rf("LICENSE.txt")
+  rm_rf("README.md")
 end
 
 cleanup
