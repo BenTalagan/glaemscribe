@@ -154,6 +154,9 @@ Or, alternatively, if in a project that uses **bundle**, edit your **Gemfile**, 
 
 Simply add it to your web pages as you would do with a standard **js** library.
 
+Or, alternatively, you can retrieve a front-end package for **npm**, for an easy installation, version management and upgrade. Just use
+
+    npm install glaemscribe
 <hr>
 
 <a name="integrate"></a>
@@ -204,7 +207,6 @@ eldamar = Glaemscribe::API::ResourceManager::loaded_charsets["tengwar_ds_eldamar
 
 quenya.transcribe("Ai ! Laurie lantar lassi súrinen !", eldamar)
  => [true, "lD Á j.E7T`V jE4#6 jE,G 8~M7T5$5 Á"]
- 
 {% endhighlight %}
 
 #### Get mode options info
@@ -238,8 +240,6 @@ quenya.options
     }
   }
 }
- 
- 
 {% endhighlight %}
 
 ### Javascript
@@ -328,7 +328,6 @@ quenya.options
     }
   }
 }
-
 {% endhighlight %}
 
 <hr>
