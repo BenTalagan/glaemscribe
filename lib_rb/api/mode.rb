@@ -125,7 +125,6 @@ module Glaemscribe
           l = @processor.apply(l)
           l = @post_processor.apply(l, charset)
         }.join("\n")
-        
         return true, ret
       end
       

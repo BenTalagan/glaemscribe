@@ -47,7 +47,7 @@ Glaemscribe.ResolveVirtualsPostProcessorOperator.prototype.reset_trigger_states 
 
 Glaemscribe.ResolveVirtualsPostProcessorOperator.prototype.apply_loop = function(charset, tokens, new_tokens, reversed, token, idx) {
   var op = this;
-  if(token == '*SPACE') {
+  if(token == '*SPACE' || token == '*LF') {
     op.reset_trigger_states(charset);
     return; // continue
   }

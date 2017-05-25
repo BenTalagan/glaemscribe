@@ -38,7 +38,7 @@ module Glaemscribe
       end
       
       def apply_loop(charset, tokens, new_tokens, reversed, token, idx)
-        if token == '*SPACE'
+        if token == '*SPACE' || token =='*LF'
           reset_trigger_states(charset)
           return
         end
