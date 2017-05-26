@@ -12,6 +12,7 @@ VIRTUALS_DS = {
   "A_TEHTA"             => { names: ["A_TEHTA"],                       classes: ["A_TEHTA_XS",        "A_TEHTA_S",        "A_TEHTA_L",        "A_TEHTA_XL"] },
   "A_TEHTA_DOUBLE"      => { names: ["A_TEHTA_DOUBLE"] ,               classes: ["A_TEHTA_DOUBLE_XS", "A_TEHTA_DOUBLE_S", "A_TEHTA_DOUBLE_L", "A_TEHTA_DOUBLE_XL"]  },                           
   "A_TEHTA_CIRCUM"      => { names: ["A_TEHTA_CIRCUM"] ,               classes: ["A_TEHTA_CIRCUM_XS", "A_TEHTA_CIRCUM_S", "A_TEHTA_CIRCUM_L", "A_TEHTA_CIRCUM_XL"] },
+  "A_TEHTA_REVERSED"    => { names: ["A_TEHTA_REVERSED"],              classes: ["A_TEHTA_INV_XS",    "A_TEHTA_INV_S",    "A_TEHTA_INV_L",    "A_TEHTA_INV_XL"] },
   "E_TEHTA"             => { names: ["E_TEHTA"] ,                      classes: ["E_TEHTA_XS",        "E_TEHTA_S",        "E_TEHTA_L",        "E_TEHTA_XL"] },
   "E_TEHTA_DOUBLE"      => { names: ["E_TEHTA_DOUBLE"] ,               classes: ["E_TEHTA_DOUBLE_XS", "E_TEHTA_DOUBLE_S", "E_TEHTA_DOUBLE_L", "E_TEHTA_DOUBLE_XL"] },
   "I_TEHTA"             => { names: ["I_TEHTA"] ,                      classes: ["I_TEHTA_XS",        "I_TEHTA_S",        "I_TEHTA_L",        "I_TEHTA_XL"] },
@@ -27,11 +28,11 @@ VIRTUALS_DS = {
   "O_TEHTA_INF"         => { names: ["O_TEHTA_INF"] ,                 classes:  ["THINF_CURL_XS", "THINF_CURL_S", "THINF_CURL_L", "THINF_CURL_XL"] },
   "U_TEHTA_INF"         => { names: ["U_TEHTA_INF"] ,                 classes:  ["THINF_CURL_INV_XS", "THINF_CURL_INV_S", "THINF_CURL_INV_L", "THINF_CURL_INV_XL"] },
   "CIRC_TEHTA_INF"      => { names: ["CIRC_TEHTA_INF"] ,              classes:  ["TH_SUB_CIRC_XS", "TH_SUB_CIRC_S", "TH_SUB_CIRC_L", "TH_SUB_CIRC_XL"] },
-  "SEV_TEHTA_INF"       => { names: ["SEV_TEHTA_INF","THINF_STROKE"] ,               classes:  ["THINF_STROKE_XS", "THINF_STROKE_S", "THINF_STROKE_L", "THINF_STROKE_XL"] },
+  "THINNAS"             => { names: ["THINNAS","SEV_TEHTA_INF","THINF_STROKE"] ,               classes:  ["THINF_STROKE_XS", "THINF_STROKE_S", "THINF_STROKE_L", "THINF_STROKE_XL"] },
                                                                       
-  "Y_TEHTA_INF"         => { names: ["Y_TEHTA_INF","PALATAL_SIGN "] ,           classes: ["THINF_DDOT_XS", "THINF_DDOT_S", "THINF_DDOT_L", "THINF_DDOT_XL", "LAMBE_MARK_DDOT"] },
+  "PALATAL_SIGN"        => { names: ["PALATAL_SIGN", "I_TEHTA_DOUBLE_INF", "Y_TEHTA_INF" ] ,           classes: ["THINF_DDOT_XS", "THINF_DDOT_S", "THINF_DDOT_L", "THINF_DDOT_XL", "LAMBE_MARK_DDOT"] },
   "E_TEHTA_DOUBLE_INF"  => { names: ["E_TEHTA_DOUBLE_INF","GEMINATE_DOUBLE"],   classes: ["THINF_DSTROKE_XS" , "THINF_DSTROKE_S" ,"THINF_DSTROKE_L" , "THINF_DSTROKE_XL"  , "LAMBE_MARK_DSTROKE"] },
-  "I_TEHTA_INF"         => { names: ["I_TEHTA_INF","NO_VOWEL_DOT","UNUTIXE"],   classes: ["THINF_DOT_XS" , "THINF_DOT_S" ,"THINF_DOT_L" , "THINF_DOT_XL"  , "LAMBE_MARK_DOT"] },
+  "UNUTIXE"             => { names: ["UNUTIXE","I_TEHTA_INF","NO_VOWEL_DOT"],   classes: ["THINF_DOT_XS" , "THINF_DOT_S" ,"THINF_DOT_L" , "THINF_DOT_XL"  , "LAMBE_MARK_DOT"] },
                                   
   "GEMINATE_SIGN"       => { names: ["GEMINATE_SIGN"] ,     classes: ["DASH_INF_S",   "DASH_INF_L",  "LAMBE_MARK_DASH"] },
   "GEMINATE_SIGN_TILD"  => { names: ["GEMINATE_SIGN_TILD"] ,classes: ["TILD_INF_S",   "TILD_INF_L",  "LAMBE_MARK_TILD"] },
@@ -47,6 +48,7 @@ LIGATURES_ANNATAR = {
 DIACTRITICS_WITH_SIMILAR_PLACEMENT_DS = [
    ["A_TEHTA" ],
    ["A_TEHTA_CIRCUM"],
+   ["A_TEHTA_REVERSED"],
    ["E_TEHTA"],
    ["I_TEHTA"],
    ["O_TEHTA"],
@@ -60,12 +62,12 @@ DIACTRITICS_WITH_SIMILAR_PLACEMENT_DS = [
    ["A_TEHTA_INF"],
    ["E_TEHTA_INF"],
    ["CIRC_TEHTA_INF"],
-   ["SEV_TEHTA_INF"],
+   ["THINNAS"],
    ["O_TEHTA_INF"],
    ["U_TEHTA_INF"],
-   ["Y_TEHTA_INF"],
+   ["PALATAL_SIGN"],
    ["E_TEHTA_DOUBLE_INF"],
-   ["I_TEHTA_INF"],
+   ["UNUTIXE"],
    ["GEMINATE_SIGN"],
    ["GEMINATE_SIGN_TILD"],
    ["NASALIZE_SIGN"],
@@ -93,6 +95,10 @@ DIACRITICS_BEARERS = [
   "YANTA","URE",
 
   "OSSE",
+  
+  "VAIA",
+  
+  "MALTA_W_HOOK", "VALA_W_HOOK",
   
   "SHOOK_BEAUTIFUL",
   "ANCA_CLOSED",
@@ -154,7 +160,7 @@ File.open("#{charset.name}.html","wb") { |f|
   conf[:virtual_groups].each{ |group|
     # Get the first element from the "similar group"
     first = group.first
-    # Get the names of the diactrictic
+    # Get the names of the diactrictic   
     desc  = conf[:virtuals][first]
     f.puts "<td style='text-align:center;font-size:8px'>#{desc[:names].join("<br>")}</td>"
   }
