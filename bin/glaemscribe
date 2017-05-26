@@ -216,6 +216,11 @@ command :transcribe do |c|
       perxit("Was asked to use charset '#{charset_name}', but the mode does not handle it. Aborting.", 12) if !charset
     end
     
+    if mode.raw_mode_name
+      # This is probably a bit light on error treatment.
+      Glaemscribe::API::ResourceManager.load_modes([mode.raw_mode_name])
+    end
+    
     if options.options
       a = options.options.split(",").map{ |o| o.split(":") }.flatten.map{|s| s.strip }
       opts = Hash[*a]
