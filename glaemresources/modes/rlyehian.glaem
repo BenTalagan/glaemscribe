@@ -30,17 +30,21 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 \**  R'lyehian mode for glaemscribe : a non-euclidian joke, muhahahaha **\
 
-\language "R'lyehian"
-\writing  Tengwar
-\mode     Glaemscrafu
-\version  0.0.3
-\authors  "H.P.Lovecraft & The Great Ancient Gods, impl. Fthalagn"
-
 \beg changelog
   \entry "0.0.1" "First version"
-	\entry 0.0.2 "Ported to virtual chars"
-	\entry 0.0.3 "Ported to various charsets"
+	\entry "0.0.2" "Ported to virtual chars"
+	\entry "0.0.3" "Ported to various charsets"
+  \entry "0.1.1" "Added support for inlined raw tengwar"
 \end
+
+
+\language "R'lyehian"
+\writing  "Tengwar"
+\mode     "Glaemscrafu"
+\version  "0.1.1"
+\authors  "H.P.Lovecraft & The Great Ancient Gods, impl. Fthalagn"
+
+\raw_mode "raw-tengwar"
 
 \charset  tengwar_ds_sindarin true
 \charset  tengwar_ds_parmaite false

@@ -23,14 +23,17 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 **\
 
 \beg changelog
-  \entry 0.0.2 "Porting to virtual chars"
+  \entry "0.0.2" "Porting to virtual chars"
+  \entry "0.1.1" "Added support for inlined raw tengwar"
 \end
 
 \language "Old English"
 \writing  "Tengwar"
 \mode     "Mercian"
-\version  "0.1.0"
+\version  "0.1.1"
 \authors  "J.R.R. Tolkien, impl. Talagan (Benjamin Babut)"
+
+\raw_mode "raw-tengwar"
 
 \charset  tengwar_ds_eldamar true
 \** Other charsets cannot handle all diacritics we are using here ... **\

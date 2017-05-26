@@ -42,6 +42,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   \entry "0.9.1" "Added support for the FreeMonoTengwar font"
   \entry "0.9.2" "Added support for the Tengwar Elfica font"
   \entry "0.9.4" "Adding Vanyarin ldy, rdy, lg, rg, ff"
+  \entry "0.9.5" "Added support for inlined raw tengwar"
 \end
 
 \**
@@ -52,8 +53,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 \language "Quenya"
 \writing  "Tengwar"
 \mode     "Classical"
-\version  "0.9.4"
+\version  "0.9.5"
 \authors  "J.R.R. Tolkien, impl. Talagan (Benjamin Babut)"
+
+\raw_mode "raw-tengwar"
 
 \charset  tengwar_ds_sindarin true
 \charset  tengwar_ds_parmaite false

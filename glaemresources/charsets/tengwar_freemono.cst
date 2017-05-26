@@ -24,7 +24,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 \** Charset for the FreeMonoTengwar font **\ 
 
-\version 0.0.2
+\version 0.0.5
+
+\beg changelog
+  \entry "0.0.5" "Added VALA_W_HOOK."
+\end
 
 \char 20 SPACE
 
@@ -105,14 +109,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 \char e03B  VALA_W_HOOK TW_MH_BELERIANDIC
 
 \char e03C  TW_HW_LOWDHAM HARP_SHAPED
-\char e03D  VAIYA
+\char e03D  VAIA WAIA VAIYA
 \char e03E  ?
 \char e03F  ?      
 
 \char e040  A_TEHTA
 \char e041  A_TEHTA_INF
 \char e042  I_TEHTA_DOUBLE Y_TEHTA
-\char e043  PALATAL_SIGN Y_TEHTA_INF 
+\char e043  I_TEHTA_DOUBLE_INF PALATAL_SIGN Y_TEHTA_INF 
 
 \char e044  I_TEHTA
 \char e045  I_TEHTA_INF NO_VOWEL_DOT UNUTIXE
@@ -137,7 +141,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 \char e054  ?
 \char e055  A_TEHTA_CIRCUM  
 \char e056  A_TEHTA_REVERSED A_TEHTA_DOUBLE
-\char e057  SEV_TEHTA_INF THINF_STROKE
+\char e057  THINNAS SEV_TEHTA_INF THINF_STROKE
 
 \** THE TWO FOLLOWING ONES ARE HIGHLY DISCUSSABLE, MAYBE WE SHOULD ADD A VIRTUAL CHAR FOR THESE **\
 \char e058  SHOOK_LEFT_L
@@ -173,4 +177,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 \char e079 NUM_9 
 \char e07A NUM_10
 \char e07B NUM_11
+
+\char 10037 AHA_TINCO
+\char 10038 HWESTA_TINCO
+\char 10039 ANCA_CLOSED
 
