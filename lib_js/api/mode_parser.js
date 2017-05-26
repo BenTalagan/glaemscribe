@@ -266,6 +266,9 @@ Glaemscribe.ModeParser.prototype.parse_raw = function(mode_name, raw, mode_optio
   mode.authors     = doc.root_node.gpath('authors')[0].args[0]
   mode.version     = doc.root_node.gpath('version')[0].args[0]
   
+  if(doc.root_node.gpath('raw_mode')[0])
+    mode.raw_mode_name = doc.root_node.gpath('raw_mode')[0].args[0];
+  
   doc.root_node.gpath('options.option').glaem_each(function(_,option_element) {
 
     var values          = {};

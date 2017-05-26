@@ -40,6 +40,8 @@ Glaemscribe.Mode = function(mode_name) {
   this.errors               = [];
   this.warnings             = [];
   this.latest_option_values = {};
+  
+  this.raw_mode_name        = null;
 
   this.pre_processor    = new Glaemscribe.TranscriptionPreProcessor(this);
   this.processor        = new Glaemscribe.TranscriptionProcessor(this);
@@ -99,12 +101,26 @@ Glaemscribe.Mode.prototype.finalize = function(options) {
   this.post_processor.finalize(this.latest_option_values);
   this.processor.finalize(this.latest_option_values);
   
+  if(mode.get_raw_mode())
+    mode.get_raw_mode().finalize(options);
+  
   return this;
 }
 
-Glaemscribe.Mode.prototype.transcribe = function(content, charset) {
+Glaemscribe.Mode.prototype.get_raw_mode = function() {
+  var mode = this;
+  
+  if(mode.raw_mode != null)
+    return mode.raw_mode;
+  
+  var loaded_raw_mode = (mode.raw_mode_name && Glaemscribe.resource_manager.loaded_modes[mode.raw_mode_name]);
+  if(loaded_raw_mode == null)
+    return null;
+  
+  mode.raw_mode = Object.glaem_clone(loaded_raw_mode);
+}
 
-  var debug_context = new Glaemscribe.ModeDebugContext();
+Glaemscribe.Mode.prototype.strict_transcribe = function(content, charset, debug_context) {
 
   if(charset == null)
     charset = this.default_charset;
@@ -113,12 +129,18 @@ Glaemscribe.Mode.prototype.transcribe = function(content, charset) {
     return [false, "*** No charset usable for transcription. Failed!"];
 
   var ret   = ""
-  var lines = content.split("\n")
+  var lines = content.split(/(\n)/);
   
   for(var i=0;i<lines.length;i++)
   {
-    // Do a bit of cleaning on the lines
-    var l = lines[i].trim();
+    var l = lines[i];
+    var restore_lf = false;
+    
+    if(l[l.length-1] == "\n")
+    {
+      restore_lf = true;
+      l = l.slice(0,-1);
+    }
     
     l = this.pre_processor.apply(l);
     debug_context.preprocessor_output += l + "\n";
@@ -128,10 +150,59 @@ Glaemscribe.Mode.prototype.transcribe = function(content, charset) {
     
     l = this.post_processor.apply(l, charset);
     debug_context.postprocessor_output += l + "\n";
+
+    if(restore_lf)
+      l += "\n";
     
-    ret += l + "\n";
+    ret += l;
   }
 
   return [true, ret, debug_context];  
+}
+
+Glaemscribe.Mode.prototype.transcribe = function(content, charset) {
+
+  var mode          = this;
+  var debug_context = new Glaemscribe.ModeDebugContext();
+
+  var raw_mode      = mode.get_raw_mode();
+
+  var ret = "";
+  var res = true;
+ 
+  if(raw_mode != null)
+  {
+    var chunks = content.split(/({{[\s\S]*?}})/);
+       
+    chunks.glaem_each(function(_,c) {
+      var rmatch = null;
+      
+      var to_transcribe = c;
+      var tr_mode       = mode;
+      
+      if(rmatch = c.match(/{{([\s\S]*?)}}/))
+      {
+        to_transcribe = rmatch[1];
+        tr_mode       = raw_mode;
+      }
+      
+      var rr = tr_mode.strict_transcribe(to_transcribe,charset,debug_context);
+      var succ = rr[0]; var r = rr[1]; 
+      
+      res = res && succ;
+      if(succ)
+        ret += r;   
+    });
+  }
+  else
+  {
+    var rr = mode.strict_transcribe(content,charset,debug_context);
+    var succ = rr[0]; var r = rr[1]; 
+    res = res && succ;
+    if(succ)
+      ret += r;   
+  }
+    
+  return [res, ret, debug_context];  
 }
 

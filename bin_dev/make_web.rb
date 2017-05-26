@@ -50,6 +50,7 @@ JS_FILES = [
   "api/post_processor/reverse.js",
   "api/post_processor/resolve_virtuals.js",
   "extern/shellwords.js",
+  "extern/object-clone.js"
 ]
 
 def cleanup
@@ -107,7 +108,33 @@ end
 def build_ugly_min
   File.open(BUILD_JS_PATH + "/glaemscribe.min.js","wb:utf-8") { |f|
     f << "/*\n" + $license + "\nVersion : " + $version + "\n*/\n\n"
-    f << Uglifier.compile(File.read(BUILD_JS_PATH + "/glaemscribe.js"), :comments => :none)
+    
+    full_js  = File.read(BUILD_JS_PATH + "/glaemscribe.js")
+    begin
+      f << Uglifier.compile(full_js, :comments => :none)
+    rescue ExecJS::ProgramError => e
+
+      if !(e.message =~ /line: ([0-9]+), col: ([0-9]+), pos: ([0-9]+)/)
+        raise "Could not assemble glaemscribe.js . I can't retrieve the line number, you should install node js for that."
+        raise GlaemJSError  		
+      else
+        line = $1.to_i
+        col  = $2.to_i
+
+        line_content = "...\n"
+        full_js.lines.each_with_index { |l,i| 
+          if i > line-6 && i < line+4
+            bad = (i == line-1)?(" -BAD-> "):("        ")
+
+            line_content += "#{i+1}#{bad}: #{l}"
+          end 
+        }
+        line_content += "...\n"
+
+        raise "Could not assemble glaemscribe.js . There's probably a syntax error.\nMessage from uglifier:\n#{e.message.lines.first}\n#{line_content} "  
+      end
+    end
+    
   }
 end
 

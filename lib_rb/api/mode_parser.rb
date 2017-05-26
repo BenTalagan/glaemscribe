@@ -207,11 +207,12 @@ module Glaemscribe
         return @mode if(@mode.errors.any?)
         
         # Get the attributes of the mode
-        @mode.language    = doc.root_node.gpath('language').first.args.first
-        @mode.writing     = doc.root_node.gpath('writing').first.args.first
-        @mode.human_name  = doc.root_node.gpath('mode').first.args.first
-        @mode.authors     = doc.root_node.gpath('authors').first.args.first
-        @mode.version     = doc.root_node.gpath('version').first.args.first
+        @mode.language      = doc.root_node.gpath('language').first.args.first
+        @mode.writing       = doc.root_node.gpath('writing').first.args.first
+        @mode.human_name    = doc.root_node.gpath('mode').first.args.first
+        @mode.authors       = doc.root_node.gpath('authors').first.args.first
+        @mode.version       = doc.root_node.gpath('version').first.args.first
+        @mode.raw_mode_name = doc.root_node.gpath('raw_mode').first.args.first if doc.root_node.gpath('raw_mode').first
                 
         doc.root_node.gpath("options.option").each{ |option_element|
           values      = {}

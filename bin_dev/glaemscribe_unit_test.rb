@@ -105,7 +105,7 @@ def unit_test_directory(directory)
         next
       end
     
-      teng = teng.strip
+      teng = teng.lines.map{|l| l.strip }.join("\n").strip
     
       if true_teng != teng
         puts "[****] " + prefix
@@ -247,8 +247,10 @@ Glaemscribe::API::ResourceManager::loaded_modes.each{ |name,mode|
  
 if ARGV[0] == "--dump" 
   dump_test_directory(SCRIPT_PATH + "/../unit_tests/glaemscrafu", SCRIPT_PATH + "/../unit_tests_dumped/glaemscrafu" )
+  dump_test_directory(SCRIPT_PATH + "/../unit_tests/technical", SCRIPT_PATH + "/../unit_tests_dumped/technical" )
 else
   unit_test_directory(SCRIPT_PATH + "/../unit_tests/glaemscrafu")
+  unit_test_directory(SCRIPT_PATH + "/../unit_tests/technical")
 end
 
 # puts Glaemscribe::API::ResourceManager::loaded_modes['quenya'].finalize("implicit_a" => "true").options['implicit_a_unutixe'].visible?

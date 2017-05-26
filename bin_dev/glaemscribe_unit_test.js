@@ -104,7 +104,9 @@ function unit_test_directory(directory) {
         console.log("[****] " + tinfo[1]);
         continue;
       }
-    
+      
+      teng    = teng.split("\n").map(function(l) { return l.trim(); }).join("\n").trim();
+   
       if(true_teng != teng)
       {
       
@@ -160,6 +162,7 @@ Glaemscribe.resource_manager.load_modes();
 for(var mode_name in Glaemscribe.resource_manager.loaded_modes)
 { 
   var mode    = Glaemscribe.resource_manager.loaded_modes[mode_name];
+
   if(mode.errors.length > 0)
   {
     for(var i=0;i<mode.errors.length;i++)
@@ -172,5 +175,7 @@ for(var mode_name in Glaemscribe.resource_manager.loaded_modes)
 }
 
 unit_test_directory(__dirname + "/../unit_tests/glaemscrafu")
+unit_test_directory(__dirname + "/../unit_tests/technical")
+
 // unit_test_directory(__dirname + "/../unit_tests/old")
 // console.log(Glaemscribe.resource_manager.loaded_modes['quenya'].finalize({"implicit_a" : "false"}).options['implicit_a_unutixe'].is_visible())

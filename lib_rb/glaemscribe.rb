@@ -32,6 +32,7 @@ module Glaemscribe
     
     require API_PATH + "/api/debug.rb"
     require API_PATH + "/api/constants.rb"
+    require API_PATH + "/api/object_additions.rb"
     
     require API_PATH + "/api/fragment.rb"
     require API_PATH + "/api/sheaf_chain_iterator.rb"

@@ -143,7 +143,7 @@ File.open("#{charset.name}.html","wb") { |f|
   f.puts ".check3:checked:after { background-color : yellow !important}"
   f.puts ".check4:checked:after { background-color : orange !important}"
   f.puts ".choice { float:left;text-align:center;display:inline-block;padding:5px;border:1px #eaeaea solid; border-collapse:collapse}"
- 
+  f.puts ".no_choice_made { background: rgb(255, 231, 231); }"
   
   f.puts ".eldamar  { font-family: 'Tengwar Eldamar Glaemscrafu'}"
   f.puts ".zetable, .zetable td  { border: solid 1px black; border-collapse: collapse; padding :5px}"
@@ -200,12 +200,15 @@ File.open("#{charset.name}.html","wb") { |f|
         target  = vchar[b]
         tnames  = target.names if target
       end 
+      tnames = tnames || []
       
-      f.puts "<td style='text-align:center'>"
+      has_choice = false
+      classes.each_with_index { |v,i| has_choice ||= tnames.include? v }
+      
+      f.puts "<td style='text-align:center' class='#{(has_choice)?(''):('no_choice_made')}'>"
       f.puts "<div class='tlist' style='display:inline-flex'>"
       classes.each_with_index { |v,i|
                        
-        tnames = tnames || []
         checked = tnames.include? v
         
         f.puts "<div class='choice'>"

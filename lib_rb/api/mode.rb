@@ -37,6 +37,8 @@ module Glaemscribe
       attr_accessor :supported_charsets
       attr_accessor :default_charset
       
+      attr_accessor :raw_mode_name # Read from glaeml
+      
       attr_reader   :latest_option_values
          
       def initialize(name)
@@ -111,21 +113,59 @@ module Glaemscribe
         @pre_processor.finalize(@latest_option_values)
         @post_processor.finalize(@latest_option_values)
         @processor.finalize(@latest_option_values)
-        
+    
+        raw_mode.finalize options if raw_mode
+          
         self
       end
       
-      def transcribe(content, charset = nil)
+      def raw_mode
+        return @raw_mode if @raw_mode
+        loaded_raw_mode = (@raw_mode_name && Glaemscribe::API::ResourceManager.loaded_modes[@raw_mode_name])    
+        return nil if !loaded_raw_mode
+        @raw_mode = loaded_raw_mode.deep_clone
+      end
+      
+      def strict_transcribe(content, charset = nil)
         charset = default_charset if !charset
         return false, "*** No charset usable for transcription. Failed!" if !charset
   
+        # Parser works line by line
         ret = content.lines.map{ |l| 
-          l = l.strip # Clean the lines
+          restore_lf = false
+          if l[-1] == "\n"
+            l[-1] = "" 
+            restore_lf = true
+          end
           l = @pre_processor.apply(l)
           l = @processor.apply(l)
           l = @post_processor.apply(l, charset)
-        }.join("\n")
+          l += "\n" if restore_lf
+          l
+        }.join
         return true, ret
+      end
+      
+      def transcribe(content, charset = nil)
+        if raw_mode
+          chunks = content.split(/({{.*?}})/m)
+          ret = ''
+          res = true
+          chunks.each{ |c|
+            if c =~ /{{(.*?)}}/m
+              succ, r = raw_mode.strict_transcribe($1,charset)
+              res = res && succ
+              ret += r if succ
+            else
+              succ, r = strict_transcribe(c,charset)
+              res = res && succ
+              ret += r if succ
+            end
+          }
+          return res,ret
+        else
+          strict_transcribe(content,charset)
+        end
       end
       
     end
