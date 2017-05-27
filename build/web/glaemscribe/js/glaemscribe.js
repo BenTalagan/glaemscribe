@@ -19,7 +19,7 @@ GNU Affero General Public License for more details.
 You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-Version : 1.1.2
+Version : 1.1.3
 */
 
 /*
@@ -951,6 +951,8 @@ Glaemscribe.Mode = function(mode_name) {
   this.errors               = [];
   this.warnings             = [];
   this.latest_option_values = {};
+  
+  this.raw_mode_name        = null;
 
   this.pre_processor    = new Glaemscribe.TranscriptionPreProcessor(this);
   this.processor        = new Glaemscribe.TranscriptionProcessor(this);
@@ -1010,12 +1012,26 @@ Glaemscribe.Mode.prototype.finalize = function(options) {
   this.post_processor.finalize(this.latest_option_values);
   this.processor.finalize(this.latest_option_values);
   
+  if(mode.get_raw_mode())
+    mode.get_raw_mode().finalize(options);
+  
   return this;
 }
 
-Glaemscribe.Mode.prototype.transcribe = function(content, charset) {
+Glaemscribe.Mode.prototype.get_raw_mode = function() {
+  var mode = this;
+  
+  if(mode.raw_mode != null)
+    return mode.raw_mode;
+  
+  var loaded_raw_mode = (mode.raw_mode_name && Glaemscribe.resource_manager.loaded_modes[mode.raw_mode_name]);
+  if(loaded_raw_mode == null)
+    return null;
+  
+  mode.raw_mode = Object.glaem_clone(loaded_raw_mode);
+}
 
-  var debug_context = new Glaemscribe.ModeDebugContext();
+Glaemscribe.Mode.prototype.strict_transcribe = function(content, charset, debug_context) {
 
   if(charset == null)
     charset = this.default_charset;
@@ -1024,12 +1040,18 @@ Glaemscribe.Mode.prototype.transcribe = function(content, charset) {
     return [false, "*** No charset usable for transcription. Failed!"];
 
   var ret   = ""
-  var lines = content.split("\n")
+  var lines = content.split(/(\n)/);
   
   for(var i=0;i<lines.length;i++)
   {
-    // Do a bit of cleaning on the lines
-    var l = lines[i].trim();
+    var l = lines[i];
+    var restore_lf = false;
+    
+    if(l[l.length-1] == "\n")
+    {
+      restore_lf = true;
+      l = l.slice(0,-1);
+    }
     
     l = this.pre_processor.apply(l);
     debug_context.preprocessor_output += l + "\n";
@@ -1039,11 +1061,60 @@ Glaemscribe.Mode.prototype.transcribe = function(content, charset) {
     
     l = this.post_processor.apply(l, charset);
     debug_context.postprocessor_output += l + "\n";
+
+    if(restore_lf)
+      l += "\n";
     
-    ret += l + "\n";
+    ret += l;
   }
 
   return [true, ret, debug_context];  
+}
+
+Glaemscribe.Mode.prototype.transcribe = function(content, charset) {
+
+  var mode          = this;
+  var debug_context = new Glaemscribe.ModeDebugContext();
+
+  var raw_mode      = mode.get_raw_mode();
+
+  var ret = "";
+  var res = true;
+ 
+  if(raw_mode != null)
+  {
+    var chunks = content.split(/({{[\s\S]*?}})/);
+       
+    chunks.glaem_each(function(_,c) {
+      var rmatch = null;
+      
+      var to_transcribe = c;
+      var tr_mode       = mode;
+      
+      if(rmatch = c.match(/{{([\s\S]*?)}}/))
+      {
+        to_transcribe = rmatch[1];
+        tr_mode       = raw_mode;
+      }
+      
+      var rr = tr_mode.strict_transcribe(to_transcribe,charset,debug_context);
+      var succ = rr[0]; var r = rr[1]; 
+      
+      res = res && succ;
+      if(succ)
+        ret += r;   
+    });
+  }
+  else
+  {
+    var rr = mode.strict_transcribe(content,charset,debug_context);
+    var succ = rr[0]; var r = rr[1]; 
+    res = res && succ;
+    if(succ)
+      ret += r;   
+  }
+    
+  return [res, ret, debug_context];  
 }
 
 
@@ -1361,6 +1432,9 @@ Glaemscribe.ModeParser.prototype.parse_raw = function(mode_name, raw, mode_optio
   mode.human_name  = doc.root_node.gpath('mode')[0].args[0]
   mode.authors     = doc.root_node.gpath('authors')[0].args[0]
   mode.version     = doc.root_node.gpath('version')[0].args[0]
+  
+  if(doc.root_node.gpath('raw_mode')[0])
+    mode.raw_mode_name = doc.root_node.gpath('raw_mode')[0].args[0];
   
   doc.root_node.gpath('options.option').glaem_each(function(_,option_element) {
 
@@ -1779,7 +1853,7 @@ Glaemscribe.SubRule = function(rule, src_combination, dst_combination)
 */
 
 
-Glaemscribe.Sheaf = function(sheaf_chain, expression) {
+Glaemscribe.Sheaf = function(sheaf_chain, expression, linkable) {
   
   var sheaf = this;
   
@@ -1787,6 +1861,7 @@ Glaemscribe.Sheaf = function(sheaf_chain, expression) {
   sheaf.mode           = sheaf_chain.mode;
   sheaf.rule           = sheaf_chain.rule;
   sheaf.expression     = expression;
+  sheaf.linkable       = linkable;
   
   // The ruby function has -1 to tell split not to remove empty stirngs at the end
   // Javascript does not need this
@@ -1823,18 +1898,20 @@ Glaemscribe.SheafChain = function(rule, expression, is_src)
   sheaf_chain.sheaf_exps = stringListToCleanArray(expression,Glaemscribe.SheafChain.SHEAF_REGEXP_OUT)
 
   sheaf_chain.sheaf_exps = sheaf_chain.sheaf_exps.map(function(sheaf_exp) { 
-    var exp     =  Glaemscribe.SheafChain.SHEAF_REGEXP_IN.exec(sheaf_exp);
-    
-    if(exp)
+    var exp       =  Glaemscribe.SheafChain.SHEAF_REGEXP_IN.exec(sheaf_exp);
+    var linkable  = false;
+    if(exp) {
       sheaf_exp   = exp[1];
+      linkable    = true;
+    }
     
-    return sheaf_exp.trim();
+    return { exp: sheaf_exp.trim(), linkable: linkable} ;
   });
 
-  sheaf_chain.sheaves    = sheaf_chain.sheaf_exps.map(function(sheaf_exp) { return new Glaemscribe.Sheaf(sheaf_chain, sheaf_exp) });
+  sheaf_chain.sheaves    = sheaf_chain.sheaf_exps.map(function(sd) { return new Glaemscribe.Sheaf(sheaf_chain, sd['exp'], sd['linkable']) });
   
   if(sheaf_chain.sheaves.length == 0)
-    sheaf_chain.sheaves    = [new Glaemscribe.Sheaf(sheaf_chain,"")]
+    sheaf_chain.sheaves    = [new Glaemscribe.Sheaf(sheaf_chain, "", false)]
     
   return sheaf_chain;    
 }
@@ -1862,53 +1939,72 @@ Glaemscribe.SheafChainIterator = function (sheaf_chain, cross_schema)
 
   var identity_cross_array  = []
   var sheaf_count           = sheaf_chain.sheaves.length;
-  
+
   // Construct the identity array
   for(var i=0;i<sheaf_count;i++)
-    identity_cross_array.push(i+1);
+    identity_cross_array.push(i);
   
+  // Make a list of linkable sheaves
+  var iterable_idxs   = [];
+  var prototype_array = [];
+  sheaf_chain.sheaves.glaem_each(function(i,sheaf) {
+    if(sheaf.linkable)
+    {
+      iterable_idxs.push(i);
+      prototype_array.push(sheaf.fragments.length);
+    }
+  });
+  
+  sci.cross_array = identity_cross_array;
+  sci.proto_attr  = prototype_array.join('x') || 'CONST';
+
   // Construct the cross array
-  var cross_array = null;
   if(cross_schema != null)
   {
-    cross_array     = cross_schema.split(",").map(function(i) { return parseInt(i) });
-    var ca_count    = cross_array.length;
+    cross_schema    = cross_schema.split(",").map(function(i) { return parseInt(i) - 1 });
+
+    // Verify that the number of iterables is equal to the cross schema length
+    var it_count    = iterable_idxs.length;
+    var ca_count    = cross_schema.length;
     
-    if(ca_count != sheaf_count)
-      sci.errors.push(sheaf_count + " sheaves found in right predicate, but " + ca_count + " elements in cross rule.");  
+    if(ca_count != it_count)
+    {
+      sci.errors.push(it_count + " linkable sheaves found in right predicate, but " + ca_count + " elements in cross rule."); 
+      return; 
+    }
     
-    var sorted = cross_array.slice(0); // clone
-    if(!identity_cross_array.equals(sorted.sort()))
-      sci.errors.push("Cross rule should contain each element of "+ identity_cross_array + " once and only once.");
+    // Verify that the cross schema is correct (should be a permutation of the identity)
+    var it_identity_array = [];
+    for(var i=0;i<it_count;i++)
+      it_identity_array.push(i);
+    
+    var sorted = cross_schema.slice(0).sort(); // clone and sort
+    
+    if(!it_identity_array.equals(sorted))
+    {
+      sci.errors.push("Cross rule schema should be a permutation of the identity (it should contain 1,2,..,n numbers once and only once).");
+      return;
+    }
+    
+    var prototype_array_permutted = prototype_array.slice(0);
+    
+    // Now calculate the cross array
+    cross_schema.glaem_each(function(from,to) {
+      var to_permut = iterable_idxs[from];
+      var permut    = iterable_idxs[to];
+      sci.cross_array[to_permut] = permut;
+      prototype_array_permutted[from] = prototype_array[to];
+    });
+    prototype_array = prototype_array_permutted;
   }
-  else
-  {
-    cross_array = identity_cross_array;    
-  }  
-  
-  this.cross_array = cross_array;
+
+  sci.proto_attr = prototype_array.join('x') || 'CONST';
 }
 
-Glaemscribe.SheafChainIterator.prototype.proto = function()
-{
-  var sci   = this;
-  
-  var res   = sci.sizes.slice(0); // clone
-  var res2  = sci.sizes.slice(0); // clone
-  
-  for(var i=0;i<res.length;i++)
-    res2[i] = res[sci.cross_array[i]-1];
-  
-  // Remove all sheaves of size 1 (which are constant)
-  res = res2.filter(function(elt) {return elt != 1})
-  
-  // Create a prototype string
-  res = res.join("x");
-  
-  if(res == "")
-    res = "1";
-  
-  return res;
+// Beware, 'prototype' is a reserved keyword
+Glaemscribe.SheafChainIterator.prototype.proto = function() {
+  var sci = this;
+  return sci.prototype_attr;
 }
 
 Glaemscribe.SheafChainIterator.prototype.combinations = function()
@@ -1945,7 +2041,7 @@ Glaemscribe.SheafChainIterator.prototype.iterate = function()
   
   while(pos < sci.sizes.length)
   {
-    var realpos = sci.cross_array[pos]-1;
+    var realpos = sci.cross_array[pos];
     sci.iterators[realpos] += 1;
     if(sci.iterators[realpos] >= sci.sizes[realpos])
     {
@@ -3087,7 +3183,7 @@ Glaemscribe.ResolveVirtualsPostProcessorOperator.prototype.reset_trigger_states 
 
 Glaemscribe.ResolveVirtualsPostProcessorOperator.prototype.apply_loop = function(charset, tokens, new_tokens, reversed, token, idx) {
   var op = this;
-  if(token == '*SPACE') {
+  if(token == '*SPACE' || token == '*LF') {
     op.reset_trigger_states(charset);
     return; // continue
   }
@@ -3229,4 +3325,235 @@ THE SOFTWARE.
 
 },{}]},{},[1])(1)
 });
+
+/*
+  Adding extern/object-clone.js 
+*/
+/*
+ * $Id: object-clone.js,v 0.41 2013/03/27 18:29:04 dankogai Exp dankogai $
+ *
+ *  Licensed under the MIT license.
+ *  http://www.opensource.org/licenses/mit-license.php
+ *
+ */
+
+(function(global) {
+    'use strict';
+    if (!Object.freeze || typeof Object.freeze !== 'function') {
+        throw Error('ES5 support required');
+    }
+    // from ES5
+    var O = Object, OP = O.prototype,
+    create = O.create,
+    defineProperty = O.defineProperty,
+    defineProperties = O.defineProperties,
+    getOwnPropertyNames = O.getOwnPropertyNames,
+    getOwnPropertyDescriptor = O.getOwnPropertyDescriptor,
+    getPrototypeOf = O.getPrototypeOf,
+    freeze = O.freeze,
+    isFrozen = O.isFrozen,
+    isSealed = O.isSealed,
+    seal = O.seal,
+    isExtensible = O.isExtensible,
+    preventExtensions = O.preventExtensions,
+    hasOwnProperty = OP.hasOwnProperty,
+    toString = OP.toString,
+    isArray = Array.isArray,
+    slice = Array.prototype.slice;
+    // Utility functions; some exported
+    function defaults(dst, src) {
+        getOwnPropertyNames(src).forEach(function(k) {
+            if (!hasOwnProperty.call(dst, k)) defineProperty(
+                dst, k, getOwnPropertyDescriptor(src, k)
+            );
+        });
+        return dst;
+    };
+    var isObject = function(o) { return o === Object(o) };
+    var isPrimitive = function(o) { return o !== Object(o) };
+    var isFunction = function(f) { return typeof(f) === 'function' };
+    var signatureOf = function(o) { return toString.call(o) };
+    var HASWEAKMAP = (function() { // paranoia check
+        try {
+            var wm = new WeakMap();
+            wm.set(wm, wm);
+            return wm.get(wm) === wm;
+        } catch(e) {
+            return false;
+        }
+    })();
+    // exported
+    function is (x, y) {
+        return x === y
+            ? x !== 0 ? true
+            : (1 / x === 1 / y) // +-0
+        : (x !== x && y !== y); // NaN
+    };
+    function isnt (x, y) { return !is(x, y) };
+    var defaultCK = {
+        descriptors:true,
+        extensibility:true, 
+        enumerator:getOwnPropertyNames
+    };
+    function equals (x, y, ck) {
+        var vx, vy;
+        if (HASWEAKMAP) {
+            vx = new WeakMap();
+            vy = new WeakMap();
+        }
+        ck = defaults(ck || {}, defaultCK);
+        return (function _equals(x, y) {
+            if (isPrimitive(x)) return is(x, y);
+            if (isFunction(x))  return is(x, y);
+            // check deeply
+            var sx = signatureOf(x), sy = signatureOf(y);
+            var i, l, px, py, sx, sy, kx, ky, dx, dy, dk, flt;
+            if (sx !== sy) return false;
+            switch (sx) {
+            case '[object Array]':
+            case '[object Object]':
+                if (ck.extensibility) {
+                    if (isExtensible(x) !== isExtensible(y)) return false;
+                    if (isSealed(x) !== isSealed(y)) return false;
+                    if (isFrozen(x) !== isFrozen(y)) return false;
+                }
+                if (vx) {
+                    if (vx.has(x)) {
+                        // console.log('circular ref found');
+                        return vy.has(y);
+                    }
+                    vx.set(x, true);
+                    vy.set(y, true);
+                }
+                px = ck.enumerator(x);
+                py = ck.enumerator(y);
+                if (ck.filter) {
+                    flt = function(k) {
+                        var d = getOwnPropertyDescriptor(this, k);
+                        return ck.filter(d, k, this);
+                    };
+                    px = px.filter(flt, x);
+                    py = py.filter(flt, y);
+                }
+                if (px.length != py.length) return false;
+                px.sort(); py.sort();
+                for (i = 0, l = px.length; i < l; ++i) {
+                    kx = px[i];
+                    ky = py[i];
+                    if (kx !== ky) return false;
+                    dx = getOwnPropertyDescriptor(x, ky);
+                    dy = getOwnPropertyDescriptor(y, ky);
+                    if ('value' in dx) {
+                        if (!_equals(dx.value, dy.value)) return false;
+                    } else {
+                        if (dx.get && dx.get !== dy.get) return false;
+                        if (dx.set && dx.set !== dy.set) return false;
+                    }
+                    if (ck.descriptors) {
+                        if (dx.enumerable !== dy.enumerable) return false;
+                        if (ck.extensibility) {
+                            if (dx.writable !== dy.writable)
+                                return false;
+                            if (dx.configurable !== dy.configurable)
+                                return false;
+                        }
+                    }
+                }
+                return true;
+            case '[object RegExp]':
+            case '[object Date]':
+            case '[object String]':
+            case '[object Number]':
+            case '[object Boolean]':
+                return ''+x === ''+y;
+            default:
+                throw TypeError(sx + ' not supported');
+            }
+        })(x, y);
+    }
+    function clone(src, deep, ck) {
+        var wm;
+        if (deep && HASWEAKMAP) {
+            wm = new WeakMap();
+        }
+        ck = defaults(ck || {}, defaultCK);
+        return (function _clone(src) {
+            // primitives and functions
+            if (isPrimitive(src)) return src;
+            if (isFunction(src)) return src;
+            var sig = signatureOf(src);
+            switch (sig) {
+            case '[object Array]':
+            case '[object Object]':
+                if (wm) {
+                    if (wm.has(src)) {
+                        // console.log('circular ref found');
+                        return src;
+                    }
+                    wm.set(src, true);
+                }
+                var isarray = isArray(src);
+                var dst = isarray ? [] : create(getPrototypeOf(src));
+                ck.enumerator(src).forEach(function(k) {
+                    // Firefox forbids defineProperty(obj, 'length' desc)
+                    if (isarray && k === 'length') {
+                        dst.length = src.length;
+                    } else {
+                        if (ck.descriptors) {
+                            var desc = getOwnPropertyDescriptor(src, k);
+                            if (ck.filter && !ck.filter(desc, k, src)) return;
+                            if (deep && 'value' in desc) 
+                                desc.value = _clone(src[k]);
+                            defineProperty(dst, k, desc);
+                        } else {
+                            dst[k] = _clone(src[k]);
+                        }
+                    }
+                });
+                if (ck.extensibility) {
+                    if (!isExtensible(src)) preventExtensions(dst);
+                    if (isSealed(src)) seal(dst);
+                    if (isFrozen(src)) freeze(dst);
+                }
+                return dst;
+            case '[object RegExp]':
+            case '[object Date]':
+            case '[object String]':
+            case '[object Number]':
+            case '[object Boolean]':
+                return deep ? new src.constructor(src.valueOf()) : src;
+            default:
+                throw TypeError(sig + ' is not supported');
+            }
+        })(src);
+    };
+    //  Install
+    var obj2specs = function(src) {
+        var specs = create(null);
+        getOwnPropertyNames(src).forEach(function(k) {
+            specs[k] = {
+                value: src[k],
+                configurable: true,
+                writable: true,
+                enumerable: false
+            };
+        });
+        return specs;
+    };
+    var defaultProperties = function(dst, descs) {
+        getOwnPropertyNames(descs).forEach(function(k) {
+            if (!hasOwnProperty.call(dst, k)) defineProperty(
+                dst, k, descs[k]
+            );
+        });
+        return dst;
+    };
+    (Object.installProperties || defaultProperties)(Object, obj2specs({
+        // Avoid conflicts with other projects, rename glaem_clone
+        glaem_clone: clone,
+        // is: is,
+        // isnt: isnt,
+        // equals: equals
+    }));
+})(this);
 

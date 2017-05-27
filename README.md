@@ -18,6 +18,7 @@ Features
 * Separates the handling of modes and charsets, making the mode files purely 'logical' and compliant with all fonts, and pushing back font issues to charset files.
 * Compliant with opentype and non-opentype fonts, so that we can handle old-gen (Parmaite, Eldamar, Annatar...) fonts as well as new-gen ones (FreeMono, Eldamar Sarati - glaemscribe version with opentype features, ...), so that have a smooth transition between technologies.
 * Offers a mechanism to compensate diacritic and ligature issues for non-opentype fonts through 'virtual characters', allowing mode files to be generic and far more simple to write.
+* As support for inlined, spelled tengwar (or any other writing, respectively) for complete control on the output.
 * Has an official graphical, friendly integration (see above).
 * Has a graphical IDE for helping users to write mode files.
 * Exists as a javascript library or a ruby library.
@@ -37,7 +38,9 @@ Changelog
 ---------
 
 | Version | Date | Comment |
-|---------|------|---------| 
+|---------|------|---------|
+| 1.1.3 | 05/27/2017 | [Tengwar] Added support for inlined, raw, spelled tengwar through the raw tengwar mode and the {{ ... }} syntax within any tengwar mode (thanks @Shihali for the discussion leading to that feature). <br> Major bug fix on crossrules (thanks @Laicasaane for noticing that bug!) <br> Reworked charsets and moved the reversed a tehta that was mapped on U+00AD (soft hyphen) (thanks @Laicasaane for noticing that bug too!) |
+| 1.1.2 | 05/04/2017 | Npm repackaging. |
 | 1.1.1 | 05/04/2017 | [Quenya] Added Vanyarin ldy, rdy, lg, rg, ff. <br> Added npm packaging. <br> Minor bug fixes. |
 | 1.1.0 | 03/24/2017 | [Quenya] Added double tehtar option. <br>Added reversed virtual chars (for ligatures). <br>Added charset for Annatar. <br>Added LAMBE ligature for Annatar charset. <br>Enhanced existing charsets for better diacritic placement.<br>Merged Blackspeech modes. <br>Added support for FreeMonoTengwar. <br>Added custom, independent charset for Tengwar Parmaite. <br>Added charset for Tengwar Elfica. <br>New runic modes for Old Norse and Old English. <br>Lots of minor fixes. <br>Added small options in tengwar modes (consonant modification diacritic style, o/u curl direction, etc.) |
 | 1.0.19 | 09/06/2016 | [Quenya] Removed unutixe under óre for coherency in implicit a submode.<br>[Sindarin Angerthas Daeron] Fixed h,ch,hw. |

@@ -1,7 +1,6 @@
 /bin_dev/node_modules
 /sandbox
-/unit_tests/glaemscrafu
-/unit_tests/old
+/unit_tests
 /unit_tests_dumped
 .DS_Store
 *.disabled
