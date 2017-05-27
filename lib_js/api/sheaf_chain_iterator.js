@@ -35,53 +35,72 @@ Glaemscribe.SheafChainIterator = function (sheaf_chain, cross_schema)
 
   var identity_cross_array  = []
   var sheaf_count           = sheaf_chain.sheaves.length;
-  
+
   // Construct the identity array
   for(var i=0;i<sheaf_count;i++)
-    identity_cross_array.push(i+1);
+    identity_cross_array.push(i);
   
+  // Make a list of linkable sheaves
+  var iterable_idxs   = [];
+  var prototype_array = [];
+  sheaf_chain.sheaves.glaem_each(function(i,sheaf) {
+    if(sheaf.linkable)
+    {
+      iterable_idxs.push(i);
+      prototype_array.push(sheaf.fragments.length);
+    }
+  });
+  
+  sci.cross_array = identity_cross_array;
+  sci.proto_attr  = prototype_array.join('x') || 'CONST';
+
   // Construct the cross array
-  var cross_array = null;
   if(cross_schema != null)
   {
-    cross_array     = cross_schema.split(",").map(function(i) { return parseInt(i) });
-    var ca_count    = cross_array.length;
+    cross_schema    = cross_schema.split(",").map(function(i) { return parseInt(i) - 1 });
+
+    // Verify that the number of iterables is equal to the cross schema length
+    var it_count    = iterable_idxs.length;
+    var ca_count    = cross_schema.length;
     
-    if(ca_count != sheaf_count)
-      sci.errors.push(sheaf_count + " sheaves found in right predicate, but " + ca_count + " elements in cross rule.");  
+    if(ca_count != it_count)
+    {
+      sci.errors.push(it_count + " linkable sheaves found in right predicate, but " + ca_count + " elements in cross rule."); 
+      return; 
+    }
     
-    var sorted = cross_array.slice(0); // clone
-    if(!identity_cross_array.equals(sorted.sort()))
-      sci.errors.push("Cross rule should contain each element of "+ identity_cross_array + " once and only once.");
+    // Verify that the cross schema is correct (should be a permutation of the identity)
+    var it_identity_array = [];
+    for(var i=0;i<it_count;i++)
+      it_identity_array.push(i);
+    
+    var sorted = cross_schema.slice(0).sort(); // clone and sort
+    
+    if(!it_identity_array.equals(sorted))
+    {
+      sci.errors.push("Cross rule schema should be a permutation of the identity (it should contain 1,2,..,n numbers once and only once).");
+      return;
+    }
+    
+    var prototype_array_permutted = prototype_array.slice(0);
+    
+    // Now calculate the cross array
+    cross_schema.glaem_each(function(from,to) {
+      var to_permut = iterable_idxs[from];
+      var permut    = iterable_idxs[to];
+      sci.cross_array[to_permut] = permut;
+      prototype_array_permutted[from] = prototype_array[to];
+    });
+    prototype_array = prototype_array_permutted;
   }
-  else
-  {
-    cross_array = identity_cross_array;    
-  }  
-  
-  this.cross_array = cross_array;
+
+  sci.proto_attr = prototype_array.join('x') || 'CONST';
 }
 
-Glaemscribe.SheafChainIterator.prototype.proto = function()
-{
-  var sci   = this;
-  
-  var res   = sci.sizes.slice(0); // clone
-  var res2  = sci.sizes.slice(0); // clone
-  
-  for(var i=0;i<res.length;i++)
-    res2[i] = res[sci.cross_array[i]-1];
-  
-  // Remove all sheaves of size 1 (which are constant)
-  res = res2.filter(function(elt) {return elt != 1})
-  
-  // Create a prototype string
-  res = res.join("x");
-  
-  if(res == "")
-    res = "1";
-  
-  return res;
+// Beware, 'prototype' is a reserved keyword
+Glaemscribe.SheafChainIterator.prototype.proto = function() {
+  var sci = this;
+  return sci.prototype_attr;
 }
 
 Glaemscribe.SheafChainIterator.prototype.combinations = function()
@@ -118,7 +137,7 @@ Glaemscribe.SheafChainIterator.prototype.iterate = function()
   
   while(pos < sci.sizes.length)
   {
-    var realpos = sci.cross_array[pos]-1;
+    var realpos = sci.cross_array[pos];
     sci.iterators[realpos] += 1;
     if(sci.iterators[realpos] >= sci.sizes[realpos])
     {

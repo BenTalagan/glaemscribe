@@ -31,6 +31,7 @@ module Glaemscribe
   module API
     class Sheaf
       
+      attr_reader :linkable
       attr_reader :fragments
       attr_reader :sheaf_chain 
       attr_reader :mode
@@ -44,8 +45,9 @@ module Glaemscribe
       def dst?; @sheaf_chain.dst?; end
             
       # Should pass a sheaf expression, e.g. : "h, s, t"
-      def initialize(sheaf_chain, expression)
+      def initialize(sheaf_chain, expression, linkable)
         
+        @linkable     = linkable
         @sheaf_chain  = sheaf_chain
         @mode         = sheaf_chain.mode
         @rule         = sheaf_chain.rule

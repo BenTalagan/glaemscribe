@@ -34,18 +34,20 @@ Glaemscribe.SheafChain = function(rule, expression, is_src)
   sheaf_chain.sheaf_exps = stringListToCleanArray(expression,Glaemscribe.SheafChain.SHEAF_REGEXP_OUT)
 
   sheaf_chain.sheaf_exps = sheaf_chain.sheaf_exps.map(function(sheaf_exp) { 
-    var exp     =  Glaemscribe.SheafChain.SHEAF_REGEXP_IN.exec(sheaf_exp);
-    
-    if(exp)
+    var exp       =  Glaemscribe.SheafChain.SHEAF_REGEXP_IN.exec(sheaf_exp);
+    var linkable  = false;
+    if(exp) {
       sheaf_exp   = exp[1];
+      linkable    = true;
+    }
     
-    return sheaf_exp.trim();
+    return { exp: sheaf_exp.trim(), linkable: linkable} ;
   });
 
-  sheaf_chain.sheaves    = sheaf_chain.sheaf_exps.map(function(sheaf_exp) { return new Glaemscribe.Sheaf(sheaf_chain, sheaf_exp) });
+  sheaf_chain.sheaves    = sheaf_chain.sheaf_exps.map(function(sd) { return new Glaemscribe.Sheaf(sheaf_chain, sd['exp'], sd['linkable']) });
   
   if(sheaf_chain.sheaves.length == 0)
-    sheaf_chain.sheaves    = [new Glaemscribe.Sheaf(sheaf_chain,"")]
+    sheaf_chain.sheaves    = [new Glaemscribe.Sheaf(sheaf_chain, "", false)]
     
   return sheaf_chain;    
 }

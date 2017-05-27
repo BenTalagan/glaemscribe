@@ -65,12 +65,16 @@ module Glaemscribe
         sheaf_exps = expression.split(SHEAF_REGEXP_OUT).map{ |elt| elt.strip }.reject{ |elt| elt.empty? }
         sheaf_exps = sheaf_exps.map { |sheaf_exp| 
           sheaf_exp =~ SHEAF_REGEXP_IN
-          sheaf_exp = $1 if $1 # Take the interior of the brackets it was a [...] expression
-          sheaf_exp.strip
+          linkable = false
+          if $1 # Take the interior of the brackets it was a [...] expression
+            sheaf_exp = $1 
+            linkable = true
+          end
+          { exp: sheaf_exp.strip, linkable: linkable }
         }
             
-        @sheaves    = sheaf_exps.map{ |sheaf_exp| Sheaf.new(self,sheaf_exp) }
-        @sheaves    = [Sheaf.new(self,"")] if @sheaves.empty?         
+        @sheaves    = sheaf_exps.map{ |sd| Sheaf.new(self, sd[:exp], sd[:linkable]) }
+        @sheaves    = [Sheaf.new(self,"",false)] if @sheaves.empty?         
       end
       
       def p

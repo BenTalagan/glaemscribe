@@ -27,6 +27,8 @@ module Glaemscribe
       attr_accessor :sheaf_chain
       attr_accessor :cross_map
       attr_accessor :errors
+      
+      attr_reader   :prototype
   
       # If a cross schema is passed, the prototype of the chain will be permutated
       def initialize(sheaf_chain, cross_schema = nil)
@@ -41,40 +43,57 @@ module Glaemscribe
         # Construct the identity array
         identity_cross_array    = []
         sheaf_count             = sheaf_chain.sheaves.count
-        sheaf_count.times{|i| identity_cross_array << i+1}  
+        sheaf_count.times { |i| identity_cross_array << i }  
 
+        # Make a list of iterable sheaves
+        iterable_idxs     = []
+        prototype_array   = []
+        sheaf_chain.sheaves.each_with_index { |sheaf,i| 
+          if sheaf.linkable 
+            iterable_idxs.push(i) 
+            prototype_array.push(sheaf.fragments.count)
+          end
+        }
+
+        @cross_array = identity_cross_array
+        @prototype   = prototype_array.join('x') || 'CONST'  
+ 
         # Construct the cross array
         if cross_schema
-          @cross_array          = cross_schema.split(",").map{ |i| i.to_i }
-          ca_count              = @cross_array.count
-          @errors << "#{sheaf_count} sheafs found in right predicate, but #{ca_count} elements in cross rule."  if ca_count != sheaf_count  
-          @errors << "Cross rule should contain each element of #{identity_cross_array} once and only once."    if identity_cross_array != @cross_array.sort
-        else
-          @cross_array = identity_cross_array
-        end    
-      end
+        
+          cross_schema          = cross_schema.split(",").map{ |i| i.to_i - 1 }
+              
+          # Verify that the number of iterables is equal to the cross schema length
+          it_count              = iterable_idxs.count
+          ca_count              = cross_schema.count
+          @errors << "#{it_count} linkable sheaves found in right predicate, but #{ca_count} elements in cross rule." and return  if ca_count != it_count
+          
+          # Verify that the cross schema is correct (should be a permutation of the identity)
+          it_identity_array = []
+          it_count.times { |i| it_identity_array << i }     
+          @errors << "Cross rule schema should be a permutation of the identity (it should contain 1,2,..,n numbers once and only once)." and return  if it_identity_array != cross_schema.sort
   
-      # Calculate the prototype of the chain
-      def prototype
-        res   = @sizes.clone
-        res2  = @sizes.clone 
+          proto_array_permutted = prototype_array.clone
+          
+          # Now calculate the cross array
+          cross_schema.each_with_index{ |to,from|
+            to_permut = iterable_idxs[from]
+            permut    = iterable_idxs[to]
+            @cross_array[to_permut] = permut
+ 
+            proto_array_permutted[from] = prototype_array[to] 
+          }  
+          prototype_array = proto_array_permutted
+        end  
         
-        res.count.times{ |i| res2[i] = res[@cross_array[i]-1] }
-        res   = res2
-    
-        # Remove all sheaves of size 1 (which are constant)
-        res.delete(1)
-        
-        # Create a prototype string
-        res = res.join("x")
-        res = "1" if res.empty?
-        res
+        # Recalculate prototype
+        @prototype = prototype_array.join('x') || 'CONST'  
       end
   
       def iterate
         pos = 0
         while pos < @sizes.count do
-          realpos = @cross_array[pos]-1
+          realpos = @cross_array[pos]
           @iterators[realpos] += 1
           if @iterators[realpos] >= @sizes[realpos]
             @iterators[realpos] = 0

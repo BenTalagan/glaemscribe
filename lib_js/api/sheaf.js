@@ -22,7 +22,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 */
 
-Glaemscribe.Sheaf = function(sheaf_chain, expression) {
+Glaemscribe.Sheaf = function(sheaf_chain, expression, linkable) {
   
   var sheaf = this;
   
@@ -30,6 +30,7 @@ Glaemscribe.Sheaf = function(sheaf_chain, expression) {
   sheaf.mode           = sheaf_chain.mode;
   sheaf.rule           = sheaf_chain.rule;
   sheaf.expression     = expression;
+  sheaf.linkable       = linkable;
   
   // The ruby function has -1 to tell split not to remove empty stirngs at the end
   // Javascript does not need this

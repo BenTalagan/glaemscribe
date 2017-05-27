@@ -241,10 +241,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     \** ## Liquids **\
     \** ## **\
 
-    {S_VOWELS_WN}w{S_VOWELS_WN}   --> 2,1,3 --> ROMEN {_S_VOWELS_UP_WN_}{_S_VOWELS_DN_WN_}
-    {S_VOWELS_WN}ww                   --> 2,1   --> ROMEN GEMINATE_DOUBLE {_S_VOWELS_UP_WN_}
-    {S_VOWELS_WN}[l * ll]             --> 2,1   --> [LAMBE * LAMBE GEMINATE_DOUBLE]{_S_VOWELS_UP_WN_}
-    {S_VOWELS_WN}ld                   --> 2,1   --> ALDA {_S_VOWELS_UP_WN_}
+    {S_VOWELS_WN}w{S_VOWELS_WN}             --> ROMEN {_S_VOWELS_UP_WN_}{_S_VOWELS_DN_WN_}
+    {S_VOWELS_WN}ww                         --> ROMEN GEMINATE_DOUBLE {_S_VOWELS_UP_WN_}
+    {S_VOWELS_WN}[l * ll]         --> 2,1   --> [LAMBE * LAMBE GEMINATE_DOUBLE]{_S_VOWELS_UP_WN_}
+    {S_VOWELS_WN}ld                         --> ALDA {_S_VOWELS_UP_WN_}
 
 
     \** ## Alveolar (sifflantes) **\
@@ -255,40 +255,36 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     {L8_IMG_GEMS} ===  SILME_NUQUERNA GEMINATE_DOUBLE * ESSE_NUQUERNA GEMINATE_DOUBLE
     
     {S_VOWELS_WN}[{L8_KER}]{S_VOWELS_WN}  --> 2,1,3 --> [{L8_IMG}]{_S_VOWELS_UP_WN_}{_S_VOWELS_DN_WN_}
-    {S_VOWELS_WN}[{L8_KER_GEMS}]              --> 2,1   --> [{L8_IMG_GEMS}]{_S_VOWELS_UP_WN_}
+    {S_VOWELS_WN}[{L8_KER_GEMS}]          --> 2,1   --> [{L8_IMG_GEMS}]{_S_VOWELS_UP_WN_}
 
 
     \** ## FINAL S (Challenging!) **\
     {S_VOWELS_WN}s_                               --> SHOOK_BEAUTIFUL {_S_VOWELS_UP_WN_} \** # Final rule for s **\
     _{S_VOWELS_WN}s_                              --> SILME_NUQUERNA {_S_VOWELS_UP_WN_} \** # Rule _es_ **\
-    [{L_VOWELS} * _ ]{S_VOWELS_WN}s_              --> 2,1,3     --> [{L_TEHTAR} * {NULL} ] SILME_NUQUERNA {_S_VOWELS_UP_WN_} \** # Rule for éis_, és_ **\
-    {NULL}[ {S_VOWELS_NP_KERNEL} ]{S_VOWELS}s_    --> 1,3,2,4   --> TELCO [ {TEHTAR_UP_NP} ] SILME_NUQUERNA {_S_VOWELS_UP_} \** # Rule for ies_   **\
+    [{L_VOWELS} * _ ]{S_VOWELS_WN}s_              --> [{L_TEHTAR} * {NULL} ] SILME_NUQUERNA {_S_VOWELS_UP_WN_} \** # Rule for éis_, és_ **\
+    {NULL}[ {S_VOWELS_NP_KERNEL} ]{S_VOWELS}s_    --> TELCO [ {TEHTAR_UP_NP} ] SILME_NUQUERNA {_S_VOWELS_UP_} \** # Rule for ies_   **\
 
     s --> SILME \** # Overload lonely s **\
     z --> ESSE  \** # Overload lonely z **\
 
     \** ## Ligatures **\
     \** ## **\
-    {LINE_VARIOUS_1_KER}      ===  sċ 
-    {LINE_VARIOUS_1_IMG}      ===  ANCA_CLOSED  
-    {LINE_VARIOUS_2_KER}      ===  hw * çt * (χt,ħt)
-    {LINE_VARIOUS_2_IMG}      ===  HARP_SHAPED  * AHA_TINCO  * HWESTA_TINCO 
-
-    {S_VOWELS_WN}[{LINE_VARIOUS_1_KER}]{S_VOWELS_WN} --> 2,1,3 --> [{LINE_VARIOUS_1_IMG}]{_S_VOWELS_UP_WN_}{_S_VOWELS_DN_WN_}
-    {S_VOWELS_WN}[{LINE_VARIOUS_2_KER}]{S_VOWELS_WN} --> 2,1,3 --> [{LINE_VARIOUS_2_IMG}]{_S_VOWELS_UP_WN_}{_S_VOWELS_DN_WN_}
-
-
+    {LINE_VARIOUS_KER}      ===  sċ * hw * çt * (χt,ħt)
+    {LINE_VARIOUS_IMG}      ===  ANCA_CLOSED * HARP_SHAPED  * AHA_TINCO  * HWESTA_TINCO 
+ 
+    {S_VOWELS_WN}[{LINE_VARIOUS_KER}]{S_VOWELS_WN} --> 2,1,3 --> [{LINE_VARIOUS_IMG}]{_S_VOWELS_UP_WN_}{_S_VOWELS_DN_WN_}
+  
     \** ## Various **\
     \** ## **\
-    {S_VOWELS_WN}h{S_VOWELS_WN}   --> 2,1,3 --> HYARMEN {_S_VOWELS_UP_WN_}{_S_VOWELS_DN_WN_}
-    {S_VOWELS_WN}hh               --> 2,1   --> HYARMEN GEMINATE_DOUBLE {_S_VOWELS_UP_WN_}
+    {S_VOWELS_WN}h{S_VOWELS_WN}   --> HYARMEN {_S_VOWELS_UP_WN_}{_S_VOWELS_DN_WN_}
+    {S_VOWELS_WN}hh               --> HYARMEN GEMINATE_DOUBLE {_S_VOWELS_UP_WN_}
 
 
     \** ## X **\
     \** ## For x, due to the cedilla, we cannot put tehtas under the tengwa. **\
-    {S_VOWELS_WN}x  --> 2,1 --> QUESSE SHOOK_LEFT_L {_S_VOWELS_UP_WN_}
-    {S_VOWELS_WN}xx --> 2,1 --> QUESSE SHOOK_LEFT_L GEMINATE_DOUBLE {_S_VOWELS_UP_WN_}
-    {S_VOWELS_WN}nx --> 2,1 --> QUESSE SHOOK_LEFT_L TILD_SUP_S {_S_VOWELS_UP_WN_}
+    {S_VOWELS_WN}x  --> QUESSE SHOOK_LEFT_L {_S_VOWELS_UP_WN_}
+    {S_VOWELS_WN}xx --> QUESSE SHOOK_LEFT_L GEMINATE_DOUBLE {_S_VOWELS_UP_WN_}
+    {S_VOWELS_WN}nx --> QUESSE SHOOK_LEFT_L TILD_SUP_S {_S_VOWELS_UP_WN_}
   \end
   
   \beg rules punctuation 
