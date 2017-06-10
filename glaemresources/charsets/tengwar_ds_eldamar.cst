@@ -232,7 +232,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 \** š **\ \char 161 MALTA_W_HOOK TW_MH                                 
 \** Ÿ **\ \char 178 THINF_ACCENT_XS                                 
 \** ƒ **\ \char 192 THINF_DSTROKE_XL                                 
-\** ˆ **\ \char 2c6 ?                                 
+\** ˆ **\ \char 2c6 PUNCT_TDOT PUSTA_3                                
 \** ˜ **\ \char 2dc TH_SUB_CIRC_XL                                 
 \** – **\ \char 2013 ANCA_CLOSED SILME_AHA                                
 \** — **\ \char 2014 OLD_ENGLISH_AND                                
