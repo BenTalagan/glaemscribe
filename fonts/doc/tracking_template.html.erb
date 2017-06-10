@@ -1,0 +1,112 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+</head>
+<body>
+  
+  <style>
+    
+    body {
+      padding:20px;
+    }
+    
+    h1 {
+      margin-bottom:10px;
+    }
+    
+    th.rotate {
+      /* Something you can count on */
+      height: 140px;
+      white-space: nowrap;
+    }
+
+    th.rotate > div {
+      transform: 
+      /* Magic Numbers */
+      translate(25px, 51px)
+      /* 45 is really 360 - 45 */
+      rotate(315deg);
+      width: 30px;
+      margin-left: -5px;
+    }
+    th.rotate > div > span {
+      border-bottom: 1px solid #ccc;
+      padding: 3px 10px;
+      font-size:14px;
+    }
+
+    td:first-child {
+      font-weight:bold;
+      padding:2px 5px ;
+    }
+    
+    td:last-child {
+      padding:2px 5px ;
+    }
+    
+    td {
+       white-space:nowrap;
+      font-size:12px;
+    }
+
+    td {
+      border: solid 1px #ccc;
+      border-collapse:collapse;
+      width:30px;
+    }
+
+    table {
+      border-collapse: collapse;
+    }
+
+    .x {
+      background-color:#a9ffa9;
+    }
+    
+    .a {
+      background-color:#c1f9ff;
+    }
+    
+    .m {
+      background-color:#fffab4;
+    }
+    
+    .o {
+      background-color:#ffdfd5;
+    }
+    
+    hr {
+      margin-top:30px;
+      margin-bottom:0px;
+    }
+
+  </style>
+  
+  
+  <% @sections.each do |s| %>
+    <h1><%= s[:name] %></h1>
+    
+    <table>
+      <thead>
+        <th></th>
+          <% @fonts.each do |f| %>
+            <th class="rotate"><div><span><%= f %></span></div></th> 
+          <% end %>
+        <th></th>
+      </thead>
+          <tbody>
+            <% s[:entries].each do |e|%>
+              <tr>
+                <td><%= e[e.count-2]%></td>
+                <% e[0..e.count-3].each do |ei| %>
+                  <td class="<%= ei %>">
+                <% end %>
+                <td><%= e[e.length-1]%></td>
+              </tr>
+            <% end %>
+          </tbody>
+    </table>  
+    <hr>
+  <% end %>
+  </body>
+</html>
