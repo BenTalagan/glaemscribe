@@ -8,4 +8,4 @@ editor/tipsy/* linguist-vendored
 
 textmate_bundle/* linguist-vendored
 build/* linguist-vendored
-bin_dev/virtual_chars_tool/*.html linguist-vendored
+fonts/virtual_chars_tool/*.html linguist-vendored
