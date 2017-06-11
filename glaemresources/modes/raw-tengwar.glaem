@@ -193,6 +193,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     ! --> PUNCT_EXCLAM
     ? --> PUNCT_INTERR
     · --> PUNCT_DOT
+    
+    :: --> PUSTA_3
 
     \** Apostrophe **\
 

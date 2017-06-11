@@ -24,10 +24,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 \** Charset for Dan Smith layout based fonts **\ 
 
-\version 0.0.5
+\version 0.0.6
 
 \beg changelog
   \entry "0.0.5" "Added VALA_W_HOOK, VAIYA. Moved A_TEHTA_INV_L due to soft hyphen bug."
+  \entry "0.0.6" "Superior and inferior dash and tild consonant modification signs have been added for halla, telco and ara. / Added pustar combinations (4/4-halfed/4-squared/5)"
 \end
 
 \**   **\ \char 20 SPACE              
