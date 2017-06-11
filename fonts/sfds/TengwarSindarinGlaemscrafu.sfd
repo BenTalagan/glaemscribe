@@ -21,7 +21,7 @@ OS2Version: 4
 OS2_WeightWidthSlopeOnly: 0
 OS2_UseTypoMetrics: 1
 CreationTime: -2082844800
-ModificationTime: 1497186210
+ModificationTime: 1497192982
 PfmFamily: 17
 TTFWeight: 400
 TTFWidth: 5
@@ -953,10 +953,10 @@ NameList: AGL For New Fonts
 DisplaySize: -48
 AntiAlias: 1
 FitToEm: 1
-WinInfo: 11788 28 11
+WinInfo: 308 28 11
 BeginPrivate: 0
 EndPrivate
-BeginChars: 65538 271
+BeginChars: 65538 275
 
 StartChar: .notdef
 Encoding: 65536 -1 0
@@ -33377,7 +33377,7 @@ EndChar
 StartChar: uni2E2C
 Encoding: 11820 11820 270
 Width: 1349
-Flags: WO
+Flags: W
 LayerCount: 2
 Fore
 SplineSet
@@ -33417,6 +33417,83 @@ SplineSet
  377 731 377 731 334 731 c 0,53,54
  293 731 293 731 260 764 c 128,-1,55
  227 797 227 797 227 838 c 256,42,43
+EndSplineSet
+EndChar
+
+StartChar: uni0200
+Encoding: 512 512 271
+Width: 2
+Flags: W
+LayerCount: 2
+Fore
+SplineSet
+-761 -326 m 5,0,-1
+ -695 -203 l 5,1,-1
+ 107 -203 l 5,2,-1
+ 50 -326 l 5,3,-1
+ -761 -326 l 5,0,-1
+EndSplineSet
+EndChar
+
+StartChar: uni0201
+Encoding: 513 513 272
+Width: 2
+Flags: W
+LayerCount: 2
+Fore
+SplineSet
+-1047 -406 m 1,0,1
+ -1036 -377 -1036 -377 -1004 -315 c 0,2,3
+ -971 -256 -971 -256 -897 -197 c 0,4,5
+ -825 -137 -825 -137 -727 -137 c 0,6,7
+ -651 -137 -651 -137 -557 -184 c 0,8,9
+ -467 -231 -467 -231 -401 -231 c 0,10,11
+ -307 -231 -307 -231 -172 -131 c 1,12,13
+ -221 -260 -221 -260 -289 -326 c 0,14,15
+ -356 -393 -356 -393 -449 -393 c 0,16,17
+ -504 -393 -504 -393 -578 -365 c 0,18,19
+ -659 -330 -659 -330 -688 -317 c 0,20,21
+ -717 -307 -717 -307 -762 -307 c 0,22,23
+ -860 -307 -860 -307 -1047 -406 c 1,0,1
+EndSplineSet
+EndChar
+
+StartChar: uni0202
+Encoding: 514 514 273
+Width: 2
+Flags: W
+LayerCount: 2
+Fore
+SplineSet
+-699 1100 m 5,0,-1
+ -634 1223 l 5,1,-1
+ 137 1223 l 5,2,-1
+ 79 1100 l 5,3,-1
+ -699 1100 l 5,0,-1
+EndSplineSet
+EndChar
+
+StartChar: uni0203
+Encoding: 515 515 274
+Width: 2
+Flags: WO
+LayerCount: 2
+Fore
+SplineSet
+-747 1014 m 5,0,1
+ -737 1044 -737 1044 -704 1104 c 4,2,3
+ -670 1163 -670 1163 -598 1222.5 c 132,-1,4
+ -526 1282 -526 1282 -428 1282 c 4,5,6
+ -348 1282 -348 1282 -258 1235 c 4,7,8
+ -166 1188 -166 1188 -102 1188 c 4,9,10
+ -53 1188 -53 1188 2 1212 c 4,11,12
+ 57 1237 57 1237 127 1288 c 5,13,14
+ 78 1157 78 1157 10 1091 c 4,15,16
+ -57 1026 -57 1026 -149 1026 c 4,17,18
+ -203 1026 -203 1026 -278 1055 c 4,19,20
+ -354 1087 -354 1087 -385 1100 c 4,21,22
+ -418 1112 -418 1112 -463 1112 c 4,23,24
+ -563 1112 -563 1112 -747 1014 c 5,0,1
 EndSplineSet
 EndChar
 EndChars
