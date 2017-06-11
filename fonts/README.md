@@ -18,6 +18,8 @@ A comparison chart for tengwar fonts is available here : (todo)[todo]
 * The _a_ theta at U+00AD (soft hyphen) has been moved to U+0109 (for browser compatibility issues).
 * The _vaia_ tengwa has been moved to U+0125 (for browser compatibility issues).
 * Superior and inferior dash and tild consonant modification signs have been added for halla, telco and ara.
+* Moved pustar combinations (4/4-squared/5).
+* Added 4-halfed pustar combination.
 
 **Tengwar Parmaite**, created and designed by **Måns Björkman**
 --------------------------------------------------------------
@@ -28,10 +30,12 @@ A comparison chart for tengwar fonts is available here : (todo)[todo]
 * The _a_ theta at U+00AD (soft hyphen) has been moved to U+0109 (for browser compatibility issues).
 * The _vaia_ tengwa has been moved to U+0125 (for browser compatibility issues).
 * Superior and inferior dash and tild consonant modification signs have been added for halla, telco and ara.
+* Added pustar combinations (4/4-halfed/4-squared/5)
 
 **Tengwar Elfica**, created and designed by **Enrique Mombello**
 --------------------------------------------------------------
 
+* Added pustar combinations (4-halfed @U+10FB / 4-squared @U+2E2C)
 * A serie of 4 inferior tehtar has been added for the reversed, small, u-curl.
 * Superior and inferior dash and tild consonant modification signs have been added for halla, telco and ara.
 
@@ -43,6 +47,8 @@ A comparison chart for tengwar fonts is available here : (todo)[todo]
 * The _a_ theta at U+00AD (soft hyphen) has been moved to U+0109 (for browser compatibility issues).
 * The _vaia_ tengwa has been moved to U+0125 (for browser compatibility issues).
 * The circle inf tehta for Regular and Bold (XS version @ 0xA9) as been translated, it was too high.
+* Added pustar combinations (4/4-halfed/4-squared/5)
+* Added dash+wave / inf+sup (XS version @U+200,201,202,203 for consonant modifications for telco/halla/ara.
 
 **Tengwar Annatar Bold**, created and designed by **Johan Winge**
 --------------------------------------------------------------
@@ -52,6 +58,7 @@ A comparison chart for tengwar fonts is available here : (todo)[todo]
 * The _a_ theta at U+00AD (soft hyphen) has been moved to U+0109 (for browser compatibility issues).
 * The _vaia_ tengwa has been moved to U+0125 (for browser compatibility issues).
 * The circle inf tehta for Regular and Bold (XS version @ 0xA9) as been translated, it was too high.
+* Added pustar combinations (4/4-halfed/4-squared/5)
 
 **Tengwar Annatar Italic**, created and designed by **Johan Winge**
 --------------------------------------------------------------
@@ -60,6 +67,7 @@ A comparison chart for tengwar fonts is available here : (todo)[todo]
 * The alternate font has been shifted and added at position 0x3000 of the regular font.
 * The _a_ theta at U+00AD (soft hyphen) has been moved to U+0109 (for browser compatibility issues).
 * The _vaia_ tengwa has been moved to U+0125 (for browser compatibility issues).
+* Added pustar combinations (4/4-halfed/4-squared/5)
 
 **Tengwar Sindarin**, created and designed by **Dan Smith**
 --------------------------------------------------------------
@@ -70,7 +78,8 @@ A comparison chart for tengwar fonts is available here : (todo)[todo]
 * The _a_ theta at U+00AD (soft hyphen) has been moved to U+0109 (for browser compatibility issues).
 * The _vaia_ tengwa has been added and moved to U+0125 (for browser compatibility issues).
 * Added _e grave tehtar_ . 
-
+* Added pustar combinations (4/4-halfed/4-squared/5)
+* A serie of 4 inferior tehtar has been added for the reversed, small, u-curl.
   
 **Sarati Eldamar**, created and designed by **Måns Björkman**
 --------------------------------------------------------------
