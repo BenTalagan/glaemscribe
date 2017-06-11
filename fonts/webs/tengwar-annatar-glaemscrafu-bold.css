@@ -1,0 +1,11 @@
+
+@font-face {
+    font-family: 'TengwarAnnatarGlaemscrafuBold';
+    src: url('tengwar-annatar-glaemscrafu-bold.eot');
+    src: url('tengwar-annatar-glaemscrafu-bold.eot?#iefix') format('embedded-opentype'),
+         url('tengwar-annatar-glaemscrafu-bold.woff') format('woff'),
+         url('tengwar-annatar-glaemscrafu-bold.ttf') format('truetype'),
+         url('tengwar-annatar-glaemscrafu-bold.svg#tengwar_annatar_glaemscrafuBd') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
