@@ -2,11 +2,27 @@
 
 require "rubygems"
 require "JSON"
+require "ERB"
+Encoding.default_external = Encoding::UTF_8
+Encoding.default_internal = Encoding::UTF_8
 
 SCRIPT_PATH = File.dirname(__FILE__)
-Dir.chdir(File.expand_path(SCRIPT_PATH))
+Dir.chdir(File.expand_path(File.dirname(__FILE__)))
+
 require SCRIPT_PATH + "/../../lib_rb/glaemscribe.rb"
 
+def open_template(template_file,varname)
+  begin
+    File.open(template_file,"rb:UTF-8") { |f|
+      return ERB.new(f.read,nil,nil,varname)
+    }
+  rescue Exception => e
+    raise "Could not open template file #{template_file} (#{e.message})"
+  end
+end
+
+
+@template = open_template("virtual_chars_tool_template.html.erb","layout")
 
 Glaemscribe::API::Debug.enabled = false
 
@@ -38,10 +54,10 @@ VIRTUALS_DS = {
   "E_TEHTA_DOUBLE_INF"        => { names: ["E_TEHTA_DOUBLE_INF","GEMINATE_DOUBLE"],         classes: ["THINF_DSTROKE_XS" , "THINF_DSTROKE_S" ,"THINF_DSTROKE_L" , "THINF_DSTROKE_XL"  , "LAMBE_MARK_DSTROKE"] },
   "UNUTIXE"                   => { names: ["UNUTIXE","I_TEHTA_INF","NO_VOWEL_DOT"],         classes: ["THINF_DOT_XS" , "THINF_DOT_S" ,"THINF_DOT_L" , "THINF_DOT_XL"  , "LAMBE_MARK_DOT"] },
                                   
-  "GEMINATE_SIGN"             => { names: ["GEMINATE_SIGN"] ,                               classes: ["DASH_INF_S",   "DASH_INF_L",  "LAMBE_MARK_DASH"] },
-  "GEMINATE_SIGN_TILD"        => { names: ["GEMINATE_SIGN_TILD"] ,                          classes: ["TILD_INF_S",   "TILD_INF_L",  "LAMBE_MARK_TILD"] },
-  "NASALIZE_SIGN"             => { names: ["NASALIZE_SIGN"] ,                               classes: ["DASH_SUP_S",   "DASH_SUP_L"] },
-  "NASALIZE_SIGN_TILD"        => { names: ["NASALIZE_SIGN_TILD"],                           classes: ["TILD_SUP_S",   "TILD_SUP_L"] },
+  "GEMINATE_SIGN"             => { names: ["GEMINATE_SIGN"] ,                               classes: ["DASH_INF_XS", "DASH_INF_S",   "DASH_INF_L",  "LAMBE_MARK_DASH"] },
+  "GEMINATE_SIGN_TILD"        => { names: ["GEMINATE_SIGN_TILD"] ,                          classes: ["TILD_INF_XS", "TILD_INF_S",   "TILD_INF_L",  "LAMBE_MARK_TILD"] },
+  "NASALIZE_SIGN"             => { names: ["NASALIZE_SIGN"] ,                               classes: ["DASH_SUP_XS", "DASH_SUP_S",   "DASH_SUP_L"] },
+  "NASALIZE_SIGN_TILD"        => { names: ["NASALIZE_SIGN_TILD"],                           classes: ["TILD_SUP_XS", "TILD_SUP_S",   "TILD_SUP_L"] },
   "ALVEOLAR_SIGN"             => { names: ["ALVEOLAR_SIGN"] ,                               classes: ["SHOOK_LEFT_L", "SHOOK_RIGHT_L"] }
 }
 
@@ -83,7 +99,7 @@ DIACTRITICS_WITH_SIMILAR_PLACEMENT_DS = [
 
 
 DIACRITICS_BEARERS = [
-  "TELCO", "ARA", 
+  "TELCO", "ARA", "HALLA",
   "TINCO", "PARMA", "CALMA", "QUESSE",
   "ANDO", "UMBAR", "ANGA", "UNGWE",
   "SULE", "FORMEN", "AHA", "HWESTA",
@@ -130,136 +146,9 @@ def dump_charset_edit_page(charset, font_list, conf)
   
   puts "Dumping charset #{charset.name} : "
   
-  
-File.open("#{charset.name}.html","wb") { |f|
-  
-  f.puts "<!doctype HTML>";
-  f.puts "<html>"
-  f.puts "<head>"
-  f.puts '<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />'
-  f.puts "<style>"
-  
-  font_list.each_with_index{|font,i|
-    f.puts ".font#{i} { font-family: '#{font}'; font-size:1.5em }"
+  File.open("#{charset.name}.html","wb") { |f|
+    f << @template.result(binding)
   }
-  
-  f.puts "input[type='radio']:after { width: 15px;height: 15px;border-radius: 15px;top: -2px;left: -3px;position: relative;background-color: #d1d3d1;content: '';display: inline-block;visibility: visible;border: 2px solid white;}"
-  f.puts "input[type='radio']:checked:after {width: 15px;height: 15px;border-radius: 15px;top: -2px;left: -3px;position: relative;background-color: #ffa500;content: '';display: inline-block;visibility: visible;border: 2px solid white;}"
-  f.puts ".check0:checked:after { background-color : #2fc1f1 !important }"
-  f.puts ".check1:checked:after { background-color : red !important}"
-  f.puts ".check2:checked:after { background-color : lightgreen !important}"
-  f.puts ".check3:checked:after { background-color : yellow !important}"
-  f.puts ".check4:checked:after { background-color : orange !important}"
-  f.puts ".choice { float:left;text-align:center;display:inline-block;padding:5px;border:1px #eaeaea solid; border-collapse:collapse}"
-  f.puts ".no_choice_made { background: rgb(255, 231, 231); }"
-  
-  f.puts ".eldamar  { font-family: 'Tengwar Eldamar Glaemscrafu'}"
-  f.puts ".zetable, .zetable td  { border: solid 1px black; border-collapse: collapse; padding :5px}"
-  f.puts ".trigger_is_virtual { background-color: #ffffd4}"
-  f.puts "</style>"
-  f.puts "<script src='https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js'></script>"
-  f.puts "<script src='chart.js'></script>"
-  f.puts "</head>"
-  f.puts "<body>"
-  f.puts "<table class='zetable'>"
-
-  f.puts "<tr>"
-  f.puts "<td>TRIGGERS</td>"
-  conf[:virtual_groups].each{ |group|
-    # Get the first element from the "similar group"
-    first = group.first
-    # Get the names of the diactrictic   
-    desc  = conf[:virtuals][first]
-    f.puts "<td style='text-align:center;font-size:8px'>#{desc[:names].join("<br>")}</td>"
-  }
-  f.puts "</tr>"
-
-  conf[:virtual_triggers].each { |b|
-    
-    is_trigger_virtual = '' 
-    if charset[b] && charset[b].virtual?
-      is_trigger_virtual = 'trigger_is_virtual'
-    end
-    
-    # Line
-    f.puts "<tr style='white-space:nowrap' class='#{is_trigger_virtual}'>"
-    
-    # Name of the bearer
-    f.puts "<td class='#{is_trigger_virtual}'>#{b}</td>"
-    conf[:virtual_groups].each{ |group|
-      # Get the first element from the "similar group"
-      first   = group.first
-      # Get the names of the diactrictic
-      desc      = conf[:virtuals][first]
-      names     = desc[:names]
-      # Get the versions of the virtual
-      classes   = desc[:classes]
-      
-      reversed  = (desc[:reversed] == true)
-      
-      k       = names[0]
-      target  = nil
-      
-      # Get the corresponding virtual char in the charset
-      vchar   = charset[k.to_s]
-      
-      tnames = nil
-      if vchar
-        target  = vchar[b]
-        tnames  = target.names if target
-      end 
-      tnames = tnames || []
-      
-      has_choice = false
-      classes.each_with_index { |v,i| has_choice ||= tnames.include? v }
-      
-      f.puts "<td style='text-align:center' class='#{(has_choice)?(''):('no_choice_made')}'>"
-      f.puts "<div class='tlist' style='display:inline-flex'>"
-      classes.each_with_index { |v,i|
-                       
-        checked = tnames.include? v
-        
-        f.puts "<div class='choice'>"
-        
-        font_list.each_with_index { |font,i|
-          
-          raise "#{b} not found in charset #{charset.name}"          if(!charset[b])
-          raise "#{v} not found in charset #{charset.name}"          if(!charset[v])
-          
-          f.puts "<div class='font#{i}'>"
-          if(reversed)
-            f.puts "#{charset[v].str}#{charset[b].str}"
-          else
-            f.puts "#{charset[b].str}#{charset[v].str}"
-          end
-          f.puts "</div>"
-        }
-        f.puts "<div>"
-        f.puts "<input class='check#{i}' type='radio' name='#{k}[#{b}]' " + ((checked)?("checked"):("")) + " data-master='#{k}' data-bearer='#{b}' value='#{v}' />"
-        f.puts "</div>"
-        
-        f.puts "</div>"
-      }
-      f.puts "</div>"
-      f.puts "</td>"
-    }
-    f.puts "</tr>"
-  }
-  
-  f.puts "</table>"
-  f.puts "<div><button class='dumper'>Dump</button></div><br/><br/>"
-  f.puts "<code class='dump_zone' style='white-space: pre;'></code>";
-  
-  f.puts "<script>"
-  f.puts "var SIMILARS        = #{conf[:virtual_groups].to_json};"
-  f.puts "var DIACRITIC_TABLE = #{conf[:virtuals].to_json};"
-  
-  f.puts "</script>"
-  
-  f.puts "</body>"
-  f.puts "</html>"
-  
-}
 end
 
 
@@ -268,5 +157,5 @@ Glaemscribe::API::ResourceManager.load_charsets(["tengwar_ds_sindarin","tengwar_
 dump_charset_edit_page(Glaemscribe::API::ResourceManager.loaded_charsets["tengwar_ds_sindarin"],["Tengwar Sindarin Glaemscrafu"], TENGWAR_DS_GENERIC_CONF)
 dump_charset_edit_page(Glaemscribe::API::ResourceManager.loaded_charsets["tengwar_ds_parmaite"],["Tengwar Parmaite Glaemscrafu"], TENGWAR_DS_GENERIC_CONF)
 dump_charset_edit_page(Glaemscribe::API::ResourceManager.loaded_charsets["tengwar_ds_eldamar"], ["Tengwar Eldamar Glaemscrafu"], TENGWAR_DS_GENERIC_CONF)
-dump_charset_edit_page(Glaemscribe::API::ResourceManager.loaded_charsets["tengwar_ds_annatar"], ["Tengwar Annatar Glaemscrafu"], TENGWAR_ANNATAR_CONF)
-dump_charset_edit_page(Glaemscribe::API::ResourceManager.loaded_charsets["tengwar_ds_elfica"], ["Tengwar Elfica"], TENGWAR_DS_GENERIC_CONF)
+dump_charset_edit_page(Glaemscribe::API::ResourceManager.loaded_charsets["tengwar_ds_annatar"], ["TengwarAnnatarGlaemscrafu"], TENGWAR_ANNATAR_CONF)
+dump_charset_edit_page(Glaemscribe::API::ResourceManager.loaded_charsets["tengwar_ds_elfica"], ["Tengwar Elfica Glaemscrafu"], TENGWAR_DS_GENERIC_CONF)

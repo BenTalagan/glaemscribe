@@ -1,0 +1,141 @@
+<!doctype HTML>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <style>
+    <% font_list.each_with_index do |font,i| %>
+      .font<%= i %> { font-family: '<%= font %>'; font-size:1.5em }
+    <% end %>
+    
+    input[type='radio']:after { width: 15px;height: 15px;border-radius: 15px;top: -2px;left: -3px;position: relative;background-color: #d1d3d1;content: '';display: inline-block;visibility: visible;border: 2px solid white;}
+    input[type='radio']:checked:after {width: 15px;height: 15px;border-radius: 15px;top: -2px;left: -3px;position: relative;background-color: #ffa500;content: '';display: inline-block;visibility: visible;border: 2px solid white;}
+    .check0:checked:after { background-color : #2fc1f1 !important }
+    .check1:checked:after { background-color : red !important}
+    .check2:checked:after { background-color : lightgreen !important}
+    .check3:checked:after { background-color : yellow !important}
+    .check4:checked:after { background-color : orange !important}
+    .choice { float:left;text-align:center;display:inline-block;padding:5px;border:1px #eaeaea solid; border-collapse:collapse}
+    .no_choice_made { background: rgb(255, 231, 231); }
+    .zetable, .zetable td  { border: solid 1px black; border-collapse: collapse; padding :5px}
+    .trigger_is_virtual { background-color: #ffffd4}
+    
+  </style>
+  
+  
+  <link rel="stylesheet" type="text/css" href="../webs/tengwar-annatar-glaemscrafu.css">
+  <link rel="stylesheet" type="text/css" href="../webs/tengwar-annatar-glaemscrafu-bold.css">
+  <link rel="stylesheet" type="text/css" href="../webs/tengwar-annatar-glaemscrafu-italic.css">
+  <link rel="stylesheet" type="text/css" href="../webs/tengwar-elfica-glaemscrafu.css">
+  <link rel="stylesheet" type="text/css" href="../webs/tengwar-eldamar-glaemscrafu.css">
+  <link rel="stylesheet" type="text/css" href="../webs/tengwar-parmaite-glaemscrafu.css">
+  <link rel="stylesheet" type="text/css" href="../webs/tengwar-sindarin-glaemscrafu.css">
+ 
+  <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js'></script>
+  <script src='chart.js'></script>
+
+
+</head>
+<body>
+
+<table class='zetable'>
+
+  <tr>
+    <td>TRIGGERS</td>
+    <% conf[:virtual_groups].each do |group| %>
+
+        <%# Get the first element from the "similar group" %>
+        <% first = group.first %>
+        <%# Get the names of the diactrictic %>
+        <% desc  = conf[:virtuals][first] %>
+
+        <td style='text-align:center;font-size:8px'><%= desc[:names].join("<br>") %></td>
+    <% end %>
+  </tr>
+
+  <% conf[:virtual_triggers].each do |b| %>
+      <% is_trigger_virtual = '' %>
+
+      <% if charset[b] && charset[b].virtual? %>
+          <% is_trigger_virtual = 'trigger_is_virtual' %>
+      <% end %>
+
+      <tr style='white-space:nowrap' class='<%= is_trigger_virtual %>'>
+        <%# Name of the bearer %>
+        <td class='<%= is_trigger_virtual %>'><%= b %></td>
+
+        <%  conf[:virtual_groups].each do |group| %>
+
+            <%# Get the first element from the "similar group" %>
+            <% first   = group.first %>
+
+            <%# Get the names of the diactrictic %>
+            <% desc      = conf[:virtuals][first] %>
+            <% names     = desc[:names] %>
+            <%# Get the versions of the virtual %>
+            <% classes   = desc[:classes] %>
+
+            <% reversed  = (desc[:reversed] == true) %>
+
+            <% k       = names[0] %>
+            <% target  = nil %>
+
+            <%# Get the corresponding virtual char in the charset %>
+            <% vchar   = charset[k.to_s] %>
+
+            <% tnames = nil %>
+            <% if vchar %>
+                <% target  = vchar[b] %>
+                <%  tnames  = target.names if target %>
+            <% end %>
+            <% tnames = tnames || [] %>
+
+            <% has_choice = false %>
+
+            <% classes.each_with_index { |v,i| has_choice ||= tnames.include? v } %>
+
+            <td style='text-align:center' class='<%= (has_choice)?(''):('no_choice_made') %>'>
+              <div class='tlist' style='display:inline-flex'>
+                <% classes.each_with_index do |v,i| %>
+
+                    <% checked = tnames.include? v %>
+
+                    <div class='choice'>
+
+                      <% font_list.each_with_index do |font,i| %>
+
+                          <% raise "#{b} not found in charset #{charset.name}"          if(!charset[b]) %>
+                          <% raise "#{v} not found in charset #{charset.name}"          if(!charset[v]) %>
+
+                          <div class='font<%= i %>'>
+                            <% if(reversed) %>
+                                <%= "#{charset[v].str}#{charset[b].str}" %>
+                            <% else %>
+                                <%= "#{charset[b].str}#{charset[v].str}" %>
+                            <% end %>
+                          </div>
+                      <% end %>
+                      <div>
+                        <input class='check<%= i%>' type='radio' name='<%= "#{k}[#{b}]" %>' <%= ((checked)?("checked"):("")) %> data-master='<%= k %>' data-bearer='<%= b %>' value='<%= v %>' />
+                      </div>
+
+                    </div>
+                <% end %>
+              </div>
+            </td>
+        <% end %>
+      </tr>
+
+  <% end %>
+
+</table>
+<div><button class='dumper'>Dump</button></div><br/><br/>
+<code class='dump_zone' style='white-space: pre;'></code>
+
+<script>
+  var SIMILARS        = <%= conf[:virtual_groups].to_json %>;
+  var DIACRITIC_TABLE = <%= conf[:virtuals].to_json %>;
+</script>
+
+
+</body>
+</html>
