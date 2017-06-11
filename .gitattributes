@@ -9,3 +9,4 @@ editor/tipsy/* linguist-vendored
 textmate_bundle/* linguist-vendored
 build/* linguist-vendored
 fonts/virtual_chars_tool/*.html linguist-vendored
+fonts/doc/glaemscribe_tengwar_fonts.html linguist-vendored
