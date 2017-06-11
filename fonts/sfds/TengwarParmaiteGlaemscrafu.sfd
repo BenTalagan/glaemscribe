@@ -22,7 +22,7 @@ OS2Version: 1
 OS2_WeightWidthSlopeOnly: 0
 OS2_UseTypoMetrics: 0
 CreationTime: 1106669751
-ModificationTime: 1497185772
+ModificationTime: 1497192731
 PfmFamily: 81
 TTFWeight: 400
 TTFWidth: 5
@@ -212,10 +212,10 @@ NameList: AGL For New Fonts
 DisplaySize: -48
 AntiAlias: 1
 FitToEm: 0
-WinInfo: 11774 29 11
+WinInfo: 308 28 10
 BeginPrivate: 0
 EndPrivate
-BeginChars: 65543 283
+BeginChars: 65543 287
 
 StartChar: .notdef
 Encoding: 65536 -1 0
@@ -25805,7 +25805,7 @@ EndChar
 StartChar: uni2E2C
 Encoding: 11820 11820 282
 Width: 723
-Flags: WO
+Flags: W
 LayerCount: 2
 Fore
 SplineSet
@@ -25829,6 +25829,74 @@ SplineSet
  252 178 l 1,14,-1
  140 71 l 1,15,-1
  66 150 l 1,12,-1
+EndSplineSet
+EndChar
+
+StartChar: uni0200
+Encoding: 512 512 283
+Width: 0
+Flags: W
+LayerCount: 2
+Fore
+SplineSet
+-430 -41 m 5,0,-1
+ 53 -41 l 5,1,-1
+ -50 -174 l 5,2,-1
+ -532 -174 l 5,3,-1
+ -430 -41 l 5,0,-1
+EndSplineSet
+EndChar
+
+StartChar: uni0201
+Encoding: 513 513 284
+Width: 0
+Flags: W
+LayerCount: 2
+Fore
+SplineSet
+48 -20 m 5,0,1
+ -74 -217 -74 -217 -192 -217 c 4,2,3
+ -238 -217 -238 -217 -327 -189 c 132,-1,4
+ -416 -161 -416 -161 -453 -161 c 4,5,6
+ -515 -161 -515 -161 -573 -215 c 5,7,8
+ -459 -29 -459 -29 -327 -29 c 4,9,10
+ -289 -29 -289 -29 -216 -51 c 132,-1,11
+ -143 -73 -143 -73 -105 -73 c 4,12,13
+ -35 -73 -35 -73 48 -20 c 5,0,1
+EndSplineSet
+EndChar
+
+StartChar: uni0202
+Encoding: 514 514 285
+Width: 0
+Flags: W
+LayerCount: 2
+Fore
+SplineSet
+-380 840 m 5,0,-1
+ 103 840 l 5,1,-1
+ 0 706 l 5,2,-1
+ -482 706 l 5,3,-1
+ -380 840 l 5,0,-1
+EndSplineSet
+EndChar
+
+StartChar: uni0203
+Encoding: 515 515 286
+Width: 0
+Flags: WO
+LayerCount: 2
+Fore
+SplineSet
+128 881 m 5,0,1
+ 6 685 6 685 -112 685 c 4,2,3
+ -158 685 -158 685 -247 713 c 132,-1,4
+ -336 741 -336 741 -373 741 c 4,5,6
+ -435 741 -435 741 -493 686 c 5,7,8
+ -379 873 -379 873 -247 873 c 4,9,10
+ -209 873 -209 873 -136 850.5 c 132,-1,11
+ -63 828 -63 828 -25 828 c 4,12,13
+ 45 828 45 828 128 881 c 5,0,1
 EndSplineSet
 EndChar
 EndChars
