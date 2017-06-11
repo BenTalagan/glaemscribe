@@ -6,7 +6,7 @@ That's why, at some point, they needed some patching ; here are these fonts, wit
 
 **All these fonts are the propriety of their authors. Tengwar, Sarati and Cirth are writing systems invented and designed by J.R.R. Tolkien.**
 
-A comparison chart for tengwar fonts is available here : (todo)[todo]
+See also the [**comparison chart for tengwar fonts**](http://htmlpreview.github.io/?https://github.com/BenTalagan/glaemscribe/blob/master/fonts/doc/glaemscribe_tengwar_fonts.html) for an overview of all features and changes.
 
 
 **Tengwar Eldamar**, created and designed by **Måns Björkman**
