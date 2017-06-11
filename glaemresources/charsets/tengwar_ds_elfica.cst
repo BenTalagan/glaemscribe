@@ -277,6 +277,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 \char 202 DASH_SUP_XS
 \char 203 TILD_SUP_XS
 
+\char 204 THINF_CURL_INV_XL
+\char 205 THINF_CURL_INV_L
+\char 206 THINF_CURL_INV_S
+\char 207 THINF_CURL_INV_XS
 
 \** ˆ **\ \char 2c6 PUNCT_TDOT PUSTA_3 
 
@@ -288,11 +292,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                
 \** – **\ \char 2013 ANCA_CLOSED SILME_AHA           \** OK **\                       
 \** — **\ \char 2014 OLD_ENGLISH_AND       \** OK **\                          
-\** ‘ **\ \char 2018 THINF_CURL_INV_XL     \** OK **\                            
-\** ’ **\ \char 2019 THINF_CURL_INV_L      \** OK **\                           
+\** ‘ **\ \char 2018 ?     \** OK **\                            
+\** ’ **\ \char 2019 ?      \** OK **\                           
 \** ‚ **\ \char 201a LAMBE_MARK_DSTROKE    \** OK **\                              
-\** “ **\ \char 201c THINF_CURL_INV_S      \** OK **\                           
-\** ” **\ \char 201d THINF_CURL_INV_XS     \** OK **\                            
+\** “ **\ \char 201c ?      \** OK **\                           
+\** ” **\ \char 201d ?     \** OK **\                            
 \** „ **\ \char 201e THINF_DSTROKE_L       \** OK **\                          
 \** † **\ \char 2020 THINF_DSTROKE_XS      \** OK **\                           
 \** ‡ **\ \char 2021 ?                                
