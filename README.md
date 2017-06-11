@@ -39,7 +39,7 @@ Changelog
 
 | Version | Date | Comment |
 |---------|------|---------|
-| 1.1.4 | 06/11/2017 | Enhancing fonts and charsets : adding some missing pustar punctuation, adding consonant modification signs for narrow bearer tengwar, refactoring the virtual charset tool, creating font repo for better tracking (thanks @Laicasaane for reporting all these issues!). |
+| 1.1.4 | 06/11/2017 | Fixing font problems and adding font features, enhancing charsets : adding some missing pustar punctuation, adding consonant modification signs for narrow bearer tengwar, refactoring the virtual charset tool, creating font repo for better tracking (thanks @Laicasaane for reporting all these issues!). |
 | 1.1.3 | 05/27/2017 | [Tengwar] Added support for inlined, raw, spelled tengwar through the raw tengwar mode and the {{ ... }} syntax within any tengwar mode (thanks @Shihali for the discussion leading to that feature). <br> Major bug fix on crossrules (thanks @Laicasaane for noticing that bug!) <br> Reworked charsets and moved the reversed a tehta that was mapped on U+00AD (soft hyphen) (thanks @Laicasaane for noticing that bug too!) |
 | 1.1.2 | 05/04/2017 | Npm repackaging. |
 | 1.1.1 | 05/04/2017 | [Quenya] Added Vanyarin ldy, rdy, lg, rg, ff. <br> Added npm packaging. <br> Minor bug fixes. |
