@@ -238,7 +238,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 \** œ **\ \char 153 PUNCT_PAREN_R                           
 \** Š **\ \char 160 THINF_ACCENT_L                                 
 \** š **\ \char 161 MALTA_W_HOOK TW_MH                                 
-\** Ÿ **\ \char 178 THINF_ACCENT_XS                                 
+\** Ÿ **\ \char 178 THINF_ACCENT_XS         
+
+\char 181 PUSTA_4
+\char 182 PUSTA_5
+\char 10FB PUSTA_4_HALFED
+\char 2E2C PUSTA_4_SQUARED
+                        
 \** ˆ **\ \char 2c6 PUNCT_TDOT PUSTA_3                               
 \** ˜ **\ \char 2dc TH_SUB_CIRC_XL                                 
 \** – **\ \char 2013 ANCA_CLOSED SILME_AHA                               

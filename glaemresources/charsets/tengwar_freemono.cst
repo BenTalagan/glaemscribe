@@ -32,6 +32,15 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 \char 20 SPACE
 
+\** PUSTAR, take them in unicode not in personnal use (deprecation) **\
+\char 2e31 PUNCT_DOT
+\char   3a PUNCT_DDOT
+\char 205D PUNCT_TDOT PUSTA_3
+\char 2058 PUSTA_4
+\char 10FB PUSTA_4_HALFED
+\char 2E2C PUSTA_4_SQUARED
+\char 2E2D PUSTA_5
+
 \char e000  TW_11 TINCO     
 \char e001  TW_12 PARMA
 \char e002  TW_13 CALMA
@@ -149,11 +158,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 \char e05A  ?
 \char e05B  ?
 
-\char e060  PUNCT_DOT
-\char e061  PUNCT_DDOT
-\char e062  PUNCT_TDOT
-\char e063  PUNCT_QDOT
-\char e064  PUNCT_FDOT
+
 
 \char e065  PUNCT_EXCLAM
 \char e066  PUNCT_INTERR
