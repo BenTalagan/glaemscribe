@@ -222,7 +222,9 @@ def dump_test_directory(directory, dump_directory)
       }
     
       File.open( dump_directory + "/expecteds/" + full_name + "/" + bfname,"wb:utf-8") { |fw|    
+        source             = source.lines.map{|l| l.strip }.join("\n").strip
         success, teng      = mode.transcribe(source, charset)
+        teng = teng.lines.map{|l| l.strip }.join("\n").strip
         fw << teng 
       }
     }  
