@@ -32,12 +32,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 \language "Quenya"
 \writing  "Sarati"
 \mode     "Quenya Usage"
-\version  "0.0.2"
+\version  "0.0.3"
 \authors  "J.R.R. Tolkien, impl. Talagan (Benjamin Babut)"
 
 \beg changelog
   \entry "0.0.1" "Initial version"
   \entry "0.0.2" "Adding quotes handling"
+  \entry "0.0.3" "Adding simple punctuation. Correcting 'qui' by changing rule order for 'qu' in preprocessor. Adding hl/hr."
 \end
 
 \charset  sarati_eldamar true
@@ -63,6 +64,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   \rxsubstitute "(ū|û|uü|üu|üü|uu)" "ú"
   \rxsubstitute "(ȳ|ŷ|yy)"          "ý"
 
+  \** Dis-ambiguate qu. Should come BEFORE correcting diphthongs. **\
+  \substitute   "qu" "q" 
+
+  \** Dis-ambiguate old qenya diphthongs **\
   \substitute   "iu" "iw"
   \substitute   "eu" "ew"
   \substitute   "au" "aw"
@@ -72,9 +77,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
   \** Split long a  **\
   \substitute   "á" "aa" 
-
-  \** Dis-ambiguate qu **\
-  \substitute   "qu" "q" 
 \end
 
 \beg      processor
@@ -135,7 +137,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     \** ########### **\
     \**  THIRD LINE **\
 
-    {L3_KER}        === th                * f                   * h         *  hw
+    {L3_KER}        === (th,þ)            * f                   * (h,χ)     *  hw
     {L3_IMG}        === SARATI_QUENYA_S   * SARATI_QUENYA_F_ALT * SARATI_H  *  SARATI_QUENYA_HW
 
     [{L3_KER}]{V_L_KER_WN}    --> 2,1 --> {V_IMG_FOR_CONSONNANTS_WN}[{L3_IMG}]
@@ -145,6 +147,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     \** # The two following are not treated the same way in tengwar **\
     ht{V_L_KER_WN}            --> {V_IMG_FOR_CONSONNANTS_WN} SARATI_QUENYA_HT_ALT_1
     hty{V_L_KER_WN}           --> {V_IMG_FOR_CONSONNANTS_WN} SARATI_QUENYA_HTY
+   
+    
+    hl{V_L_KER_WN}            --> {V_IMG_FOR_CONSONNANTS_WN} SARATI_QUENYA_HL
+    hr{V_L_KER_WN}            --> {V_IMG_FOR_CONSONNANTS_WN} SARATI_QUENYA_HR
+    
+    
 
     \** ########### **\
     \**  FOURTH LINE **\
@@ -206,10 +214,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
     [{LINE_8PTH_KER}]{V_L_KER_WN} --> 2,1 --> {V_IMG_FOR_CONSONNANTS_WN}[{LINE_8PTH_IMG}]
 
-    \**  Override lonely s / ss / before consonant: TODO!!!! **\
-    \**  s      -> 8  **\
-    \**  {SS}     -> ,  **\
-
     \** ############ **\
     \**  OTHERS **\
 
@@ -217,15 +221,18 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   \end
     
   \beg    rules punctuation
-    · --> {NULL}
-    , --> {NULL}
-    ; --> {NULL}
-    : --> {NULL}
-    . --> SARATI_SPACE
+    . --> PUNCT_2_DOT
+    ! --> PUNCT_2_DOT
+    ? --> PUNCT_2_DOT
+    
+    , --> PUNCT_DOT
+    ; --> PUNCT_DOT
+    : --> PUNCT_DOT
+    
     - --> SARATI_SPACE
     – --> SARATI_SPACE
-    ! --> {NULL}
-    ? --> {NULL}
+    
+    · --> {NULL}
     ' --> {NULL}
     [ --> {NULL}
     ] --> {NULL}

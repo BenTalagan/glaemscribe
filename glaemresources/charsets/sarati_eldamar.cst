@@ -55,7 +55,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 \** > **\ \char 3e ?
 \** ? **\ \char 3f SARATI_L
 \** @ **\ \char 40 ?
-\** A **\ \char 41 ?
+\** A **\ \char 41 SARATI_QUENYA_HL
 \** B **\ \char 42 ?
 \** C **\ \char 43 ?
 \** D **\ \char 44 ?
@@ -64,7 +64,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 \** G **\ \char 47 ?
 \** H **\ \char 48 ?
 \** I **\ \char 49 ?
-\** J **\ \char 4a ?
+\** J **\ \char 4a SARATI_QUENYA_HR
 \** K **\ \char 4b ?
 \** L **\ \char 4c ?
 \** M **\ \char 4d ?
@@ -162,10 +162,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 \** Ê **\ \char ca ?
 \** Ë **\ \char cb SARATI_H
 \** Ì **\ \char cc ?
-\** Í **\ \char cd ?
-\** Î **\ \char ce ?
-\** Ï **\ \char cf ?
-\** Ð **\ \char d0 ?
+\** Í **\ \char cd PUNCT_DOT
+\** Î **\ \char ce PUNCT_2_DOT
+\** Ï **\ \char cf PUNCT_TRI
+\** Ð **\ \char d0 PUNCT_2_TRI
 \** Ñ **\ \char d1 ?
 \** Ò **\ \char d2 SARATI_DOT_U SARATI_QUENYA_I
 \** Ó **\ \char d3 SARATI_DOT_D
