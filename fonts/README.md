@@ -1,6 +1,6 @@
 # Repository of (patched) fonts used by Glǽmscribe
 
-This is the place where are stored and tracked the fonts that have been patched specifically for **_Glǽmscribe_** . Due to the precision needed by some modes (and users!), due to the fact that are a large number of them were designed at a time where the technologies where not as powerful as today, and for a lot of other reasons, not all fonts (especially Tengwar fonts) could bring the level of detailed needed for pointy transcriptions. Moreover, since there had been no real strict norm to describe how they should be designed, these fonts are not always compliant one with each other.
+This is the place where are stored and tracked the fonts that have been patched specifically for **_Glǽmscribe_** . Due to the precision needed by some modes (and users!), due to the fact that a large number of them were designed at a time where the technologies were not as powerful as today, and for a lot of other reasons, not all fonts (especially Tengwar fonts) could bring the level of detail needed for pointy transcriptions. Moreover, since there had been no real strict norm to describe how they should be designed, these fonts are not always compliant one with each other.
 
 That's why, at some point, they needed some patching ; here are these fonts, with a backlog of the modifications brought to them.
 
