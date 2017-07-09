@@ -31,12 +31,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   \entry "0.0.6" "Added support for the FreeMonoTengwar font"
   \entry "0.1.0" "Added support for the Tengwar Elfica font"
   \entry "0.1.1" "Added support for inlined raw tengwar"
+  \entry "0.1.2" "Fine tuning handling of the aw diphthong"
 \end
 
 \language "Sindarin"
 \writing  "Tengwar"
 \mode     "Beleriand"
-\version  "0.1.1"
+\version  "0.1.2"
 \authors  "J.R.R. Tolkien, impl. Talagan (Benjamin Babut)"
 
 \raw_mode "raw-tengwar"
@@ -50,16 +51,24 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 \beg      options
 
+  \beg option beleriand_aw_diphthong AW_VILYA_AT_ENDINGS_CURL_ELSE
+    \value AW_VILYA_AT_ENDINGS_CURL_ELSE 0
+    \value AW_ALWAYS_VILYA 1
+    \value AW_ALWAYS_CURL  2
+  \end
+
   \beg option consonant_modification_style CONSONANT_MODIFICATION_STYLE_BAR
     \value CONSONANT_MODIFICATION_STYLE_WAVE 0
     \value CONSONANT_MODIFICATION_STYLE_BAR 1
   \end
 
   \option reverse_numbers true
+  
   \beg option numbers_base BASE_12
     \value    BASE_10 10
     \value    BASE_12 12
   \end
+  
 \end
 
 \beg      preprocessor
@@ -87,6 +96,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   
   \** Special case of starting 'i' before vowels, replace i by j **\     
   \rxsubstitute "\\bi([aeouyáāâéēêíīîóōôúūûýȳŷ])" "j\\1"
+  
+  \** Special case of diphtong aw. Before vowels, do not treat 'aw' as diphthong, 
+  since it seems more logical that aw would behave as a semi vowel **\
+  \rxsubstitute "aw([aeouyáāâéēêíīîóōôúūûýȳŷ])" "a|w\\1"
   
   \** Preprocess numbers **\
   \elvish_numbers "\\eval numbers_base" "\\eval reverse_numbers"
@@ -146,7 +159,16 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     {AE}                --> OSSE  YANTA  \** Should chose between OSSE YANTA and OSSE THSUP_TICK_INV_L. Old tengscribe had second one, amanye tenceli has first one. **\ 
     {AI}                --> OSSE  Y_TEHTA
     {AU}                --> OSSE  SEV_TEHTA 
-    {AW}                --> OSSE  SEV_TEHTA
+    
+    \if "beleriand_aw_diphthong == AW_VILYA_AT_ENDINGS_CURL_ELSE"
+      {AW}                --> OSSE SEV_TEHTA
+      {AW}_               --> OSSE VILYA
+    \elsif "beleriand_aw_diphthong == AW_ALWAYS_VILYA"
+      {AW}                --> OSSE VILYA
+    \elsif "beleriand_aw_diphthong == AW_ALWAYS_CURL"
+      {AW}                --> OSSE SEV_TEHTA
+    \endif
+      
     {EI}                --> YANTA Y_TEHTA
     {UI}                --> URE   Y_TEHTA
     {OE}                --> ANNA  YANTA
