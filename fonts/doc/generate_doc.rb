@@ -22,6 +22,9 @@ end
 
 @fonts    = ["Tengwar Annatar", "Tengwar Annatar Bold", "Tengwar Annatar Italic", "Tengwar Eldamar", "Tengwar Parmaite", "Tengwar Elfica", "Tengwar Sindarin"]
 
+# x = available originally
+# m = modified
+# a = added
 
 @sections = [
   {
@@ -201,16 +204,16 @@ end
     entries: [
       ["x","x","x","x","x","x","x","Geminate (tild) [l]",""],
       ["x","x","x","x","x","x","x","Geminate (tild) [s]",""],
-      ["o","o","o","o","o","o","o","Geminate (tild) [xs]","TODO"],
+      ["a","a","a","a","a","a","a","Geminate (tild) [xs]","Added for Telco/Ara/Halla"],
       ["x","x","x","x","x","x","x","Geminate (dash) [l]",""],
       ["x","x","x","x","x","x","x","Geminate (dash) [s]",""],
-      ["o","o","o","o","o","o","o","Geminate (dash) [xs]","TODO"],
+      ["a","a","a","a","a","a","a","Geminate (dash) [xs]","Added for Telco/Ara/Halla"],
       ["x","x","x","x","x","x","x","Nasal (tild) [l]",""],
       ["x","x","x","x","x","x","x","Nasal (tild) [s]",""],
-      ["o","o","o","o","o","o","o","Nasal (tild) [xs]","TODO"],
+      ["a","a","a","a","a","a","a","Nasal (tild) [xs]","Added for Telco/Ara/Halla"],
       ["x","x","x","x","x","x","x","Nasal (dash) [l]",""],
       ["x","x","x","x","x","x","x","Nasal (dash) [s]",""],
-      ["o","o","o","o","o","o","o","Nasal (dash) [xs]","TODO"],
+      ["a","a","a","a","a","a","a","Nasal (dash) [xs]","Added for Telco/Ara/Halla"],
       ["x","x","x","x","x","x","x","Labial (wave) [xs]",""],
       ["x","x","x","x","x","x","x","Labial (wave) [s]",""],
       ["x","x","x","x","x","x","x","Labial (wave) [l]",""],
@@ -221,11 +224,21 @@ end
   {
     name: "Sa-Rince (s curls) Variants",
     entries: [
+      [" "," "," "," "," "," "," ","...","Tricky unification to do ..."]
     ]
   },
+  # Annatar / A. Bold / A. italic / Eldamar / Parmaite / Elfica / Sindarin
   {
     name: "Punctuation",
     entries: [
+      ["x","x","x","x","x","x","x","Pusta 1",""],
+      ["x","x","x","x","x","x","x","Pusta 2",""],
+      ["x","x","x","x","x","x","x","Pusta 3",""],
+      ["a","a","a","m","a","x","a","Pusta 4",""],
+      ["a","a","a","a","a","a","a","Pusta 4 (halfed)",""],
+      ["a","a","a","m","a","a","a","Pusta 4 (squared)",""],
+      ["a","a","a","m","a","x","a","Pusta 5",""],
+      [" "," "," "," "," "," "," ","...","..."]
     ]
   }
   
