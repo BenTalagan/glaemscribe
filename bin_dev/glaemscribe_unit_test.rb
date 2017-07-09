@@ -28,6 +28,96 @@ require SCRIPT_PATH + "/../lib_rb/glaemscribe.rb"
 
 Glaemscribe::API::Debug.enabled = false
 
+Dir.chdir(SCRIPT_PATH)
+
+def delete_html_error_file
+  begin
+    FileUtils.rm "unit_test_errors.html"
+  rescue Errno::ENOENT
+  end
+end
+
+def dump_html_error(prefix, charset, source_line, true_line, teng_line)
+
+  if !$error_file
+    $error_file = File.open("unit_test_errors.html","wb")  
+    $error_file.puts "<!doctype HTML>"
+    $error_file.puts "<html>"
+    $error_file.puts "<head>"
+    $error_file.puts "<link type='text/css' rel='stylesheet' href='../fonts/webs/sarati-eldamar-rtlb-glaemscrafu.css'>"
+    $error_file.puts "<link type='text/css' rel='stylesheet' href='../fonts/webs/tengwar-annatar-glaemscrafu.css'>"
+    $error_file.puts "<link type='text/css' rel='stylesheet' href='../fonts/webs/tengwar-annatar-glaemscrafu-bold.css'>"
+    $error_file.puts "<link type='text/css' rel='stylesheet' href='../fonts/webs/tengwar-annatar-glaemscrafu-italic.css'>"
+    $error_file.puts "<link type='text/css' rel='stylesheet' href='../fonts/webs/tengwar-sindarin-glaemscrafu.css'>"
+    $error_file.puts "<link type='text/css' rel='stylesheet' href='../fonts/webs/tengwar-eldamar-glaemscrafu.css'>"
+    $error_file.puts "<link type='text/css' rel='stylesheet' href='../fonts/webs/tengwar-parmaite-glaemscrafu.css'>"
+    $error_file.puts "<link type='text/css' rel='stylesheet' href='../fonts/webs/tengwar-elfica-glaemscrafu.css'>"
+    $error_file.puts "</head>"
+    $error_file.puts "<body>"    
+  end
+  
+  font_name = case charset.name
+  when 'tengwar_ds_sindarin'
+    'Tengwar Sindarin Glaemscrafu'
+  when 'tengwar_ds_annatar', 'tengwar_ds_annatar_italic', 'tengwar_ds_annatar_bold'
+    'Tengwar Annatar Glaemscrafu'
+  when 'tengwar_ds_eldamar'
+    'Tengwar Eldamar Glaemscrafu'
+  when 'tengwar_ds_parmaite'
+    'Tengwar Parmaite Glaemscrafu'
+  when 'tengwar_ds_elfica'
+    'Tengwar Elfica Glaemscrafu'
+  else 
+    'UNRESOLVED_FONT'
+  end
+  
+  $error_file.puts "<div>"
+  $error_file.puts "<div>"
+  $error_file.puts source_line
+  $error_file.puts "</div>"
+  $error_file.puts "<div style='font-family:#{font_name}'>"
+  $error_file.puts true_line
+  $error_file.puts "</div>"
+  $error_file.puts "<div style='font-family:#{font_name}'>"
+  $error_file.puts teng_line
+  $error_file.puts "</div>"
+  $error_file.puts "</div>"
+end
+
+def close_html_error_file
+  if $error_file
+    $error_file.puts "</body>"        
+    $error_file.puts "</html>"        
+    $error_file.close 
+  end
+end
+
+def read_mode_options_file(dirent, copy_to_directory = nil)
+  mode_options = {}
+  charset_name = nil
+  opt_file  = dirent[0..dirent.length-2] + ".options"
+  if File.exists? opt_file
+    # There is an option file, parse it
+    File.open(opt_file,"rb") { |f|
+        content = f.read
+        ofl = content.lines
+        charset_name = ofl[0].strip
+        opt_line     = ofl[1].strip
+        a = opt_line.strip.split(",").map{ |o| o.split(":") }.flatten.map{|s| s.strip }
+        mode_options = Hash[*a]    
+    
+        if copy_to_directory
+          # Copyt the option file
+          oname = File.basename(opt_file)
+          File.open( copy_to_directory + oname,"wb:utf-8") { |fw|    
+            fw << content
+          }
+        end
+    }
+  end
+  return charset_name, mode_options
+end
+
 def unit_test_directory(directory)
   
   puts "Testing now test base : #{directory}"
@@ -48,20 +138,8 @@ def unit_test_directory(directory)
       next     
     end
     
-    mode_options = {}
-    charset_name = nil
-    opt_file  = dirent[0..dirent.length-2] + ".options"
-    if File.exists? opt_file
-      # There is an option file, parse it
-      File.open(opt_file,"rb") { |f|
-          ofl = f.read.lines
-          charset_name = ofl[0].strip
-          opt_line     = ofl[1].strip
-          a = opt_line.strip.split(",").map{ |o| o.split(":") }.flatten.map{|s| s.strip }
-          mode_options = Hash[*a]    
-      }
-    end
-    
+    # READ THE OPTIONS FROM THE OPTION FILE
+    charset_name, mode_options = read_mode_options_file(dirent)
     mode.finalize(mode_options)    
     charset = mode.supported_charsets[charset_name]
     if !charset
@@ -138,6 +216,8 @@ def unit_test_directory(directory)
           puts "G: " + true_line.inspect
           puts "T: " + teng_line.inspect
           puts "D: " + diff_line.inspect
+          
+          dump_html_error(prefix, charset, source_line, true_line, teng_line)
         
         }
         puts "=========================="        
@@ -176,34 +256,14 @@ def dump_test_directory(directory, dump_directory)
     FileUtils.mkdir_p( dump_directory + "/sources/"   + full_name)
     FileUtils.mkdir_p( dump_directory + "/expecteds/" + full_name)
     
-    mode_options = {}
-    charset_name = nil
-    opt_file  = dirent[0..dirent.length-2] + ".options"
-    if File.exists? opt_file
-      content = ""
-      # There is an option file, parse it
-      File.open(opt_file,"rb") { |f|
-        content = f.read
-        ofl = content.lines
-        charset_name = ofl[0].strip
-        opt_line     = ofl[1].strip
-        a = opt_line.strip.split(",").map{ |o| o.split(":") }.flatten.map{|s| s.strip }
-        mode_options = Hash[*a]    
-      }
-      # Copyt the option file
-      oname = File.basename(opt_file)
-      File.open( dump_directory + "/sources/" + oname,"wb:utf-8") { |fw|    
-        fw << content
-      }
-    end
-    
+    # READ THE OPTIONS FROM THE OPTION FILE
+    charset_name, mode_options = read_mode_options_file(dirent,  dump_directory + "/sources/")    
     mode.finalize(mode_options)    
     charset = mode.supported_charsets[charset_name]
     if !charset
       charset = mode.default_charset
     end
     
- 
     Dir.glob(directory + "/sources/" + full_name + "/*") { |fok|
     
       bfname = File.basename(fok)
@@ -251,8 +311,10 @@ if ARGV[0] == "--dump"
   dump_test_directory(SCRIPT_PATH + "/../unit_tests/glaemscrafu", SCRIPT_PATH + "/../unit_tests_dumped/glaemscrafu" )
   dump_test_directory(SCRIPT_PATH + "/../unit_tests/technical", SCRIPT_PATH + "/../unit_tests_dumped/technical" )
 else
+  delete_html_error_file
   unit_test_directory(SCRIPT_PATH + "/../unit_tests/glaemscrafu")
   unit_test_directory(SCRIPT_PATH + "/../unit_tests/technical")
+  close_html_error_file
 end
 
 # puts Glaemscribe::API::ResourceManager::loaded_modes['quenya'].finalize("implicit_a" => "true").options['implicit_a_unutixe'].visible?
