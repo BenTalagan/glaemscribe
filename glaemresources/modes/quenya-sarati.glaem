@@ -68,6 +68,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   \substitute   "qu" "q" 
 
   \** Dis-ambiguate old qenya diphthongs **\
+  \** AT: The Quenya diphthongs are iu, eu, au, ai, oi, ui. 
+      In the Quenya Usage, u is treated as w, and i is treated as y, 
+      when they are the second element in diphthongs. 
+      Other than that, the standard conventions of each document apply. **\
   \substitute   "iu" "iw"
   \substitute   "eu" "ew"
   \substitute   "au" "aw"
