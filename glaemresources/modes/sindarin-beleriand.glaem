@@ -31,7 +31,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   \entry "0.0.6" "Added support for the FreeMonoTengwar font"
   \entry "0.1.0" "Added support for the Tengwar Elfica font"
   \entry "0.1.1" "Added support for inlined raw tengwar"
-  \entry "0.1.2" "Fine tuning handling of the aw diphthong"
+  \entry "0.1.2" "Fine tuning handling of the aw diphthong (Thanks to Dmitry Kourmyshov!)"
 \end
 
 \language "Sindarin"
