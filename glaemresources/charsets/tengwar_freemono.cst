@@ -24,11 +24,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 \** Charset for the FreeMonoTengwar font **\ 
 
-\version 0.0.6
+\version 0.0.7
 
 \beg changelog
   \entry "0.0.5" "Added VALA_W_HOOK."
   \entry "0.0.6" "Updating punctuation"
+  \entry "0.0.7" "Fixed missing tinco_ext / sule_ext"
 \end
 
 \char 20 SPACE
@@ -72,7 +73,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 \char e016  TW_63 ANNA
 \char e017  TW_64 VILYA
 
-\char e018  TW_EXT_11 TINCO_EXT SULE_EXT
+\char e018  TW_EXT_11 TINCO_EXT SULE_EXT THULE_EXT
 \char e019  TW_EXT_12 PARMA_EXT FORMEN_EXT 
 \char e01A  TW_EXT_13 CALMA_EXT AHA_EXT
 \char e01B  TW_EXT_14 QUESSE_EXT HWESTA_EXT
