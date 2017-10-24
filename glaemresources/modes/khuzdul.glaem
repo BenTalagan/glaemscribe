@@ -22,7 +22,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 **\
 
-\** Khuzdul mode for glaemscribe **\
+\beg changelog
+  \entry "0.0.2", "Moved outspace character to general element"
+\end
 
 \language "Khuzdul"
 \writing  "Cirth"
@@ -30,14 +32,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 \version  "0.0.2"
 \authors  "J.R.R. Tolkien, impl. Talagan (Benjamin Babut)"
 
-\charset  cirth_ds true
+\world      arda
+\invention  jrrt
 
-\** Changelog **\
-\**
-\beg changelog
-  \entry "0.0.2", "Moved outspace character to general element"
-\end
-**\
+\charset  cirth_ds true
 
 \** We redefine the output space to have something beautiful, especially with erebor1 and erebor2 **\ 
 \outspace CIRTH_SPACE_BIG

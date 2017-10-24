@@ -33,6 +33,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 \version  "0.1.1"
 \authors  "J.R.R. Tolkien, impl. Talagan (Benjamin Babut)"
 
+\world      arda
+\invention  jrrt
+
 \raw_mode "raw-tengwar"
 
 \charset  tengwar_ds_eldamar true

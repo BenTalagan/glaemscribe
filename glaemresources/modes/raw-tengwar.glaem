@@ -33,6 +33,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 \version  "0.0.2"
 \authors  "Talagan (Benjamin Babut)"
 
+\world      arda
+\invention  experimental
+
 \metamode true
 
 \charset  tengwar_ds_sindarin true

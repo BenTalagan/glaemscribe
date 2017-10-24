@@ -37,12 +37,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   \entry "0.1.1" "Added support for inlined raw tengwar"
 \end
 
-
 \language "R'lyehian"
 \writing  "Tengwar"
 \mode     "Glaemscrafu"
 \version  "0.1.1"
 \authors  "H.P.Lovecraft & The Great Ancient Gods, impl. Fthalagn"
+
+\world      other
+\invention  experimental
 
 \raw_mode "raw-tengwar"
 

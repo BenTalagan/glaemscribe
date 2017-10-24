@@ -36,6 +36,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 \version  "0.0.4"
 \authors  "J.R.R. Tolkien, impl. Talagan (Benjamin Babut)"
 
+\world      arda
+\invention  jrrt
+
 \charset  cirth_ds true
 
 \** We redefine the output space to have something beautiful, especially with erebor1 and erebor2 **\ 

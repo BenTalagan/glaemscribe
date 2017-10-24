@@ -42,7 +42,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 \version  "0.1.1"
 \authors  "J.R.R. Tolkien, impl. Talagan (Benjamin Babut)"
 
-\raw_mode "raw-tengwar"
+\world      arda
+\invention  jrrt
 
 \charset  tengwar_ds_sindarin true
 \charset  tengwar_ds_parmaite false
@@ -50,6 +51,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 \charset  tengwar_ds_annatar  false
 \charset  tengwar_ds_elfica   false
 \charset  tengwar_freemono    false
+
+\raw_mode "raw-tengwar"
 
 \beg      options
 

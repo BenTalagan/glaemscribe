@@ -35,6 +35,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 \version  "0.0.3"
 \authors  "J.R.R. Tolkien, impl. Talagan (Benjamin Babut)"
 
+\world      arda
+\invention  jrrt
+
 \beg changelog
   \entry "0.0.1" "Initial version"
   \entry "0.0.2" "Adding quotes handling"

@@ -38,6 +38,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 \version  "0.1.1"
 \authors  "Talagan (Benjamin Babut), based on J.R.R. Tolkien"
 
+\world      arda
+\invention  experimental
+
 \raw_mode "raw-tengwar"
 
 \charset  tengwar_ds_sindarin true

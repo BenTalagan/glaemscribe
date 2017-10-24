@@ -22,18 +22,20 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 **\
 
-\** 0.0.3 : Moved out space to general element **\
+\beg changelog
+  \entry "0.0.1" "Initial version"
+  \entry "0.0.2" "Adding quotes handling"
+  \entry "0.0.3" " Moved out space to general element"
+\end
 
 \language "Valarin"
 \writing  "Sarati"
 \mode     "Glaemscrafu"
-\version  "0.0.2"
+\version  "0.0.3"
 \authors  "Talagan (Benjamin Babut), based on J.R.R. Tolkien"
 
-\beg changelog
-  \entry "0.0.1" "Initial version"
-  \entry "0.0.2" "Adding quotes handling"
-\end
+\world      arda
+\invention  experimental
 
 \charset  sarati_eldamar true
 
