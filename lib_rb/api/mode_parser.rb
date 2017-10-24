@@ -213,6 +213,8 @@ module Glaemscribe
         @mode.authors       = doc.root_node.gpath('authors').first.args.first
         @mode.version       = doc.root_node.gpath('version').first.args.first
         @mode.raw_mode_name = doc.root_node.gpath('raw_mode').first.args.first if doc.root_node.gpath('raw_mode').first
+        @mode.invention     = doc.root_node.gpath('invention').first.args.first if doc.root_node.gpath('invention').first
+        @mode.world         = doc.root_node.gpath('world').first.args.first if doc.root_node.gpath('world').first
                 
         doc.root_node.gpath("options.option").each{ |option_element|
           values      = {}
