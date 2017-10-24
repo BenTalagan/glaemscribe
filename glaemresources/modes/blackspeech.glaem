@@ -146,8 +146,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
      
     {DIPHTHONGS}        === ai              * au              * oi          
     {_DIPHTHONGS_}      === YANTA A_TEHTA   * URE A_TEHTA     * YANTA {O_LOOP}  
-    {WDIPHTHONGS}       === * {DIPHTHONGS}
-    {_WDIPHTHONGS_}     === * {_DIPHTHONGS_}
       
 		{WLONG}     === {NULL} \** long vowels that can be used as tehtar **\
     {_WLONG_}   === {NULL} \** tehtar of long vowels that can be used as tehtar **\
@@ -189,9 +187,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         {_WLONG_}        === {_WLONG_} * {_LONG_U_}
 		  \endif
     \endif  
-			
-		{_LTEHTAR_}     === {_LONG_A_} * {_LONG_E_} * {_LONG_I_} * {_LONG_O_} * {_LONG_U_}
-         
+			        
     {V_D}           === [ {VOWELS} {WLONG}  ]
     {V_D_WN}        === [ {VOWELS} {WLONG} * {NULL} ]
 
