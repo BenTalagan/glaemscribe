@@ -62,7 +62,7 @@ module Glaemscribe
       
         srcp = srccounter.prototype
         dstp = dstcounter.prototype
-            
+        
         if srcp != dstp
           @mode.errors << Glaeml::Error.new(@line, "Source and destination are not compatible (#{srcp} vs #{dstp})")
           return

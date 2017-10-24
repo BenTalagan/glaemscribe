@@ -50,9 +50,11 @@ Glaemscribe.SheafChainIterator = function (sheaf_chain, cross_schema)
       prototype_array.push(sheaf.fragments.length);
     }
   });
-  
+    
   sci.cross_array = identity_cross_array;
-  sci.proto_attr  = prototype_array.join('x') || 'CONST';
+  sci.proto_attr  = prototype_array.join('x');
+  if(sci.proto_attr == '')
+    sci.proto_attr = 'CONST';
 
   // Construct the cross array
   if(cross_schema != null)
@@ -94,13 +96,15 @@ Glaemscribe.SheafChainIterator = function (sheaf_chain, cross_schema)
     prototype_array = prototype_array_permutted;
   }
 
-  sci.proto_attr = prototype_array.join('x') || 'CONST';
+  sci.proto_attr = prototype_array.join('x');
+  if(sci.proto_attr == '')
+    sci.proto_attr = 'CONST';
 }
 
 // Beware, 'prototype' is a reserved keyword
 Glaemscribe.SheafChainIterator.prototype.proto = function() {
   var sci = this;
-  return sci.prototype_attr;
+  return sci.proto_attr;
 }
 
 Glaemscribe.SheafChainIterator.prototype.combinations = function()

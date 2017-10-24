@@ -56,7 +56,8 @@ module Glaemscribe
         }
 
         @cross_array = identity_cross_array
-        @prototype   = prototype_array.join('x') || 'CONST'  
+        @prototype   = prototype_array.join('x')
+        @prototype   = 'CONST'  if @prototype.empty?
  
         # Construct the cross array
         if cross_schema
@@ -87,7 +88,8 @@ module Glaemscribe
         end  
         
         # Recalculate prototype
-        @prototype = prototype_array.join('x') || 'CONST'  
+        @prototype = prototype_array.join('x')
+        @prototype   = 'CONST'  if @prototype.empty?
       end
   
       def iterate
