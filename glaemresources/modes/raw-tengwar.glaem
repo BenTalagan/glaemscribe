@@ -24,12 +24,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 \beg changelog
   \entry "0.0.1" "Initial version."
+  \entry "0.0.2" "Added missing extended tengwar."
 \end
 
 \language "Raw Tengwar"
 \writing  "Tengwar"
 \mode     "Raw"
-\version  "0.0.1"
+\version  "0.0.2"
 \authors  "Talagan (Benjamin Babut)"
 
 \metamode true
@@ -58,7 +59,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 \beg processor
 
   \beg    rules litteral
-	
+
     \if "consonant_modification_style == CONSONANT_MODIFICATION_STYLE_WAVE"
       {GEMINATE} === GEMINATE_SIGN_TILD
       {NASAL}    === NASALIZE_SIGN_TILD
@@ -66,101 +67,110 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
       {GEMINATE} === GEMINATE_SIGN
       {NASAL}    === NASALIZE_SIGN
     \endif
-		
+
     _a_      --> A_TEHTA
-		_acirc_  --> A_TEHTA_CIRCUM
+    _acirc_  --> A_TEHTA_CIRCUM
     _arev_   --> A_TEHTA_REVERSED
 
     _e_      --> E_TEHTA
     _i_      --> I_TEHTA
     _o_      --> O_TEHTA
     _u_      --> U_TEHTA
-    
+
     _a<_     --> A_TEHTA_INF
     _e<_     --> E_TEHTA_INF
     _i<_     --> I_TEHTA_INF
     _o<_     --> O_TEHTA_INF
     _u<_     --> U_TEHTA_INF
-    
+
     _unutixe_ --> I_TEHTA_INF
-		
+
     _ee_    --> E_TEHTA_DOUBLE
     _ii_    --> I_TEHTA_DOUBLE
     _oo_    --> O_TEHTA_DOUBLE
     _uu_    --> U_TEHTA_DOUBLE
-    
+
     _ee<_    --> E_TEHTA_DOUBLE_INF
     _ii<_    --> I_TEHTA_DOUBLE_INF
 
     _(tinco,tw11)_   --> TINCO
-		_(parma,tw12)_   --> PARMA
-		_(calma,tw13)_   --> CALMA
-		_(quesse,tw14)_  --> QUESSE
+    _(parma,tw12)_   --> PARMA
+    _(calma,tw13)_   --> CALMA
+    _(quesse,tw14)_  --> QUESSE
 
     _(ando,tw21)_    --> ANDO
-		_(umbar,tw22)_   --> UMBAR
-		_(anga,tw23)_    --> ANGA
-		_(ungwe,tw24)_   --> UNGWE
-		
-		_(sule,súle,thule,thúle,tw31)_    --> SULE
-		_(formen,tw32)_                   --> FORMEN
-		_(aha,harma,tw33)_                --> AHA
-		_(hwesta,tw34)_                   --> HWESTA
-		
-		_(anto,tw41)_   --> ANTO
-		_(ampa,tw42)_   --> AMPA
-		_(anca,tw43)_   --> ANCA
-		_(unque,tw44)_  --> UNQUE
-		
-		_(numen,númen,tw51)_     --> NUMEN
-		_(malta,tw52)_           --> MALTA
-		_(noldo,ñoldo,tw53)_     --> NOLDO
-		_(nwalme,ñwalme,tw54)_   --> NWALME
-		
-		_(ore,óre,tw61)_          --> ORE
-		_(vala,tw62)_             --> VALA
-		_(anna,tw63)_             --> ANNA
-		_(vilya,wilya,tw64)_      --> VILYA	
-		
-		_(romen,rómen,tw71)_      --> ROMEN
-		_(arda,tw72)_             --> ARDA
-		_(lambe,tw73)_            --> LAMBE
-		_(alda,tw74)_             --> ALDA
-		
-		_(silme,tw81)_                  --> SILME
-		_(silmenuquerna,silmen,tw82)_   --> SILME_NUQUERNA
-		_(esse,tw83)_                   --> ESSE
-		_(essenuquerna,essen,tw84)_     --> ESSE_NUQUERNA
-		
-		_(hyarmen,tw91)_                   --> HYARMEN
-		_(hwestasindarinwa,hwestas,tw92)_  --> HWESTA_SINDARINWA
-		_(yanta,tw93)_                     --> YANTA
-		_(ure,úre,tw94)_                   --> URE
-		
-    
-		_(osse)_  --> OSSE
-		_(halla)_ --> HALLA
-	  _(vaia,vaiya)_  --> VAIA
-    
-    
+    _(umbar,tw22)_   --> UMBAR
+    _(anga,tw23)_    --> ANGA
+    _(ungwe,tw24)_   --> UNGWE
+
+    _(sule,súle,thule,thúle,tw31)_    --> SULE
+    _(formen,tw32)_                   --> FORMEN
+    _(aha,harma,tw33)_                --> AHA
+    _(hwesta,tw34)_                   --> HWESTA
+
+    _(anto,tw41)_   --> ANTO
+    _(ampa,tw42)_   --> AMPA
+    _(anca,tw43)_   --> ANCA
+    _(unque,tw44)_  --> UNQUE
+
+    _(numen,númen,tw51)_     --> NUMEN
+    _(malta,tw52)_           --> MALTA
+    _(noldo,ñoldo,tw53)_     --> NOLDO
+    _(nwalme,ñwalme,tw54)_   --> NWALME
+
+    _(ore,óre,tw61)_          --> ORE
+    _(vala,tw62)_             --> VALA
+    _(anna,tw63)_             --> ANNA
+    _(vilya,wilya,tw64)_      --> VILYA
+
+    _(romen,rómen,tw71)_      --> ROMEN
+    _(arda,tw72)_             --> ARDA
+    _(lambe,tw73)_            --> LAMBE
+    _(alda,tw74)_             --> ALDA
+
+    _(silme,tw81)_                  --> SILME
+    _(silmenuquerna,silmen,tw82)_   --> SILME_NUQUERNA
+    _(esse,tw83)_                   --> ESSE
+    _(essenuquerna,essen,tw84)_     --> ESSE_NUQUERNA
+
+    _(hyarmen,tw91)_                   --> HYARMEN
+    _(hwestasindarinwa,hwestas,tw92)_  --> HWESTA_SINDARINWA
+    _(yanta,tw93)_                     --> YANTA
+    _(ure,úre,tw94)_                   --> URE
+
+    \** Extended tengwar **\
+    _(xtinco,xsule,xsúle,xthule,xthúle,xtw11)_        --> TW_EXT_11
+    _(xparma,xformen,xtw12)_                          --> TW_EXT_12
+    _(xcalma,xaha,xharma,xtw13)_                      --> TW_EXT_13
+    _(xquesse,xhwesta,xtw14)_                         --> TW_EXT_14
+    _(xando,xanto,xtw21)_                             --> TW_EXT_21
+    _(xumbar,xampa,xtw22)_                            --> TW_EXT_22
+    _(xanga,xanca,xtw23)_                             --> TW_EXT_23
+    _(xungwe,xunque,xtw24)_                           --> TW_EXT_24
+
+    \** Others more exotic tengwar **\
+    _(osse)_              --> OSSE
+    _(vaia,vaiya)_        --> VAIA
     _(mh)_                --> TW_MH
     _(mhbeleriandic,mhb)_ --> TW_MH_BELERIANDIC
     _(hwlowdham,hwl)_     --> TW_HW_LOWDHAM
-    
-		
-		\** ligatures **\
+
+    \** ligatures **\
     _(harmasilme,ahasilme,silmeharma,silmeaha)_ --> ANCA_CLOSED
     _(hwestatinco,tincohwesta)_                 --> HWESTA_TINCO
     _(harmatinco,ahatinco,tincoharma,tincoaha)_ --> AHA_TINCO
-    
+
+    \** bearers **\
     _(telco)_   --> TELCO
-		_(ara,ára)_ --> ARA
-		
-		_(geminate)_  --> {GEMINATE}
-		_(nasal)_     --> {NASAL}
-		_(palatal)_   --> PALATAL_SIGN
-		
-		_0_ --> NUM_0
+    _(ara,ára)_ --> ARA
+    _(halla)_ --> HALLA
+
+    \** consonant modifiers **\
+    _(geminate)_  --> {GEMINATE}
+    _(nasal)_     --> {NASAL}
+    _(palatal)_   --> PALATAL_SIGN
+
+    _0_ --> NUM_0
     _1_ --> NUM_1
     _2_ --> NUM_2
     _3_ --> NUM_3
@@ -172,12 +182,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     _9_ --> NUM_9
     _10_ --> NUM_10
     _11_ --> NUM_11
-    
+
   \end
 
   \beg    rules punctuation
-	  / --> {NULL}
-	
+    / --> {NULL}
+
     . --> PUNCT_DDOT
     .. --> PUNCT_DOT PUNCT_DDOT PUNCT_DOT
     …  --> PUNCT_TILD
@@ -193,7 +203,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     ! --> PUNCT_EXCLAM
     ? --> PUNCT_INTERR
     · --> PUNCT_DOT
-    
+
     :: --> PUSTA_3
 
     \** Apostrophe **\
