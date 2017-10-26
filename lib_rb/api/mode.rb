@@ -39,6 +39,8 @@ module Glaemscribe
       
       attr_accessor :raw_mode_name # Read from glaeml
       
+      attr_accessor :world, :invention
+      
       attr_reader   :latest_option_values
          
       def initialize(name)
@@ -126,6 +128,10 @@ module Glaemscribe
         @raw_mode = loaded_raw_mode.deep_clone
       end
       
+      def replace_specials(l)
+        l.gsub("_",SPECIAL_CHAR_UNDERSCORE)
+      end
+      
       def strict_transcribe(content, charset = nil)
         charset = default_charset if !charset
         return false, "*** No charset usable for transcription. Failed!" if !charset
@@ -137,6 +143,7 @@ module Glaemscribe
             l[-1] = "" 
             restore_lf = true
           end
+          l = replace_specials(l)
           l = @pre_processor.apply(l)
           l = @processor.apply(l)
           l = @post_processor.apply(l, charset)

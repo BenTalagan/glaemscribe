@@ -24,6 +24,9 @@ module Glaemscribe
   module API
     WORD_BREAKER        = "|"
     WORD_BOUNDARY       = "_"
+    
+    SPECIAL_CHAR_UNDERSCORE = '﹏'
+    
     UNKNOWN_CHAR_OUTPUT = "☠"      
     VIRTUAL_CHAR_OUTPUT = "☢" # When transcribing a virtual char...
   end
