@@ -178,6 +178,7 @@ Glaemscribe.RuleGroup.prototype.finalize = function(options) {
   this.rules      = []
   
   this.add_var("NULL","");
+  this.add_var("UNDERSCORE",Glaemscribe.SPECIAL_CHAR_UNDERSCORE);
 
   this.descend_if_tree(this.root_code_block, options)
   

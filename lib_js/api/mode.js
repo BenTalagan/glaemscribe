@@ -120,6 +120,10 @@ Glaemscribe.Mode.prototype.get_raw_mode = function() {
   mode.raw_mode = Object.glaem_clone(loaded_raw_mode);
 }
 
+Glaemscribe.Mode.prototype.replace_specials = function(l) {
+  return l.replace(new RegExp('_', 'g'), Glaemscribe.SPECIAL_CHAR_UNDERSCORE);
+}
+
 Glaemscribe.Mode.prototype.strict_transcribe = function(content, charset, debug_context) {
 
   if(charset == null)
@@ -141,6 +145,8 @@ Glaemscribe.Mode.prototype.strict_transcribe = function(content, charset, debug_
       restore_lf = true;
       l = l.slice(0,-1);
     }
+    
+    l = this.replace_specials(l)
     
     l = this.pre_processor.apply(l);
     debug_context.preprocessor_output += l + "\n";
