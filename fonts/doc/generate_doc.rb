@@ -130,10 +130,6 @@ end
       ["x","x","x","x","x","x","x","U [s]",""],
       ["x","x","x","x","x","x","x","U [l]",""],
       ["x","x","x","x","x","x","x","U [xl]",""],
-      ["x","x","x","x","x","x","x","Thinnas [xs]",""],
-      ["x","x","x","x","x","x","x","Thinnas [s]",""],
-      ["x","x","x","x","x","x","x","Thinnas [l]",""],
-      ["x","x","x","x","x","x","x","Thinnas [xl]",""],
     ]
   },
   {
@@ -162,7 +158,11 @@ end
       ["m","m","x","x","x","x","x","LSD (circle tehta inf) [xs]          ","Modified for better placement under telco."],
       ["x","x","x","x","x","x","x","LSD (circle tehta inf) [s]           ",""],
       ["x","x","x","x","x","x","x","LSD (circle tehta inf) [l]           ",""],
-      ["x","x","x","x","x","x","x","LSD (circle tehta inf) [xl]          ",""]
+      ["x","x","x","x","x","x","x","LSD (circle tehta inf) [xl]          ",""],
+      ["x","x","x","x","x","x","x","Thinnas [xs]",""],
+      ["x","x","x","x","x","x","x","Thinnas [s]",""],
+      ["x","x","x","x","x","x","x","Thinnas [l]",""],
+      ["x","x","x","x","x","x","x","Thinnas [xl]",""],
     ]
   },
   {
