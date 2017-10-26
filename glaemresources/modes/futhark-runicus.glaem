@@ -29,7 +29,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 \language "Old Norse"
 \writing  "Runes"
-\mode     "Futhark Codex Runicus"
+\mode     "Old Norse Futhark - Codex Runicus"
 \version  "0.0.2"
 \authors  "Historical, impl. Talagan (Benjamin Babut)"
 

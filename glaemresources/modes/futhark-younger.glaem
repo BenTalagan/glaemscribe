@@ -29,7 +29,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 \language "Old Norse"
 \writing  "Runes"
-\mode     "Younger Futhark"
+\mode     "Old Norse Futhark - Younger Futhark"
 \version  "0.0.2"
 \authors  "Historical impl. Bertrand Bellet"
 

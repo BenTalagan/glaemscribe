@@ -37,7 +37,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 \language "Sindarin"
 \writing  "Tengwar"
-\mode     "Beleriand"
+\mode     "Sindarin Tengwar - Beleriand"
 \version  "0.1.3"
 \authors  "J.R.R. Tolkien, impl. Talagan (Benjamin Babut)"
 

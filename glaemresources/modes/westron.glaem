@@ -34,7 +34,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 \**  Westron mode for glaemscribe (MAY BE INCOMPLETE) **\
 \language Westron
 \writing  Tengwar
-\mode     Glaemscrafu
+\mode     "Westron Tengwar - G*"
 \version  "0.1.1"
 \authors  "Talagan (Benjamin Babut), based on J.R.R. Tolkien"
 

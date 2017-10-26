@@ -32,7 +32,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 \language "Sindarin"
 \writing  "Cirth"
-\mode     "Angerthas Daeron"
+\mode     "Sindarin Cirth - Angerthas Daeron"
 \version  "0.0.4"
 \authors  "J.R.R. Tolkien, impl. Talagan (Benjamin Babut)"
 

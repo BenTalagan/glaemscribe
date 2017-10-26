@@ -29,7 +29,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 \language "Raw Tengwar"
 \writing  "Tengwar"
-\mode     "Raw"
+\mode     "Raw Tengwar"
 \version  "0.0.2"
 \authors  "Talagan (Benjamin Babut)"
 

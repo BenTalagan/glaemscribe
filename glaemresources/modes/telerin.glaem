@@ -36,7 +36,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 \language "Telerin"
 \writing  "Tengwar"
-\mode     "Glaemscrafu"
+\mode     "Telerin Tengwar - G*"
 \version  "0.1.1"
 \authors  "Talagan (Benjamin Babut), based on J.R.R Tolkien"
 

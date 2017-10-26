@@ -38,7 +38,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 \language "Sindarin"
 \writing  "Tengwar"
-\mode     "General Use"
+\mode     "Sindarin Tengwar - General Use"
 \version  "0.1.1"
 \authors  "J.R.R. Tolkien, impl. Talagan (Benjamin Babut)"
 

@@ -39,11 +39,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 \language "R'lyehian"
 \writing  "Tengwar"
-\mode     "Glaemscrafu"
+\mode     "R'lyehian Tengwar - G*"
 \version  "0.1.1"
 \authors  "H.P.Lovecraft & The Great Ancient Gods, impl. Fthalagn"
 
-\world      other
+\world      other_world
 \invention  experimental
 
 \raw_mode "raw-tengwar"

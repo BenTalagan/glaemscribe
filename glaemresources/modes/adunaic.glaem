@@ -35,7 +35,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 \**  Adunaic mode for glaemscribe (MAY BE INCOMPLETE) **\
 \language Adûnaic
 \writing  Tengwar
-\mode     Glaemscrafu
+\mode     "Adûnaic Tengwar - G*"
 \version  "0.1.0"
 \authors  "Talagan (Benjamin Babut), based on J.R.R Tolkien"
 

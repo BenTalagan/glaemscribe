@@ -24,7 +24,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 \language "Gothic"
 \writing  "Gothic Alphabet"
-\mode     "Standard"
+\mode     "Gothic - Standard"
 \version  "0.0.1"
 \authors  "Historical, impl. Talagan (Benjamin Babut)"
 

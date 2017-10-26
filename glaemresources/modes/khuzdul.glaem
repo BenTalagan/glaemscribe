@@ -28,7 +28,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 \language "Khuzdul"
 \writing  "Cirth"
-\mode     "Angerthas Moria"
+\mode     "Khuzdul Cirth - Angerthas Moria"
 \version  "0.0.2"
 \authors  "J.R.R. Tolkien, impl. Talagan (Benjamin Babut)"
 

@@ -29,7 +29,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 \language "Old English"
 \writing  "Tengwar"
-\mode     "Mercian"
+\mode     "Old English Tengwar - 'Mercian' Usage"
 \version  "0.1.1"
 \authors  "J.R.R. Tolkien, impl. Talagan (Benjamin Babut)"
 
