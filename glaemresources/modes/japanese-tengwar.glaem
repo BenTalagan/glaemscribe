@@ -1,0 +1,543 @@
+\language "Japanese"
+\writing  "Tengwar"
+\mode			"Japanese Tengwar - G*"
+\authors	"Talagan (Benjamin Babut)"
+\version	"0.0.1"
+ 
+\world      primary
+\invention  experimental 
+ 
+\raw_mode "raw-tengwar"
+ 
+\charset  tengwar_ds_sindarin false
+\charset  tengwar_ds_parmaite false
+\charset  tengwar_ds_eldamar  false
+\charset  tengwar_ds_annatar  true
+\charset  tengwar_ds_elfica   false
+\charset  tengwar_freemono    false
+
+\beg options
+  \beg option gojuon_y GOJUON_Y_USE_YANTA
+	  \value GOJUON_Y_USE_TELCO 0
+	  \value GOJUON_Y_USE_YANTA 1
+	\end
+  
+  \beg option gojuon_w GOJUON_W_USE_URE
+	  \value GOJUON_W_USE_TELCO 0
+	  \value GOJUON_W_USE_URE 1
+	\end
+	
+	\beg option isolated_n ISOLATED_N_USE_NOLDO
+	  \value ISOLATED_N_USE_NOLDO 0
+		\value ISOLATED_N_USE_MODIFIER 1
+	\end
+		
+  \beg option choon_long_vowels CHOON_CONFLATE
+    \value CHOON_CONFLATE 0
+    \value CHOON_KEEP_SEPARATE 1
+  \end
+
+  \beg option consonant_modification_style CONSONANT_MODIFICATION_STYLE_WAVE
+    \value CONSONANT_MODIFICATION_STYLE_WAVE 0
+    \value CONSONANT_MODIFICATION_STYLE_BAR 1
+  \end    
+  
+  
+\end
+
+\beg preprocessor
+
+  \downcase
+
+  \** Normalize explicitly written long vowels **\
+  \rxsubstitute "[āâàá]" "aー"
+  \rxsubstitute "[īîíì]" "iー"
+  \rxsubstitute "[ūûúù]" "uー"
+  \rxsubstitute "[ēêéè]" "eー"
+  \rxsubstitute "[ōôóò]" "oー"
+  
+  \** Normalize elvish bizarrerie **\
+  \substitute "ä" "a"
+  \substitute "ï" "i"
+  \substitute "ü" "u"
+  \substitute "ë" "e"
+  \substitute "ö" "o"
+
+  \if "choon_long_vowels == CHOON_CONFLATE"
+    \** Normalization of long vowels : gojuon **\
+    \** a **\ \rxsubstitute "([あアカかさサたタなナはハまマらラがガざザだダばバぱパやヤわワ])[あアー]" "\\1ー"
+    \** i **\ \rxsubstitute "([いイきキしシちチにニひヒみミりリぎギじジぢヂびビぴピゐヰ])[いイー]" "\\1ー"
+    \** u **\ \rxsubstitute "([うウくクすスつツぬヌふフむムるルぐグずズづヅぶブぷプゆユ])[うウー]" "\\1ー"
+    \** e **\ \rxsubstitute "([えエけケせセてテねネへヘめメれレげゲぜゼでデべベぺペゑヱ])[いイー]" "\\1ー"
+    \** o **\ \rxsubstitute "([おオこコそソとトのノほホもモろロごゴぞゾどドぼボぽポよヨをヲ])[うウー]" "\\1ー"
+    
+    \** ookami, too **\
+    \rxsubstitute "([とトおオ])[おオ]" "\\1ー"
+    \** ee, nee, oneesan **\
+    \rxsubstitute "([ねネえエ])[えエ]" "\\1ー"
+    
+    \** Normalization of long vowels : yoon & foreign extended katakana **\
+	  \** a **\ \rxsubstitute "([ラ゜ゃャァヮ])[あアー]" "\\1ー"
+ 	  \** i **\ \rxsubstitute "([リ゜ィ])[いイー]" "\\1ー"
+	  \** u **\ \rxsubstitute "([ル゜ゅュゥヴ])[うウー]" "\\1ー"
+	  \** e **\ \rxsubstitute "([レ゜ェえエ])[いイー]" "\\1ー"
+	  \** o **\ \rxsubstitute "([ロ゜ょョォ])[うウー]" "\\1ー"
+ 
+	  \rxsubstitute "ei" "eー"
+	  \rxsubstitute "ou" "oー"
+         
+    \rxsubstitute "aa" "aー"
+	  \rxsubstitute "ii" "iー"
+	  \rxsubstitute "uu" "uー"
+	  \rxsubstitute "ee" "eー"
+	  \rxsubstitute "oo" "oー"
+  \endif
+	
+	\** Normalization of geminates.  Simply introduce っ in romanisation ;) **\
+	\rxsubstitute "([tpkcs])\\1" "っ\\1"
+	\rxsubstitute "tch" "っch"
+	\** Far less common, maybe even impossible **\
+  \rxsubstitute "([h])\\1" "っ\\1"      
+  \rxsubstitute "([dbgz])\\1" "っ\\1"
+	\rxsubstitute "([fvl])\\1" "っ\\1" 
+  \rxsubstitute "([rwy])\\1" "っ\\1"
+	
+	\** Normalization of isolated nasalizer n (&m). Simply introduce ん in romanisation :) **\
+	\rxsubstitute "(n|m)([^aeiouy]|$)" "ん\\2"
+
+\end
+
+\beg processor
+	\beg rules litteral
+  
+    \if "consonant_modification_style == CONSONANT_MODIFICATION_STYLE_WAVE"
+      {GEMINATE} === GEMINATE_SIGN_TILD
+    \else
+      {GEMINATE} === GEMINATE_SIGN
+    \endif
+      
+		{_A_} === A_TEHTA
+		{_I_} === I_TEHTA
+		{_U_} === U_TEHTA
+		{_E_} === E_TEHTA
+		{_O_} === O_TEHTA
+		
+		{_AA_} === A_TEHTA_REVERSED
+		{_II_} === I_TEHTA_DOUBLE
+		{_UU_} === U_TEHTA_DOUBLE
+		{_EE_} === E_TEHTA_DOUBLE
+		{_OO_} === O_TEHTA_DOUBLE
+
+    {_SHORT_VOWELS_} === [{_A_}  * {_I_}  * {_U_}  * {_E_}  * {_O_}]
+		{_LONG_VOWELS_}  === [{_AA_} * {_II_} * {_UU_} * {_EE_} * {_OO_}]
+
+    {_SHORT_VOWELS_YON_} === [{_A_} * {_U_} * {_O_}]
+    {_LONG_VOWELS_YON_}  === [{_AA_} * {_UU_} * {_OO_}]	
+    		
+		{NASAL_OR_NOT}       === [{NULL} * (ん,ン)]
+		{GEMINATE_OR_NOT}    === [{NULL} * (っ,ッ)]
+		{MODS}               === {NASAL_OR_NOT} {GEMINATE_OR_NOT}
+		
+		{_PALATAL_}       === UNUTIXE
+		{_NASAL_}         === NASALIZE_SIGN
+		{_GEMINATE_}      === {GEMINATE}
+    {_LABIAL_}        === U_TEHTA_INF
+    {_CANCELLER_}     === THINNAS
+    {_ALVEOLAR_}      === ALVEOLAR_SIGN
+    {_CANCEL_THEN_PALATAL_} === CIRC_TEHTA_INF
+				
+	  {_GEMINATE_OR_NOT_}  === [{NULL} * {_GEMINATE_}]
+	
+		\if "isolated_n == ISOLATED_N_USE_NOLDO"
+		  {_NASAL_OR_NOT_PRE_}  === [{NULL} * NOLDO]
+			{_NASAL_OR_NOT_POST_} === {NULL}
+		\else
+		  {_NASAL_OR_NOT_PRE_}  === {NULL}
+			{_NASAL_OR_NOT_POST_} === [{NULL} * {_NASAL_}]
+		\endif
+    
+		{_PREMODS_}        === {_NASAL_OR_NOT_PRE_}
+		{_POSTMODS_}       === {_NASAL_OR_NOT_POST_} {_GEMINATE_OR_NOT_}
+			
+		\** Isolated vowels / Y Serie **\
+		{GOJUON}   === [(あ,ア,a) * (い,イ,i) * (う,ウ,u) * (え,エ,e) * (お,オ,o)]
+		{YOON}     === [(や,ヤ,ya) * (ゆ,ユ,yu) * (よ,ヨ,yo)]  	
+	  {GOJUON}   --> TELCO {_SHORT_VOWELS_}
+	  {GOJUON}ー  --> TELCO {_LONG_VOWELS_}
+		\if "gojuon_y == GOJUON_Y_USE_YANTA" 
+      {TENGWA}   === YANTA
+		\else
+      {TENGWA}   === TELCO {_PALATAL_}
+		\endif
+  	{YOON}   --> {TENGWA}  {_SHORT_VOWELS_YON_}
+	  {YOON}ー  --> {TENGWA}  {_LONG_VOWELS_YON_}  
+    
+    
+		\** T serie **\
+		{GOJUON}   === [(た,タ,ta) * (ち,チ,chi) * (つ,ツ,tsu) * (て,テ,te) * (と,ト,to)] 	
+		{YOON}     === [(ちゃ,チャ,cha) * (ちゅ,チュ,chu) * (ちょ,チョ,cho)]  	
+		{TENGWA}   === TINCO
+		
+		{MODS} {GOJUON}     --> {_PREMODS_} {TENGWA} {_POSTMODS_} {_SHORT_VOWELS_}
+		{MODS} {GOJUON}ー   --> {_PREMODS_} {TENGWA} {_POSTMODS_} {_LONG_VOWELS_}
+	  {MODS} {YOON}       --> {_PREMODS_} {TENGWA} {_POSTMODS_} {_PALATAL_} {_SHORT_VOWELS_YON_}
+		{MODS} {YOON}ー     --> {_PREMODS_} {TENGWA} {_POSTMODS_} {_PALATAL_} {_LONG_VOWELS_YON_}
+	
+		\** P serie **\
+		{GOJUON}   === [(ぱ,パ,pa) * (ぴ,ピ,pi) * (ぷ,プ,pu) * (ぺ,ペ,pe) * (ぽ,ポ,po)] 	
+		{YOON}     === [(ぴゃ,ピャ,pya) * (ぴゅ,ピュ,pyu) * (ぴょ,ピョ,pyo)] 
+		{TENGWA}   === PARMA
+		
+		{MODS} {GOJUON}     --> {_PREMODS_} {TENGWA} {_POSTMODS_} {_SHORT_VOWELS_}
+		{MODS} {GOJUON}ー   --> {_PREMODS_} {TENGWA} {_POSTMODS_} {_LONG_VOWELS_}
+	  {MODS} {YOON}       --> {_PREMODS_} {TENGWA} {_POSTMODS_} {_PALATAL_} {_SHORT_VOWELS_YON_}
+		{MODS} {YOON}ー     --> {_PREMODS_} {TENGWA} {_POSTMODS_} {_PALATAL_} {_LONG_VOWELS_YON_}
+	
+ 		\** K serie **\
+		{GOJUON}   === [(か,カ,ka) * (き,キ,ki) * (く,ク,ku) * (け,ケ,ke) * (こ,コ,ko)] 	
+		{YOON}     === [(きゃ,キャ,kya) * (きゅ,キュ,kyu) * (きょ,キョ,kyo)]  
+		{TENGWA}   === CALMA
+
+		{MODS} {GOJUON}     --> {_PREMODS_} {TENGWA} {_POSTMODS_} {_SHORT_VOWELS_}
+		{MODS} {GOJUON}ー   --> {_PREMODS_} {TENGWA} {_POSTMODS_} {_LONG_VOWELS_}
+	  {MODS} {YOON}       --> {_PREMODS_} {TENGWA} {_POSTMODS_} {_PALATAL_} {_SHORT_VOWELS_YON_}
+		{MODS} {YOON}ー     --> {_PREMODS_} {TENGWA} {_POSTMODS_} {_PALATAL_} {_LONG_VOWELS_YON_}
+		
+		\** D serie **\
+		{GOJUON}   === [(だ,ダ,da) * (ぢ,ヂ,dji) * (づ,ヅ,dzu) * (で,デ,de) * (ど,ド,do)] 
+		{YOON}     === [(ぢゃ,ヂャ,dja) * (ぢゅ,ヂュ,dju) * (ぢょ,ヂョ,djo)] 
+		{TENGWA}   === ANDO
+
+		{MODS} {GOJUON}     --> {_PREMODS_} {TENGWA} {_POSTMODS_} {_SHORT_VOWELS_}
+		{MODS} {GOJUON}ー   --> {_PREMODS_} {TENGWA} {_POSTMODS_} {_LONG_VOWELS_}
+	  {MODS} {YOON}       --> {_PREMODS_} {TENGWA} {_POSTMODS_} {_PALATAL_} {_SHORT_VOWELS_YON_}
+		{MODS} {YOON}ー     --> {_PREMODS_} {TENGWA} {_POSTMODS_} {_PALATAL_} {_LONG_VOWELS_YON_}
+		
+ 		\** B serie **\
+		{GOJUON}   === [(ば,バ,ba) * (び,ビ,bi) * (ぶ,ブ,bu) * (べ,ベ,be) * (ぼ,ボ,bo)] 	
+		{YOON}     === [(びゃ,ビャ,bya) * (びゅ,ビュ,byu) * (びょ,ビョ,byo)] 
+		{TENGWA}   === UMBAR
+
+		{MODS} {GOJUON}     --> {_PREMODS_} {TENGWA} {_POSTMODS_} {_SHORT_VOWELS_}
+		{MODS} {GOJUON}ー   --> {_PREMODS_} {TENGWA} {_POSTMODS_} {_LONG_VOWELS_}
+	  {MODS} {YOON}       --> {_PREMODS_} {TENGWA} {_POSTMODS_} {_PALATAL_} {_SHORT_VOWELS_YON_}
+		{MODS} {YOON}ー     --> {_PREMODS_} {TENGWA} {_POSTMODS_} {_PALATAL_} {_LONG_VOWELS_YON_}
+		
+ 		\** G Serie **\
+		{GOJUON}   === [(が,ガ,ga) * (ぎ,ギ,gi) * (ぐ,グ,gu) * (げ,ゲ,ge) * (ご,ゴ,go)] 			
+		{YOON}     === [(ぎゃ,ギャ,gya) * (ぎゅ,ギュ,gyu) * (ぎょ,ギョ,gyo)]  
+		{TENGWA}   === ANGA
+
+		{MODS} {GOJUON}     --> {_PREMODS_} {TENGWA} {_POSTMODS_} {_SHORT_VOWELS_}
+		{MODS} {GOJUON}ー   --> {_PREMODS_} {TENGWA} {_POSTMODS_} {_LONG_VOWELS_}
+	  {MODS} {YOON}       --> {_PREMODS_} {TENGWA} {_POSTMODS_} {_PALATAL_} {_SHORT_VOWELS_YON_}
+		{MODS} {YOON}ー     --> {_PREMODS_} {TENGWA} {_POSTMODS_} {_PALATAL_} {_LONG_VOWELS_YON_}
+		
+		\** N serie **\	
+		{GOJUON}   === [(な,ナ,na) * (に,ニ,ni) * (ぬ,ヌ,nu) * (ね,ネ,ne) * (の,ノ,no)] 				
+		{YOON}     === [(にゃ,ニャ,nya) * (にゅ,ニュ,nyu) * (にょ,ニョ,nyo)] 
+		{TENGWA}   === NUMEN
+
+		{MODS} {GOJUON}     --> {_PREMODS_} {TENGWA} {_POSTMODS_} {_SHORT_VOWELS_}
+		{MODS} {GOJUON}ー   --> {_PREMODS_} {TENGWA} {_POSTMODS_} {_LONG_VOWELS_}
+	  {MODS} {YOON}       --> {_PREMODS_} {TENGWA} {_POSTMODS_} {_PALATAL_} {_SHORT_VOWELS_YON_}
+		{MODS} {YOON}ー     --> {_PREMODS_} {TENGWA} {_POSTMODS_} {_PALATAL_} {_LONG_VOWELS_YON_}
+		(ん,ン)              --> NOLDO
+		
+		\** M serie **\	
+		{GOJUON}   === [(ま,マ,ma) * (み,ミ,mi) * (む,ム,mu) * (め,メ,me) * (も,モ,mo)] 					
+		{YOON}     === [(みゃ,ミャ,mya) * (みゅ,ミュ,myu) * (みょ,ミョ,myo)] 
+		{TENGWA}   === MALTA
+
+		{MODS} {GOJUON}     --> {_PREMODS_} {TENGWA} {_POSTMODS_} {_SHORT_VOWELS_}
+		{MODS} {GOJUON}ー   --> {_PREMODS_} {TENGWA} {_POSTMODS_} {_LONG_VOWELS_}
+	  {MODS} {YOON}       --> {_PREMODS_} {TENGWA} {_POSTMODS_} {_PALATAL_} {_SHORT_VOWELS_YON_}
+		{MODS} {YOON}ー     --> {_PREMODS_} {TENGWA} {_POSTMODS_} {_PALATAL_} {_LONG_VOWELS_YON_}
+
+		\** H serie **\	
+		{GOJUON}   === [(は,ハ,ha) * (ひ,ヒ,hi) * (ふ,フ,fu) * (へ,ヘ,he) * (ほ,ホ,ho)] 					
+		{YOON}     === [(ひゃ,ヒャ,hya) * (ひゅ,ヒュ,hyu) * (ひょ,ヒョ,hyo)] 
+		{TENGWA}   === VALA
+
+		{MODS} {GOJUON}     --> {_PREMODS_} {TENGWA} {_POSTMODS_} {_SHORT_VOWELS_}
+		{MODS} {GOJUON}ー   --> {_PREMODS_} {TENGWA} {_POSTMODS_} {_LONG_VOWELS_}
+	  {MODS} {YOON}       --> {_PREMODS_} {TENGWA} {_POSTMODS_} {_PALATAL_} {_SHORT_VOWELS_YON_}
+		{MODS} {YOON}ー     --> {_PREMODS_} {TENGWA} {_POSTMODS_} {_PALATAL_} {_LONG_VOWELS_YON_}
+		
+		\** S serie **\
+		{GOJUON}   === [(さ,サ,sa) * (し,シ,shi) * (す,ス,su) * (せ,セ,se) * (そ,ソ,so)] 					
+		{YOON}     === [(しゃ,シャ,sha) * (しゅ,シュ,shu) * (しょ,ショ,sho)] 
+		{TENGWA}   === SILME_NUQUERNA
+
+		{MODS} {GOJUON}     --> {_PREMODS_} {TENGWA} {_POSTMODS_} {_SHORT_VOWELS_}
+		{MODS} {GOJUON}ー   --> {_PREMODS_} {TENGWA} {_POSTMODS_} {_LONG_VOWELS_}
+	  {MODS} {YOON}       --> {_PREMODS_} {TENGWA} {_POSTMODS_} {_PALATAL_} {_SHORT_VOWELS_YON_}
+		{MODS} {YOON}ー     --> {_PREMODS_} {TENGWA} {_POSTMODS_} {_PALATAL_} {_LONG_VOWELS_YON_}
+		
+		\** Z serie **\
+		{GOJUON}   === [(ざ,ザ,za) * (じ,ジ,ji) * (ず,ズ,zu) * (ぜ,ゼ,ze) * (ぞ,ゾ,zo)] 					
+		{YOON}     === [(じゃ,ジャ,ja) * (じゅ,ジュ,ju) * (じょ,ジョ,jo)] 
+		{TENGWA}   === ESSE_NUQUERNA
+
+		{MODS} {GOJUON}     --> {_PREMODS_} {TENGWA} {_POSTMODS_} {_SHORT_VOWELS_}
+		{MODS} {GOJUON}ー   --> {_PREMODS_} {TENGWA} {_POSTMODS_} {_LONG_VOWELS_}
+	  {MODS} {YOON}       --> {_PREMODS_} {TENGWA} {_POSTMODS_} {_PALATAL_} {_SHORT_VOWELS_YON_}
+		{MODS} {YOON}ー     --> {_PREMODS_} {TENGWA} {_POSTMODS_} {_PALATAL_} {_LONG_VOWELS_YON_}
+
+	  \** R serie **\
+		{GOJUON}   === [(ら,ラ,ra) * (り,リ,ri) * (る,ル,ru) * (れ,レ,re) * (ろ,ロ,ro)] 					
+		{YOON}     === [(りゃ,リャ,rya) * (りゅ,リュ,ryu) * (りょ,リョ,ryo)] 
+		{TENGWA}   === ROMEN
+
+		{MODS} {GOJUON}     --> {_PREMODS_} {TENGWA} {_POSTMODS_} {_SHORT_VOWELS_}
+		{MODS} {GOJUON}ー   --> {_PREMODS_} {TENGWA} {_POSTMODS_} {_LONG_VOWELS_}
+	  {MODS} {YOON}       --> {_PREMODS_} {TENGWA} {_POSTMODS_} {_PALATAL_} {_SHORT_VOWELS_YON_}
+		{MODS} {YOON}ー     --> {_PREMODS_} {TENGWA} {_POSTMODS_} {_PALATAL_} {_LONG_VOWELS_YON_}
+		
+		\** W serie **\
+		{GOJUON}   === [(わ,ワ,wa) * (ゐ,ヰ,wi) * (ゑ,ヱ,we) ] 				
+		\if "gojuon_w == GOJUON_W_USE_URE" 
+      {TENGWA}   === URE
+		\else
+		  {TENGWA}   === TELCO {_LABIAL_}
+    \endif
+		{MODS} {GOJUON}     --> {_PREMODS_} {TENGWA} {_POSTMODS_} [{_A_} * {_I_} * {_E_}]
+		{MODS} {GOJUON}ー   --> {_PREMODS_} {TENGWA} {_POSTMODS_} [{_AA_} * {_II_} * {_EE_}]
+		
+	  \** SPECIALS **\
+		{UNDERSCORE}(は,ha,wa) --> HWESTA_SINDARINWA
+	  (を,ヲ,wo,{UNDERSCORE}を,{UNDERSCORE}ヲ,{UNDERSCORE}wo,{UNDERSCORE}o) --> VAIA
+    
+    \** ***************** **\
+    \** Extended katakana **\
+    \** ***************** **\
+    
+		{YI}     === (イィ,yi)
+		\if "gojuon_y == GOJUON_Y_USE_YANTA" 
+      {TENGWA}   === YANTA
+		\else
+      {TENGWA}   === TELCO {_PALATAL_}
+		\endif
+		{YI}   --> {TENGWA} {_I_}
+	  {YI}ー  --> {TENGWA} {_II_}
+    
+    \** va vi vu ve vo **\
+		{SERIE}   === [(ヴァ,va) * (ヴィ,vi) * (ヴ,vu) * (ヴェ,ve) * (ヴォ,vo)] 
+		{TENGWA}  === TW_EXT_22
+		{MODS} {SERIE}     --> {_PREMODS_} {TENGWA} {_POSTMODS_} {_SHORT_VOWELS_}
+		{MODS} {SERIE}ー   --> {_PREMODS_} {TENGWA} {_POSTMODS_} {_LONG_VOWELS_}
+		
+    \** v yon : vya vyu vye vyo **\
+		{SERIE}   === [(ヴャ,vya) * (ヴュ,vyu) * (ヴィェ,vye) * (ヴョ,vyo)] 
+		{TENGWA}  === TW_EXT_22  
+		{MODS} {SERIE}     --> {_PREMODS_} {TENGWA} {_POSTMODS_} {_PALATAL_} [{_A_} * {_U_} * {_E_} * {_O_}]
+		{MODS} {SERIE}ー   --> {_PREMODS_} {TENGWA} {_POSTMODS_} {_PALATAL_} [{_AA_} * {_UU_} * {_EE_} * {_OO_}]
+    
+    \** kye **\
+		{SERIE}   === [(キェ,kye)]
+    {TENGWA}  === CALMA
+		{MODS} {SERIE}     --> {_PREMODS_} {TENGWA} {_POSTMODS_} {_PALATAL_} [{_E_}]
+		{MODS} {SERIE}ー   --> {_PREMODS_} {TENGWA} {_POSTMODS_} {_PALATAL_} [{_EE_}]
+     	   
+    \** kwa, kWa, kwi, kwe, kwo **\
+		{SERIE}   === [(クァ,クヮ,kwa) * (クィ,kwi) * (クェ,kwe) * (クォ,kwo)]
+    {TENGWA}  === CALMA
+		{MODS} {SERIE}     --> {_PREMODS_} {TENGWA} {_POSTMODS_} {_LABIAL_} [{_A_} * {_I_} * {_E_} * {_O_}]
+		{MODS} {SERIE}ー   --> {_PREMODS_} {TENGWA} {_POSTMODS_} {_LABIAL_} [{_AA_} * {_II_} * {_EE_} * {_OO_}]
+    
+    \** gye **\
+		{SERIE}   === [(ギェ,gye)]
+    {TENGWA}  === ANGA
+		{MODS} {SERIE}     --> {_PREMODS_} {TENGWA} {_POSTMODS_} {_PALATAL_} [{_E_}]
+		{MODS} {SERIE}ー   --> {_PREMODS_} {TENGWA} {_POSTMODS_} {_PALATAL_} [{_EE_}]  
+    
+    \** gwa, gWa, gwi, gwe, gwo **\
+		{SERIE}   === [(グァ,グヮ,gwa) * (グィ,gwi) * (グェ,gwe) * (グォ,gwo)]
+    {TENGWA}  === ANGA
+		{MODS} {SERIE}     --> {_PREMODS_} {TENGWA} {_POSTMODS_} {_LABIAL_} [{_A_} * {_I_} * {_E_} * {_O_}]
+		{MODS} {SERIE}ー   --> {_PREMODS_} {TENGWA} {_POSTMODS_} {_LABIAL_} [{_AA_} * {_II_} * {_EE_} * {_OO_}]
+    
+    \** she **\
+		{SERIE}     === [(シェ,she)] 
+		{TENGWA}    === SILME_NUQUERNA
+		{MODS} {SERIE}     --> {_PREMODS_} {TENGWA} {_POSTMODS_} {_PALATAL_} [{_E_}]
+		{MODS} {SERIE}ー   --> {_PREMODS_} {TENGWA} {_POSTMODS_} {_PALATAL_} [{_EE_}]  
+   
+    \** je **\    
+		{SERIE}     === [(ジェ,je)] 
+		{TENGWA}    === ESSE_NUQUERNA
+		{MODS} {SERIE}     --> {_PREMODS_} {TENGWA} {_POSTMODS_} {_PALATAL_} [{_E_}]
+		{MODS} {SERIE}ー   --> {_PREMODS_} {TENGWA} {_POSTMODS_} {_PALATAL_} [{_EE_}]  
+ 
+    \** si **\
+		{SERIE}     === [(スィ,si)] 
+		{TENGWA}    === SILME_NUQUERNA
+		{MODS} {SERIE}     --> {_PREMODS_} {TENGWA} {_POSTMODS_} {_CANCELLER_} [{_I_}]
+		{MODS} {SERIE}ー   --> {_PREMODS_} {TENGWA} {_POSTMODS_} {_CANCELLER_} [{_II_}]  
+ 
+    \** zi **\
+		{SERIE}     === [(ズィ,zi)] 
+		{TENGWA}    === ESSE_NUQUERNA
+		{MODS} {SERIE}     --> {_PREMODS_} {TENGWA} {_POSTMODS_} {_CANCELLER_} [{_I_}]
+		{MODS} {SERIE}ー   --> {_PREMODS_} {TENGWA} {_POSTMODS_} {_CANCELLER_} [{_II_}]  
+    
+    \** che **\
+		{SERIE}     === [(チェ,che)] 
+		{TENGWA}    === TINCO
+		{MODS} {SERIE}     --> {_PREMODS_} {TENGWA} {_POSTMODS_} {_PALATAL_} [{_E_}]
+		{MODS} {SERIE}ー   --> {_PREMODS_} {TENGWA} {_POSTMODS_} {_PALATAL_} [{_EE_}]  
+    
+    \** tsa, tsi, tse, tso **\
+    {SERIE}   === [(ツァ,tsa) * (ツィ,tsi) * (ツェ,tse) * (ツォ,tso)] 	
+		{TENGWA}   === TINCO
+		{MODS} {SERIE}     --> {_PREMODS_} {TENGWA} {_POSTMODS_} {_ALVEOLAR_} [{_A_} * {_I_} * {_E_} * {_O_}] 
+		{MODS} {SERIE}ー   --> {_PREMODS_} {TENGWA} {_POSTMODS_}  {_ALVEOLAR_} [{_AA_} * {_II_} * {_EE_} * {_OO_}]
+    
+    \** tsyu = t alveolaire + palatale + u **\
+    {SERIE}   === [(ツァ,tsyu)] 	
+		{TENGWA}  === TINCO
+		{MODS} {SERIE}     --> {_PREMODS_} {TENGWA} {_POSTMODS_} {_PALATAL_} {_ALVEOLAR_}  [{_U_}] 
+		{MODS} {SERIE}ー   --> {_PREMODS_} {TENGWA} {_POSTMODS_} {_PALATAL_} {_ALVEOLAR_} [{_UU_}] 
+    
+    \** ti, tu **\
+    {SERIE}   === [(ティ,ti) * (トゥ,tu)] 	
+		{TENGWA}  === TINCO
+		{MODS} {SERIE}     --> {_PREMODS_} {TENGWA} {_POSTMODS_} {_CANCELLER_} [{_I_} * {_U_}]
+		{MODS} {SERIE}ー   --> {_PREMODS_} {TENGWA} {_POSTMODS_} {_CANCELLER_} [{_II_} * {_UU_}]
+
+    \** tyu **\
+    {SERIE}   === [(テュ,tyu)] 	
+		{TENGWA}  === TINCO
+		{MODS} {SERIE}     --> {_PREMODS_} {TENGWA} {_POSTMODS_} {_CANCEL_THEN_PALATAL_} [{_U_}]
+		{MODS} {SERIE}ー   --> {_PREMODS_} {TENGWA} {_POSTMODS_} {_CANCEL_THEN_PALATAL_} [{_UU_}]
+    
+    \** di, du **\
+    {SERIE}   === [(ディ,di) * (ドゥ,du)] 	
+		{TENGWA}  === ANDO
+		{MODS} {SERIE}     --> {_PREMODS_} {TENGWA} {_POSTMODS_} {_CANCELLER_} [{_I_} * {_U_}]
+		{MODS} {SERIE}ー   --> {_PREMODS_} {TENGWA} {_POSTMODS_} {_CANCELLER_} [{_II_} * {_UU_}]
+
+    \** dyu **\
+    {SERIE}   === [(デュ,dyu)] 	
+		{TENGWA}  === TINCO
+		{MODS} {SERIE}     --> {_PREMODS_} {TENGWA} {_POSTMODS_} {_CANCEL_THEN_PALATAL_} [{_U_}]
+		{MODS} {SERIE}ー   --> {_PREMODS_} {TENGWA} {_POSTMODS_} {_CANCEL_THEN_PALATAL_} [{_UU_}]
+   
+    \** nye **\
+		{SERIE}   === [(ニェ,nye)]
+    {TENGWA}  === NUMEN
+		{MODS} {SERIE}     --> {_PREMODS_} {TENGWA} {_POSTMODS_} {_PALATAL_} [{_E_}]
+		{MODS} {SERIE}ー   --> {_PREMODS_} {TENGWA} {_POSTMODS_} {_PALATAL_} [{_EE_}]
+
+    \** hye **\
+		{SERIE}   === [(ヒェ,hye)]
+    {TENGWA}  === VALA
+		{MODS} {SERIE}     --> {_PREMODS_} {TENGWA} {_POSTMODS_} {_PALATAL_} [{_E_}]
+		{MODS} {SERIE}ー   --> {_PREMODS_} {TENGWA} {_POSTMODS_} {_PALATAL_} [{_EE_}]
+    
+    \** bye **\
+		{SERIE}   === [(ビェ,bye)]
+    {TENGWA}  === UMBAR
+		{MODS} {SERIE}     --> {_PREMODS_} {TENGWA} {_POSTMODS_} {_PALATAL_} [{_E_}]
+		{MODS} {SERIE}ー   --> {_PREMODS_} {TENGWA} {_POSTMODS_} {_PALATAL_} [{_EE_}]
+
+    \** pye **\
+		{SERIE}   === [(ピェ,pye)]
+    {TENGWA}  === PARMA
+		{MODS} {SERIE}     --> {_PREMODS_} {TENGWA} {_POSTMODS_} {_PALATAL_} [{_E_}]
+		{MODS} {SERIE}ー   --> {_PREMODS_} {TENGWA} {_POSTMODS_} {_PALATAL_} [{_EE_}]
+
+    \** fa, fi, fu, fe, fo **\
+		{SERIE}   === [(ファ,fa) * (フィ,fi) * (フェ,fe) * (フォ,fo)] 
+		{TENGWA}  === TW_EXT_12
+		{MODS} {SERIE}     --> {_PREMODS_} {TENGWA} {_POSTMODS_} [{_A_} * {_I_} * {_E_} * {_O_}]
+		{MODS} {SERIE}ー   --> {_PREMODS_} {TENGWA} {_POSTMODS_} [{_AA_} * {_II_} * {_EE_} * {_OO_}]
+
+    \** fya, fyu, fye, fyo **\
+		{SERIE}   === [(フャ,fya) * (フュ,fyu) * (フィ,fye) * (フョ,fyo)] 
+		{TENGWA}  === TW_EXT_12
+		{MODS} {SERIE}     --> {_PREMODS_} {TENGWA} {_POSTMODS_} [{_A_} * {_U_} * {_E_} * {_O_}]
+		{MODS} {SERIE}ー   --> {_PREMODS_} {TENGWA} {_POSTMODS_} [{_AA_} * {_UU_} * {_EE_} * {_OO_}]
+    
+    \** hu **\
+		{SERIE}   === [(ホゥ,hu)]
+    {TENGWA}  === VALA
+		{MODS} {SERIE}     --> {_PREMODS_} {TENGWA} {_POSTMODS_} {_CANCELLER_} [{_U_}]
+		{MODS} {SERIE}ー   --> {_PREMODS_} {TENGWA} {_POSTMODS_} {_CANCELLER_} [{_UU_}]
+    
+    \** mye **\
+		{SERIE}   === [(ミェ,mye)]
+    {TENGWA}  === MALTA
+		{MODS} {SERIE}     --> {_PREMODS_} {TENGWA} {_POSTMODS_} {_PALATAL_} [{_E_}]
+		{MODS} {SERIE}ー   --> {_PREMODS_} {TENGWA} {_POSTMODS_} {_PALATAL_} [{_EE_}]
+    
+    \** rye **\
+		{SERIE}   === [(リェ,rye)]
+    {TENGWA}  === ROMEN
+		{MODS} {SERIE}     --> {_PREMODS_} {TENGWA} {_POSTMODS_} {_PALATAL_} [{_E_}]
+		{MODS} {SERIE}ー   --> {_PREMODS_} {TENGWA} {_POSTMODS_} {_PALATAL_} [{_EE_}]
+  
+    \** la, li, lu, le, lo / sons of the patriots **\
+		{SERIE}   === [(ラ゜,la) * (リ゜,li) * (ル゜ ,lu) * (レ゜,le) * (ロ゜,lo)] 					
+		{TENGWA}  === LAMBE
+
+		{MODS} {SERIE}     --> {_PREMODS_} {TENGWA} {_POSTMODS_} {_SHORT_VOWELS_}
+		{MODS} {SERIE}ー   --> {_PREMODS_} {TENGWA} {_POSTMODS_} {_LONG_VOWELS_}
+    
+	\end
+  
+  \beg rules punctuation
+    . --> PUNCT_DDOT
+		。 --> PUNCT_DDOT
+    .. --> PUNCT_DOT PUNCT_DDOT PUNCT_DOT
+    …  --> PUNCT_TILD
+    ... --> PUNCT_TILD
+    .... --> PUNCT_TILD
+    ..... --> PUNCT_TILD
+    ...... --> PUNCT_TILD
+    ....... --> PUNCT_TILD
+
+    , --> PUNCT_DOT
+		、 --> PUNCT_DOT
+    : --> PUNCT_DOT
+    ; --> PUNCT_DOT
+    ! --> PUNCT_EXCLAM
+    ? --> PUNCT_INTERR
+    · --> PUNCT_DOT
+
+    \** Apostrophe **\
+
+    ' --> {NULL}
+    ’ --> {NULL}
+
+    \** Quotes **\
+
+    “ --> DQUOT_OPEN
+    ” --> DQUOT_CLOSE
+    « --> DQUOT_OPEN
+    » --> DQUOT_CLOSE
+
+    - --> {NULL}
+    – --> PUNCT_TILD
+    — --> PUNCT_TILD
+
+    [ --> PUNCT_PAREN_L
+    ] --> PUNCT_PAREN_R
+    ( --> PUNCT_PAREN_L
+    ) --> PUNCT_PAREN_R
+    { --> PUNCT_PAREN_L
+    } --> PUNCT_PAREN_R
+    < --> PUNCT_PAREN_L
+    > --> PUNCT_PAREN_R
+
+    \** Not universal between fonts ... **\
+    $ --> BOOKMARK_SIGN
+    ≤ --> RING_MARK_L \** Ring inscription left beautiful stuff **\
+    ≥ --> RING_MARK_R \** Ring inscription right beautiful stuff **\
+
+	\end
+\end
+
+\beg postprocessor
+  \resolve_virtuals
+\end
