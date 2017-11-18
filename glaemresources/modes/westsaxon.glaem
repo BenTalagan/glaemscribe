@@ -39,8 +39,16 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 \raw_mode "raw-tengwar"
 
+\charset  tengwar_ds_annatar false
 \charset  tengwar_ds_eldamar true
-\** Other charsets cannot handle all diacritics we are using here ... **\
+\charset  tengwar_ds_parmaite false
+\charset  tengwar_ds_annatar  false
+\charset  tengwar_ds_elfica   false
+
+\** List of features that would prevent use of other charsets 
+\charset  tengwar_freemono    false
+ Free Mono Tengwar : missing [OLD_ENGLISH_AND,SHOOK_BEAUTIFUL] / sa-rince management not accurate
+**\
 
 \beg options
   \beg option consonant_modification_style CONSONANT_MODIFICATION_STYLE_WAVE

@@ -39,11 +39,15 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 \raw_mode "raw-tengwar"
 
+\charset  tengwar_ds_annatar false
 \charset  tengwar_ds_eldamar true
+\charset  tengwar_ds_parmaite false
+\charset  tengwar_ds_annatar  false
+\charset  tengwar_ds_elfica   false
+
 \** List of features that would prevent use of other charsets 
-
-
- Free Mono Tengwar : missing [OLD_ENGLISH_AND,SHOOK_BEAUTIFUL]
+\charset  tengwar_freemono    false
+ Free Mono Tengwar : missing [OLD_ENGLISH_AND,SHOOK_BEAUTIFUL] / sa-rince management not accurate
 **\
 
 
