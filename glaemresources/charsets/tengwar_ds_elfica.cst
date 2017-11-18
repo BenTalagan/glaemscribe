@@ -263,8 +263,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
           
 \char 125 VAIA WAIA VAIYA
           
-\** Œ **\ \char 152 PUNCT_PAREN_L          \** OK **\                    
-\** œ **\ \char 153 PUNCT_PAREN_R          \** OK **\                        
+\** Œ **\ \char 152 PUNCT_PAREN_L PUNCT_PAREN_L_ALT          \** OK **\                    
+\** œ **\ \char 153 PUNCT_PAREN_R PUNCT_PAREN_R_ALT         \** OK **\                        
 \** Š **\ \char 160 THINF_ACCENT_L         \** OK **\                              
 \** š **\ \char 161 MALTA_W_HOOK TW_MH           \** OK **\                            
 \** Ÿ **\ \char 178 THINF_ACCENT_XS        \** OK **\              
