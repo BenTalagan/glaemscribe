@@ -25,12 +25,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 \beg changelog
   \entry "0.0.2" "Porting to virtual chars"
   \entry "0.1.1" "Added support for inlined raw tengwar"  
+  \entry "0.1.2" "Doing some cleaning"
 \end
 
 \language "Old English"
 \writing  "Tengwar"
 \mode     "Old English Tengwar - 'West Saxon' Usage"
-\version  "0.1.1"
+\version  "0.1.2"
 \authors  "J.R.R. Tolkien, impl. Talagan (Benjamin Babut)"
 
 \world      primary_related_to_arda
@@ -80,12 +81,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
   \beg rules litteral
   
+    {_GEMINATE_} === E_TEHTA_DOUBLE_INF
+  
     \if "consonant_modification_style == CONSONANT_MODIFICATION_STYLE_WAVE"
-      {GEMINATE} === GEMINATE_SIGN_TILD
-      {NASAL}    === NASALIZE_SIGN_TILD
+      {_NASAL_}    === NASALIZE_SIGN_TILD
     \else
-      {GEMINATE} === GEMINATE_SIGN
-      {NASAL}    === NASALIZE_SIGN
+      {_NASAL_}    === NASALIZE_SIGN
     \endif
   
     {A}   === a
@@ -157,10 +158,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     {L1_KER_2}      === ċ     * c       * k
     {L1_IMG_2}      === CALMA * QUESSE  * QUESSE
         
-    {L1_KER_1_GEMS} === tt                     * pp   
-    {L1_IMG_1_GEMS} === TINCO GEMINATE_DOUBLE  * PARMA GEMINATE_DOUBLE
-    {L1_KER_2_GEMS} === ċċ                     * cc                     * kk 
-    {L1_IMG_2_GEMS} === CALMA GEMINATE_DOUBLE  * QUESSE GEMINATE_DOUBLE * QUESSE GEMINATE_DOUBLE
+    {L1_KER_1_GEMS} === tt                  * pp   
+    {L1_IMG_1_GEMS} === TINCO {_GEMINATE_}  * PARMA {_GEMINATE_}
+    {L1_KER_2_GEMS} === ċċ                  * cc                  * kk 
+    {L1_IMG_2_GEMS} === CALMA {_GEMINATE_}  * QUESSE {_GEMINATE_} * QUESSE {_GEMINATE_}
 
   
     {S_VOWELS_WN}[{L1_KER_1}]{S_VOWELS_WN}  --> 2,1,3 --> [{L1_IMG_1}]{_S_VOWELS_UP_WN_}{_S_VOWELS_DN_WN_}
@@ -168,8 +169,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     {S_VOWELS_WN}[{L1_KER_2}]{S_VOWELS_WN}  --> 2,1,3 --> [{L1_IMG_2}]{_S_VOWELS_UP_WN_}{_S_VOWELS_DN_WN_}
     {S_VOWELS_WN}[{L1_KER_2_GEMS}]          --> 2,1   --> [{L1_IMG_2_GEMS}]{_S_VOWELS_UP_WN_}
 
-    {S_VOWELS_WN}[ nt * mp ]{S_VOWELS_WN}   --> 2,1,3 -->  [ TINCO TILD_SUP_S * PARMA TILD_SUP_S  ]{_S_VOWELS_UP_WN_}{_S_VOWELS_DN_WN_}
-    {S_VOWELS_WN}[ nċ * nc ]{S_VOWELS_WN}   --> 2,1,3 -->  [ CALMA TILD_SUP_S * QUESSE TILD_SUP_S ]{_S_VOWELS_UP_WN_}{_S_VOWELS_DN_WN_}
+    {S_VOWELS_WN}[ nt * mp ]{S_VOWELS_WN}   --> 2,1,3 -->  [ {L1_IMG_1} ]  {_NASAL_} {_S_VOWELS_UP_WN_} {_S_VOWELS_DN_WN_}
+    {S_VOWELS_WN}[ nċ * nc ]{S_VOWELS_WN}   --> 2,1,3 -->  [ CALMA  * QUESSE ] {_NASAL_} {_S_VOWELS_UP_WN_} {_S_VOWELS_DN_WN_}
 
 
     \** ## 2nd Line (Voiced occlusives) **\
@@ -177,14 +178,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     {L2_KER}        === d     * b     * ġ     * g
     {L2_IMG}        === ANDO  * UMBAR * ANGA  * UNGWE
                     
-    {L2_KER_GEMS}   === dd                    * bb                    * (ċġ,ġġ)               * (cg,gg)
-    {L2_IMG_GEMS}   === ANDO GEMINATE_DOUBLE  * UMBAR GEMINATE_DOUBLE * ANGA GEMINATE_DOUBLE  * UNGWE GEMINATE_DOUBLE
+    {L2_KER_GEMS}   === dd                 * bb                 * (ċġ,ġġ)            * (cg,gg)
+    {L2_IMG_GEMS}   === ANDO {_GEMINATE_}  * UMBAR {_GEMINATE_} * ANGA {_GEMINATE_}  * UNGWE {_GEMINATE_}
     
 
-    {S_VOWELS_WN}[{L2_KER}]{S_VOWELS_WN}            --> 2,1,3 --> [{L2_IMG}]{_S_VOWELS_UP_WN_}{_S_VOWELS_DN_WN_}
-    {S_VOWELS_WN}[{L2_KER_GEMS}]                    --> 2,1   --> [{L2_IMG_GEMS}]{_S_VOWELS_UP_WN_}
+    {S_VOWELS_WN}[{L2_KER}]{S_VOWELS_WN}            --> 2,1,3 --> [{L2_IMG}] {_S_VOWELS_UP_WN_}{_S_VOWELS_DN_WN_}
+    {S_VOWELS_WN}[{L2_KER_GEMS}]                    --> 2,1   --> [{L2_IMG_GEMS}] {_S_VOWELS_UP_WN_}
 
-    {S_VOWELS_WN}[ nd * mb * nġ * ng ]{S_VOWELS_WN} --> 2,1,3 -->  [ ANDO TILD_SUP_L * UMBAR TILD_SUP_L * ANGA TILD_SUP_L * UNGWE TILD_SUP_L ]{_S_VOWELS_UP_WN_}{_S_VOWELS_DN_WN_}
+    {S_VOWELS_WN}[ nd * mb * nġ * ng ]{S_VOWELS_WN} --> 2,1,3 -->  [ {L2_IMG} ] {_NASAL_} {_S_VOWELS_UP_WN_} {_S_VOWELS_DN_WN_}
 
 
     \** ## 3rd Line (Voiceless fricatives) **\
@@ -194,10 +195,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     {L3_KER_2}      === ç     * (χ,ħ)
     {L3_IMG_2}      === AHA   * HWESTA
     
-    {L3_KER_1_GEMS} === þþ                    * ff
-    {L3_IMG_1_GEMS} === SULE GEMINATE_DOUBLE * FORMEN GEMINATE_DOUBLE   
-    {L3_KER_2_GEMS} === çç                    * (χχ,ħħ)
-    {L3_IMG_2_GEMS} === AHA GEMINATE_DOUBLE  * HWESTA GEMINATE_DOUBLE
+    {L3_KER_1_GEMS} === þþ                * ff
+    {L3_IMG_1_GEMS} === SULE {_GEMINATE_} * FORMEN {_GEMINATE_}   
+    {L3_KER_2_GEMS} === çç                * (χχ,ħħ)
+    {L3_IMG_2_GEMS} === AHA {_GEMINATE_}  * HWESTA {_GEMINATE_}
 
     {S_VOWELS_WN}[{L3_KER_1}]{S_VOWELS_WN}  --> 2,1,3 --> [{L3_IMG_1}]{_S_VOWELS_UP_WN_}{_S_VOWELS_DN_WN_}
     {S_VOWELS_WN}[{L3_KER_1_GEMS}]          --> 2,1   --> [{L3_IMG_1_GEMS}]{_S_VOWELS_UP_WN_}
@@ -211,8 +212,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     {L4_KER}        === ð     * v     * j     * ȝ
     {L4_IMG}        === ANTO  * AMPA  * ANCA  * UNQUE
     
-    {L4_KER_GEMS}   === ðð                    * vv                    * jj                    * ȝȝ
-    {L4_IMG_GEMS}   === ANTO GEMINATE_DOUBLE  * AMPA GEMINATE_DOUBLE  * ANCA GEMINATE_DOUBLE  * UNQUE GEMINATE_DOUBLE
+    {L4_KER_GEMS}   === ðð                 * vv                 * jj                 * ȝȝ
+    {L4_IMG_GEMS}   === ANTO {_GEMINATE_}  * AMPA {_GEMINATE_}  * ANCA {_GEMINATE_}  * UNQUE {_GEMINATE_}
     
 
     {S_VOWELS_WN}[{L4_KER}]{S_VOWELS_WN}  --> 2,1,3 --> [{L4_IMG}]{_S_VOWELS_UP_WN_}{_S_VOWELS_DN_WN_}
@@ -226,16 +227,16 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     {L5_IMG}        === NUMEN * MALTA
 
     {S_VOWELS_WN}[{L5_KER}]{S_VOWELS_WN}  --> 2,1,3 --> [{L5_IMG}]{_S_VOWELS_UP_WN_}{_S_VOWELS_DN_WN_}
-    {S_VOWELS_WN}[ nn * mm ]{S_VOWELS_WN} --> 2,1,3 --> [ NUMEN TILD_SUP_L * MALTA TILD_SUP_L ]{_S_VOWELS_UP_WN_}{_S_VOWELS_DN_WN_}
+    {S_VOWELS_WN}[ nn * mm ]{S_VOWELS_WN} --> 2,1,3 --> [ {L5_IMG} ] {_NASAL_} {_S_VOWELS_UP_WN_}{_S_VOWELS_DN_WN_}
 
 
     \** ## 6th Line (Approximants == fr : Spirantes) **\
     \** ## Short upper dash for nasalisation **\
 
-    {L6_KER}        === r * ĭ
-    {L6_IMG}        === ORE * ANNA
-    {L6_KER_GEMS}   === rr * ĭĭ
-    {L6_IMG_GEMS}   === ORE GEMINATE_DOUBLE * ANNA GEMINATE_DOUBLE
+    {L6_KER}        === r                 * ĭ
+    {L6_IMG}        === ORE               * ANNA
+    {L6_KER_GEMS}   === rr                * ĭĭ
+    {L6_IMG_GEMS}   === ORE {_GEMINATE_}  * ANNA {_GEMINATE_}
 
     {S_VOWELS_WN}[{L6_KER}]{S_VOWELS_WN}  --> 2,1,3 --> [{L6_IMG}]{_S_VOWELS_UP_WN_}{_S_VOWELS_DN_WN_}
     {S_VOWELS_WN}[{L6_KER_GEMS}]          --> 2,1   --> [{L6_IMG_GEMS}]{_S_VOWELS_UP_WN_}
@@ -245,8 +246,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     \** ## **\
 
     {S_VOWELS_WN}w{S_VOWELS_WN}             --> ROMEN {_S_VOWELS_UP_WN_}{_S_VOWELS_DN_WN_}
-    {S_VOWELS_WN}ww                         --> ROMEN GEMINATE_DOUBLE {_S_VOWELS_UP_WN_}
-    {S_VOWELS_WN}[l * ll]         --> 2,1   --> [LAMBE * LAMBE GEMINATE_DOUBLE]{_S_VOWELS_UP_WN_}
+    {S_VOWELS_WN}ww                         --> ROMEN {_GEMINATE_} {_S_VOWELS_UP_WN_}
+    {S_VOWELS_WN}[l * ll]         --> 2,1   --> [LAMBE * LAMBE {_GEMINATE_}]{_S_VOWELS_UP_WN_}
     {S_VOWELS_WN}ld                         --> ALDA {_S_VOWELS_UP_WN_}
 
 
@@ -255,7 +256,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     {L8_KER}      ===  s * z 
     {L8_IMG}      ===  SILME_NUQUERNA * ESSE_NUQUERNA 
     {L8_KER_GEMS} ===  ss * zz 
-    {L8_IMG_GEMS} ===  SILME_NUQUERNA GEMINATE_DOUBLE * ESSE_NUQUERNA GEMINATE_DOUBLE
+    {L8_IMG_GEMS} ===  SILME_NUQUERNA {_GEMINATE_} * ESSE_NUQUERNA {_GEMINATE_}
     
     {S_VOWELS_WN}[{L8_KER}]{S_VOWELS_WN}  --> 2,1,3 --> [{L8_IMG}]{_S_VOWELS_UP_WN_}{_S_VOWELS_DN_WN_}
     {S_VOWELS_WN}[{L8_KER_GEMS}]          --> 2,1   --> [{L8_IMG_GEMS}]{_S_VOWELS_UP_WN_}
@@ -273,21 +274,21 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     \** ## Ligatures **\
     \** ## **\
     {LINE_VARIOUS_KER}      ===  sċ * hw * çt * (χt,ħt)
-    {LINE_VARIOUS_IMG}      ===  ANCA_CLOSED * HARP_SHAPED  * AHA_TINCO  * HWESTA_TINCO 
+    {LINE_VARIOUS_IMG}      ===  ANCA_CLOSED * TW_HW_LOWDHAM  * AHA_TINCO  * HWESTA_TINCO 
  
     {S_VOWELS_WN}[{LINE_VARIOUS_KER}]{S_VOWELS_WN} --> 2,1,3 --> [{LINE_VARIOUS_IMG}]{_S_VOWELS_UP_WN_}{_S_VOWELS_DN_WN_}
   
     \** ## Various **\
     \** ## **\
     {S_VOWELS_WN}h{S_VOWELS_WN}   --> HYARMEN {_S_VOWELS_UP_WN_}{_S_VOWELS_DN_WN_}
-    {S_VOWELS_WN}hh               --> HYARMEN GEMINATE_DOUBLE {_S_VOWELS_UP_WN_}
+    {S_VOWELS_WN}hh               --> HYARMEN {_GEMINATE_} {_S_VOWELS_UP_WN_}
 
 
     \** ## X **\
     \** ## For x, due to the cedilla, we cannot put tehtas under the tengwa. **\
     {S_VOWELS_WN}x  --> QUESSE SHOOK_LEFT_L {_S_VOWELS_UP_WN_}
-    {S_VOWELS_WN}xx --> QUESSE SHOOK_LEFT_L GEMINATE_DOUBLE {_S_VOWELS_UP_WN_}
-    {S_VOWELS_WN}nx --> QUESSE SHOOK_LEFT_L TILD_SUP_S {_S_VOWELS_UP_WN_}
+    {S_VOWELS_WN}xx --> QUESSE SHOOK_LEFT_L {_GEMINATE_} {_S_VOWELS_UP_WN_}
+    {S_VOWELS_WN}nx --> QUESSE SHOOK_LEFT_L {_NASAL_} {_S_VOWELS_UP_WN_}
   \end
   
   \beg rules punctuation 
