@@ -121,7 +121,9 @@ Glaemscribe.Mode.prototype.get_raw_mode = function() {
 }
 
 Glaemscribe.Mode.prototype.replace_specials = function(l) {
-  return l.replace(new RegExp('_', 'g'), Glaemscribe.SPECIAL_CHAR_UNDERSCORE);
+  return l.
+    replace(/_/g,     Glaemscribe.SPECIAL_CHAR_UNDERSCORE).
+    replace(/\u00a0/g,  Glaemscribe.SPECIAL_CHAR_NBSP);
 }
 
 Glaemscribe.Mode.prototype.strict_transcribe = function(content, charset, debug_context) {

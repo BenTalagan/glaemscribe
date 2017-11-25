@@ -129,7 +129,9 @@ module Glaemscribe
       end
       
       def replace_specials(l)
-        l.gsub("_",SPECIAL_CHAR_UNDERSCORE)
+        l.
+          gsub("_",SPECIAL_CHAR_UNDERSCORE).
+          gsub("\u00a0",SPECIAL_CHAR_NBSP)
       end
       
       def strict_transcribe(content, charset = nil)

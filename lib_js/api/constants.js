@@ -24,6 +24,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 Glaemscribe.WORD_BREAKER        = "|";
 Glaemscribe.WORD_BOUNDARY       = "_"
-Glaemscribe.SPECIAL_CHAR_UNDERSCORE = '﹏'
+
+Glaemscribe.SPECIAL_CHAR_UNDERSCORE = '➊'
+Glaemscribe.SPECIAL_CHAR_NBSP       = '➋'
+
 Glaemscribe.UNKNOWN_CHAR_OUTPUT = "☠"      
 Glaemscribe.VIRTUAL_CHAR_OUTPUT = "☢" 

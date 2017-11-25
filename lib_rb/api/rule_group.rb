@@ -140,7 +140,9 @@ module Glaemscribe
         @rules            = []
         
         add_var("NULL","")
-        add_var("UNDERSCORE",SPECIAL_CHAR_UNDERSCORE)
+  
+        add_var("UNDERSCORE", SPECIAL_CHAR_UNDERSCORE)
+        add_var("NBSP",       SPECIAL_CHAR_NBSP)
         
         descend_if_tree(@root_code_block, trans_options)
                             
