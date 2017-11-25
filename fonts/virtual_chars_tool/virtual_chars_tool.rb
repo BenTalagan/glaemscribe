@@ -152,7 +152,13 @@ def dump_charset_edit_page(charset, font_list, conf)
 end
 
 
-Glaemscribe::API::ResourceManager.load_charsets(["tengwar_ds_sindarin","tengwar_ds_eldamar","tengwar_ds_annatar","tengwar_ds_parmaite", "tengwar_ds_elfica"])
+Glaemscribe::API::ResourceManager.load_charsets([
+  "tengwar_ds_sindarin",
+  "tengwar_ds_eldamar",
+  "tengwar_ds_annatar",
+  "tengwar_ds_parmaite", 
+  "tengwar_ds_elfica"
+])
 
 dump_charset_edit_page(Glaemscribe::API::ResourceManager.loaded_charsets["tengwar_ds_sindarin"],["Tengwar Sindarin Glaemscrafu"], TENGWAR_DS_GENERIC_CONF)
 dump_charset_edit_page(Glaemscribe::API::ResourceManager.loaded_charsets["tengwar_ds_parmaite"],["Tengwar Parmaite Glaemscrafu"], TENGWAR_DS_GENERIC_CONF)

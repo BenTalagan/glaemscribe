@@ -20,6 +20,7 @@ See also the [**comparison chart for tengwar fonts**](http://htmlpreview.github.
 * Superior and inferior dash and tild consonant modification signs have been added for halla, telco and ara.
 * Moved pustar combinations (4/4-squared/5).
 * Added 4-halfed pustar combination.
+* Added missing non-breaking space (U+00A0)
 
 **Tengwar Parmaite**, created and designed by **Måns Björkman**
 --------------------------------------------------------------
@@ -49,6 +50,7 @@ See also the [**comparison chart for tengwar fonts**](http://htmlpreview.github.
 * The circle inf tehta for Regular and Bold (XS version @ 0xA9) as been translated, it was too high.
 * Added pustar combinations (4/4-halfed/4-squared/5)
 * Added dash+wave / inf+sup (XS version @U+200,201,202,203 for consonant modifications for telco/halla/ara.
+* Added missing non-breaking space (U+00A0)
 
 **Tengwar Annatar Bold**, created and designed by **Johan Winge**
 --------------------------------------------------------------
@@ -59,6 +61,7 @@ See also the [**comparison chart for tengwar fonts**](http://htmlpreview.github.
 * The _vaia_ tengwa has been moved to U+0125 (for browser compatibility issues).
 * The circle inf tehta for Regular and Bold (XS version @ 0xA9) as been translated, it was too high.
 * Added pustar combinations (4/4-halfed/4-squared/5)
+* Added missing non-breaking space (U+00A0)
 
 **Tengwar Annatar Italic**, created and designed by **Johan Winge**
 --------------------------------------------------------------
@@ -68,6 +71,7 @@ See also the [**comparison chart for tengwar fonts**](http://htmlpreview.github.
 * The _a_ theta at U+00AD (soft hyphen) has been moved to U+0109 (for browser compatibility issues).
 * The _vaia_ tengwa has been moved to U+0125 (for browser compatibility issues).
 * Added pustar combinations (4/4-halfed/4-squared/5)
+* Added missing non-breaking space (U+00A0)
 
 **Tengwar Sindarin**, created and designed by **Dan Smith**
 --------------------------------------------------------------

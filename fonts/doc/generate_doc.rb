@@ -231,6 +231,7 @@ end
   {
     name: "Punctuation",
     entries: [
+      ["a","a","a","a","x","x","x","NBSP","Was missing in some fonts."],
       ["x","x","x","x","x","x","x","Pusta 1",""],
       ["x","x","x","x","x","x","x","Pusta 2",""],
       ["x","x","x","x","x","x","x","Pusta 3",""],

@@ -6,8 +6,7 @@
 <font id="tengwar_annatar_glaemscrafuRg" horiz-adv-x="0" >
 <font-face units-per-em="2048" ascent="1638" descent="-410" />
 <missing-glyph horiz-adv-x="565" />
-<glyph />
-<glyph horiz-adv-x="682" />
+<glyph unicode="&#xd;" horiz-adv-x="682" />
 <glyph unicode=" "  horiz-adv-x="565" />
 <glyph unicode="&#x09;" horiz-adv-x="565" />
 <glyph unicode="&#xa0;" horiz-adv-x="565" />
