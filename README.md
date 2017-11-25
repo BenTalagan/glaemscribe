@@ -39,6 +39,7 @@ Changelog
 
 | Version | Date | Comment |
 |---------|------|---------|
+| 1.1.8 | 25/11/2017 | Bug fixes and charset enhancings. |
 | 1.1.7 | 07/21/2017 | Merged handling of /aw/ & /au/ in the Beleriand mode for Sindarin. |
 | 1.1.6 | 07/17/2017 | Enhanced handling of /aw/ in the Beleriand mode for Sindarin. Thanks a lot to Dmitry Kourmyshov for noticing! |
 | 1.1.5 | 06/14/2017 | Fixing Quenya/Sarati issues (hl/hr/qui). Adding Quenya/Sarati punctuation basic handling. Thanks a lot to Roman Rausch for noticing these bugs & missing features ! |
