@@ -19,7 +19,7 @@ GNU Affero General Public License for more details.
 You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-Version : 1.1.7
+Version : 1.1.8
 */
 
 /*
@@ -261,6 +261,7 @@ var Glaemscribe           = {};
 
 Glaemscribe.WORD_BREAKER        = "|";
 Glaemscribe.WORD_BOUNDARY       = "_"
+Glaemscribe.SPECIAL_CHAR_UNDERSCORE = '﹏'
 Glaemscribe.UNKNOWN_CHAR_OUTPUT = "☠"      
 Glaemscribe.VIRTUAL_CHAR_OUTPUT = "☢" 
 
@@ -1031,6 +1032,10 @@ Glaemscribe.Mode.prototype.get_raw_mode = function() {
   mode.raw_mode = Object.glaem_clone(loaded_raw_mode);
 }
 
+Glaemscribe.Mode.prototype.replace_specials = function(l) {
+  return l.replace(new RegExp('_', 'g'), Glaemscribe.SPECIAL_CHAR_UNDERSCORE);
+}
+
 Glaemscribe.Mode.prototype.strict_transcribe = function(content, charset, debug_context) {
 
   if(charset == null)
@@ -1052,6 +1057,8 @@ Glaemscribe.Mode.prototype.strict_transcribe = function(content, charset, debug_
       restore_lf = true;
       l = l.slice(0,-1);
     }
+    
+    l = this.replace_specials(l)
     
     l = this.pre_processor.apply(l);
     debug_context.preprocessor_output += l + "\n";
@@ -1432,9 +1439,9 @@ Glaemscribe.ModeParser.prototype.parse_raw = function(mode_name, raw, mode_optio
   mode.human_name  = doc.root_node.gpath('mode')[0].args[0]
   mode.authors     = doc.root_node.gpath('authors')[0].args[0]
   mode.version     = doc.root_node.gpath('version')[0].args[0]
-  
-  if(doc.root_node.gpath('raw_mode')[0])
-    mode.raw_mode_name = doc.root_node.gpath('raw_mode')[0].args[0];
+  mode.invention   = (doc.root_node.gpath('invention')[0] || {args:[]}).args[0]
+  mode.world       = (doc.root_node.gpath('world')[0] || {args:[]}).args[0]
+  mode.raw_mode_name = (doc.root_node.gpath('raw_mode')[0] || {args:[]}).args[0]    
   
   doc.root_node.gpath('options.option').glaem_each(function(_,option_element) {
 
@@ -1810,6 +1817,7 @@ Glaemscribe.RuleGroup.prototype.finalize = function(options) {
   this.rules      = []
   
   this.add_var("NULL","");
+  this.add_var("UNDERSCORE",Glaemscribe.SPECIAL_CHAR_UNDERSCORE);
 
   this.descend_if_tree(this.root_code_block, options)
   
@@ -1954,9 +1962,11 @@ Glaemscribe.SheafChainIterator = function (sheaf_chain, cross_schema)
       prototype_array.push(sheaf.fragments.length);
     }
   });
-  
+    
   sci.cross_array = identity_cross_array;
-  sci.proto_attr  = prototype_array.join('x') || 'CONST';
+  sci.proto_attr  = prototype_array.join('x');
+  if(sci.proto_attr == '')
+    sci.proto_attr = 'CONST';
 
   // Construct the cross array
   if(cross_schema != null)
@@ -1998,13 +2008,15 @@ Glaemscribe.SheafChainIterator = function (sheaf_chain, cross_schema)
     prototype_array = prototype_array_permutted;
   }
 
-  sci.proto_attr = prototype_array.join('x') || 'CONST';
+  sci.proto_attr = prototype_array.join('x');
+  if(sci.proto_attr == '')
+    sci.proto_attr = 'CONST';
 }
 
 // Beware, 'prototype' is a reserved keyword
 Glaemscribe.SheafChainIterator.prototype.proto = function() {
   var sci = this;
-  return sci.prototype_attr;
+  return sci.proto_attr;
 }
 
 Glaemscribe.SheafChainIterator.prototype.combinations = function()
