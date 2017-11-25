@@ -18,7 +18,7 @@ Features
 * Separates the handling of modes and charsets, making the mode files purely 'logical' and compliant with all fonts, and pushing back font issues to charset files.
 * Compliant with opentype and non-opentype fonts, so that we can handle old-gen (Parmaite, Eldamar, Annatar...) fonts as well as new-gen ones (FreeMono, Eldamar Sarati - glaemscribe version with opentype features, ...), so that have a smooth transition between technologies.
 * Offers a mechanism to compensate diacritic and ligature issues for non-opentype fonts through 'virtual characters', allowing mode files to be generic and far more simple to write.
-* As support for inlined, spelled tengwar (or any other writing, respectively) for complete control on the output.
+* Has support for inlined, spelled tengwar (or any other writing, respectively) for complete control on the output.
 * Has an official graphical, friendly integration (see above).
 * Has a graphical IDE for helping users to write mode files.
 * Exists as a javascript library or a ruby library.

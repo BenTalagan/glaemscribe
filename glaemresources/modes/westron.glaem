@@ -29,13 +29,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   \entry "0.0.5" "Added support for the FreeMonoTengwar font" 
   \entry "0.1.0" "Added support for the Tengwar Elfica font"
   \entry "0.1.1" "Added support for inlined raw tengwar"  
+  \entry "0.1.2" "Added support for non-breaking spaces"   
 \end
 
 \**  Westron mode for glaemscribe (MAY BE INCOMPLETE) **\
 \language Westron
 \writing  Tengwar
 \mode     "Westron Tengwar - G*"
-\version  "0.1.1"
+\version  "0.1.2"
 \authors  "Talagan (Benjamin Babut), based on J.R.R. Tolkien"
 
 \world      arda
@@ -340,7 +341,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
     ' --> {NULL}
     ’ --> {NULL}
-
+    
+    \** NBSP **\
+    {NBSP} --> NBSP
+    
     \** Quotes **\
 
     “ --> DQUOT_OPEN

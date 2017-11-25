@@ -32,12 +32,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   \entry "0.0.6" "Ported some options from the quenya mode"
   \entry "0.1.0" "Added support for the Tengwar Elfica font"
   \entry "0.1.1" "Added support for inlined raw tengwar"  
+  \entry "0.1.2" "Added support for non-breaking spaces"     
 \end
 
 \language "Telerin"
 \writing  "Tengwar"
 \mode     "Telerin Tengwar - G*"
-\version  "0.1.1"
+\version  "0.1.2"
 \authors  "Talagan (Benjamin Babut), based on J.R.R Tolkien"
 
 \world      arda
@@ -342,7 +343,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
     ' --> {NULL}
     ’ --> {NULL}
-
+    
+    \** NBSP **\
+    {NBSP} --> NBSP
+    
     \** Quotes **\
 
     “ --> DQUOT_OPEN

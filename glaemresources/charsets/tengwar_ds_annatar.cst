@@ -24,14 +24,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 \** Charset specially customized for Tengwar Annatar (Glaemscrafu patched version) **\ 
 
-\version 0.0.7
+\version 0.0.8
 
 \beg changelog
   \entry "0.0.5" "Added VALA_W_HOOK, VAIYA. Moved A_TEHTA_INV_L due to soft hyphen bug."
   \entry "0.0.6" "Superior and inferior dash and tild consonant modification signs have been added for halla, telco and ara. / Added pustar combinations (4/4-halfed/4-squared/5)"
   \entry "0.0.7" "Fixed missing tinco_ext / sule_ext"
+  \entry "0.0.8" "Added NBSP"
 \end
-
 
 \**   **\ \char 20 SPACE              
 \** ! **\ \char 21 TW_EXT_11 TINCO_EXT SULE_EXT THULE_EXT                   
@@ -128,6 +128,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 \** | **\ \char 7c SHOOK_LEFT_L          
 \** } **\ \char 7d SHOOK_LEFT_S          
 \** ~ **\ \char 7e ARA               
+\char a0 NBSP
 \** ¡ **\ \char a1 ?                
 \** ¢ **\ \char a2 ?                
 \** £ **\ \char a3 SHOOK_BEAUTIFUL                

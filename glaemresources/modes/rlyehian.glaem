@@ -243,7 +243,10 @@ y palatal semi vowel ?
     ! --> PUNCT_EXCLAM
     ? --> PUNCT_INTERR
     · --> PUNCT_DOT
-
+    
+    \** NBSP **\
+    {NBSP} --> NBSP
+    
     \** Quotes **\
 
     “ --> DQUOT_OPEN

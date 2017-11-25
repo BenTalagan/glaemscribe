@@ -1,16 +1,17 @@
 Desc
 ====
 
-This tool helps building virtual chars by building comparison chars for tengwar.
+This tool helps building virtual chars by dumping interactive html comparison charts for tengwar.
 
-The user choses the variants he'd like to use, and can dump the result to save it in his charset file.
+The user choses the variants he/she'd like to use, and can dump the result to save it in his/her charset file.
 
-It is in pretty early stage of conception and will probably stay in its state (it does the job it need too).
+It is in pretty early stage of conception and will probably stay in its state (it does the job it needs to do).
 
 Usage
 =====
 
 No configuration, just edit the script by hand. 
-Launch. 
-Use the generated HTML charts (generated from the charsets).<
+Launch. It will pick the charsets in ../glaemsresources/charsets/.
+Open the generated HTML charts (generated from the charsets).
 Chose your variants, then dump button.
+Re-incorporate the result into charset files.

@@ -24,15 +24,17 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 \** Charset for the FreeMonoTengwar font **\ 
 
-\version 0.0.7
+\version 0.0.8
 
 \beg changelog
   \entry "0.0.5" "Added VALA_W_HOOK."
   \entry "0.0.6" "Updating punctuation"
   \entry "0.0.7" "Fixed missing tinco_ext / sule_ext"
+  \entry "0.0.8" "Added NBSP"
 \end
 
 \char 20 SPACE
+\char a0 NBSP
 
 \** PUSTAR, take them in unicode not in personnal use (deprecation) **\
 \char 2e31 PUNCT_DOT
