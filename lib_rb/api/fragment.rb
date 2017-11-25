@@ -54,11 +54,7 @@ module Glaemscribe
           eq =~ EQUIVALENCE_RX_IN
           if $1
             eq = $1.split(EQUIVALENCE_SEPARATOR,-1).map{ |elt| 
-              elt = elt.strip 
-              if elt.empty?
-                @rule.errors << "Null members are not allowed in equivalences!" 
-                return
-              end
+              elt = elt.strip
               elt.split(/\s/)
             } 
           else

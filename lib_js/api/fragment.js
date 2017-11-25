@@ -41,11 +41,6 @@ Glaemscribe.Fragment = function(sheaf, expression) {
       eq = exp[1]; 
       eq = eq.split(Glaemscribe.Fragment.EQUIVALENCE_SEPARATOR).map(function(elt) {
         elt = elt.trim();
-        if(elt == "")
-        {
-          fragment.rule.errors.push("Null members are not allowed in equivalences!");
-          return;
-        }
         return elt.split(/\s/);
       });      
     }
