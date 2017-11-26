@@ -39,6 +39,7 @@ Changelog
 
 | Version | Date | Comment |
 |---------|------|---------|
+| 1.1.9 | 11/26/2017 | Bug fix targetting handling of NBSP. |
 | 1.1.8 | 11/25/2017 | Bug fixes and charset enhancings. |
 | 1.1.7 | 07/21/2017 | Merged handling of /aw/ & /au/ in the Beleriand mode for Sindarin. |
 | 1.1.6 | 07/17/2017 | Enhanced handling of /aw/ in the Beleriand mode for Sindarin. Thanks a lot to Dmitry Kourmyshov for noticing! |
