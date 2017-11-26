@@ -148,10 +148,11 @@ Glaemscribe.Mode.prototype.strict_transcribe = function(content, charset, debug_
       l = l.slice(0,-1);
     }
     
-    l = this.replace_specials(l)
     
     l = this.pre_processor.apply(l);
     debug_context.preprocessor_output += l + "\n";
+ 
+    l = this.replace_specials(l)
     
     l = this.processor.apply(l, debug_context);
     debug_context.processor_output = debug_context.processor_output.concat(l);

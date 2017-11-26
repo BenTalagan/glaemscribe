@@ -145,8 +145,8 @@ module Glaemscribe
             l[-1] = "" 
             restore_lf = true
           end
-          l = replace_specials(l)
           l = @pre_processor.apply(l)
+          l = replace_specials(l)
           l = @processor.apply(l)
           l = @post_processor.apply(l, charset)
           l += "\n" if restore_lf
