@@ -19,7 +19,7 @@ GNU Affero General Public License for more details.
 You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-Version : 1.1.8
+Version : 1.1.9
 */
 
 /*
@@ -1058,10 +1058,11 @@ Glaemscribe.Mode.prototype.strict_transcribe = function(content, charset, debug_
       l = l.slice(0,-1);
     }
     
-    l = this.replace_specials(l)
     
     l = this.pre_processor.apply(l);
     debug_context.preprocessor_output += l + "\n";
+ 
+    l = this.replace_specials(l)
     
     l = this.processor.apply(l, debug_context);
     debug_context.processor_output = debug_context.processor_output.concat(l);
