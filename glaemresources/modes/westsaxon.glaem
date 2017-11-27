@@ -132,7 +132,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     {L_TEHTAR}      === ARA E_TEHTA       * ARA A_TEHTA     * ARA E_TEHTA_DOUBLE    * ARA Y_TEHTA     * ARA I_TEHTA     * ARA O_TEHTA       * ARA U_TEHTA     * ARA SEV_TEHTA       
 
     \** DOWN TEHTAS **\
-    {TEHTAR_DN}     === E_TEHTA_INF       * A_TEHTA_INF     * CIRC_TEHTA_INF        * Y_TEHTA_INF     * I_TEHTA_INF     * TELCO O_TEHTA     * TELCO U_TEHTA   * SEV_TEHTA_INF   * VILYA * {NULL}
+    {TEHTAR_DN}     === E_TEHTA_INF       * A_TEHTA_INF     * CIRC_TEHTA_INF        * Y_TEHTA_INF     * I_TEHTA_INF     * TELCO O_TEHTA     * TELCO U_TEHTA   * THINNAS   * VILYA * {NULL}
     
     {S_VOWELS_NP}       === [ {S_VOWELS_NP_KERNEL} ]
     {S_VOWELS_NP_WN}    === [ {S_VOWELS_NP_KERNEL} * {NULL} ]

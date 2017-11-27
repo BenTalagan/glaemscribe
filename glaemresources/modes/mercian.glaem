@@ -131,10 +131,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     {LVOWELS}       === {AA}           * {AEAE}       * {OEOE}             * {EE}         * {II}         * {OO}          * {UU}         * {YY}  
     {LTEHTAR}       === ARA A_TEHTA    * ARA Y_TEHTA  * ARA E_TEHTA_DOUBLE * ARA E_TEHTA  * ARA I_TEHTA  * ARA O_TEHTA   * ARA U_TEHTA  * ARA SEV_TEHTA    
 
-    {LVOWEL_MARKER}  === SEV_TEHTA_INF
+    {LVOWEL_MARKER}  === THINNAS
   
     \** DOWN TEHTAS **\
-    {DTEHTAR}        === A_TEHTA_INF   * Y_TEHTA_INF  * CIRC_TEHTA_INF     * E_TEHTA_INF  * I_TEHTA_INF  * O_TEHTA_INF  * U_TEHTA_INF   * SEV_TEHTA_INF   * {NULL}
+    {DTEHTAR}        === A_TEHTA_INF   * Y_TEHTA_INF  * CIRC_TEHTA_INF     * E_TEHTA_INF  * I_TEHTA_INF  * O_TEHTA_INF  * U_TEHTA_INF   * THINNAS   * {NULL}
   
 
     {S_VOWELS_NP}       === [ {S_VOWELS_NP_KERNEL} ]
