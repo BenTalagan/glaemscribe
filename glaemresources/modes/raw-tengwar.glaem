@@ -48,7 +48,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
 \beg      options
-  \beg option consonant_modification_style CONSONANT_MODIFICATION_STYLE_BAR
+  \beg option consonant_modification_style CONSONANT_MODIFICATION_STYLE_WAVE
     \value CONSONANT_MODIFICATION_STYLE_WAVE 0
     \value CONSONANT_MODIFICATION_STYLE_BAR 1
   \end
@@ -76,7 +76,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     _acirc_  --> A_TEHTA_CIRCUM
     _arev_   --> A_TEHTA_REVERSED
 
-    _e_      --> E_TEHTA
+    _e_       --> E_TEHTA
+    _egrave_  --> E_TEHTA_GRAVE
+    
+    _breve_   --> TEHTA_BREVE
+    
     _i_      --> I_TEHTA
     _o_      --> O_TEHTA
     _u_      --> U_TEHTA
@@ -88,6 +92,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     _u<_     --> U_TEHTA_INF
 
     _unutixe_ --> I_TEHTA_INF
+    
+    _thinnas_ --> THINNAS
 
     _ee_    --> E_TEHTA_DOUBLE
     _ii_    --> I_TEHTA_DOUBLE
@@ -167,13 +173,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     \** bearers **\
     _(telco)_   --> TELCO
     _(ara,ára)_ --> ARA
-    _(halla)_ --> HALLA
+    _(halla,gasdil)_ --> HALLA
 
     \** consonant modifiers **\
     _(geminate)_  --> {GEMINATE}
     _(nasal)_     --> {NASAL}
     _(palatal)_   --> PALATAL_SIGN
-
+    _(labial)_    --> SEV_TEHTA 
+ 
     _0_ --> NUM_0
     _1_ --> NUM_1
     _2_ --> NUM_2
@@ -186,6 +193,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     _9_ --> NUM_9
     _10_ --> NUM_10
     _11_ --> NUM_11
+    
+    _(lsd)_ --> CIRC_TEHTA_INF
 
   \end
 
