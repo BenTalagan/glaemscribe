@@ -109,6 +109,9 @@ module Glaemscribe
 
             if !@is_eating_arg
               next if l[i] =~ /\s/
+              
+              raise Error, "Glaeml strictly uses double quotes, not simple quotes for args" if l[i] == "'"
+              
               @is_eating_arg             = true
               @is_eating_arg_between_quotes = (l[i] == "\"")
               @current_arg << l[i] if !@is_eating_arg_between_quotes

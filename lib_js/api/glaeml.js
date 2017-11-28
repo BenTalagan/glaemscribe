@@ -213,7 +213,6 @@ Glaemscribe.Glaeml.Parser.prototype.parse = function(raw_data) {
               args    = new Glaemscribe.Glaeml.Shellwords().parse(l.substring(name.length)); 
             }
             catch(error)  { 
-              console.log(error.stack)
               doc.errors.push(new Glaemscribe.Glaeml.Error(lnum, "Error parsing glaeml args (" + error + ").")); 
             }
                                        

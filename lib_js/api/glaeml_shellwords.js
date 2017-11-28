@@ -139,6 +139,9 @@ Glaemscribe.Glaeml.Shellwords.prototype.parse = function(l) {
       if(l[i].match(/\s/))
         continue;
       
+      if(l[i] == "'")
+        throw new Error("Glaeml strictly uses double quotes, not simple quotes for args") 
+      
       sw.is_eating_arg                = true;
       sw.is_eating_arg_between_quotes = (l[i] == "\"");
       
