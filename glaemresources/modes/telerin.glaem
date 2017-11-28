@@ -32,13 +32,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   \entry "0.0.6" "Ported some options from the quenya mode"
   \entry "0.1.0" "Added support for the Tengwar Elfica font"
   \entry "0.1.1" "Added support for inlined raw tengwar"  
-  \entry "0.1.2" "Added support for non-breaking spaces"     
+  \entry "0.1.2" "Added support for non-breaking spaces"   
+  \entry "0.1.3" "Correcting visibility options to conform to new glaeml args strict syntax"  
 \end
 
 \language "Telerin"
 \writing  "Tengwar"
 \mode     "Telerin Tengwar - G*"
-\version  "0.1.2"
+\version  "0.1.3"
 \authors  "Talagan (Benjamin Babut), based on J.R.R Tolkien"
 
 \world      arda
@@ -66,16 +67,16 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   \end  
 
   \beg option double_tehta_e false
-    \visible_when 'long_vowels_format == LONG_VOWELS_USE_DOUBLE_TEHTAR'
+    \visible_when "long_vowels_format == LONG_VOWELS_USE_DOUBLE_TEHTAR"
   \end
   \beg option double_tehta_i false
-    \visible_when 'long_vowels_format == LONG_VOWELS_USE_DOUBLE_TEHTAR'
+    \visible_when "long_vowels_format == LONG_VOWELS_USE_DOUBLE_TEHTAR"
   \end
   \beg option double_tehta_o true
-    \visible_when 'long_vowels_format == LONG_VOWELS_USE_DOUBLE_TEHTAR'
+    \visible_when "long_vowels_format == LONG_VOWELS_USE_DOUBLE_TEHTAR"
   \end
   \beg option double_tehta_u true
-    \visible_when 'long_vowels_format == LONG_VOWELS_USE_DOUBLE_TEHTAR'
+    \visible_when "long_vowels_format == LONG_VOWELS_USE_DOUBLE_TEHTAR"
   \end
   
   \beg option consonant_modification_style CONSONANT_MODIFICATION_STYLE_BAR

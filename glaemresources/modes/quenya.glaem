@@ -44,6 +44,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   \entry "0.9.4" "Adding Vanyarin ldy, rdy, lg, rg, ff"
   \entry "0.9.5" "Added support for inlined raw tengwar"
   \entry "0.9.6" "Added support for non-breaking spaces"     
+  \entry "0.9.7" "Correcting visibility options to conform to new glaeml args strict syntax"
 \end
 
 \**
@@ -54,7 +55,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 \language "Quenya"
 \writing  "Tengwar"
 \mode     "Quenya Tengwar - Classical"
-\version  "0.9.6"
+\version  "0.9.7"
 \authors  "J.R.R. Tolkien, impl. Talagan (Benjamin Babut)"
 
 \world      arda
@@ -87,20 +88,20 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   
   \** REMOVED BECAUSE UNATTESTED
   \beg option double_tehta_a false
-    \visible_when 'long_vowels_format == LONG_VOWELS_USE_DOUBLE_TEHTAR'
+    \visible_when "long_vowels_format == LONG_VOWELS_USE_DOUBLE_TEHTAR"
   \end
   **\
   \beg option double_tehta_e false
-    \visible_when 'long_vowels_format == LONG_VOWELS_USE_DOUBLE_TEHTAR'
+    \visible_when "long_vowels_format == LONG_VOWELS_USE_DOUBLE_TEHTAR"
   \end
   \beg option double_tehta_i false
-    \visible_when 'long_vowels_format == LONG_VOWELS_USE_DOUBLE_TEHTAR'
+    \visible_when "long_vowels_format == LONG_VOWELS_USE_DOUBLE_TEHTAR"
   \end
   \beg option double_tehta_o true
-    \visible_when 'long_vowels_format == LONG_VOWELS_USE_DOUBLE_TEHTAR'
+    \visible_when "long_vowels_format == LONG_VOWELS_USE_DOUBLE_TEHTAR"
   \end
   \beg option double_tehta_u true
-    \visible_when 'long_vowels_format == LONG_VOWELS_USE_DOUBLE_TEHTAR'
+    \visible_when "long_vowels_format == LONG_VOWELS_USE_DOUBLE_TEHTAR"
   \end
   
   \option split_diphthongs false
