@@ -43,13 +43,13 @@ function unit_test_directory(directory) {
     
     if(!mode)
     {
-      console.log("[    ]" + full_name + " : this mode is not loaded.");
+      console.log("[    ] " + full_name + " : this mode is not loaded.");
       continue;
     }
   
     if(mode.errors.length > 0)
     {
-      console.log("[    ]" + full_name + " : his mode has some errors.");
+      console.log("[    ] " + full_name + " : his mode has some errors.");
       continue;
     }
     
@@ -90,7 +90,7 @@ function unit_test_directory(directory) {
       true_teng = Fs.readFileSync(directory + "/expecteds/" + full_name + "/" + bfname,'utf-8');
     
       if(true_teng.trim() == "")
-        console.log("[    ]" + prefix + "Expected file is empty!!");
+        console.log("[    ] " + prefix + "Expected file is empty!!");
 
       true_teng = true_teng.split("\n").map(function(l) { return l.trim(); }).join("\n").trim();
       source    = source.split("\n").map(function(l) { return l.trim(); }).join("\n").trim();
