@@ -39,6 +39,7 @@ Changelog
 
 | Version | Date | Comment |
 |---------|------|---------|
+| 1.1.12 | 11/28/2017 | Minor bug fix on 1.1.11 |
 | 1.1.11 | 11/28/2017 | Minor bug fix on 1.1.10 |
 | 1.1.10 | 11/28/2017 | Adding small toolbar in the editor. Rewrote the glaeml arg parser to handle escaped unicode chars such as '\u00a0' |
 | 1.1.9 | 11/26/2017 | Bug fix targetting handling of NBSP. |
