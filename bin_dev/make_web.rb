@@ -27,6 +27,7 @@ JS_FILES = [
   "api/charset.js",
   "api/charset_parser.js",
   "api/glaeml.js",
+  "api/glaeml_shellwords.js",
   "api/fragment.js",
   "api/mode.js",
   "api/option.js",
@@ -49,7 +50,6 @@ JS_FILES = [
   "api/pre_processor/elvish_numbers.js",
   "api/post_processor/reverse.js",
   "api/post_processor/resolve_virtuals.js",
-  "extern/shellwords.js",
   "extern/object-clone.js"
 ]
 
