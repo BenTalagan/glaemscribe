@@ -39,6 +39,7 @@ Changelog
 
 | Version | Date | Comment |
 |---------|------|---------|
+| 1.1.10 | 11/28/2017 | Adding small toolbar in the editor. Rewrote the glaeml arg parser to handle escaped unicode chars such as '\u00a0' |
 | 1.1.9 | 11/26/2017 | Bug fix targetting handling of NBSP. |
 | 1.1.8 | 11/25/2017 | Bug fixes and charset enhancings. |
 | 1.1.7 | 07/21/2017 | Merged handling of /aw/ & /au/ in the Beleriand mode for Sindarin. |
