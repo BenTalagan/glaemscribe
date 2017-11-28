@@ -19,7 +19,7 @@ GNU Affero General Public License for more details.
 You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-Version : 1.1.9
+Version : 1.1.10
 */
 
 /*
@@ -771,7 +771,9 @@ Glaemscribe.Glaeml.Parser.prototype.parse = function(raw_data) {
           {
             name    = rmatch[0];
             
-            try { args    = shellwords.split(rest.substring(name.length)); }
+            try { 
+              args    = new Glaemscribe.Glaeml.Shellwords().parse(rest.substring(name.length)); 
+            }
             catch(error) {
                 doc.errors.push(new Glaemscribe.Glaeml.Error(lnum, "Error parsing glaeml args (" + error + ")."));
             }
@@ -806,7 +808,9 @@ Glaemscribe.Glaeml.Parser.prototype.parse = function(raw_data) {
             var name      = rmatch[0];
             var args      = [];
             
-            try           { args = shellwords.split(l.substring(name.length)); }
+            try           { 
+              args    = new Glaemscribe.Glaeml.Shellwords().parse(l.substring(name.length)); 
+            }
             catch(error)  { 
               console.log(error.stack)
               doc.errors.push(new Glaemscribe.Glaeml.Error(lnum, "Error parsing glaeml args (" + error + ").")); 
@@ -832,6 +836,184 @@ Glaemscribe.Glaeml.Parser.prototype.parse = function(raw_data) {
  
   return doc;
 }
+
+/*
+  Adding api/glaeml_shellwords.js 
+*/
+
+
+Glaemscribe.Glaeml.Shellwords = function() {
+  return this;
+}
+
+Glaemscribe.Glaeml.ShellwordsEscapeMode = {};
+Glaemscribe.Glaeml.ShellwordsEscapeMode.Unicode = 1;
+
+Glaemscribe.Glaeml.Shellwords.prototype.reset_state = function() {
+  var sw = this;
+  
+  sw.is_escaping                = false;
+  sw.is_eating_arg              = false;
+  sw.is_eating_arg_between_quotes  = false;
+  sw.args = [];
+  sw.current_arg = "";
+  sw.escape_mode            = null;
+  sw.unicode_escape_counter = 0;
+  sw.unicode_escape_str     = '';
+}
+  
+Glaemscribe.Glaeml.Shellwords.prototype.advance_inside_arg = function(l,i) {
+  var sw = this;
+  
+  if(l[i] == "\\") {
+    sw.is_escaping      = true;
+    sw.escape_mode      = null;
+  }
+  else {
+    sw.current_arg += l[i];
+  }
+}
+
+Glaemscribe.Glaeml.Shellwords.prototype.advance_inside_escape = function(l,i) {
+
+  var sw = this;
+
+  if(sw.escape_mode == null) {
+    // We don't now yet what to do.
+    switch(l[i])
+    {
+    case 'n':
+      {
+        sw.current_arg += "\n";
+        sw.is_escaping = false;
+        break;
+      }
+    case "\\":
+      {
+        sw.current_arg +=  "\\";
+        sw.is_escaping = false;
+        break;
+      }
+    case "t":
+      {
+        sw.current_arg +=  "\t";
+        sw.is_escaping = false;
+        break;      
+      }
+    case "\"":
+      {
+        sw.current_arg +=  "\"";
+        sw.is_escaping = false;
+        break;      
+      }
+    case "u":
+      {
+        sw.escape_mode = Glaemscribe.Glaeml.ShellwordsEscapeMode.Unicode;
+        sw.unicode_escape_counter = 0;
+        sw.unicode_escape_str     = '';
+        break;
+      }
+    default:
+      {
+        throw new Error("Unknown escapment : \\" + l[i]);
+      }
+    }
+  }
+  else
+  {
+    switch(sw.escape_mode)
+    {
+    case Glaemscribe.Glaeml.ShellwordsEscapeMode.Unicode:
+      {
+        var c = l[i].toLowerCase();
+          
+        if(!(c.match(/[0-9a-f]/))) {
+          throw new Error("Wrong format for unicode escaping, should be \\u with 4 hex digits");
+        }
+          
+        sw.unicode_escape_counter += 1
+        sw.unicode_escape_str     += c
+        if(sw.unicode_escape_counter == 4) {
+          sw.is_escaping = false
+          sw.current_arg += String.fromCodePoint(parseInt(sw.unicode_escape_str, 16));
+        }
+        break;
+      }
+    default:
+      {
+        throw new Error("Unimplemented escape mode")
+      }
+    }
+  }
+}
+
+Glaemscribe.Glaeml.Shellwords.prototype.parse = function(l) {
+  var sw = this;
+  
+  sw.reset_state();
+  
+  for(var i=0;i<l.length;i++) {
+    
+    if(!sw.is_eating_arg) {
+      
+      if(l[i].match(/\s/))
+        continue;
+      
+      sw.is_eating_arg                = true;
+      sw.is_eating_arg_between_quotes = (l[i] == "\"");
+      
+      if(!sw.is_eating_arg_between_quotes)
+        sw.current_arg += l[i];
+    }
+    else {
+      
+      // Eating arg
+      if(sw.is_escaping) {
+        sw.advance_inside_escape(l,i);
+      }
+      else {
+        if(!sw.is_eating_arg_between_quotes) {
+          
+          if(l[i].match(/[\s"]/)) {
+            
+            sw.args.push(sw.current_arg);
+            sw.current_arg    = "";
+            sw.is_eating_arg  = (l[i] == "\""); // Starting a new arg directly
+            sw.is_eating_arg_between_quotes = sw.is_eating_arg;
+            continue;
+            
+          }
+          else {
+            sw.advance_inside_arg(l,i)
+          }
+        }
+        else {
+          
+          if(l[i] == "\"") {
+            sw.args.push(sw.current_arg);
+            sw.current_arg    = "";
+            sw.is_eating_arg  = false;
+          }
+          else {
+            sw.advance_inside_arg(l,i);
+          }
+        }
+      }
+    }
+  }
+
+  if(sw.is_eating_arg && sw.is_eating_arg_between_quotes) {
+    throw new Error("Unmatched quote.");
+  }
+
+  if(sw.current_arg.trim() != '') {
+    sw.args.push(sw.current_arg)
+  }
+
+  return sw.args;
+}           
+           
+           
 
 /*
   Adding api/fragment.js 
@@ -3247,99 +3429,6 @@ Glaemscribe.ResolveVirtualsPostProcessorOperator.prototype.apply = function(toke
 Glaemscribe.resource_manager.register_post_processor_class("resolve_virtuals", Glaemscribe.ResolveVirtualsPostProcessorOperator);    
 
 
-
-/*
-  Adding extern/shellwords.js 
-*/
-/*
-
-Copyright (C) 2011 by Jimmy Cuadra
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in
-all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-THE SOFTWARE.
-
-*/
-
-(function(f){if(typeof exports==="object"&&typeof module!=="undefined"){module.exports=f()}else if(typeof define==="function"&&define.amd){define([],f)}else{var g;if(typeof window!=="undefined"){g=window}else if(typeof global!=="undefined"){g=global}else if(typeof self!=="undefined"){g=self}else{g=this}g.shellwords = f()}})(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
-// Generated by CoffeeScript 1.3.3
-(function() {
-  var scan;
-
-  scan = function(string, pattern, callback) {
-    var match, result;
-    result = "";
-    while (string.length > 0) {
-      match = string.match(pattern);
-      if (match) {
-        result += string.slice(0, match.index);
-        result += callback(match);
-        string = string.slice(match.index + match[0].length);
-      } else {
-        result += string;
-        string = "";
-      }
-    }
-    return result;
-  };
-
-  exports.split = function(line) {
-
-    var field, words;
-    if (line == null) {
-      line = "";
-    }
-    words = [];
-    field = "";
-    scan(line, /\s*(?:([^\s\\\'\"]+)|'((?:[^\'\\]|\\.)*)'|"((?:[^\"\\]|\\.)*)"|(\\.?)|(\S))(\s|$)?/, function(match) {
-      
-      var dq, escape, garbage, raw, seperator, sq, word;
-      raw = match[0], word = match[1], sq = match[2], dq = match[3], escape = match[4], garbage = match[5], seperator = match[6];
-      if (garbage != null) {
-        throw new Error("Unmatched quote");
-      }
-      field += word || (sq || dq || escape || "").replace(/\\(?=.)/, "");
-      if (seperator != null) {
-        words.push(field);
-        return field = "";
-      }
-    });
-    
-    if (field != null) {
-      words.push(field);
-    }
-
-    return words;
-  };
-
-  exports.escape = function(str) {
-    if (str == null) {
-      str = "";
-    }
-    if (str == null) {
-      return "''";
-    }
-    return str.replace(/([^A-Za-z0-9_\-.,:\/@\n])/g, "\\$1").replace(/\n/g, "'\n'");
-  };
-
-}).call(this);
-
-},{}]},{},[1])(1)
-});
 
 /*
   Adding extern/object-clone.js 

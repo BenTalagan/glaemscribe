@@ -99,7 +99,6 @@ Acknowledgments and thanks
 * Many thanks to **Dmitry Kourmyshov** for his very clever remarks and glances at the elvish modes.
 * Many thanks to **Leonard Wickmark** for his suggestions during his integration of **_Glǽmscribe_**'s engine into the [**_elfdict_**](http://elfict.com) project!.
 * **_Glǽmscribe_** would never have come to be without the ceaseless and continuously renewed work of the great family of Internet Tolkienists, both on technologies (with several generations of transcribers and typefaces) and on knowledge shared and gathered on websites and forums. Neither would it exist without the devoted labour of all those that make the publication of Tolkien's linguistic works possible. A very big thank you to them all!
-* **_Glǽmscribe_**'s engine uses [**_shellwords.js_**](https://github.com/jimmycuadra/shellwords) for parsing purposes in its javascript version. Thanks to **_Jimmy Cuadra_**.
 * **_Glǽmscribe_**'s IDE uses [**_CodeMirror_**](https://codemirror.net/) for its code writing widgets.
 * **_Glǽmscribe_**'s IDE uses [**_d3.js_**](https://d3js.org/) for the whole SVG behaviour of its debugger UI. Thanks to **_Mike Bostock_** for D3 (truly awesome)!
 * **_Glǽmscribe_**'s IDE uses [**_tipsy_**](http://onehackoranother.com/projects/jquery/tipsy/#download) for tooltips in its debugger UI. Thanks to **_Jason Frame_**!
