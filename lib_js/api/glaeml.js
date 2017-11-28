@@ -172,7 +172,9 @@ Glaemscribe.Glaeml.Parser.prototype.parse = function(raw_data) {
           {
             name    = rmatch[0];
             
-            try { args    = shellwords.split(rest.substring(name.length)); }
+            try { 
+              args    = new Glaemscribe.Glaeml.Shellwords().parse(rest.substring(name.length)); 
+            }
             catch(error) {
                 doc.errors.push(new Glaemscribe.Glaeml.Error(lnum, "Error parsing glaeml args (" + error + ")."));
             }
@@ -207,7 +209,9 @@ Glaemscribe.Glaeml.Parser.prototype.parse = function(raw_data) {
             var name      = rmatch[0];
             var args      = [];
             
-            try           { args = shellwords.split(l.substring(name.length)); }
+            try           { 
+              args    = new Glaemscribe.Glaeml.Shellwords().parse(l.substring(name.length)); 
+            }
             catch(error)  { 
               console.log(error.stack)
               doc.errors.push(new Glaemscribe.Glaeml.Error(lnum, "Error parsing glaeml args (" + error + ").")); 

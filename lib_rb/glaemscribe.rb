@@ -57,6 +57,7 @@ module Glaemscribe
     
     require API_PATH + "/api/resource_manager.rb"
     require API_PATH + "/api/glaeml.rb"
+    require API_PATH + "/api/glaeml_shellwords.rb"
     require API_PATH + "/api/mode_parser.rb"
     require API_PATH + "/api/charset_parser.rb"
     

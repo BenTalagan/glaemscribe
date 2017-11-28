@@ -153,7 +153,12 @@ module Glaemscribe
                     @document.errors << Error.new(lnum, "Bad element name #{rest}.")
                   else
                     name = $1
-                    args = $'.shellsplit                
+                    begin
+                      args = Shellwords.new.parse $'                
+                    rescue Shellwords::Error => e
+                      @document.errors << Error.new(lnum, "Failed to parse args : #{e}")
+                      args = []
+                    end
                   end
                 
                   n             = Node.new(lnum, Node::Type::ElementBlock, name)
@@ -179,7 +184,13 @@ module Glaemscribe
                   l             = l[1..-1]         
                   l             =~ /^([a-z_]+)/
                   name          = $1
-                  args          = $'.shellsplit
+                  
+                  begin
+                    args = Shellwords.new.parse $'                
+                  rescue Shellwords::Error => e
+                    @document.errors << Error.new(lnum, "Failed to parse args : #{e}")
+                    args = []
+                  end
                 
                   n             = Node.new(lnum, Node::Type::ElementInline, name)
                   n.args        += args
