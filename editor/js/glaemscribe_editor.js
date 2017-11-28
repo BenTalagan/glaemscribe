@@ -457,7 +457,42 @@ GlaemscribeEditor.prototype.installCallbacks = function()
     editor.codemirror.execCommand("replace")
   })
   
-  
+  var font_size = 1;
+  $("#font_up_button").click(function() {
+    font_size += 0.2;
+    $(".transcribed").css("font-size", font_size + "em");
+  })
+  $("#font_down_button").click(function() {
+    font_size -= 0.2;
+    $(".transcribed").css("font-size", font_size + "em");
+  })
+  $("#copy_to_clipboard_button").click(function() {
+    
+    var text = $(".transcribed").text();
+    
+    if (window.clipboardData && window.clipboardData.setData) {
+      // IE specific code path to prevent textarea being shown while dialog is visible.
+      return clipboardData.setData("Text", text); 
+
+    } else if (document.queryCommandSupported && document.queryCommandSupported("copy")) {
+      var textarea = document.createElement("textarea");
+      textarea.textContent = text;
+      textarea.style.position = "fixed";  // Prevent scrolling to bottom of page in MS Edge.
+      document.body.appendChild(textarea);
+      textarea.select();
+      try {
+        ret = document.execCommand("copy");  // Security exception may be thrown by some browsers.
+        alertify.glaemsuccess("Transcription copied to clipboard! Note : some web browsers (like Firefox) may break non-breaking spaces.");
+        return ret;
+      } catch (ex) {
+        alertify.alert("Copying to the clipboard failed. Might not be supported by your browser.");
+        return false;
+      } finally {
+        document.body.removeChild(textarea);
+      }
+    }
+  })
+
 }
 
 GlaemscribeEditor.prototype.showCommitPannel = function(force)

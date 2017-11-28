@@ -929,4 +929,21 @@ html, body, .glaemscribe { height:100%; width:100%; margin:0px; padding:0px; bac
   user-select: none;
 }
 
+.transcribed_toolbar {
+  width: 30px;
+  height: 100%;
+  float: right;
+  display: inline-block;
+  background-color: black;
+  margin-left: 2px;
+}
+
+.toolbar_button {
+  height: 30px;
+  cursor:pointer;
+}
+
+.toolbar_button:hover {
+  background-color:grey;
+}
 
