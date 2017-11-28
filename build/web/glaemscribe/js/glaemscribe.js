@@ -19,7 +19,7 @@ GNU Affero General Public License for more details.
 You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-Version : 1.1.10
+Version : 1.1.11
 */
 
 /*
@@ -812,7 +812,6 @@ Glaemscribe.Glaeml.Parser.prototype.parse = function(raw_data) {
               args    = new Glaemscribe.Glaeml.Shellwords().parse(l.substring(name.length)); 
             }
             catch(error)  { 
-              console.log(error.stack)
               doc.errors.push(new Glaemscribe.Glaeml.Error(lnum, "Error parsing glaeml args (" + error + ").")); 
             }
                                        
@@ -958,6 +957,9 @@ Glaemscribe.Glaeml.Shellwords.prototype.parse = function(l) {
       
       if(l[i].match(/\s/))
         continue;
+      
+      if(l[i] == "'")
+        throw new Error("Glaeml strictly uses double quotes, not simple quotes for args") 
       
       sw.is_eating_arg                = true;
       sw.is_eating_arg_between_quotes = (l[i] == "\"");
