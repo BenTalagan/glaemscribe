@@ -492,6 +492,31 @@ GlaemscribeEditor.prototype.installCallbacks = function()
       }
     }
   })
+  $("#save_transcription_to_txt_button").click(function() {
+    
+    var getTimeStamp = function dateToYMD(date) {
+        var d = date.getDate();
+        var m = date.getMonth() + 1;
+        var y = date.getFullYear();
+        var hh = date.getHours();
+        var mm = date.getMinutes(); 
+        var ss = date.getSeconds()
+        var dalign = function(num) {
+          return (num<=9 ? '0' + num : num)
+        }
+        return '' + y + dalign(m) + dalign(d) + dalign(hh) + dalign(mm) + dalign(ss) ;
+    }
+    
+    var filename  = "glaem_transcript_" + getTimeStamp(new Date()) + ".txt";
+    var content   = $(".transcribed").text();
+  
+    var dlink     = $('#save_transcription_to_txt_anchor');
+    dlink.attr({
+      download: filename,
+      href: "data:application/text;charset=utf-8," + encodeURIComponent(content),
+    });
+    dlink[0].click();
+  });
 
 }
 
