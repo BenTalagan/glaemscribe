@@ -51,8 +51,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   \entry "0.9.6" "Added support for non-breaking spaces"     
   \entry "0.9.7" "Correcting visibility options to conform to new glaeml args strict syntax"
   \entry "0.9.8" "Adding palatalized geminates (requested)"
+  \entry "0.9.9" "Hotfix on 0.9.8"
 \end
-\version  "0.9.8"
+\version  "0.9.9"
 
 \language "Quenya"
 \writing  "Tengwar"
@@ -328,7 +329,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     [ {L1} * {L1_1_GEMS} ] {V_D_WN} --> [ {_L1_} * {_L1_1_GEMS_} ] {_V_D_WN_}
 
     \** PALATAL **\
-    [t * p * {K}] y {V_D_WN} --> [TINCO * PARMA * CALMA] {_V_D_WN_}
+    [t * p * {K}] y {V_D_WN} --> [TINCO * PARMA * CALMA] {PALATAL} {_V_D_WN_}
     
     \if "palatalized_geminates == PALATALIZED_GEMINATES_CUMULATE"
       [tt * pp * {K}{K}] y {V_D_WN} --> [TINCO * PARMA * CALMA] {GEMINATE} {PALATAL} {_V_D_WN_}
@@ -410,7 +411,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     [{L4}]{V_D_WN}    --> [{_L4_}]{_V_D_WN_}
 
     \** PALATAL **\
-    nty{V_D_WN}       --> ANTO {PALATAL} {_V_D_WN_}
+    nty {V_D_WN}       --> ANTO {PALATAL} {_V_D_WN_}
 
     \if "palatalized_geminates == PALATALIZED_GEMINATES_CUMULATE"
       [nnt] y {V_D_WN} --> [ANTO] {GEMINATE} {PALATAL} {_V_D_WN_}
