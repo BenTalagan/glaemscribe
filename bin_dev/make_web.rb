@@ -61,9 +61,17 @@ def cleanup
 end
 
 def generate_js_modes
+  
+  modes = ["../glaemresources/modes/*.glaem"]
+  modes += ["../glaemresources/modes/*.glaem.dev"] if ENV['ENV'] == 'dev'
+  
   # Read modes, dump them in a JS string
-  Dir.glob("../glaemresources/modes/*.glaem") { |fmode|
-    fname = File.basename(fmode,".glaem")
+  Dir.glob(modes) { |fmode|
+    
+    ext = (fmode =~ /\.glaem\.dev$/)?(".glaem.dev"):(".glaem")
+    
+    fname = File.basename(fmode,ext)
+    
     File.open(fmode,"rb:utf-8") { |fin|
       File.open(BUILD_JS_PATH + "/modes/#{fname}.glaem.js","wb:utf-8") { |fjs|
         fjs << "Glaemscribe.resource_manager.raw_modes[\"#{fname}\"] = \"#{EscapeUtils.escape_javascript(fin.read)}\""      
@@ -83,8 +91,6 @@ def generate_js_charsets
     }
   }
 end
-
-
 
 def build_engine  
   

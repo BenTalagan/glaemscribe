@@ -15,11 +15,14 @@ def cleanup
   mkdir_p BUILD_GEM_PATH + "/bin"  
   mkdir_p BUILD_GEM_PATH + "/lib"  
   mkdir_p BUILD_GEM_PATH + "/glaemresources"  
+  mkdir_p BUILD_GEM_PATH + "/glaemresources/modes"  
+  mkdir_p BUILD_GEM_PATH + "/glaemresources/charsets"  
 end
 
 def copy_files
   cp_r      Dir.glob("../lib_rb/*"),           BUILD_GEM_PATH + "/lib"
-  cp_r      Dir.glob("../glaemresources/*"),   BUILD_GEM_PATH + "/glaemresources"
+  cp_r      Dir.glob("../glaemresources/modes/*.glaem"),   BUILD_GEM_PATH + "/glaemresources/modes"
+  cp_r      Dir.glob("../glaemresources/modes/*.cst"),   BUILD_GEM_PATH + "/glaemresources/charsets"
   cp_r      "../bin_dev/glaemscribe.gemspec",  BUILD_GEM_PATH
   cp_r      "../bin/glaemscribe",              BUILD_GEM_PATH + "/bin/" 
   cp_r      "../LICENSE.txt",                  BUILD_GEM_PATH
