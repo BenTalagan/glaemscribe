@@ -30,6 +30,9 @@ module Glaemscribe
       CHARSET_EXT   = "cst"
       
       ALL           = ["*"]
+      
+      MODE_FILES     = [MODE_PATH + "*.#{MODE_EXT}"]
+      MODE_FILES     << (MODE_PATH + "*.#{MODE_EXT}.dev") if ENV['ENV'] == 'dev'
     
       @loaded_modes                     = {}
       @loaded_charsets                  = {}
@@ -38,7 +41,7 @@ module Glaemscribe
       @post_processor_operator_classes  = {}
       
       def self.available_mode_names
-        Dir.glob(MODE_PATH + "*.#{MODE_EXT}").map { |mode_file|     
+        Dir.glob(MODE_FILES).map { |mode_file|     
           self.mode_name_from_file_path(mode_file)
         }
       end
@@ -73,7 +76,8 @@ module Glaemscribe
       end
         
       def self.mode_name_from_file_path(file_path)
-        File.basename(file_path,".*")
+        ext = (file_path =~ /\.glaem\.dev$/)?(".glaem.dev"):(".glaem")
+        File.basename(file_path,ext)
       end
     
       def self.charset_name_from_file_path(file_path)
@@ -84,10 +88,10 @@ module Glaemscribe
         
         which_ones = [which_ones] if(which_ones.is_a?(String))  
           
-        Dir.glob(MODE_PATH + "*.#{MODE_EXT}") { |mode_file|
+        Dir.glob(MODE_FILES) { |mode_file|
       
           mode_name = self.mode_name_from_file_path(mode_file)
-         
+      
           next if(which_ones != ALL && !which_ones.include?(mode_name))
           next if(@loaded_modes.include? mode_name) # Don't load a charset twice
     
