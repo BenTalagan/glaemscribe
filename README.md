@@ -39,6 +39,7 @@ Changelog
 
 | Version | Date | Comment |
 |---------|------|---------|
+| 1.1.14 | 12/17/2017 | Minor bug fix on 1.1.13 |
 | 1.1.13 | 12/17/2017 | [Quenya] Adding support for palatalized geminates (requested exotic feature) |
 | 1.1.12 | 11/28/2017 | Minor bug fix on 1.1.11 |
 | 1.1.11 | 11/28/2017 | Minor bug fix on 1.1.10 |
