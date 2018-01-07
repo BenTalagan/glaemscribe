@@ -219,6 +219,7 @@ module Glaemscribe
         doc.root_node.gpath("options.option").each{ |option_element|
           values      = {}
           visibility  = nil
+          is_radio    = false
   
           option_element.gpath("value").each{ |value_element|
             value_name                = value_element.args.first
@@ -227,6 +228,8 @@ module Glaemscribe
           option_element.gpath("visible_when").each{ |visible_element|
             visibility = visible_element.args.first
           }
+          
+          option_element.gpath('radio').each{|e| is_radio = true}
         
           option_name_at          = option_element.args[0]
           option_default_val_at   = option_element.args[1]
@@ -236,8 +239,9 @@ module Glaemscribe
             @mode.errors << Glaeml::Error.new(option_element.line, "Missing option default value.")
           end
             
-          option        = Option.new(@mode, option_name_at, option_default_val_at, values, visibility)
-          @mode.options[option.name] = option
+          option                      = Option.new(@mode, option_name_at, option_default_val_at, values, visibility)
+          option.is_radio             = is_radio
+          @mode.options[option.name]  = option
         }
         
         # Read the supported font list

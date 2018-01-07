@@ -29,8 +29,9 @@ module Glaemscribe
       attr_reader   :type
       attr_reader   :default_value_name      
       attr_reader   :values
+      
+      attr_accessor :is_radio
 
-    
       class Type
         ENUM = "ENUM"
         BOOL = "BOOL"

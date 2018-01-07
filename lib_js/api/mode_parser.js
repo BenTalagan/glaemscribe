@@ -273,6 +273,7 @@ Glaemscribe.ModeParser.prototype.parse_raw = function(mode_name, raw, mode_optio
 
     var values          = {};
     var visibility      = null;
+    var is_radio        = false;
     
     option_element.gpath('value').glaem_each(function(_, value_element) {   
       var value_name                = value_element.args[0];
@@ -281,6 +282,7 @@ Glaemscribe.ModeParser.prototype.parse_raw = function(mode_name, raw, mode_optio
     option_element.gpath('visible_when').glaem_each(function(_, visible_element) {   
       visibility = visible_element.args[0];
     });    
+    option_element.gpath('radio').glaem_each(function(_,_) { is_radio = true });    
       
     var option_name_at          = option_element.args[0];
     var option_default_val_at   = option_element.args[1];
@@ -292,6 +294,7 @@ Glaemscribe.ModeParser.prototype.parse_raw = function(mode_name, raw, mode_optio
     }
     
     option                    = new Glaemscribe.Option(mode, option_name_at, option_default_val_at, values, visibility);
+    option.is_radio           = is_radio;
     mode.options[option.name] = option;
   }); 
   
