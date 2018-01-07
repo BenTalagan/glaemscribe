@@ -52,8 +52,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   \entry "0.9.7" "Correcting visibility options to conform to new glaeml args strict syntax"
   \entry "0.9.8" "Adding palatalized geminates (requested)"
   \entry "0.9.9" "Hotfix on 0.9.8"
+  \entry "0.9.10" "Removing option on palatalized geminates (always accumulate)"
 \end
-\version  "0.9.9"
+\version  "0.9.10"
 
 \language "Quenya"
 \writing  "Tengwar"
@@ -118,12 +119,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     \value ST_PT_HT_SEPARATED 1
     \value ST_PT_HT_WITH_XTD 2
   \end
-  
-  \beg option palatalized_geminates PALATALIZED_GEMINATES_SPLIT
-    \value PALATALIZED_GEMINATES_SPLIT 0
-    \value PALATALIZED_GEMINATES_CUMULATE 1
-  \end
-  
+    
   \beg option consonant_modification_style CONSONANT_MODIFICATION_STYLE_BAR
     \value CONSONANT_MODIFICATION_STYLE_WAVE 0
     \value CONSONANT_MODIFICATION_STYLE_BAR 1
@@ -158,25 +154,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
   \** Dis-ambiguate qu **\
   \substitute   "qu" "q" 
-  
-  \if "palatalized_geminates == PALATALIZED_GEMINATES_SPLIT"
-    \substitute     "ppy"       "p|py"
-    \substitute     "tty"       "t|ty"
-    \rxsubstitute   "[ck][ck]y" "k|ky"
-
-    \substitute     "nny"       "n|ny"
-    \substitute     "mmy"       "m|my"
-
-    \substitute     "nnty"      "n|nty"
-    \substitute     "nndy"      "n|ndy"
     
-    \substitute     "rry"       "r|ry"
-    \substitute     "rrdy"      "r|rdy"
-
-    \substitute     "lly"       "l|ly"
-    \substitute     "lldy"      "l|ldy"
-  \endif
-  
   \elvish_numbers "\\eval numbers_base" "\\eval reverse_numbers"
 \end
 
@@ -330,10 +308,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
     \** PALATAL **\
     [t * p * {K}] y {V_D_WN} --> [TINCO * PARMA * CALMA] {PALATAL} {_V_D_WN_}
-    
-    \if "palatalized_geminates == PALATALIZED_GEMINATES_CUMULATE"
-      [tt * pp * {K}{K}] y {V_D_WN} --> [TINCO * PARMA * CALMA] {GEMINATE} {PALATAL} {_V_D_WN_}
-    \endif
+
+    \** PALATAL GEMINATES **\
+    [tt * pp * {K}{K}] y {V_D_WN} --> [TINCO * PARMA * CALMA] {GEMINATE} {PALATAL} {_V_D_WN_}
     
     \** For alveolarized consonants, we must put the alveolar_sign just after the tengwa
         because else, FreeMonoTengwar will not handle well the ligature. Anyway, this is
@@ -355,9 +332,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     \** Palatalized **\
     ndy{V_D_WN} --> ANDO {PALATAL} {_V_D_WN_}
 
-    \if "palatalized_geminates == PALATALIZED_GEMINATES_CUMULATE"
-      [nnd] y {V_D_WN} --> [ANDO] {GEMINATE} {PALATAL} {_V_D_WN_}
-    \endif
+    \** PALATAL GEMINATES **\
+    [nnd] y {V_D_WN} --> [ANDO] {GEMINATE} {PALATAL} {_V_D_WN_}
 
     \** Have some rules for d,b,g,gw although there are not theoritically possible, aldudénie e.g needs it **\
     {L2_UN}               === d       * b         * g       * gw
@@ -413,9 +389,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     \** PALATAL **\
     nty {V_D_WN}       --> ANTO {PALATAL} {_V_D_WN_}
 
-    \if "palatalized_geminates == PALATALIZED_GEMINATES_CUMULATE"
-      [nnt] y {V_D_WN} --> [ANTO] {GEMINATE} {PALATAL} {_V_D_WN_}
-    \endif
+    \** PALATAL GEMINATES **\
+    [nnt] y {V_D_WN} --> [ANTO] {GEMINATE} {PALATAL} {_V_D_WN_}
 
     \** ===================== **\
     \**     5TH LINE RULES    **\
@@ -431,9 +406,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     ny{V_D_WN}          --> NUMEN {PALATAL} {_V_D_WN_}
     my{V_D_WN}          --> MALTA {PALATAL} {_V_D_WN_}
 
-    \if "palatalized_geminates == PALATALIZED_GEMINATES_CUMULATE"
-      [nn * mm] y {V_D_WN} --> [NUMEN * MALTA] {GEMINATE} {PALATAL} {_V_D_WN_}
-    \endif
+    \** PALATAL GEMINATES **\
+    [nn * mm] y {V_D_WN} --> [NUMEN * MALTA] {GEMINATE} {PALATAL} {_V_D_WN_}
 
     \** ===================== **\
     \**     6TH LINE RULES    **\
@@ -465,9 +439,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     ry{V_D_WN}        --> ROMEN {PALATAL} {_V_D_WN_}
     rdy{V_D_WN}       --> ARDA {PALATAL} {_V_D_WN_}
     
-    \if "palatalized_geminates == PALATALIZED_GEMINATES_CUMULATE"
-      [rr * rrd] y {V_D_WN} --> [ROMEN * ARDA] {GEMINATE} {PALATAL} {_V_D_WN_}
-    \endif
+    \** PALATAL GEMINATES **\
+    [rr * rrd] y {V_D_WN} --> [ROMEN * ARDA] {GEMINATE} {PALATAL} {_V_D_WN_}
 
     \** ===================== **\
     \**     L  LINE RULES     **\
@@ -480,9 +453,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     ly{V_D_WN}            --> LAMBE {PALATAL} {_V_D_WN_}
     ldy{V_D_WN}           --> ALDA  {PALATAL} {_V_D_WN_}
     
-    \if "palatalized_geminates == PALATALIZED_GEMINATES_CUMULATE"
-      [ll * lld] y {V_D_WN} --> [LAMBE * ALDA] {GEMINATE} {PALATAL} {_V_D_WN_}
-    \endif
+    \** PALATAL GEMINATES **\
+    [ll * lld] y {V_D_WN} --> [LAMBE * ALDA] {GEMINATE} {PALATAL} {_V_D_WN_}
     
     hl{V_D_WN}            --> HALLA LAMBE {_V_D_WN_}
     hr{V_D_WN}            --> HALLA ROMEN {_V_D_WN_}
