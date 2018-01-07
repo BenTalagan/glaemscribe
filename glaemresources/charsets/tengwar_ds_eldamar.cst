@@ -24,13 +24,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 \** Charset specially customized for Tengwar Eldamar (Glaemscrafu patched version) **\ 
 
-\version 0.0.8
+\version 0.0.9
 
 \beg changelog
   \entry "0.0.5" "Added VALA_W_HOOK, VAIYA. Moved A_TEHTA_INV_L due to soft hyphen bug."
   \entry "0.0.6" "Superior and inferior dash and tild consonant modification signs have been added for halla, telco and ara. / Added pustar combinations (4/4-halfed/4-squared/5)"
   \entry "0.0.7" "Fixed missing tinco_ext / sule_ext"
   \entry "0.0.8" "Added NBSP"
+  \entry "0.0.9" "Moved back some chars to latin blocks to avoid word-wrapping problems"
 \end
 
 \**   **\ \char 20 SPACE              
@@ -226,23 +227,51 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 \** FIX FOR SOFT HYPHEN **\
 \char 109 A_TEHTA_INV_L
 
+\char 10C O_TEHTA_DOUBLE_XL
+\char 10D O_TEHTA_DOUBLE_L
+\char 10E O_TEHTA_DOUBLE_S
+\char 10F O_TEHTA_DOUBLE_XS
+
 \** USING TENGWAR ELFICA POS TO AVOID PROBLEMS **\
 \char 125 VAIA WAIA VAIYA
-                
-\** Œ **\ \char 152 PUNCT_PAREN_L                           
-\** œ **\ \char 153 PUNCT_PAREN_R                           
-\** Š **\ \char 160 THINF_ACCENT_L                                 
-\** š **\ \char 161 MALTA_W_HOOK TW_MH                                 
-\** Ÿ **\ \char 178 THINF_ACCENT_XS                                 
-\** ƒ **\ \char 192 THINF_DSTROKE_XL       
+
+\char 160 THINF_ACCENT_L                                 
+\char 161 MALTA_W_HOOK TW_MH                                 
+\char 178 THINF_ACCENT_XS      
+  
+\char 180 VALA_W_HOOK TW_MH_BELERIANDIC   
+
+\char 181 PUSTA_4
+\char 182 PUSTA_5
+                           
+\char 192 THINF_DSTROKE_XL       
+
+\char 19C A_TEHTA_DOUBLE_XL
+\char 19D A_TEHTA_DOUBLE_L
+\char 19E A_TEHTA_DOUBLE_S
+\char 19F A_TEHTA_DOUBLE_XS
+
+\char 1A0 E_TEHTA_DOUBLE_XL
+\char 1A1 E_TEHTA_DOUBLE_L
+\char 1A2 E_TEHTA_DOUBLE_S
+\char 1A3 E_TEHTA_DOUBLE_XS
+
+\char 1A4 U_TEHTA_DOUBLE_XL
+\char 1A5 U_TEHTA_DOUBLE_L
+\char 1A6 U_TEHTA_DOUBLE_S
+\char 1A7 U_TEHTA_DOUBLE_XS
+
+      
+\char 2C2 PUNCT_PAREN_L  PUNCT_PAREN_L_ALT                           
+\char 2C3 PUNCT_PAREN_R  PUNCT_PAREN_R_ALT        
+                 
 
 \char 200 DASH_INF_XS
 \char 201 TILD_INF_XS
 \char 202 DASH_SUP_XS
 \char 203 TILD_SUP_XS
 
-\char 181 PUSTA_4
-\char 182 PUSTA_5
+
 \char 10FB PUSTA_4_HALFED
 \char 2E2C PUSTA_4_SQUARED
                           
@@ -270,87 +299,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 \char 2FFE E_TEHTA_GRAVE_L
 \char 2FFF E_TEHTA_GRAVE_S
                       
-\** 〠 **\ \char 3020 ?                                
-\** 〡 **\ \char 3021 ?                                
-\** 〣 **\ \char 3023 A_TEHTA_DOUBLE_XL                                
-\** 〤 **\ \char 3024 E_TEHTA_DOUBLE_XL                                
-\** 〦 **\ \char 3026 U_TEHTA_DOUBLE_XL        
-
-\** 〰 **\ \char 3030 ?                                
-\** 〱 **\ \char 3031 ?                                
-\** 〲 **\ \char 3032 ?                                
-\** 〳 **\ \char 3033 ?                                
-\** 〴 **\ \char 3034 ?                                
-\** 〵 **\ \char 3035 ?                                
-\** 〶 **\ \char 3036 ?                                
-\** 〷 **\ \char 3037 ?                                
-\** 〸 **\ \char 3038 ?                                
-\** 〹 **\ \char 3039 ?                                
-\** 〼 **\ \char 303c ?                                
-\** ぀ **\ \char 3040 ?                                
-\** ぃ **\ \char 3043 A_TEHTA_DOUBLE_XS                                
-\** い **\ \char 3044 A_TEHTA_DOUBLE_S                                
-\** ぅ **\ \char 3045 A_TEHTA_DOUBLE_L                                
-\** う **\ \char 3046 E_TEHTA_DOUBLE_XS                                
-\** え **\ \char 3048 O_TEHTA_DOUBLE_S                                
-\** お **\ \char 304a U_TEHTA_DOUBLE_S                                
-\** き **\ \char 304d U_TEHTA_DOUBLE_XS                                
-\** ぎ **\ \char 304e O_TEHTA_DOUBLE_XS                                
-\** け **\ \char 3051 ?                                
-\** げ **\ \char 3052 E_TEHTA_DOUBLE_L                                
-\** さ **\ \char 3055 U_TEHTA_DOUBLE_L                                
-\** ざ **\ \char 3056 E_TEHTA_DOUBLE_S                                
-\** し **\ \char 3057 ?                                
-\** す **\ \char 3059 O_TEHTA_DOUBLE_L                                
-\** ぞ **\ \char 305e O_TEHTA_DOUBLE_XL                                
-\** ぢ **\ \char 3062 ?                                
-\** づ **\ \char 3065 ?                                
-\** と **\ \char 3068 ?                                
-\** な **\ \char 306a LAMBE_LIG                                
-\** の **\ \char 306e ?                                
-\** ぱ **\ \char 3071 ?                                
-\** ひ **\ \char 3072 ?                                
-\** ぴ **\ \char 3074 ?                                
-\** ふ **\ \char 3075 ?                                
-\** ぷ **\ \char 3077 ?                                
-\** へ **\ \char 3078 ?                                
-\** べ **\ \char 3079 ?                                
-\** ぺ **\ \char 307a ?                                
-\** ア **\ \char 30a2 ?                                
-\** カ **\ \char 30ab ?                                
-\** ギ **\ \char 30ae ?                                
-\** セ **\ \char 30bb ?                                
-\** タ **\ \char 30bf ?                                
-\** ツ **\ \char 30c4 ?                                
-\** テ **\ \char 30c6 ?                                
-\** デ **\ \char 30c7 ?                                
-\** ヘ **\ \char 30d8 ?                                
-\** ベ **\ \char 30d9 ?                                
-\** ペ **\ \char 30da ?                                
-\** ホ **\ \char 30db ?                                
-\** ム **\ \char 30e0 ?                                
-\** メ **\ \char 30e1 ?                                
-\** モ **\ \char 30e2 ?                                
-\** ャ **\ \char 30e3 ?                                
-\** ヨ **\ \char 30e8 ?                                
-\** ラ **\ \char 30e9 ?                                
-\** リ **\ \char 30ea ?                                
-\** ル **\ \char 30eb ? 
-\** **\ \char 3152 PUNCT_PAREN_L_ALT                                
-\** **\ \char 3153 PUNCT_PAREN_R_ALT                                                               
-\** ㅠ **\ \char 3160 ?              
-                  
-\char 3161 VALA_W_HOOK TW_MH_BELERIANDIC       
+                      
               
-\** ㅸ **\ \char 3178 ?                                
-\** ㆒ **\ \char 3192 ?                                
-\** 倚 **\ \char 501a ?                                
-\** 倞 **\ \char 501e ?                                
-\** 倠 **\ \char 5020 ?                                
-\** 倢 **\ \char 5022 ?                                
-\** 倦 **\ \char 5026 ?                                
-\** 倰 **\ \char 5030 ?                                
-\** 倹 **\ \char 5039 ?
 
 
 \** The following virtual chars are used to handle tehtar (& the like) multiple version chosing **\

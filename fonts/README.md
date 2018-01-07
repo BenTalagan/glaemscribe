@@ -13,7 +13,8 @@ See also the [**comparison chart for tengwar fonts**](http://htmlpreview.github.
 --------------------------------------------------------------
  
 * The regular and alternate fonts have been merged into a single file so as to simplify its use as a WebFont.
-* The alternate font has been shifted and added at position 0x3000 of the regular font.
+* ~~The alternate font has been shifted and added at position 0x3000 of the regular font.~~
+* Alternate font chars have been merged and aligned on the Tengwar Elfica layout.
 * Double tehtar for long _e_ have been added, and _e grave tehtar_ have been moved.
 * The _a_ theta at U+00AD (soft hyphen) has been moved to U+0109 (for browser compatibility issues).
 * The _vaia_ tengwa has been moved to U+0125 (for browser compatibility issues).
@@ -26,7 +27,8 @@ See also the [**comparison chart for tengwar fonts**](http://htmlpreview.github.
 --------------------------------------------------------------
 
 * The regular and alternate fonts have been merged into a single file so as to simplify its use as a WebFont.
-* The alternate font has been shifted and added at position 0x3000 of the regular font.
+* ~~The alternate font has been shifted and added at position 0x3000 of the regular font.~~
+* Alternate font chars have been merged and aligned on the Tengwar Elfica layout.
 * Double tehtar for long _e, o and u_ have been added.
 * The _a_ theta at U+00AD (soft hyphen) has been moved to U+0109 (for browser compatibility issues).
 * The _vaia_ tengwa has been moved to U+0125 (for browser compatibility issues).
@@ -39,12 +41,14 @@ See also the [**comparison chart for tengwar fonts**](http://htmlpreview.github.
 * Added pustar combinations (4-halfed @U+10FB / 4-squared @U+2E2C)
 * A serie of 4 inferior tehtar has been added for the reversed, small, u-curl.
 * Superior and inferior dash and tild consonant modification signs have been added for halla, telco and ara.
+* Double stroke inferior tehtar versions have been moved for compatibility reasons.
 
 **Tengwar Annatar**, created and designed by **Johan Winge**
 --------------------------------------------------------------
 
 * The regular and alternate fonts have been merged into a single file so as to simplify its use as a WebFont.
-* The alternate font has been shifted and added at position 0x3000 of the regular font.
+* ~~The alternate font has been shifted and added at position 0x3000 of the regular font.~~
+* Alternate font chars have been merged and aligned on the Tengwar Elfica layout.
 * The _a_ theta at U+00AD (soft hyphen) has been moved to U+0109 (for browser compatibility issues).
 * The _vaia_ tengwa has been moved to U+0125 (for browser compatibility issues).
 * The circle inf tehta for Regular and Bold (XS version @ 0xA9) as been translated, it was too high.
@@ -56,7 +60,8 @@ See also the [**comparison chart for tengwar fonts**](http://htmlpreview.github.
 --------------------------------------------------------------
 
 * The regular and alternate fonts have been merged into a single file so as to simplify its use as a WebFont.
-* The alternate font has been shifted and added at position 0x3000 of the regular font.
+* ~~The alternate font has been shifted and added at position 0x3000 of the regular font.~~
+* Alternate font chars have been merged and aligned on the Tengwar Elfica layout.
 * The _a_ theta at U+00AD (soft hyphen) has been moved to U+0109 (for browser compatibility issues).
 * The _vaia_ tengwa has been moved to U+0125 (for browser compatibility issues).
 * The circle inf tehta for Regular and Bold (XS version @ 0xA9) as been translated, it was too high.
@@ -67,7 +72,8 @@ See also the [**comparison chart for tengwar fonts**](http://htmlpreview.github.
 --------------------------------------------------------------
 
 * The regular and alternate fonts have been merged into a single file so as to simplify its use as a WebFont.
-* The alternate font has been shifted and added at position 0x3000 of the regular font.
+* ~~The alternate font has been shifted and added at position 0x3000 of the regular font.~~
+* Alternate font chars have been merged and aligned on the Tengwar Elfica layout.
 * The _a_ theta at U+00AD (soft hyphen) has been moved to U+0109 (for browser compatibility issues).
 * The _vaia_ tengwa has been moved to U+0125 (for browser compatibility issues).
 * Added pustar combinations (4/4-halfed/4-squared/5)
@@ -77,7 +83,7 @@ See also the [**comparison chart for tengwar fonts**](http://htmlpreview.github.
 --------------------------------------------------------------
 
 * Added MH (@ 0x161).
-* Added Beleriandic MH (@ 0x3161).
+* Added Beleriandic MH (@ 0x180).
 * Added double tehtar for long _e, o and u_ have been added.
 * The _a_ theta at U+00AD (soft hyphen) has been moved to U+0109 (for browser compatibility issues).
 * The _vaia_ tengwa has been added and moved to U+0125 (for browser compatibility issues).
