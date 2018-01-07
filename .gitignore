@@ -1,1 +1,5 @@
 .DS_Store
+bin_dev/
+glaemresources/
+unit_tests/
+unit_tests_dumped/
