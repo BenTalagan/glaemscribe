@@ -1,8 +1,8 @@
 /*
 
 Glǽmscribe (also written Glaemscribe) is a software dedicated to
-the transcription of texts between writing systems, and more 
-specifically dedicated to the transcription of J.R.R. Tolkien's 
+the transcription of texts between writing systems, and more
+specifically dedicated to the transcription of J.R.R. Tolkien's
 invented languages to some of his devised writing systems.
 
 Copyright (C) 2015 Benjamin Babut (Talagan).
@@ -37,18 +37,18 @@ Glaemscribe.CharsetParser.prototype.parse_raw = function(charset_name, raw)
     charset.errors = doc.errors;
     return charset;
   }
- 
+
   var chars   = doc.root_node.gpath('char');
 
   for(var c=0;c<chars.length;c++)
   {
     var char = chars[c];
-    code   = parseInt(char.args[0],16);
-    names  = char.args.slice(1);
+    var code = parseInt(char.args[0],16);
+    var names = char.args.slice(1);
     charset.add_char(char.line, code, names)
-  }  
-  
-  doc.root_node.gpath("virtual").glaem_each(function(_,virtual_element) { 
+  }
+
+  doc.root_node.gpath("virtual").glaem_each(function(_,virtual_element) {
     var names     = virtual_element.args;
     var classes   = [];
     var reversed  = false;
@@ -56,7 +56,7 @@ Glaemscribe.CharsetParser.prototype.parse_raw = function(charset_name, raw)
     virtual_element.gpath("class").glaem_each(function(_,class_element) {
       var vc        = new Glaemscribe.VirtualChar.VirtualClass();
       vc.target     = class_element.args[0];
-      vc.triggers   = class_element.args.slice(1);   
+      vc.triggers   = class_element.args.slice(1);
       classes.push(vc);
     });
     virtual_element.gpath("reversed").glaem_each(function(_,reversed_element) {
@@ -67,14 +67,14 @@ Glaemscribe.CharsetParser.prototype.parse_raw = function(charset_name, raw)
     });
     charset.add_virtual_char(virtual_element.line,classes,names,reversed,deflt);
   });
-  
-  charset.finalize(); 
-  return charset;  
+
+  charset.finalize();
+  return charset;
 }
 
 Glaemscribe.CharsetParser.prototype.parse = function(charset_name) {
-  
+
   var raw     = Glaemscribe.resource_manager.raw_charsets[charset_name];
-  
+
   return this.parse_raw(charset_name, raw);
 }
