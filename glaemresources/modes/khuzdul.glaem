@@ -24,12 +24,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 \beg changelog
   \entry "0.0.2", "Moved outspace character to general element"
+  \entry "0.0.3", "Adding missing long ô"
 \end
 
 \language "Khuzdul"
 \writing  "Cirth"
 \mode     "Khuzdul Cirth - Angerthas Moria"
-\version  "0.0.2"
+\version  "0.0.3"
 \authors  "J.R.R. Tolkien, impl. Talagan (Benjamin Babut)"
 
 \world      arda
@@ -66,6 +67,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   \beg    rules litteral
     a --> CIRTH_48
     â --> CIRTH_49
+    
     e --> CIRTH_46
     ê --> CIRTH_47
 
@@ -73,6 +75,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     î --> CIRTH_39 CIRTH_39
 
     o --> CIRTH_50
+    ô --> CIRTH_51
 
     u --> CIRTH_42
     û --> CIRTH_43
