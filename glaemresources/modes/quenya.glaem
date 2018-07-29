@@ -312,13 +312,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     \** PALATAL GEMINATES **\
     [tt * pp * {K}{K}] y {V_D_WN} --> [TINCO * PARMA * CALMA] {GEMINATE} {PALATAL} {_V_D_WN_}
     
-    \** For alveolarized consonants, we must put the alveolar_sign just after the tengwa
+    \** For alveolarized consonants, we must put the SARINCE just after the tengwa
         because else, FreeMonoTengwar will not handle well the ligature. Anyway, this is
         more logical, but the tehta placement will not be perfect for older fonts **\
-    ts{V_D_WN}          --> TINCO ALVEOLAR_SIGN {_V_D_WN_} 
-    ps{V_D_WN}          --> PARMA ALVEOLAR_SIGN {_V_D_WN_} 
-    {K}s{V_D_WN}        --> CALMA ALVEOLAR_SIGN {_V_D_WN_}   
-    x{V_D_WN}           --> CALMA ALVEOLAR_SIGN {_V_D_WN_}   \** render ks for x **\
+    ts{V_D_WN}          --> TINCO SARINCE {_V_D_WN_} 
+    ps{V_D_WN}          --> PARMA SARINCE {_V_D_WN_} 
+    {K}s{V_D_WN}        --> CALMA SARINCE {_V_D_WN_}   
+    x{V_D_WN}           --> CALMA SARINCE {_V_D_WN_}   \** render ks for x **\
 
     \** ===================== **\
     \**     2ND LINE RULES    **\

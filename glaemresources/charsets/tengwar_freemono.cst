@@ -158,7 +158,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 \** THE TWO FOLLOWING ONES ARE HIGHLY DISCUSSABLE, MAYBE WE SHOULD ADD A VIRTUAL CHAR FOR THESE **\
 \char e058  SHOOK_LEFT_L
-\char e059  SHOOK_RIGHT_L ALVEOLAR_SIGN
+\char e059  SHOOK_RIGHT_L SARINCE
 \char e05A  ?
 \char e05B  ?
 

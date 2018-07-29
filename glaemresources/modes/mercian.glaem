@@ -324,7 +324,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     [l * ll * ld] {S_VOWELS_WN}               --> [LAMBE * LAMBE {_GEMINATE_} * ALDA] {_S_VOWELS_UP_WN_}
 
     \** ========== **\
-    \** Alveolar (sifflantes) **\
+    \** sibilant (sifflantes) **\
     
     {L8_KER}      ===  s * z 
     {L8_IMG}      ===  SILME_NUQUERNA * ESSE_NUQUERNA 
@@ -377,9 +377,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     \** X **\
     \** For x, due to the cedilla, we cannot put tehtas under the tengwa (so no need to treat diphthongs or long vowels) **\
 
-    x{S_VOWELS_WN}                               --> QUESSE ALVEOLAR_SIGN {_S_VOWELS_UP_WN_}
-    xx{S_VOWELS_WN}                              --> QUESSE ALVEOLAR_SIGN {_GEMINATE_} {_S_VOWELS_UP_WN_}
-    nx{S_VOWELS_WN}                              --> QUESSE ALVEOLAR_SIGN {_NASAL_} {_S_VOWELS_UP_WN_}     
+    x{S_VOWELS_WN}                               --> QUESSE SARINCE {_S_VOWELS_UP_WN_}
+    xx{S_VOWELS_WN}                              --> QUESSE SARINCE {_GEMINATE_} {_S_VOWELS_UP_WN_}
+    nx{S_VOWELS_WN}                              --> QUESSE SARINCE {_NASAL_} {_S_VOWELS_UP_WN_}     
     
     
   \end

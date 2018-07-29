@@ -260,7 +260,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     {S_VOWELS_WN}ld                         --> ALDA {_S_VOWELS_UP_WN_}
 
 
-    \** ## Alveolar (sifflantes) **\
+    \** ## Sibilant (sifflantes) **\
     \** ## **\
     {L8_KER}      ===  s * z 
     {L8_IMG}      ===  SILME_NUQUERNA * ESSE_NUQUERNA 

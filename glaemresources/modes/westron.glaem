@@ -293,13 +293,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     nz{V_D}           --> ESSE_NUQUERNA {NASAL} {_V_D_}   
     nz                --> ESSE_NUQUERNA {NASAL}                
 
-    ts                --> TINCO ALVEOLAR_SIGN
-    ps                --> PARMA ALVEOLAR_SIGN
-    (ks,cs,x)         --> QUESSE ALVEOLAR_SIGN
+    ts                --> TINCO SARINCE
+    ps                --> PARMA SARINCE
+    (ks,cs,x)         --> QUESSE SARINCE
 
-    ts{V_D}           --> TINCO ALVEOLAR_SIGN {_V_D_}  
-    ps{V_D}           --> PARMA ALVEOLAR_SIGN {_V_D_}
-    (ks,cs,x){V_D}    --> QUESSE ALVEOLAR_SIGN {_V_D_}	
+    ts{V_D}           --> TINCO SARINCE {_V_D_}  
+    ps{V_D}           --> PARMA SARINCE {_V_D_}
+    (ks,cs,x){V_D}    --> QUESSE SARINCE {_V_D_}	
 
     h{V_D}            --> HYARMEN {_V_D_}
     h                 --> HYARMEN

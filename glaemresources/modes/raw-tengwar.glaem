@@ -180,6 +180,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     _(nasal)_     --> {NASAL}
     _(palatal)_   --> PALATAL_SIGN
     _(labial)_    --> SEV_TEHTA 
+    
+    \** SA-Rincer to be enhanced ... **\
+    _(sarince)_  --> SARINCE
  
     _0_ --> NUM_0
     _1_ --> NUM_1
