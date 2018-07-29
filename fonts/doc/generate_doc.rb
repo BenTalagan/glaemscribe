@@ -79,8 +79,8 @@ end
       ["x","x","x","x","x","x","x","Osse",""],
       ["x","x","x","x","x","x","x","Lowdham HW",""],
       ["x","x","x","x","x","x","a","MH (malta+hook)",""],
-      ["x","x","x","x","x","x","a","MH Beleriandic (vala+hook)",""],
-      ["m","m","m","m","m","x","a","Vaia","Moved for obscure browser compatibility reasons."]
+      ["m","m","m","m","m","x","a","MH Beleriandic (vala+hook)","Added, or remapped to Elfica's mapping."],
+      ["m","m","m","m","m","x","a","Vaia","Added, or moved for obscure browser compatibility reasons."]
     ]
   },
   {
@@ -114,10 +114,10 @@ end
       ["x","x","x","x","x","x","x","E [s]",""],
       ["x","x","x","x","x","x","x","E [l]",""],
       ["x","x","x","x","x","x","x","E [xl]",""],
-      ["x","x","x","m","m","x","a","E (reversed) [xs]","Was interfering with double e"],
-      ["x","x","x","m","m","x","a","E (reversed) [s]","Was interfering with double e"],
-      ["x","x","x","m","m","x","a","E (reversed) [l]","Was interfering with double e"],
-      ["x","x","x","m","m","x","a","E (reversed) [xl]","Was interfering with double e"],
+      ["x","x","x","m","m","x","a","E (reversed) [xs]","Added, or moved because was interfering with double e"],
+      ["x","x","x","m","m","x","a","E (reversed) [s]","Added, or moved because was interfering with double e"],
+      ["x","x","x","m","m","x","a","E (reversed) [l]","Added, or moved because was interfering with double e"],
+      ["x","x","x","m","m","x","a","E (reversed) [xl]","Added, or moved because was interfering with double e"],
       ["x","x","x","x","x","x","x","I [xs]",""],
       ["x","x","x","x","x","x","x","I [s]",""],
       ["x","x","x","x","x","x","x","I [l]",""],
@@ -168,31 +168,31 @@ end
   {
     name: "Double tehtar above",
     entries: [
-      ["x","x","x","a","a","x","a","EE [xs]",""],
-      ["x","x","x","a","a","x","a","EE [s] ",""],
-      ["x","x","x","a","a","x","a","EE [l] ",""],
-      ["x","x","x","a","a","x","a","EE [xl]",""],
+      ["m","m","m","a","a","x","a","EE [xs]","Added, or remapped to Elfica mapping."],
+      ["m","m","m","a","a","x","a","EE [s] ","Added, or remapped to Elfica mapping."],
+      ["m","m","m","a","a","x","a","EE [l] ","Added, or remapped to Elfica mapping."],
+      ["m","m","m","a","a","x","a","EE [xl]","Added, or remapped to Elfica mapping."],
       ["x","x","x","x","x","x","x","II [xs]",""],
       ["x","x","x","x","x","x","x","II [s] ",""],
       ["x","x","x","x","x","x","x","II [l] ",""],
       ["x","x","x","x","x","x","x","II [xl]",""],
-      ["x","x","x","x","a","x","a","OO [xs]",""],
-      ["x","x","x","x","a","x","a","OO [s] ",""],
-      ["x","x","x","x","a","x","a","OO [l] ",""],
-      ["x","x","x","x","a","x","a","OO [xl]",""],
-      ["x","x","x","x","a","x","a","UU [xs]",""],
-      ["x","x","x","x","a","x","a","UU [s] ",""],
-      ["x","x","x","x","a","x","a","UU [l] ",""],
-      ["x","x","x","x","a","x","a","UU [xl]",""]
+      ["m","m","m","m","a","x","a","OO [xs]","Added, or remapped to Elfica mapping."],
+      ["m","m","m","m","a","x","a","OO [s] ","Added, or remapped to Elfica mapping."],
+      ["m","m","m","m","a","x","a","OO [l] ","Added, or remapped to Elfica mapping."],
+      ["m","m","m","m","a","x","a","OO [xl]","Added, or remapped to Elfica mapping."],
+      ["m","m","m","m","a","x","a","UU [xs]","Added, or remapped to Elfica mapping."],
+      ["m","m","m","m","a","x","a","UU [s] ","Added, or remapped to Elfica mapping."],
+      ["m","m","m","m","a","x","a","UU [l] ","Added, or remapped to Elfica mapping."],
+      ["m","m","m","m","a","x","a","UU [xl]","Added, or remapped to Elfica mapping."]
     ]
   },
   {
     name: "Double tehtar below",
     entries: [
-      ["x","x","x","x","x","x","x","EE [xs]",""],
-      ["x","x","x","x","x","x","x","EE [s] ",""],
-      ["x","x","x","x","x","x","x","EE [l] ",""],
-      ["x","x","x","x","x","x","x","EE [xl]",""],
+      ["m","m","m","x","x","x","x","EE [xs]","Moved to Elfica's mapping."],
+      ["m","m","m","x","x","x","x","EE [s] ","Moved to Elfica's mapping."],
+      ["m","m","m","x","x","x","x","EE [l] ","Moved to Elfica's mapping."],
+      ["m","m","m","x","x","x","x","EE [xl]","Moved to Elfica's mapping."],
       ["x","x","x","x","x","x","x","II [xs]",""],
       ["x","x","x","x","x","x","x","II [s] ",""],
       ["x","x","x","x","x","x","x","II [l] ",""],
