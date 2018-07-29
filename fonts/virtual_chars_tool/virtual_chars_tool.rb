@@ -58,7 +58,7 @@ VIRTUALS_DS = {
   "GEMINATE_SIGN_TILD"        => { names: ["GEMINATE_SIGN_TILD"] ,                          classes: ["TILD_INF_XS", "TILD_INF_S",   "TILD_INF_L",  "LAMBE_MARK_TILD"] },
   "NASALIZE_SIGN"             => { names: ["NASALIZE_SIGN"] ,                               classes: ["DASH_SUP_XS", "DASH_SUP_S",   "DASH_SUP_L"] },
   "NASALIZE_SIGN_TILD"        => { names: ["NASALIZE_SIGN_TILD"],                           classes: ["TILD_SUP_XS", "TILD_SUP_S",   "TILD_SUP_L"] },
-  "ALVEOLAR_SIGN"             => { names: ["ALVEOLAR_SIGN"] ,                               classes: ["SHOOK_LEFT_L", "SHOOK_RIGHT_L"] }
+  "SARINCE"                   => { names: ["SARINCE"] ,                                     classes: ["SHOOK_LEFT_L", "SHOOK_RIGHT_L"] }
 }
 
 LIGATURES_ANNATAR = {
@@ -94,7 +94,7 @@ DIACTRITICS_WITH_SIMILAR_PLACEMENT_DS = [
    ["GEMINATE_SIGN_TILD"],
    ["NASALIZE_SIGN"],
    ["NASALIZE_SIGN_TILD"],
-   ["ALVEOLAR_SIGN"],
+   ["SARINCE"],
 ]
 
 
