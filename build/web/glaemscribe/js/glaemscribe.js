@@ -19,8 +19,10 @@ GNU Affero General Public License for more details.
 You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-Version : 1.1.15
+Version : 1.1.16
 */
+
+"use strict";
 
 /*
   Adding utils/string_list_to_clean_array.js 
@@ -578,9 +580,9 @@ Glaemscribe.CharsetParser.prototype.parse_raw = function(charset_name, raw)
 
   for(var c=0;c<chars.length;c++)
   {
-    var char = chars[c];
-    code   = parseInt(char.args[0],16);
-    names  = char.args.slice(1);
+    var char    = chars[c];
+    var code    = parseInt(char.args[0],16);
+    var names   = char.args.slice(1);
     charset.add_char(char.line, code, names)
   }  
   
@@ -1641,7 +1643,7 @@ Glaemscribe.ModeParser.prototype.parse_raw = function(mode_name, raw, mode_optio
     option_element.gpath('visible_when').glaem_each(function(_, visible_element) {   
       visibility = visible_element.args[0];
     });    
-    option_element.gpath('radio').glaem_each(function(_,_) { is_radio = true });    
+    option_element.gpath('radio').glaem_each(function(_,__) { is_radio = true });    
       
     var option_name_at          = option_element.args[0];
     var option_default_val_at   = option_element.args[1];
@@ -1652,7 +1654,7 @@ Glaemscribe.ModeParser.prototype.parse_raw = function(mode_name, raw, mode_optio
       mode.errors.push(new Glaemscribe.Glaeml.Error(option_element.line, "Missing option 'default' value."));
     }
     
-    option                    = new Glaemscribe.Option(mode, option_name_at, option_default_val_at, values, visibility);
+    var option                = new Glaemscribe.Option(mode, option_name_at, option_default_val_at, values, visibility);
     option.is_radio           = is_radio;
     mode.options[option.name] = option;
   }); 
@@ -1958,7 +1960,8 @@ Glaemscribe.RuleGroup.prototype.finalize_code_line = function(code_line) {
 
   var mode = this.mode;
   
-  if(exp = Glaemscribe.RuleGroup.VAR_DECL_REGEXP.exec(code_line.expression ))
+  var exp = Glaemscribe.RuleGroup.VAR_DECL_REGEXP.exec(code_line.expression);
+  if(exp)
   {
     var var_name      = exp[1];
     var var_value_ex  = exp[2];
@@ -2761,7 +2764,7 @@ Glaemscribe.PrePostProcessorOperator.prototype.eval_arg = function(arg, trans_op
   var rmatch = null;
   if( rmatch = arg.match(/^\\eval\s/) )
   {
-    to_eval = arg.substring( rmatch[0].length ); 
+    var to_eval = arg.substring( rmatch[0].length ); 
     return new Glaemscribe.Eval.Parser().parse(to_eval, trans_options);   
   }
   return arg;
