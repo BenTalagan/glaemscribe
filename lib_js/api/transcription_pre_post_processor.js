@@ -42,7 +42,7 @@ Glaemscribe.PrePostProcessorOperator.prototype.eval_arg = function(arg, trans_op
   var rmatch = null;
   if( rmatch = arg.match(/^\\eval\s/) )
   {
-    to_eval = arg.substring( rmatch[0].length ); 
+    var to_eval = arg.substring( rmatch[0].length ); 
     return new Glaemscribe.Eval.Parser().parse(to_eval, trans_options);   
   }
   return arg;

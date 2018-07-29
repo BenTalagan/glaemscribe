@@ -42,9 +42,9 @@ Glaemscribe.CharsetParser.prototype.parse_raw = function(charset_name, raw)
 
   for(var c=0;c<chars.length;c++)
   {
-    var char = chars[c];
-    code   = parseInt(char.args[0],16);
-    names  = char.args.slice(1);
+    var char    = chars[c];
+    var code    = parseInt(char.args[0],16);
+    var names   = char.args.slice(1);
     charset.add_char(char.line, code, names)
   }  
   

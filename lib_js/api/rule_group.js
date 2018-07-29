@@ -131,7 +131,8 @@ Glaemscribe.RuleGroup.prototype.finalize_code_line = function(code_line) {
 
   var mode = this.mode;
   
-  if(exp = Glaemscribe.RuleGroup.VAR_DECL_REGEXP.exec(code_line.expression ))
+  var exp = Glaemscribe.RuleGroup.VAR_DECL_REGEXP.exec(code_line.expression);
+  if(exp)
   {
     var var_name      = exp[1];
     var var_value_ex  = exp[2];
