@@ -97,6 +97,9 @@ def build_engine
   File.open(BUILD_JS_PATH + "/glaemscribe.js","wb:utf-8") { |fout|
     fout << "/*\n" + $license + "\nVersion : " + $version + "\n*/\n\n"
 
+    fout << '"use strict";'
+    fout << "\n\n"
+
     JS_FILES.each{ |fname|
       File.open("../lib_js/" + fname,"rb:utf-8") { |fin|
         fout << "/*\n  Adding #{fname} \n*/\n"

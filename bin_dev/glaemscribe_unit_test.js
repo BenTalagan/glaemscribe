@@ -1,5 +1,7 @@
 #!/usr/bin/env node
 
+"use strict";
+
 // ======================
 // === ENV LOADING ======
 // ======================
@@ -8,7 +10,7 @@ var Fs       = require("fs")
 var Vm       = require("vm")
 var Glob     = require("Glob") // npm install 
 var Path     = require("path")
-Util         = require("util")
+var Util     = require("util")
 
 // Use the following trick to load the javascript that we would use normally in a web browser
 function include(path) { var code = Fs.readFileSync(path, 'utf-8'); Vm.runInThisContext(code, path); }
@@ -70,7 +72,7 @@ function unit_test_directory(directory) {
     }
     
     mode.finalize(mode_options);
-    charset = mode.supported_charsets[charset_name];
+    var charset = mode.supported_charsets[charset_name];
     if(!charset)
       charset = mode.default_charset;
       
@@ -96,7 +98,7 @@ function unit_test_directory(directory) {
       source    = source.split("\n").map(function(l) { return l.trim(); }).join("\n").trim();
       var tinfo = mode.transcribe(source, charset);
     
-      success = tinfo[0]
+      var success = tinfo[0]
       teng    = tinfo[1].trim();
     
       if(!success)
