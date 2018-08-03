@@ -262,10 +262,9 @@ var Glaemscribe           = {};
 
 
 Glaemscribe.WORD_BREAKER        = "|";
-Glaemscribe.WORD_BOUNDARY       = "_"
 
-Glaemscribe.SPECIAL_CHAR_UNDERSCORE = '➊'
-Glaemscribe.SPECIAL_CHAR_NBSP       = '➋'
+Glaemscribe.WORD_BOUNDARY_LANG  = "_"
+Glaemscribe.WORD_BOUNDARY_TREE  = "\u0000"
 
 Glaemscribe.UNKNOWN_CHAR_OUTPUT = "☠"      
 Glaemscribe.VIRTUAL_CHAR_OUTPUT = "☢" 
@@ -1033,7 +1032,8 @@ Glaemscribe.Fragment = function(sheaf, expression) {
   fragment.rule         = sheaf.rule;
   fragment.expression   = expression;
 
-  fragment.equivalences = stringListToCleanArray(fragment.expression, Glaemscribe.Fragment.EQUIVALENCE_RX_OUT);
+  // Next line : no need to filter empty strings, js does not put them
+  fragment.equivalences = stringListToCleanArray(fragment.expression, Glaemscribe.Fragment.EQUIVALENCE_RX_OUT); 
   fragment.equivalences = fragment.equivalences.map(function(eq_exp) {
     var eq  = eq_exp;
     var exp = Glaemscribe.Fragment.EQUIVALENCE_RX_IN.exec(eq_exp);  
@@ -1043,12 +1043,12 @@ Glaemscribe.Fragment = function(sheaf, expression) {
       eq = exp[1]; 
       eq = eq.split(Glaemscribe.Fragment.EQUIVALENCE_SEPARATOR).map(function(elt) {
         elt = elt.trim();
-        return elt.split(/\s/);
+        return elt.split(/\s/).map(function(leaf) {return fragment.finalize_fragment_leaf(leaf)});
       });      
     }
     else
     {
-      eq = [eq_exp.split(/\s/)];
+      eq = [eq_exp.split(/\s/).map(function(leaf) {return fragment.finalize_fragment_leaf(leaf)})];
     }
     return eq;
   });
@@ -1105,6 +1105,25 @@ Glaemscribe.Fragment = function(sheaf, expression) {
   fragment.combinations = res; 
 }
 
+Glaemscribe.Fragment.prototype.finalize_fragment_leaf = function(leaf) {
+  var fragment = this;
+      
+      
+  if(fragment.is_src()) {
+    leaf = leaf.replace(Glaemscribe.RuleGroup.UNICODE_VAR_NAME_REGEXP_OUT, function(cap_var,p1,offset,str) { 
+      var new_char  = String.fromCodePoint(parseInt(p1, 16));
+      if(new_char == "_")
+        new_char = "\u0001"; // Temporary mem true underscore
+
+      return new_char;
+    });
+    leaf = leaf.replace(new RegExp(Glaemscribe.WORD_BOUNDARY_LANG,"g"), Glaemscribe.WORD_BOUNDARY_TREE);
+    leaf = leaf.replace(new RegExp("\u0001","g"),"_"); // Put true underscore back
+  }
+
+  return leaf;
+}
+      
 Glaemscribe.Fragment.EQUIVALENCE_SEPARATOR = ","
 Glaemscribe.Fragment.EQUIVALENCE_RX_OUT    = /(\(.*?\))/
 Glaemscribe.Fragment.EQUIVALENCE_RX_IN     = /\((.*?)\)/
@@ -1216,12 +1235,6 @@ Glaemscribe.Mode.prototype.get_raw_mode = function() {
   mode.raw_mode = Object.glaem_clone(loaded_raw_mode);
 }
 
-Glaemscribe.Mode.prototype.replace_specials = function(l) {
-  return l.
-    replace(/_/g,     Glaemscribe.SPECIAL_CHAR_UNDERSCORE).
-    replace(/\u00a0/g,  Glaemscribe.SPECIAL_CHAR_NBSP);
-}
-
 Glaemscribe.Mode.prototype.strict_transcribe = function(content, charset, debug_context) {
 
   if(charset == null)
@@ -1247,8 +1260,6 @@ Glaemscribe.Mode.prototype.strict_transcribe = function(content, charset, debug_
     
     l = this.pre_processor.apply(l);
     debug_context.preprocessor_output += l + "\n";
- 
-    l = this.replace_specials(l)
     
     l = this.processor.apply(l, debug_context);
     debug_context.processor_output = debug_context.processor_output.concat(l);
@@ -1866,19 +1877,38 @@ Glaemscribe.RuleGroup.prototype.add_var = function(var_name, value) {
 }
 
 // Replace all vars in expression
-Glaemscribe.RuleGroup.prototype.apply_vars = function(line,string) {
+Glaemscribe.RuleGroup.prototype.apply_vars = function(line,string,allow_unicode_vars) {
   var rule_group  = this;
   var mode        = this.mode;
   var goterror    = false;  
     
   var ret = string.replace(Glaemscribe.RuleGroup.VAR_NAME_REGEXP, function(match,p1,offset,str) { 
-    var rep = rule_group.vars[p1];
-    
+    var vname = p1;
+    var rep = rule_group.vars[vname];
+
     if(rep == null)
     {
-      mode.errors.push(new Glaemscribe.Glaeml.Error(line, "In expression: " + string + ": failed to evaluate variable: " + p1 + "."))
-      goterror = true;
-      return "";
+       if(Glaemscribe.RuleGroup.UNICODE_VAR_NAME_REGEXP_IN.exec(vname))
+      {
+        // A unicode variable.
+        if(allow_unicode_vars)
+        {
+          // Just keep this variable intact, it will be replaced at the last moment of the parsing
+          rep = match;
+        }
+        else
+        {
+          mode.errors.push(new Glaemscribe.Glaeml.Error(line, "In expression: "+ string + ": making wrong use of unicode variable: " + match + ". Unicode vars can only be used in source members of a rule or in the definition of another variable."))
+          goterror = true;
+          return ""; 
+        }  
+      }
+      else
+      {
+        mode.errors.push(new Glaemscribe.Glaeml.Error(line, "In expression: " + string + ": failed to evaluate variable: " + p1 + "."))
+        goterror = true;
+        return ""; 
+      }      
     }
     
     return rep;
@@ -1934,15 +1964,17 @@ Glaemscribe.RuleGroup.prototype.descend_if_tree = function(code_block,options)
   }
 }
 
-Glaemscribe.RuleGroup.VAR_DECL_REGEXP    = /^\s*{([0-9A-Z_]+)}\s+===\s+(.+?)\s*$/
-Glaemscribe.RuleGroup.RULE_REGEXP        = /^\s*(.*?)\s+-->\s+(.+?)\s*$/
-Glaemscribe.RuleGroup.CROSS_RULE_REGEXP  = /^\s*(.*?)\s+-->\s+([\s0-9,]+)\s+-->\s+(.+?)\s*$/
+Glaemscribe.RuleGroup.VAR_DECL_REGEXP             = /^\s*{([0-9A-Z_]+)}\s+===\s+(.+?)\s*$/
+Glaemscribe.RuleGroup.UNICODE_VAR_NAME_REGEXP_IN  = /^UNI_([0-9A-F]+)$/
+Glaemscribe.RuleGroup.UNICODE_VAR_NAME_REGEXP_OUT = /{UNI_([0-9A-F]+)}/
+Glaemscribe.RuleGroup.RULE_REGEXP                 = /^\s*(.*?)\s+-->\s+(.+?)\s*$/
+Glaemscribe.RuleGroup.CROSS_RULE_REGEXP           = /^\s*(.*?)\s+-->\s+([\s0-9,]+)\s+-->\s+(.+?)\s*$/
 
 
 Glaemscribe.RuleGroup.prototype.finalize_rule = function(line, match_exp, replacement_exp, cross_schema)
 {
-  var match             = this.apply_vars(line, match_exp);
-  var replacement       = this.apply_vars(line, replacement_exp);
+  var match             = this.apply_vars(line, match_exp, true);
+  var replacement       = this.apply_vars(line, replacement_exp, false);
   
   if(match == null || replacement == null) // Failed
     return;
@@ -1965,7 +1997,7 @@ Glaemscribe.RuleGroup.prototype.finalize_code_line = function(code_line) {
   {
     var var_name      = exp[1];
     var var_value_ex  = exp[2];
-    var var_value     = this.apply_vars(code_line.line, var_value_ex);
+    var var_value     = this.apply_vars(code_line.line, var_value_ex, true);
         
     if(var_value == null)
     {
@@ -2009,8 +2041,21 @@ Glaemscribe.RuleGroup.prototype.finalize = function(options) {
   
   this.add_var("NULL","");
  
-  this.add_var("UNDERSCORE",Glaemscribe.SPECIAL_CHAR_UNDERSCORE);
-  this.add_var("NBSP",      Glaemscribe.SPECIAL_CHAR_NBSP);
+  // Characters that are not easily entered or visible in a text editor
+  this.add_var("NBSP",           "{UNI_A0}")
+  this.add_var("WJ",             "{UNI_2060}")
+  this.add_var("ZWSP",           "{UNI_200B}")
+  this.add_var("ZWNJ",           "{UNI_200C}")        
+
+  // The following characters are used by the mode syntax.
+  // Redefine some convenient tools.
+  this.add_var("UNDERSCORE",     "{UNI_5F}")
+  this.add_var("ASTERISK",       "{UNI_2A}")
+  this.add_var("COMMA",          "{UNI_2C}")
+  this.add_var("LPAREN",         "{UNI_28}")
+  this.add_var("RPAREN",         "{UNI_29}")
+  this.add_var("LBRACKET",       "{UNI_5B}")
+  this.add_var("RBRACKET",       "{UNI_5D}")
 
   this.descend_if_tree(this.root_code_block, options)
   
@@ -2028,8 +2073,8 @@ Glaemscribe.RuleGroup.prototype.finalize = function(options) {
       {
         var inchar = letters[l];
         
-        // Ignore '_' (bounds of word) and '|' (word breaker)
-        if(inchar != Glaemscribe.WORD_BREAKER && inchar != Glaemscribe.WORD_BOUNDARY)
+        // Ignore '\u0000' (bounds of word) and '|' (word breaker)
+        if(inchar != Glaemscribe.WORD_BREAKER && inchar != Glaemscribe.WORD_BOUNDARY_TREE)
           rule_group.in_charset[inchar] = rule_group;      
       }
     }
@@ -2953,8 +2998,8 @@ Glaemscribe.TranscriptionProcessor.prototype.finalize = function(options) {
   var mode = this.mode;
     
   processor.transcription_tree = new Glaemscribe.TranscriptionTreeNode(null,null,"");
-  processor.transcription_tree.add_subpath(Glaemscribe.WORD_BOUNDARY, [""]);
-  processor.transcription_tree.add_subpath(Glaemscribe.WORD_BREAKER,  [""]);
+  processor.transcription_tree.add_subpath(Glaemscribe.WORD_BOUNDARY_TREE,  [""]);
+  processor.transcription_tree.add_subpath(Glaemscribe.WORD_BREAKER,        [""]);
   
   this.rule_groups.glaem_each(function(gname,rg) {
     rg.finalize(options);
@@ -2988,7 +3033,7 @@ Glaemscribe.TranscriptionProcessor.prototype.finalize = function(options) {
       }  
     }
   });
-     
+
 }
 
 Glaemscribe.TranscriptionProcessor.prototype.add_subrule = function(sub_rule) {
@@ -3049,13 +3094,13 @@ Glaemscribe.TranscriptionProcessor.prototype.transcribe_word = function(word, de
   var processor = this;
     
   var res = [];
-  var word = Glaemscribe.WORD_BOUNDARY + word + Glaemscribe.WORD_BOUNDARY;
+  var word = Glaemscribe.WORD_BOUNDARY_TREE + word + Glaemscribe.WORD_BOUNDARY_TREE;
 
   while(word.length != 0)
   {    
     // Explore tree
     var ttret = this.transcription_tree.transcribe(word);   
-    
+      
     // r is the replacement, len its length
     var tokens    = ttret[0];
     var len       = ttret[1];   
@@ -3403,16 +3448,17 @@ Glaemscribe.ResolveVirtualsPostProcessorOperator.prototype.apply_loop = function
     var last_trigger = op.last_triggers[c.object_reference];
     if(last_trigger != null) {
       new_tokens[idx] = last_trigger.names[0]; // Take the first name of the non-virtual replacement.
+      token = new_tokens[idx]; // Consider the token replaced, being itself a potential trigger for further virtuals (cascading virtuals)
     };
   }
-  else {
-    // Update states of virtual classes
-    charset.virtual_chars.glaem_each(function(_,vc) {
-      var rc = vc.n2c(token);
-      if(rc != null)
-        op.last_triggers[vc.object_reference] = rc;
-    });
-  }  
+
+  // Update states of virtual classes
+  charset.virtual_chars.glaem_each(function(_,vc) {
+    var rc = vc.n2c(token);
+    if(rc != null)
+      op.last_triggers[vc.object_reference] = rc;
+  });
+
 }
 
 
