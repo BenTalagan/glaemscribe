@@ -82,10 +82,33 @@ module SFD
   class File
     attr_accessor :header, :chars, :queuer
     attr_reader :errors
-    def initialize
+    def initialize(file_path)
       @header  = ""
       @chars   = []
       @queuer  = ""
+      
+      read_from_file(file_path)
+    end
+    
+    def read_from_file(file_path)
+        # REALLY DIRTY PARSING!!
+        ::File.open(file_path,"rb") { |ff|
+          content = ff.read
+          content =~ REG_HEADER
+          @header	= $1
+          chars  = content.scan(REG_CHAR) 
+
+          chars.each{ |c| 
+            sfdchar 		                = SFD::Char.new
+            sfdchar.name	              = c[0].strip # Correct it
+            sfdchar.content	            = c[1]
+            sfdchar.extract_info
+            @chars << sfdchar
+            sfdchar.file = self
+          }	
+          @queuer = "EndChars\nEndSplineFont\n"
+        }
+  	    touch!
     end
     
     def valid?
@@ -152,16 +175,22 @@ module SFD
       c.encoding.gid
     end
     
+    def pull_gid
+      @chars.map{|c| c.encoding.gid }.max + 1
+    end
+    
     def remap_char(gid, unicode_point)
       c = get_char_by_gid(gid)
       
-      raise "Character already present here!!" if get_char_by_codepoint(unicode_point)
+      return false, "A character is already present at destination! If this is really what you want to do, delete it manually." if get_char_by_codepoint(unicode_point)
       
       c.name = U2N[unicode_point]
       c.encoding.in_font     = unicode_point
       c.encoding.in_unicode  = unicode_point
         
       touch!
+      
+      return true, ''
     end
     
     def destroy_char(gid)
@@ -175,15 +204,11 @@ module SFD
       }
       touch!
     end
-    
-    def pull_gid
-      @chars.map{|c| c.encoding.gid }.max + 1
-    end
-    
+
     def copy_char(gid, unicode_point)
       src = get_char_by_gid(gid)
       
-      raise "Character already present here!!" if get_char_by_codepoint(unicode_point)
+      return false, "A character is already present at destination! If this is really what you want to do, delete it manually." if get_char_by_codepoint(unicode_point)
   
       newc          = Char.new
       newc.file     = src.file
@@ -209,48 +234,175 @@ module SFD
           c.kerns[new_kern.target]  = new_kern
         end
       }
+      return true, ''
     end
         
   end
-
-  class Reader 
-    def read(file_path)
-      sfdfile		= SFD::File.new
-	
+  
+  
+  
+  class Modifier
+    
+    attr_reader :errors
+    
+    class Directive
+      attr_reader :command
+      attr_accessor :line
+    end
+    
+    class MoveDirective < Directive
+      attr_accessor :src, :dst
+      def initialize
+        @command = "move"
+      end
+      def dump
+        ":#{line}".ljust(6) + "Moving".ljust(16) + "0x%08X to 0x%08X" % [src,dst]
+      end
+    end
+    
+    class CopyDirective < Directive
+      attr_accessor :src, :dst
+      def initialize
+        @command = "copy"
+      end
+      def dump
+        ":#{line}".ljust(6) + "Copying".ljust(16) + "0x%08X to 0x%08X" % [src,dst]
+      end
+    end
+    
+    class DeleteDirective < Directive
+      attr_accessor :dst
+      def initialize
+        @command = "del"
+      end
+      def dump
+        ":#{line}".ljust(6) + "Deleting".ljust(16) + "0x%08X" % [dst]
+      end
+    end
+    
+    def initialize(file_path)
+      @directives = []
+      @errors     = []
+      read_from_file(file_path)
+    end
+    
+    def conv_point(point)
+      point = point.upcase.strip
+      if point.start_with? "0X"
+        point = point[2..-1]
+        point.hex
+      else
+        point.to_i
+      end
+    end
+    
+    def read_from_file(file_path)
       # REALLY DIRTY PARSING!!
       ::File.open(file_path,"rb") { |ff|
-        content = ff.read
-        content =~ REG_HEADER
-        sfdfile.header	= $1
-        chars  = content.scan(REG_CHAR) 
-
-        chars.each{ |c| 
-          sfdchar 		                = SFD::Char.new
-          sfdchar.name	              = c[0].strip # Correct it
-          sfdchar.content	            = c[1]
-          sfdchar.extract_info
-          sfdfile.chars << sfdchar
-          sfdchar.file = sfdfile
-        }	
-        sfdfile.queuer = "EndChars\nEndSplineFont\n"
+        ff.read.lines.each_with_index { |l,line|
+          l = l.strip
+          next if l.start_with? "#"
+          next if l.empty?
+          l = l.split.reject{|w| w.empty?}
+          case l[0]
+          when 'M' #move
+            if l.length != 3
+              @errors << "#{line} : Move directive should have 2 params"
+              next
+            end
+            d = MoveDirective.new
+            d.src = conv_point l[1]
+            d.dst = conv_point l[2] 
+          when 'C'
+            if l.length != 3
+              @errors << "#{line} : Copy directive should have 2 params"
+              next
+            end        
+            d = CopyDirective.new
+            d.src = conv_point l[1]
+            d.dst = conv_point l[2] 
+          when 'D'
+            if l.length != 2
+              @errors << "#{line} : Delete directive should have 2 params"
+              next
+            end        
+            d = DeleteDirective.new    
+            d.dst = conv_point l[1]        
+          else
+            @errors << "#{line}: Unknown directive."
+            next
+          end
+          d.line = line
+          @directives << d
+        }
       }
-	    sfdfile.touch!
-      sfdfile
+    end 
+    
+    def apply(sfd_file)
+      @directives.each{ |d|
+        puts d.dump
+        res,msg = true, ''
+        case d.command
+        when "move"
+          c = sfd_file.get_char_by_codepoint d.src
+          if !c
+            perror "Src char not found!!" 
+            return false
+          end
+          res,msg = sfd_file.remap_char(c.encoding.gid, d.dst)
+        when "copy"
+          c = sfd_file.get_char_by_codepoint d.src
+          if !c
+            perror "Src char not found!!" 
+            return false
+          end
+          res,msg = sfd_file.copy_char(c.encoding.gid, d.dst)
+        when "del"
+          c = sfd_file.get_char_by_codepoint d.dst
+          if !c
+            perror "Target char not found!!" 
+            return false
+          end
+          res,msg = sfd_file.destroy_char(c.encoding.gid)       
+        else
+          raise "WTF"
+        end
+        
+        if !res
+          perror msg
+          return false
+        end
+      }
+      true
     end
+       
   end
 end
 
-reader  = SFD::Reader.new
-file    = reader.read ARGV[0]
+def perror(msg)
+  STDERR.puts "**** " + msg
+end
 
-# file.remap_char(28, 130)
-file.copy_char(28,130)
+file    = SFD::File.new ARGV[0]
+mod     = SFD::Modifier.new ARGV[1]
+
+if mod.errors.any?
+  perror mod.errors.join("\n")
+  exit
+end
+
+res = mod.apply(file)
+if !res
+  perror "Failed to reach the end without problems."
+end
 
 file.dump('toto.sfd')
+
+# file.remap_char(28, 130)
+# file.copy_char(28,130)
+# file.dump('toto.sfd')
 # puts file.pull_gid
-
 # puts file.chars[0].kerns
-
 # file.chars.each{|i,c| puts c.kerns.inspect}
 
 
