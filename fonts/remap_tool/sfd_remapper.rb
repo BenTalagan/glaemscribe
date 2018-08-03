@@ -383,26 +383,35 @@ def perror(msg)
   STDERR.puts "**** " + msg
 end
 
-file    = SFD::File.new ARGV[0]
-mod     = SFD::Modifier.new ARGV[1]
+def usage
+  puts ""
+  puts "sfd_remapper.rb input.sfd modifier.mod output.sfd"
+  puts ""
+  puts "   Apply remapping directives on a FontForge sfd file."
+  puts ""
+end
+  
+def go!
+  if ARGV.count != 3
+    usage
+  else
 
-if mod.errors.any?
-  perror mod.errors.join("\n")
-  exit
+    file    = SFD::File.new     ARGV[0]
+    mod     = SFD::Modifier.new ARGV[1]
+
+    if mod.errors.any?
+      perror mod.errors.join("\n")
+      return
+    end
+
+    res = mod.apply(file)
+    if !res
+      perror "Failed to reach the end without problems."
+      return
+    end
+
+    file.dump(ARGV[2])
+  end
 end
 
-res = mod.apply(file)
-if !res
-  perror "Failed to reach the end without problems."
-end
-
-file.dump('toto.sfd')
-
-# file.remap_char(28, 130)
-# file.copy_char(28,130)
-# file.dump('toto.sfd')
-# puts file.pull_gid
-# puts file.chars[0].kerns
-# file.chars.each{|i,c| puts c.kerns.inspect}
-
-
+go!
