@@ -43,8 +43,8 @@ module Glaemscribe
         @transcription_tree = TranscriptionTreeNode.new(nil,nil)
         
         # Add WORD_BOUNDARY and WORD_BREAKER in the tree
-        @transcription_tree.add_subpath(WORD_BOUNDARY,  [""])
-        @transcription_tree.add_subpath(WORD_BREAKER,   [""])
+        @transcription_tree.add_subpath(WORD_BOUNDARY_TREE,   [""])
+        @transcription_tree.add_subpath(WORD_BREAKER,         [""])
         
         rule_groups.each{ |rgname, rg| 
           rg.finalize(trans_options) 
@@ -110,7 +110,7 @@ module Glaemscribe
       
       def transcribe_word(word)
         res = []
-        word = WORD_BOUNDARY + word + WORD_BOUNDARY
+        word = WORD_BOUNDARY_TREE + word + WORD_BOUNDARY_TREE
         while word.length != 0
           r, len = @transcription_tree.transcribe(word)       
           word = word[len..-1]

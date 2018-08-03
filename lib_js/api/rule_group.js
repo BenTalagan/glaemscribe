@@ -37,19 +37,38 @@ Glaemscribe.RuleGroup.prototype.add_var = function(var_name, value) {
 }
 
 // Replace all vars in expression
-Glaemscribe.RuleGroup.prototype.apply_vars = function(line,string) {
+Glaemscribe.RuleGroup.prototype.apply_vars = function(line,string,allow_unicode_vars) {
   var rule_group  = this;
   var mode        = this.mode;
   var goterror    = false;  
     
   var ret = string.replace(Glaemscribe.RuleGroup.VAR_NAME_REGEXP, function(match,p1,offset,str) { 
-    var rep = rule_group.vars[p1];
-    
+    var vname = p1;
+    var rep = rule_group.vars[vname];
+
     if(rep == null)
     {
-      mode.errors.push(new Glaemscribe.Glaeml.Error(line, "In expression: " + string + ": failed to evaluate variable: " + p1 + "."))
-      goterror = true;
-      return "";
+       if(Glaemscribe.RuleGroup.UNICODE_VAR_NAME_REGEXP_IN.exec(vname))
+      {
+        // A unicode variable.
+        if(allow_unicode_vars)
+        {
+          // Just keep this variable intact, it will be replaced at the last moment of the parsing
+          rep = match;
+        }
+        else
+        {
+          mode.errors.push(new Glaemscribe.Glaeml.Error(line, "In expression: "+ string + ": making wrong use of unicode variable: " + match + ". Unicode vars can only be used in source members of a rule or in the definition of another variable."))
+          goterror = true;
+          return ""; 
+        }  
+      }
+      else
+      {
+        mode.errors.push(new Glaemscribe.Glaeml.Error(line, "In expression: " + string + ": failed to evaluate variable: " + p1 + "."))
+        goterror = true;
+        return ""; 
+      }      
     }
     
     return rep;
@@ -105,15 +124,17 @@ Glaemscribe.RuleGroup.prototype.descend_if_tree = function(code_block,options)
   }
 }
 
-Glaemscribe.RuleGroup.VAR_DECL_REGEXP    = /^\s*{([0-9A-Z_]+)}\s+===\s+(.+?)\s*$/
-Glaemscribe.RuleGroup.RULE_REGEXP        = /^\s*(.*?)\s+-->\s+(.+?)\s*$/
-Glaemscribe.RuleGroup.CROSS_RULE_REGEXP  = /^\s*(.*?)\s+-->\s+([\s0-9,]+)\s+-->\s+(.+?)\s*$/
+Glaemscribe.RuleGroup.VAR_DECL_REGEXP             = /^\s*{([0-9A-Z_]+)}\s+===\s+(.+?)\s*$/
+Glaemscribe.RuleGroup.UNICODE_VAR_NAME_REGEXP_IN  = /^UNI_([0-9A-F]+)$/
+Glaemscribe.RuleGroup.UNICODE_VAR_NAME_REGEXP_OUT = /{UNI_([0-9A-F]+)}/
+Glaemscribe.RuleGroup.RULE_REGEXP                 = /^\s*(.*?)\s+-->\s+(.+?)\s*$/
+Glaemscribe.RuleGroup.CROSS_RULE_REGEXP           = /^\s*(.*?)\s+-->\s+([\s0-9,]+)\s+-->\s+(.+?)\s*$/
 
 
 Glaemscribe.RuleGroup.prototype.finalize_rule = function(line, match_exp, replacement_exp, cross_schema)
 {
-  var match             = this.apply_vars(line, match_exp);
-  var replacement       = this.apply_vars(line, replacement_exp);
+  var match             = this.apply_vars(line, match_exp, true);
+  var replacement       = this.apply_vars(line, replacement_exp, false);
   
   if(match == null || replacement == null) // Failed
     return;
@@ -136,7 +157,7 @@ Glaemscribe.RuleGroup.prototype.finalize_code_line = function(code_line) {
   {
     var var_name      = exp[1];
     var var_value_ex  = exp[2];
-    var var_value     = this.apply_vars(code_line.line, var_value_ex);
+    var var_value     = this.apply_vars(code_line.line, var_value_ex, true);
         
     if(var_value == null)
     {
@@ -180,8 +201,21 @@ Glaemscribe.RuleGroup.prototype.finalize = function(options) {
   
   this.add_var("NULL","");
  
-  this.add_var("UNDERSCORE",Glaemscribe.SPECIAL_CHAR_UNDERSCORE);
-  this.add_var("NBSP",      Glaemscribe.SPECIAL_CHAR_NBSP);
+  // Characters that are not easily entered or visible in a text editor
+  this.add_var("NBSP",           "{UNI_A0}")
+  this.add_var("WJ",             "{UNI_2060}")
+  this.add_var("ZWSP",           "{UNI_200B}")
+  this.add_var("ZWNJ",           "{UNI_200C}")        
+
+  // The following characters are used by the mode syntax.
+  // Redefine some convenient tools.
+  this.add_var("UNDERSCORE",     "{UNI_5F}")
+  this.add_var("ASTERISK",       "{UNI_2A}")
+  this.add_var("COMMA",          "{UNI_2C}")
+  this.add_var("LPAREN",         "{UNI_28}")
+  this.add_var("RPAREN",         "{UNI_29}")
+  this.add_var("LBRACKET",       "{UNI_5B}")
+  this.add_var("RBRACKET",       "{UNI_5D}")
 
   this.descend_if_tree(this.root_code_block, options)
   
@@ -199,8 +233,8 @@ Glaemscribe.RuleGroup.prototype.finalize = function(options) {
       {
         var inchar = letters[l];
         
-        // Ignore '_' (bounds of word) and '|' (word breaker)
-        if(inchar != Glaemscribe.WORD_BREAKER && inchar != Glaemscribe.WORD_BOUNDARY)
+        // Ignore '\u0000' (bounds of word) and '|' (word breaker)
+        if(inchar != Glaemscribe.WORD_BREAKER && inchar != Glaemscribe.WORD_BOUNDARY_TREE)
           rule_group.in_charset[inchar] = rule_group;      
       }
     }

@@ -24,10 +24,13 @@ module Glaemscribe
   module API
     class RuleGroup
   
-      VAR_NAME_REGEXP     = /{([0-9A-Z_]+)}/
-      VAR_DECL_REGEXP     = /^\s*{([0-9A-Z_]+)}\s+===\s+(.+?)\s*$/
-      RULE_REGEXP         = /^\s*(.*?)\s+-->\s+(.+?)\s*$/
-      CROSS_RULE_REGEXP   = /^\s*(.*?)\s+-->\s+([\s0-9,]+)\s+-->\s+(.+?)\s*$/
+      VAR_NAME_REGEXP             = /{([0-9A-Z_]+)}/
+      UNICODE_VAR_NAME_REGEXP_IN  = /^UNI_([0-9A-F]+)$/
+      UNICODE_VAR_NAME_REGEXP_OUT = /{UNI_([0-9A-F]+)}/
+      
+      VAR_DECL_REGEXP             = /^\s*{([0-9A-Z_]+)}\s+===\s+(.+?)\s*$/
+      RULE_REGEXP                 = /^\s*(.*?)\s+-->\s+(.+?)\s*$/
+      CROSS_RULE_REGEXP           = /^\s*(.*?)\s+-->\s+([\s0-9,]+)\s+-->\s+(.+?)\s*$/
   
       attr_reader :root_code_block, :name, :mode, :in_charset, :rules
   
@@ -42,12 +45,24 @@ module Glaemscribe
       end
   
       # Replace all vars in expression
-      def apply_vars(line, string)
+      def apply_vars(line, string, allow_unicode_vars=false)
         ret = string.gsub(VAR_NAME_REGEXP) { |cap_var|
-          rep = @vars[$1]
+          vname = $1
+          rep   = @vars[vname]
           if !rep
-            @mode.errors << Glaeml::Error.new(line, "In expression: #{string}: failed to evaluate variable: #{cap_var}.") 
-            return nil
+            if vname =~ UNICODE_VAR_NAME_REGEXP_IN
+              # A unicode variable.
+              if allow_unicode_vars
+                # Just keep this variable intact, it will be replaced at the last moment of the parsing
+                rep = cap_var
+              else
+                @mode.errors << Glaeml::Error.new(line, "In expression: #{string}: making wrong use of unicode variable: #{cap_var}. Unicode vars can only be used in source members of a rule or in the definition of another variable.") 
+                return nil
+              end
+            else
+              @mode.errors << Glaeml::Error.new(line, "In expression: #{string}: failed to evaluate variable: #{cap_var}.") 
+              return nil
+            end
           end
           rep
         }
@@ -81,8 +96,8 @@ module Glaemscribe
             
       def finalize_rule(line, match_exp, replacement_exp, cross_schema = nil)
         
-        match                 = apply_vars(line, match_exp)
-        replacement           = apply_vars(line, replacement_exp)
+        match                 = apply_vars(line, match_exp, true)
+        replacement           = apply_vars(line, replacement_exp, false)
         
         return if !match || !replacement # Failed
               
@@ -102,7 +117,7 @@ module Glaemscribe
 
             var_name      = $1
             var_value_ex  = $2
-            var_value     = apply_vars(code_line.line, var_value_ex)
+            var_value     = apply_vars(code_line.line, var_value_ex, true)
         
             if !var_value
               @mode.errors << Glaeml::Error.new(code_line.line, "Thus, variable {#{var_name}} could not be declared.")
@@ -141,9 +156,22 @@ module Glaemscribe
         
         add_var("NULL","")
   
-        add_var("UNDERSCORE", SPECIAL_CHAR_UNDERSCORE)
-        add_var("NBSP",       SPECIAL_CHAR_NBSP)
-        
+        # Characters that are not easily entered or visible in a text editor
+        add_var("NBSP",           "{UNI_A0}")
+        add_var("WJ",             "{UNI_2060}")
+        add_var("ZWSP",           "{UNI_200B}")
+        add_var("ZWNJ",           "{UNI_200C}")        
+
+        # The following characters are used by the mode syntax.
+        # Redefine some convenient tools.
+        add_var("UNDERSCORE",     "{UNI_5F}")
+        add_var("ASTERISK",       "{UNI_2A}")
+        add_var("COMMA",          "{UNI_2C}")
+        add_var("LPAREN",         "{UNI_28}")
+        add_var("RPAREN",         "{UNI_29}")
+        add_var("LBRACKET",       "{UNI_5B}")
+        add_var("RBRACKET",       "{UNI_5D}")
+       
         descend_if_tree(@root_code_block, trans_options)
                             
         # Now that we have selected our rules, create the in_charset of the rule_group 
@@ -151,8 +179,8 @@ module Glaemscribe
           r.sub_rules.each { |sr|
             sr.src_combination.join("").split(//).each{ |inchar|
               # Add the character to the map of input characters
-              # Ignore '_' (bounds of word) and '|' (word breaker)
-              @in_charset[inchar] = self if inchar != WORD_BREAKER && inchar != WORD_BOUNDARY
+              # Ignore '\u0000' (bounds of word) and '|' (word breaker)
+              @in_charset[inchar] = self if inchar != WORD_BREAKER && inchar != WORD_BOUNDARY_TREE
             }
           }
         }

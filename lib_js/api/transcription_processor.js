@@ -36,8 +36,8 @@ Glaemscribe.TranscriptionProcessor.prototype.finalize = function(options) {
   var mode = this.mode;
     
   processor.transcription_tree = new Glaemscribe.TranscriptionTreeNode(null,null,"");
-  processor.transcription_tree.add_subpath(Glaemscribe.WORD_BOUNDARY, [""]);
-  processor.transcription_tree.add_subpath(Glaemscribe.WORD_BREAKER,  [""]);
+  processor.transcription_tree.add_subpath(Glaemscribe.WORD_BOUNDARY_TREE,  [""]);
+  processor.transcription_tree.add_subpath(Glaemscribe.WORD_BREAKER,        [""]);
   
   this.rule_groups.glaem_each(function(gname,rg) {
     rg.finalize(options);
@@ -71,7 +71,7 @@ Glaemscribe.TranscriptionProcessor.prototype.finalize = function(options) {
       }  
     }
   });
-     
+
 }
 
 Glaemscribe.TranscriptionProcessor.prototype.add_subrule = function(sub_rule) {
@@ -132,13 +132,13 @@ Glaemscribe.TranscriptionProcessor.prototype.transcribe_word = function(word, de
   var processor = this;
     
   var res = [];
-  var word = Glaemscribe.WORD_BOUNDARY + word + Glaemscribe.WORD_BOUNDARY;
+  var word = Glaemscribe.WORD_BOUNDARY_TREE + word + Glaemscribe.WORD_BOUNDARY_TREE;
 
   while(word.length != 0)
   {    
     // Explore tree
     var ttret = this.transcription_tree.transcribe(word);   
-    
+      
     // r is the replacement, len its length
     var tokens    = ttret[0];
     var len       = ttret[1];   

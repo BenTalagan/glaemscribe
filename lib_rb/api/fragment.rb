@@ -41,7 +41,7 @@ module Glaemscribe
       EQUIVALENCE_RX_OUT    = /(\(.*?\))/
       EQUIVALENCE_RX_IN     = /\((.*?)\)/
     
-      # Should pass a fragment expression, e.g. : "h(a|ä)(i|ï)"
+      # Should pass a fragment expression, e.g. : "h(a,ä)(i,ï)"
       def initialize(sheaf, expression)
         @sheaf      = sheaf
         @mode       = sheaf.mode
@@ -49,16 +49,16 @@ module Glaemscribe
         @expression = expression
         
         # Split the fragment, turn it into an array of arrays, e.g. [[h],[a,ä],[i,ï]]
-        equivalences = expression.split(EQUIVALENCE_RX_OUT).map{ |eq| eq.strip }
+        equivalences = expression.split(EQUIVALENCE_RX_OUT).map{ |eq| eq.strip }.reject{ |eq| eq == '' }
         equivalences = equivalences.map{ |eq|           
           eq =~ EQUIVALENCE_RX_IN
           if $1
             eq = $1.split(EQUIVALENCE_SEPARATOR,-1).map{ |elt| 
               elt = elt.strip
-              elt.split(/\s/)
-            } 
+              elt.split(/\s/).map{ |leaf| finalize_fragment_leaf(leaf) }
+            }
           else
-            eq = [eq.split(/\s/)] # This equivalence has only one possibility
+            eq = [eq.split(/\s/).map{ |leaf| finalize_fragment_leaf(leaf) }] # This equivalence has only one possibility
           end
         }   
           
@@ -95,6 +95,26 @@ module Glaemscribe
         @combinations = res
       end   
       
+      def finalize_fragment_leaf(leaf)
+        if src?
+          
+          # Replace {UNI_XXXX} by its value to allow any unicode char to be found in the transcription tree
+          leaf = leaf.gsub(RuleGroup::UNICODE_VAR_NAME_REGEXP_OUT) { |cap_var|
+            unival = $1
+            new_char = [unival.hex].pack("U")
+            new_char = "\u0001" if new_char == '_'
+            new_char
+          }
+
+          # Replace '_' (word boundary) by '\u0000' to allow 
+          # the real underscore to be used in the transcription tree
+          # (Do it after replacing the uni_xxx vars because they have underscores inside)
+          leaf = leaf.gsub(WORD_BOUNDARY_LANG, WORD_BOUNDARY_TREE) 
+          leaf = leaf.gsub("\u0001","_")        
+        end
+
+        leaf
+      end
       
       def p
         ret = "---- " + @expression + "\n"

@@ -23,11 +23,10 @@
 module Glaemscribe
   module API
     WORD_BREAKER        = "|"
-    WORD_BOUNDARY       = "_"
     
-    SPECIAL_CHAR_UNDERSCORE = '➊'
-    SPECIAL_CHAR_NBSP       = '➋'
-    
+    WORD_BOUNDARY_LANG  = "_"
+    WORD_BOUNDARY_TREE  = "\u0000"
+        
     UNKNOWN_CHAR_OUTPUT = "☠"      
     VIRTUAL_CHAR_OUTPUT = "☢" # When transcribing a virtual char...
   end

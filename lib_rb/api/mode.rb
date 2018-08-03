@@ -128,12 +128,6 @@ module Glaemscribe
         @raw_mode = loaded_raw_mode.deep_clone
       end
       
-      def replace_specials(l)
-        l.
-          gsub("_",SPECIAL_CHAR_UNDERSCORE).
-          gsub("\u00a0",SPECIAL_CHAR_NBSP)
-      end
-      
       def strict_transcribe(content, charset = nil)
         charset = default_charset if !charset
         return false, "*** No charset usable for transcription. Failed!" if !charset
@@ -146,7 +140,6 @@ module Glaemscribe
             restore_lf = true
           end
           l = @pre_processor.apply(l)
-          l = replace_specials(l)
           l = @processor.apply(l)
           l = @post_processor.apply(l, charset)
           l += "\n" if restore_lf

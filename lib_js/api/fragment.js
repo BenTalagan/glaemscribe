@@ -31,7 +31,8 @@ Glaemscribe.Fragment = function(sheaf, expression) {
   fragment.rule         = sheaf.rule;
   fragment.expression   = expression;
 
-  fragment.equivalences = stringListToCleanArray(fragment.expression, Glaemscribe.Fragment.EQUIVALENCE_RX_OUT);
+  // Next line : no need to filter empty strings, js does not put them
+  fragment.equivalences = stringListToCleanArray(fragment.expression, Glaemscribe.Fragment.EQUIVALENCE_RX_OUT); 
   fragment.equivalences = fragment.equivalences.map(function(eq_exp) {
     var eq  = eq_exp;
     var exp = Glaemscribe.Fragment.EQUIVALENCE_RX_IN.exec(eq_exp);  
@@ -41,12 +42,12 @@ Glaemscribe.Fragment = function(sheaf, expression) {
       eq = exp[1]; 
       eq = eq.split(Glaemscribe.Fragment.EQUIVALENCE_SEPARATOR).map(function(elt) {
         elt = elt.trim();
-        return elt.split(/\s/);
+        return elt.split(/\s/).map(function(leaf) {return fragment.finalize_fragment_leaf(leaf)});
       });      
     }
     else
     {
-      eq = [eq_exp.split(/\s/)];
+      eq = [eq_exp.split(/\s/).map(function(leaf) {return fragment.finalize_fragment_leaf(leaf)})];
     }
     return eq;
   });
@@ -103,6 +104,25 @@ Glaemscribe.Fragment = function(sheaf, expression) {
   fragment.combinations = res; 
 }
 
+Glaemscribe.Fragment.prototype.finalize_fragment_leaf = function(leaf) {
+  var fragment = this;
+      
+      
+  if(fragment.is_src()) {
+    leaf = leaf.replace(Glaemscribe.RuleGroup.UNICODE_VAR_NAME_REGEXP_OUT, function(cap_var,p1,offset,str) { 
+      var new_char  = String.fromCodePoint(parseInt(p1, 16));
+      if(new_char == "_")
+        new_char = "\u0001"; // Temporary mem true underscore
+
+      return new_char;
+    });
+    leaf = leaf.replace(new RegExp(Glaemscribe.WORD_BOUNDARY_LANG,"g"), Glaemscribe.WORD_BOUNDARY_TREE);
+    leaf = leaf.replace(new RegExp("\u0001","g"),"_"); // Put true underscore back
+  }
+
+  return leaf;
+}
+      
 Glaemscribe.Fragment.EQUIVALENCE_SEPARATOR = ","
 Glaemscribe.Fragment.EQUIVALENCE_RX_OUT    = /(\(.*?\))/
 Glaemscribe.Fragment.EQUIVALENCE_RX_IN     = /\((.*?)\)/
