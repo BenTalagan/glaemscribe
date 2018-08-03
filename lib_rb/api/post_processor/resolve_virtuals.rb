@@ -51,14 +51,15 @@ module Glaemscribe
           last_trigger = @last_triggers[c]
           if last_trigger != nil
             new_tokens[idx] = last_trigger.names.first # Take the first name of the non-virtual replacement.
+            token = new_tokens[idx] # Consider the token replaced, being itself a potential trigger for further virtuals (cascading virtuals)
           end
-        else
-          # Update states of virtual classes
-          charset.virtual_chars.each{|vc|
-            rc                  = vc[token]
-            @last_triggers[vc]  = rc if rc != nil 
-          }
-        end        
+        end
+        
+        # Update states of virtual classes
+        charset.virtual_chars.each{|vc|
+          rc                  = vc[token]
+          @last_triggers[vc]  = rc if rc != nil 
+        }
       end
       
       def apply(tokens,charset)

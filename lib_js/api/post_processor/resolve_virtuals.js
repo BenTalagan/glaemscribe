@@ -62,16 +62,17 @@ Glaemscribe.ResolveVirtualsPostProcessorOperator.prototype.apply_loop = function
     var last_trigger = op.last_triggers[c.object_reference];
     if(last_trigger != null) {
       new_tokens[idx] = last_trigger.names[0]; // Take the first name of the non-virtual replacement.
+      token = new_tokens[idx]; // Consider the token replaced, being itself a potential trigger for further virtuals (cascading virtuals)
     };
   }
-  else {
-    // Update states of virtual classes
-    charset.virtual_chars.glaem_each(function(_,vc) {
-      var rc = vc.n2c(token);
-      if(rc != null)
-        op.last_triggers[vc.object_reference] = rc;
-    });
-  }  
+
+  // Update states of virtual classes
+  charset.virtual_chars.glaem_each(function(_,vc) {
+    var rc = vc.n2c(token);
+    if(rc != null)
+      op.last_triggers[vc.object_reference] = rc;
+  });
+
 }
 
 
