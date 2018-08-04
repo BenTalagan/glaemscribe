@@ -2,6 +2,7 @@ Generate a partial modifier remapping file from charset diff (to include in a mo
 
 ./cst_modifier_gen.rb ../../glaemresources/charsets/tengwar_ds_annatar.cst final_layout.cst 0x10000 > _annatar_partial.mod
 ./cst_modifier_gen.rb ../../glaemresources/charsets/tengwar_ds_eldamar.cst final_layout.cst 0x10000 > _eldamar_partial.mod
+./cst_modifier_gen.rb ../../glaemresources/charsets/tengwar_ds_sindarin.cst final_layout.cst 0x10000 > _sindarin_partial.mod
 
 Generate a new remapped font using a modifier file
 
@@ -9,6 +10,7 @@ Generate a new remapped font using a modifier file
 ./sfd_remapper.rb ../sfds/TengwarAnnatarGlaemscrafuItalic.sfd _annatar_modifier.mod ./TengwarAnnatarGlaemUnicodeItalic.sfd
 ./sfd_remapper.rb ../sfds/TengwarAnnatarGlaemscrafuBold.sfd _annatar_modifier.mod ./TengwarAnnatarGlaemUnicodeBold.sfd
 ./sfd_remapper.rb ../sfds/TengwarEldamarGlaemscrafu.sfd _eldamar_modifier.mod ./TengwarEldamarGlaemUnicode.sfd
+./sfd_remapper.rb ../sfds/TengwarSindarinGlaemscrafu.sfd _sindarin_modifier.mod ./TengwarSindarinGlaemUnicode.sfd
 
 
 

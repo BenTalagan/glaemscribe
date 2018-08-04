@@ -56042,8 +56042,80 @@ EndSplineSet
 Validated: 1
 EndChar
 
+StartChar: bracketleft
+Encoding: 91 91 459
+Width: 293
+Flags: W
+LayerCount: 2
+Fore
+SplineSet
+227 785 m 0,0,1
+ 231 789 231 789 233.5 785.5 c 128,-1,2
+ 236 782 236 782 232 778 c 0,3,4
+ 231 776 231 776 217.5 757 c 128,-1,5
+ 204 738 204 738 185 704.5 c 128,-1,6
+ 166 671 166 671 144.5 624.5 c 128,-1,7
+ 123 578 123 578 104.5 520.5 c 128,-1,8
+ 86 463 86 463 73.5 396.5 c 128,-1,9
+ 61 330 61 330 61 257 c 0,10,11
+ 61 202 61 202 69 147 c 128,-1,12
+ 77 92 77 92 90.5 39 c 128,-1,13
+ 104 -14 104 -14 120.5 -63 c 128,-1,14
+ 137 -112 137 -112 155 -155 c 0,15,16
+ 196 -256 196 -256 250 -348 c 1,17,-1
+ 152 -380 l 1,18,19
+ 109 -300 109 -300 76 -208 c 0,20,21
+ 62 -169 62 -169 48 -123.5 c 128,-1,22
+ 34 -78 34 -78 23.5 -28 c 128,-1,23
+ 13 22 13 22 6.5 76 c 128,-1,24
+ 0 130 0 130 0 186 c 0,25,26
+ 0 271 0 271 16.5 348.5 c 128,-1,27
+ 33 426 33 426 57.5 492.5 c 128,-1,28
+ 82 559 82 559 111 612.5 c 128,-1,29
+ 140 666 140 666 165 704 c 128,-1,30
+ 190 742 190 742 207.5 763 c 128,-1,31
+ 225 784 225 784 227 785 c 0,0,1
+EndSplineSet
+EndChar
+
+StartChar: bracketright
+Encoding: 93 93 460
+Width: 292
+Flags: W
+LayerCount: 2
+Fore
+SplineSet
+23 -375 m 0,0,1
+ 19 -379 19 -379 16.5 -375.5 c 128,-1,2
+ 14 -372 14 -372 18 -368 c 0,3,4
+ 19 -366 19 -366 32.5 -347 c 128,-1,5
+ 46 -328 46 -328 65 -294.5 c 128,-1,6
+ 84 -261 84 -261 105.5 -214.5 c 128,-1,7
+ 127 -168 127 -168 145.5 -110.5 c 128,-1,8
+ 164 -53 164 -53 176.5 13.5 c 128,-1,9
+ 189 80 189 80 189 153 c 0,10,11
+ 189 208 189 208 181 263 c 128,-1,12
+ 173 318 173 318 159.5 370.5 c 128,-1,13
+ 146 423 146 423 129 472.5 c 128,-1,14
+ 112 522 112 522 94 565 c 0,15,16
+ 53 666 53 666 0 758 c 1,17,-1
+ 98 790 l 1,18,19
+ 141 710 141 710 174 618 c 0,20,21
+ 188 579 188 579 202 533.5 c 128,-1,22
+ 216 488 216 488 226.5 437.5 c 128,-1,23
+ 237 387 237 387 243.5 333 c 128,-1,24
+ 250 279 250 279 250 224 c 0,25,26
+ 250 139 250 139 233.5 61.5 c 128,-1,27
+ 217 -16 217 -16 192.5 -82.5 c 128,-1,28
+ 168 -149 168 -149 139 -202.5 c 128,-1,29
+ 110 -256 110 -256 85 -294 c 128,-1,30
+ 60 -332 60 -332 42.5 -353 c 128,-1,31
+ 25 -374 25 -374 23 -375 c 0,0,1
+EndSplineSet
+EndChar
+
 StartChar: quotedblright
-Encoding: 8221 8221 459
+Encoding: 8221 8221 461
 Width: 274
 Flags: W
 TtInstrs:
@@ -56148,7 +56220,7 @@ Validated: 1
 EndChar
 
 StartChar: quotedblleft
-Encoding: 8220 8220 460
+Encoding: 8220 8220 462
 Width: 274
 Flags: W
 TtInstrs:
@@ -56243,7 +56315,7 @@ Validated: 1
 EndChar
 
 StartChar: uni201F
-Encoding: 8223 8223 461
+Encoding: 8223 8223 463
 Width: 274
 Flags: W
 TtInstrs:
@@ -56348,7 +56420,7 @@ Validated: 1
 EndChar
 
 StartChar: quotedblbase
-Encoding: 8222 8222 462
+Encoding: 8222 8222 464
 Width: 274
 Flags: W
 TtInstrs:
@@ -56443,7 +56515,7 @@ Validated: 1
 EndChar
 
 StartChar: zero
-Encoding: 48 48 463
+Encoding: 48 48 465
 Width: 453
 Flags: W
 TtInstrs:
@@ -56599,7 +56671,7 @@ Validated: 1
 EndChar
 
 StartChar: one
-Encoding: 49 49 464
+Encoding: 49 49 466
 Width: 631
 Flags: W
 TtInstrs:
@@ -56726,7 +56798,7 @@ Validated: 1
 EndChar
 
 StartChar: two
-Encoding: 50 50 465
+Encoding: 50 50 467
 Width: 857
 Flags: W
 TtInstrs:
@@ -56932,7 +57004,7 @@ Validated: 1
 EndChar
 
 StartChar: three
-Encoding: 51 51 466
+Encoding: 51 51 468
 Width: 1132
 Flags: W
 TtInstrs:
@@ -57227,7 +57299,7 @@ Validated: 1
 EndChar
 
 StartChar: four
-Encoding: 52 52 467
+Encoding: 52 52 469
 Width: 633
 Flags: W
 TtInstrs:
@@ -57344,7 +57416,7 @@ Validated: 1
 EndChar
 
 StartChar: five
-Encoding: 53 53 468
+Encoding: 53 53 470
 Width: 865
 Flags: W
 TtInstrs:
@@ -57570,7 +57642,7 @@ Validated: 1
 EndChar
 
 StartChar: six
-Encoding: 54 54 469
+Encoding: 54 54 471
 Width: 1090
 Flags: W
 TtInstrs:
@@ -57848,7 +57920,7 @@ Validated: 1
 EndChar
 
 StartChar: seven
-Encoding: 55 55 470
+Encoding: 55 55 472
 Width: 592
 Flags: W
 TtInstrs:
@@ -57984,7 +58056,7 @@ Validated: 1
 EndChar
 
 StartChar: eight
-Encoding: 56 56 471
+Encoding: 56 56 473
 Width: 1021
 Flags: W
 TtInstrs:
@@ -58331,7 +58403,7 @@ Validated: 1
 EndChar
 
 StartChar: nine
-Encoding: 57 57 472
+Encoding: 57 57 474
 Width: 1358
 Flags: W
 TtInstrs:
