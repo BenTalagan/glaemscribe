@@ -48,7 +48,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 \** List of features that would prevent use of other charsets 
 \charset  tengwar_freemono    false
- Free Mono Tengwar : missing [OLD_ENGLISH_AND,SHOOK_BEAUTIFUL] / sa-rince management not accurate
+ Free Mono Tengwar : missing [OLD_ENGLISH_AND,SARINCE_FLOURISHED] / sa-rince management not accurate
 **\
 
 \beg options
@@ -272,7 +272,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
     \** ## FINAL S (Challenging!) **\
-    {S_VOWELS_WN}s_                               --> SHOOK_BEAUTIFUL {_S_VOWELS_UP_WN_} \** # Final rule for s **\
+    {S_VOWELS_WN}s_                               --> SARINCE_FLOURISHED {_S_VOWELS_UP_WN_} \** # Final rule for s **\
     _{S_VOWELS_WN}s_                              --> SILME_NUQUERNA {_S_VOWELS_UP_WN_} \** # Rule _es_ **\
     [{L_VOWELS} * _ ]{S_VOWELS_WN}s_              --> [{L_TEHTAR} * {NULL} ] SILME_NUQUERNA {_S_VOWELS_UP_WN_} \** # Rule for éis_, és_ **\
     {NULL}[ {S_VOWELS_NP_KERNEL} ]{S_VOWELS}s_    --> TELCO [ {TEHTAR_UP_NP} ] SILME_NUQUERNA {_S_VOWELS_UP_} \** # Rule for ies_   **\
@@ -295,9 +295,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
     \** ## X **\
     \** ## For x, due to the cedilla, we cannot put tehtas under the tengwa. **\
-    {S_VOWELS_WN}x  --> QUESSE SHOOK_LEFT_L {_S_VOWELS_UP_WN_}
-    {S_VOWELS_WN}xx --> QUESSE SHOOK_LEFT_L {_GEMINATE_} {_S_VOWELS_UP_WN_}
-    {S_VOWELS_WN}nx --> QUESSE SHOOK_LEFT_L {_NASAL_} {_S_VOWELS_UP_WN_}
+    {S_VOWELS_WN}x  --> QUESSE SARINCE {_S_VOWELS_UP_WN_}
+    {S_VOWELS_WN}xx --> QUESSE SARINCE {_GEMINATE_} {_S_VOWELS_UP_WN_}
+    {S_VOWELS_WN}nx --> QUESSE SARINCE {_NASAL_} {_S_VOWELS_UP_WN_}
   \end
   
   \beg rules punctuation 

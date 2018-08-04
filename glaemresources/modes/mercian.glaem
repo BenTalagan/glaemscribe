@@ -48,7 +48,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 \** List of features that would prevent use of other charsets 
 \charset  tengwar_freemono    false
- Free Mono Tengwar : missing [OLD_ENGLISH_AND,SHOOK_BEAUTIFUL] / sa-rince management not accurate
+ Free Mono Tengwar : missing [OLD_ENGLISH_AND,SARINCE_FLOURISHED] / sa-rince management not accurate
 **\
 
 
@@ -339,9 +339,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     [{L8_KER_GEMS}]{S_VOWELS_WN}              --> [{L8_IMG_GEMS}]{_S_VOWELS_UP_WN_}
 
     \**  Final s (Challenging!) **\
-    s_                --> SHOOK_BEAUTIFUL                             \** Final rule for s **\
+    s_                --> SARINCE_FLOURISHED                       \** Final rule for s **\
     {S_VOWELS}s_      --> TELCO {_S_VOWELS_UP_} SILME_NUQUERNA     \** Rule es_ **\
-    [{LVOWELS}]s_     --> [{LTEHTAR}] SILME_NUQUERNA                \** Rule és_ **\
+    [{LVOWELS}]s_     --> [{LTEHTAR}] SILME_NUQUERNA               \** Rule és_ **\
 
     s --> SILME    \** Overload lonely s **\
     z --> ESSE    \** Overload lonely z **\
