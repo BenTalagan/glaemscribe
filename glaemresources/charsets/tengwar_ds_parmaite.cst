@@ -97,7 +97,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 \** \ **\ \char 5c TILD_L              
 \** ] **\ \char 5d OSSE               
 \** ^ **\ \char 5e O_TEHTA_XL          
-\** _ **\ \char 5f SHOOOK_RIGHT_S          
+\** _ **\ \char 5f SHOOK_RIGHT_S          
 \** ` **\ \char 60 TELCO              
 \** a **\ \char 61 TW_13 CALMA          
 \** b **\ \char 62 TW_54 NWALME          
@@ -132,7 +132,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 \char a0 NBSP 
 \** ¡ **\ \char a1 ?                
 \** ¢ **\ \char a2 ?                
-\** £ **\ \char a3 SHOOK_BEAUTIFUL                
+\** £ **\ \char a3 SARINCE_FLOURISHED SHOOK_BEAUTIFUL                
 \** ¥ **\ \char a5 ?                
 \** ¦ **\ \char a6 HWESTA_TINCO                
 \** § **\ \char a7 AHA_TINCO                
