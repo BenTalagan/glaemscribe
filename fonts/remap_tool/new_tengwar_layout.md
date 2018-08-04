@@ -1,14 +1,14 @@
-Phase 1 :
+Generate a partial modifier remapping file from charset diff (to include in a more generic one)
 
-Copy all chars to unicode
+./cst_modifier_gen.rb ../../glaemresources/charsets/tengwar_ds_annatar.cst final_layout.cst 0x10000 > _annatar_partial.mod
+./cst_modifier_gen.rb ../../glaemresources/charsets/tengwar_ds_eldamar.cst final_layout.cst 0x10000 > _eldamar_partial.mod
 
-Phase 2 :
+Generate a new remapped font using a modifier file
 
-Move all chars to a safe place
-
-Phase 3 :
-
-Copy digits to the latin slots
+./sfd_remapper.rb ../sfds/TengwarAnnatarGlaemscrafu.sfd _annatar_modifier.mod ./TengwarAnnatarGlaemUnicode.sfd
+./sfd_remapper.rb ../sfds/TengwarAnnatarGlaemscrafuItalic.sfd _annatar_modifier.mod ./TengwarAnnatarGlaemUnicodeItalic.sfd
+./sfd_remapper.rb ../sfds/TengwarAnnatarGlaemscrafuBold.sfd _annatar_modifier.mod ./TengwarAnnatarGlaemUnicodeBold.sfd
+./sfd_remapper.rb ../sfds/TengwarEldamarGlaemscrafu.sfd _eldamar_modifier.mod ./TengwarEldamarGlaemUnicode.sfd
 
 
 

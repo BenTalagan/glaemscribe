@@ -1,15 +1,16 @@
 # remove strange unuseful chars notdef, null, nonmarkingreturn
 
 D 0x10000
-D 0x10001
-D 0x10002
 
 # Put everything aside
 MB 0 0x5FFF 0x10000
 
+# Put everything that's already in the unicode part (put by Mans) just before
+MB 0xE000 0xE07F 0xD000
+
 ##############################
 
-X annatar_partial.mod
+X _eldamar_partial.mod
 
 ###################################
 

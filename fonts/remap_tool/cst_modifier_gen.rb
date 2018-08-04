@@ -90,8 +90,10 @@ def modifier_builder(charset_to_move, charset_ref, offset)
   
 end
 
-c2m = GlaemMock::Charset.new ARGV[0]
-cref = GlaemMock::Charset.new ARGV[1]
-offset = 0x10000
+c2m     = GlaemMock::Charset.new ARGV[0]
+cref    = GlaemMock::Charset.new ARGV[1]
+offset  = ARGV[2].hex || 0 
+
+# The offset is here to take into account that the charset may have been offseted before remapping
 
 modifier_builder(c2m,cref,offset)
