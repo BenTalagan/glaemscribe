@@ -31,6 +31,11 @@ module SFD
       @name 		= ""
       @content 	= ""
     end
+    
+    def self.u2n(point)
+      U2N[point] || "uni%x" % point
+    end
+      
   
     def extract_info
       @content =~ REG_CHAR_ENCODING
@@ -39,8 +44,8 @@ module SFD
       @encoding.in_unicode  = $2.to_i
       @encoding.gid         = $3.to_i
       
-      if U2N[@encoding.in_font] != @name
-        "Strange char with name '#{@name}' different from canonical one '#{U2N[@encoding.in_font]}' "
+      if Char.u2n(@encoding.in_font) != @name
+        "Strange char with name '#{@name}' different from canonical one '#{Char.u2n(encoding.in_font)}' "
       end
       
       @kerns = {}
@@ -50,8 +55,8 @@ module SFD
         
         while kern_args.length != 0
           new_kern = Kern.new
-          new_kern.target   =  kern_args.shift.to_i
-          new_kern.val      =  kern_args.shift.to_i
+          new_kern.target   = kern_args.shift.to_i
+          new_kern.val      = kern_args.shift.to_i
           new_kern.lookup   = kern_args.shift
           if kern_args[0] && kern_args[0].start_with?("{")
             new_kern.device_table = kern_args.shift
@@ -72,6 +77,7 @@ module SFD
       # Update the content.
       @content.gsub! REG_CHAR_ENCODING, "Encoding: #{@encoding.in_font} #{@encoding.in_unicode} #{@encoding.gid}"
       @content.gsub! REG_KERN2, dump_kern
+      @content.gsub! /AltUni2: (.*)/, '' # Remove altuni stuff
       
       ret =   "StartChar: #{@name}\n"
       ret +=  @content
@@ -91,24 +97,24 @@ module SFD
     end
     
     def read_from_file(file_path)
-        # REALLY DIRTY PARSING!!
-        ::File.open(file_path,"rb") { |ff|
-          content = ff.read
-          content =~ REG_HEADER
-          @header	= $1
-          chars  = content.scan(REG_CHAR) 
+      # REALLY DIRTY PARSING!!
+      ::File.open(file_path,"rb") { |ff|
+        content = ff.read
+        content =~ REG_HEADER
+        @header	= $1
+        chars  = content.scan(REG_CHAR) 
 
-          chars.each{ |c| 
-            sfdchar 		                = SFD::Char.new
-            sfdchar.name	              = c[0].strip # Correct it
-            sfdchar.content	            = c[1]
-            sfdchar.extract_info
-            @chars << sfdchar
-            sfdchar.file = self
-          }	
-          @queuer = "EndChars\nEndSplineFont\n"
-        }
-  	    touch!
+        chars.each{ |c| 
+          sfdchar 		                = SFD::Char.new
+          sfdchar.name	              = c[0].strip # Correct it
+          sfdchar.content	            = c[1]
+          sfdchar.extract_info
+          @chars << sfdchar
+          sfdchar.file = self
+        }	
+        @queuer = "EndChars\nEndSplineFont\n"
+      }
+      touch!
     end
     
     def valid?
@@ -117,8 +123,8 @@ module SFD
       @errors = []
       
       @chars.each{|c|
-          lookup[c.encoding.in_font] ||= []
-          lookup[c.encoding.in_font] << c
+        lookup[c.encoding.in_font] ||= []
+        lookup[c.encoding.in_font] << c
       }
       
       lookup.each{|k,v|
@@ -184,7 +190,7 @@ module SFD
       
       return false, "A character is already present at destination! If this is really what you want to do, delete it manually." if get_char_by_codepoint(unicode_point)
       
-      c.name = U2N[unicode_point]
+      c.name = Char.u2n(unicode_point)
       c.encoding.in_font     = unicode_point
       c.encoding.in_unicode  = unicode_point
         
@@ -217,7 +223,7 @@ module SFD
       newc.encoding = src.encoding.clone
       newc.kerns    = src.kerns.clone
       
-      newc.name                = U2N[unicode_point]
+      newc.name                = Char.u2n(unicode_point)
       newc.encoding.gid        = pull_gid
       newc.encoding.in_unicode = unicode_point
       newc.encoding.in_font    = unicode_point
@@ -235,6 +241,19 @@ module SFD
         end
       }
       return true, ''
+    end
+    
+    def remap_block(unicode_point_start, unicode_point_end, new_unicode_point_start)
+      shift = new_unicode_point_start - unicode_point_start
+      (unicode_point_start..unicode_point_end).each{|p|
+        c = get_char_by_codepoint(p)
+        next if !c
+        ret, msg = remap_char(c.encoding.gid, new_unicode_point_start + p - unicode_point_start)
+        if !ret
+          return ret, msg
+        end
+      }
+      return true,''
     end
         
   end
@@ -280,9 +299,27 @@ module SFD
       end
     end
     
+    class RemapBlockDirective < Directive
+      attr_accessor :start_point, :end_point, :new_start_point
+      def initialize
+        @command = "remap_block"
+      end
+      def dump
+        ":#{line}".ljust(6) + "Remap block".ljust(16) + "(0x%08X..0x%08X) => (0x%08X..)" % [start_point, end_point, new_start_point, new_start_point+end_point-start_point]
+      end
+    end
+    
+    class ExecutePartialDirective < Directive
+      attr_accessor :file_path
+      def initialize
+        @command = "execute_partial"
+      end
+      def dump
+        ":#{line}".ljust(6) + "EX Partial".ljust(16) + file_path
+      end
+    end    
+      
     def initialize(file_path)
-      @directives = []
-      @errors     = []
       read_from_file(file_path)
     end
     
@@ -297,6 +334,9 @@ module SFD
     end
     
     def read_from_file(file_path)
+      @directives = []
+      @errors     = []
+      @file_path  = file_path 
       # REALLY DIRTY PARSING!!
       ::File.open(file_path,"rb") { |ff|
         ff.read.lines.each_with_index { |l,line|
@@ -323,14 +363,32 @@ module SFD
             d.dst = conv_point l[2] 
           when 'D'
             if l.length != 2
-              @errors << "#{line} : Delete directive should have 2 params"
+              @errors << "#{line} : Delete directive should have 1 params"
               next
             end        
             d = DeleteDirective.new    
-            d.dst = conv_point l[1]        
+            d.dst = conv_point l[1]     
+          when 'MB'
+            if l.length != 4
+              @errors << "#{line} : Remap Block directive should have 3 params"
+              next
+            end        
+            d = RemapBlockDirective.new    
+            d.start_point     = conv_point l[1]                 
+            d.end_point       = conv_point l[2]          
+            d.new_start_point = conv_point l[3]      
+          when 'X'
+            if l.length != 2
+              @errors << "#{line} : Execute Partial directive should have 1 param"
+              next
+            end
+            d = ExecutePartialDirective.new
+            d.file_path =  ::File.dirname(@file_path) + "/" + l[1]   
           else
             @errors << "#{line}: Unknown directive."
             next
+
+            
           end
           d.line = line
           @directives << d
@@ -364,6 +422,12 @@ module SFD
             return false
           end
           res,msg = sfd_file.destroy_char(c.encoding.gid)       
+        when "remap_block"
+          res,msg = sfd_file.remap_block(d.start_point, d.end_point, d.new_start_point)    
+        when "execute_partial"
+          inner_file = SFD::Modifier.new(d.file_path)
+          res = inner_file.apply(sfd_file)
+          msg = "Failed to execute partial #{d.file_path} totally" if !res
         else
           raise "WTF"
         end
