@@ -7,7 +7,7 @@ MB 0 0x5FFF 0x10000
 
 ##############################
 
-X _sindarin_partial.mod
+X _parmaite_partial.mod
 
 ###################################
 
