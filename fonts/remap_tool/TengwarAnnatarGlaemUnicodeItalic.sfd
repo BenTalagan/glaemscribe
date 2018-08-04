@@ -89,8 +89,8 @@ BeginPrivate: 0
 EndPrivate
 BeginChars: 65539 328
 
-StartChar: uni6020
-Encoding: 24608 24608 3
+StartChar: space
+Encoding: 32 32 3
 Width: 610
 Flags: W
 LayerCount: 2
@@ -13589,8 +13589,8 @@ SplineSet
 EndSplineSet
 EndChar
 
-StartChar: uni70FB
-Encoding: 28923 28923 296
+StartChar: uni10FB
+Encoding: 4347 4347 296
 Width: 740
 Flags: W
 LayerCount: 2
@@ -13626,8 +13626,8 @@ SplineSet
 EndSplineSet
 EndChar
 
-StartChar: uni8E2C
-Encoding: 36396 36396 297
+StartChar: uni2E2C
+Encoding: 11820 11820 297
 Width: 1050
 Flags: W
 LayerCount: 2
@@ -13772,8 +13772,8 @@ SplineSet
 EndSplineSet
 EndChar
 
-StartChar: uni60A0
-Encoding: 24736 24736 302
+StartChar: uni00A0
+Encoding: 160 160 302
 Width: 610
 Flags: W
 LayerCount: 2

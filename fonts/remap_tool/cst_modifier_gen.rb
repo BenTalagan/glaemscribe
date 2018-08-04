@@ -81,10 +81,13 @@ def modifier_builder(charset_to_move, charset_ref, offset)
     res = c.names.map{ |n| charset_ref.mapping[n] }.compact.uniq
     next if res.count == 0
     dst = res[0]
-    next if c.code == dst.code
+    
+    realcode = c.code+offset
+    
+    next if realcode == dst.code
     
     puts "# Moving #{c.names[0]}"
-    puts "M 0x%08X 0x%08X" % [c.code+offset, dst.code]
+    puts "M 0x%08X 0x%08X" % [realcode, dst.code]
     puts ""
   }
   
