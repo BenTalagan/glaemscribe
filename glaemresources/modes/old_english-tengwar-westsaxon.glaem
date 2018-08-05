@@ -27,12 +27,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   \entry "0.1.1" "Added support for inlined raw tengwar"  
   \entry "0.1.2" "Doing some cleaning"
   \entry "0.1.3" "Added support for non-breaking spaces"     
+  \entry "0.1.4" "Added support for new unicode charsets"
 \end
 
 \language "Old English"
 \writing  "Tengwar"
 \mode     "Old English Tengwar - 'West Saxon' Usage"
-\version  "0.1.3"
+\version  "0.1.4"
 \authors  "J.R.R. Tolkien, impl. Talagan (Benjamin Babut)"
 
 \world      primary_related_to_arda
@@ -45,6 +46,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 \charset  tengwar_ds_parmaite false
 \charset  tengwar_ds_annatar  false
 \charset  tengwar_ds_elfica   false
+
+\charset  tengwar_guni_sindarin false
+\charset  tengwar_guni_parmaite false
+\charset  tengwar_guni_eldamar  false
+\charset  tengwar_guni_annatar  false
+\charset  tengwar_guni_elfica   false
 
 \** List of features that would prevent use of other charsets 
 \charset  tengwar_freemono    false

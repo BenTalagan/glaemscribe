@@ -25,13 +25,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 \beg changelog
   \entry "0.0.1" "Initial version."
   \entry "0.0.2" "Added missing extended tengwar."
-  \entry "0.0.3" "Added support for non-breaking spaces"     
+  \entry "0.0.3" "Added support for non-breaking spaces"  
+  \entry "0.0.4" "Added support for new unicode charsets"   
 \end
 
 \language "Raw Tengwar"
 \writing  "Tengwar"
 \mode     "Raw Tengwar"
-\version  "0.0.3"
+\version  "0.0.4"
 \authors  "Talagan (Benjamin Babut)"
 
 \world      arda
@@ -44,6 +45,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 \charset  tengwar_ds_eldamar  false
 \charset  tengwar_ds_annatar  false
 \charset  tengwar_ds_elfica   false
+
+\charset  tengwar_guni_sindarin false
+\charset  tengwar_guni_parmaite false
+\charset  tengwar_guni_eldamar  false
+\charset  tengwar_guni_annatar  false
+\charset  tengwar_guni_elfica   false
+
 \charset  tengwar_freemono    false
 
 

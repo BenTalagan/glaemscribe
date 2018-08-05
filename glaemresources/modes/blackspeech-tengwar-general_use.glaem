@@ -35,12 +35,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   \entry "0.1.1" "Added support for inlined raw tengwar"
   \entry "0.1.2" "Added support for non-breaking spaces"   
   \entry "0.1.3" "Correcting visibility options to conform to new glaeml args strict syntax"
+  \entry "0.1.4" "Added support for new unicode charsets"
 \end
 
 \language "Black Speech"
 \writing  "Tengwar"
 \mode     "Black Speech Tengwar - General Use"
-\version  "0.1.3"
+\version  "0.1.4"
 \authors  "J.R.R. Tolkien, impl. Talagan (Benjamin Babut)"
 
 \world      arda
@@ -53,6 +54,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 \charset  tengwar_ds_eldamar  false
 \charset  tengwar_ds_annatar  true
 \charset  tengwar_ds_elfica   false
+
+\charset  tengwar_guni_sindarin false
+\charset  tengwar_guni_parmaite false
+\charset  tengwar_guni_eldamar  false
+\charset  tengwar_guni_annatar  false
+\charset  tengwar_guni_elfica   false
+
 \charset  tengwar_freemono    false
 
 \beg      options

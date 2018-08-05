@@ -35,12 +35,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	\entry "0.0.2" "Ported to virtual chars"
 	\entry "0.0.3" "Ported to various charsets"
   \entry "0.1.1" "Added support for inlined raw tengwar"
+  \entry "0.1.2" "Added support for new unicode charsets"   
 \end
 
 \language "R'lyehian"
 \writing  "Tengwar"
 \mode     "R'lyehian Tengwar - G*"
-\version  "0.1.1"
+\version  "0.1.2"
 \authors  "H.P.Lovecraft & The Great Ancient Gods, impl. Fthalagn"
 
 \world      other_world
@@ -53,7 +54,16 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 \charset  tengwar_ds_eldamar  false
 \charset  tengwar_ds_annatar  false
 \charset  tengwar_ds_elfica   false
+
+\charset  tengwar_guni_sindarin false
+\charset  tengwar_guni_parmaite false
+\charset  tengwar_guni_eldamar  false
+\charset  tengwar_guni_annatar  false
+\charset  tengwar_guni_elfica   false
+
 \charset  tengwar_freemono    false
+
+
 
 \beg      options
 \end
