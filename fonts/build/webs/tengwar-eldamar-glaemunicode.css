@@ -1,0 +1,10 @@
+@font-face {
+    font-family: 'TengwarEldamarGlaemunicode';
+    src: url('tengwar-eldamar-glaemunicode.eot');
+    src: url('tengwar-eldamar-glaemunicode.eot?#iefix') format('embedded-opentype'),
+         url('tengwar-eldamar-glaemunicode.woff') format('woff'),
+         url('tengwar-eldamar-glaemunicode.ttf') format('truetype'),
+         url('tengwar-eldamar-glaemunicode.svg#tengwar_eldamar_glaemunicodRg') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}

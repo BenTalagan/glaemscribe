@@ -1,0 +1,10 @@
+@font-face {
+    font-family: 'Tengwar Sindarin Glaemscrafu';
+    src: url('tengwar-sindarin-glaemscrafu.eot');
+    src: url('tengwar-sindarin-glaemscrafu.eot?#iefix') format('embedded-opentype'),
+         url('tengwar-sindarin-glaemscrafu.woff') format('woff'),
+         url('tengwar-sindarin-glaemscrafu.ttf') format('truetype'),
+         url('tengwar-sindarin-glaemscrafu.svg#tengwar_sindarin_glaemscrafRg') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}

@@ -1,0 +1,11 @@
+
+@font-face {
+    font-family: 'Tengwar Parmaite Glaemscrafu';
+    src: url('tengwar-parmaite-glaemscrafu.eot');
+    src: url('tengwar-parmaite-glaemscrafu.eot?#iefix') format('embedded-opentype'),
+         url('tengwar-parmaite-glaemscrafu.woff') format('woff'),
+         url('tengwar-parmaite-glaemscrafu.ttf') format('truetype'),
+         url('tengwar-parmaite-glaemscrafu.svg#tengwar_parmaite_glaemscrafRg') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}

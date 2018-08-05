@@ -1,0 +1,10 @@
+@font-face {
+    font-family: 'TengwarParmaiteGlaemunicode';
+    src: url('tengwar-parmaite-glaemunicode.eot');
+    src: url('tengwar-parmaite-glaemunicode.eot?#iefix') format('embedded-opentype'),
+         url('tengwar-parmaite-glaemunicode.woff') format('woff'),
+         url('tengwar-parmaite-glaemunicode.ttf') format('truetype'),
+         url('tengwar-parmaite-glaemunicode.svg#tengwar_parmaite_glaemunicoRg') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}

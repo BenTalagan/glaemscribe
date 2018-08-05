@@ -1,0 +1,12 @@
+@font-face {
+    font-family: 'TengwarAnnatarGlaemunicodeBold';
+    src: url('tengwar-annatar-glaemunicode-bold.eot');
+    src: url('tengwar-annatar-glaemunicode-bold.eot?#iefix') format('embedded-opentype'),
+         url('tengwar-annatar-glaemunicode-bold.woff') format('woff'),
+         url('tengwar-annatar-glaemunicode-bold.ttf') format('truetype'),
+         url('tengwar-annatar-glaemunicode-bold.svg#tengwar_annatar_glaemunicodBd') format('svg');
+    font-weight: bold;
+    font-style: normal;
+}
+
+

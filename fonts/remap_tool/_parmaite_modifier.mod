@@ -1,5 +1,6 @@
-# remove strange unuseful chars notdef, null, nonmarkingreturn
+RENAME "1.0.0" "TengwarParmaiteGlaemUnicode" "Tengwar Parmaite GlaemUnicode" "Tengwar Parmaite GlaemUnicode"
 
+# remove strange unuseful chars notdef, null, nonmarkingreturn
 D 0x10000
 
 # Put everything aside

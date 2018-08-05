@@ -139,6 +139,16 @@ module SFD
           @errors << "At codepoint %04X : multiple char collision (gids : #{v.map{|c| c.encoding.gid }.join(', ')} )" % k
         end
       }
+      
+      @chars.each{|c| 
+        c.kerns.each{|_,k|
+          tgt = get_char_by_gid(k.target)
+          if !tgt
+            @errors << "Kern target not found!!"
+          end
+        }
+      }
+      
       return !@errors.any?
     end
     
@@ -197,10 +207,12 @@ module SFD
       
       return false, "A character is already present at destination! If this is really what you want to do, delete it manually." if get_char_by_codepoint(unicode_point)
       
-      c.name = Char.u2n(unicode_point)
       c.encoding.in_font     = unicode_point
-      c.encoding.in_unicode  = unicode_point
-        
+      if c.encoding.in_unicode != -1
+        c.name = Char.u2n(unicode_point)
+        c.encoding.in_unicode  = unicode_point
+      end
+      
       touch!
       
       return true, ''
@@ -232,7 +244,7 @@ module SFD
       
       newc.name                = Char.u2n(unicode_point)
       newc.encoding.gid        = pull_gid
-      newc.encoding.in_unicode = unicode_point
+      newc.encoding.in_unicode = unicode_point if src.encoding.in_unicode != -1
       newc.encoding.in_font    = unicode_point
       
       @chars << newc

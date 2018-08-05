@@ -1,0 +1,12 @@
+@font-face {
+    font-family: 'TengwarAnnatarGlaemunicode';
+    src: url('tengwar-annatar-glaemunicode.eot');
+    src: url('tengwar-annatar-glaemunicode.eot?#iefix') format('embedded-opentype'),
+         url('tengwar-annatar-glaemunicode.woff') format('woff'),
+         url('tengwar-annatar-glaemunicode.ttf') format('truetype'),
+         url('tengwar-annatar-glaemunicode.svg#tengwar_annatar_glaemunicodRg') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+

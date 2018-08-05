@@ -157,7 +157,12 @@ Glaemscribe::API::ResourceManager.load_charsets([
   "tengwar_ds_eldamar",
   "tengwar_ds_annatar",
   "tengwar_ds_parmaite", 
-  "tengwar_ds_elfica"
+  "tengwar_ds_elfica",
+  "tengwar_guni_sindarin",
+  "tengwar_guni_eldamar",
+  "tengwar_guni_annatar",
+  "tengwar_guni_parmaite", 
+  "tengwar_guni_elfica"
 ])
 
 dump_charset_edit_page(Glaemscribe::API::ResourceManager.loaded_charsets["tengwar_ds_sindarin"],["Tengwar Sindarin Glaemscrafu"], TENGWAR_DS_GENERIC_CONF)
@@ -165,3 +170,9 @@ dump_charset_edit_page(Glaemscribe::API::ResourceManager.loaded_charsets["tengwa
 dump_charset_edit_page(Glaemscribe::API::ResourceManager.loaded_charsets["tengwar_ds_eldamar"], ["Tengwar Eldamar Glaemscrafu"], TENGWAR_DS_GENERIC_CONF)
 dump_charset_edit_page(Glaemscribe::API::ResourceManager.loaded_charsets["tengwar_ds_annatar"], ["TengwarAnnatarGlaemscrafu"], TENGWAR_ANNATAR_CONF)
 dump_charset_edit_page(Glaemscribe::API::ResourceManager.loaded_charsets["tengwar_ds_elfica"], ["Tengwar Elfica Glaemscrafu"], TENGWAR_DS_GENERIC_CONF)
+
+dump_charset_edit_page(Glaemscribe::API::ResourceManager.loaded_charsets["tengwar_guni_sindarin"],["TengwarSindarinGlaemUnicode"], TENGWAR_DS_GENERIC_CONF)
+dump_charset_edit_page(Glaemscribe::API::ResourceManager.loaded_charsets["tengwar_guni_parmaite"],["TengwarParmaiteGlaemUnicode"], TENGWAR_DS_GENERIC_CONF)
+dump_charset_edit_page(Glaemscribe::API::ResourceManager.loaded_charsets["tengwar_guni_eldamar"], ["TengwarEldamarGlaemUnicode"], TENGWAR_DS_GENERIC_CONF)
+dump_charset_edit_page(Glaemscribe::API::ResourceManager.loaded_charsets["tengwar_guni_annatar"], ["TengwarAnnatarGlaemUnicode"], TENGWAR_ANNATAR_CONF)
+dump_charset_edit_page(Glaemscribe::API::ResourceManager.loaded_charsets["tengwar_guni_elfica"], ["TengwarElficaGlaemUnicode"], TENGWAR_DS_GENERIC_CONF)

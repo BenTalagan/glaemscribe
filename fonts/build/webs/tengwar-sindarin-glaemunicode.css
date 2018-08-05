@@ -1,0 +1,11 @@
+@font-face {
+    font-family: 'TengwarSindarinGlaemunicode';
+    src: url('tengwar-sindarin-glaemunicode.eot');
+    src: url('tengwar-sindarin-glaemunicode.eot?#iefix') format('embedded-opentype'),
+         url('tengwar-sindarin-glaemunicode.woff') format('woff'),
+         url('tengwar-sindarin-glaemunicode.ttf') format('truetype'),
+         url('tengwar-sindarin-glaemunicode.svg#tengwar_sindarin_glaemunicoRg') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
