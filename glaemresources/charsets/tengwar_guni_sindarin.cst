@@ -42,8 +42,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 \char 2018 SQUOT_OPEN
 \char 2019 SQUOT_CLOSE
-\** \char 201C DQUOT_OPEN **\
-\** \char 201D DQUOT_CLOSE **\
+\char 201C DQUOT_OPEN 
+\char 201D DQUOT_CLOSE
 
 \char 28 PUNCT_PAREN_L 
 \char 29 PUNCT_PAREN_R 
@@ -173,8 +173,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 \char e067  ELVISH_PAREN BOOKMARK_SIGN
 \char e068  PUNCT_TILD 
 \char e069  PUNCT_DTILD
-\char e06A  DQUOT_OPEN
-\char e06B  DQUOT_CLOSE
+\** \char e06A  DQUOT_OPEN **\
+\** \char e06B  DQUOT_CLOSE **\
 \char e06C  THORIN_EXCLAMATION
 \**.....**\ 
 \**..X..**\ 
@@ -203,11 +203,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 \** LEGACY SARINCE **\
 
-\char EBD0 SARINCE_LEFT_V1
-\char EBD1 SARINCE_LEFT_V2
+\char EBD0 SARINCE_LEFT_V1 SHOOK_LEFT_L 
+\char EBD1 SARINCE_LEFT_V2 SHOOK_LEFT_S 
 
-\char EBD8 SARINCE_RIGHT_V1
-\char EBD9 SARINCE_RIGHT_V2
+\char EBD8 SARINCE_RIGHT_V1 SHOOK_RIGHT_L
+\char EBD9 SARINCE_RIGHT_V2 SHOOK_RIGHT_S
 \char EBDA SARINCE_RIGHT_V3
 
 \char EBE0 SARINCE_SEMI_ASCENDING_V1
@@ -218,7 +218,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 \char EBF0 SARINCE_DESCENDING_V1
 
-\char EBF8 SARINCE_FLOURISHED_V1
+\char EBF8 SARINCE_FLOURISHED_V1 SARINCE_FLOURISHED SHOOK_BEAUTIFUL
 \char EBF9 SARINCE_FLOURISHED_V2
 
 \** Consonant modifiers **\
