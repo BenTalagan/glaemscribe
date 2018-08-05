@@ -45,7 +45,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 \** ( **\ \char 28 ?         \** seems redundant with I_TEHTA_INF **\       
 \** ) **\ \char 29 TILD_XSUP_L           
 \** * **\ \char 2a ?                
-\** + **\ \char 2b SHOOK_RIGHT_L          
+\** + **\ \char 2b SARINCE_RIGHT_V1 SHOOK_RIGHT_L          
 \** , **\ \char 2c TW_84 ESSE_NUQUERNA       
 \** - **\ \char 2d PUNCT_DDOT            
 \** . **\ \char 2e TW_94 URE            
@@ -97,7 +97,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 \** \ **\ \char 5c TILD_L              
 \** ] **\ \char 5d OSSE               
 \** ^ **\ \char 5e O_TEHTA_XL          
-\** _ **\ \char 5f SHOOK_RIGHT_S          
+\** _ **\ \char 5f SARINCE_RIGHT_V2 SHOOK_RIGHT_S          
 \** ` **\ \char 60 TELCO              
 \** a **\ \char 61 TW_13 CALMA          
 \** b **\ \char 62 TW_54 NWALME          
@@ -126,15 +126,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 \** y **\ \char 79 TW_62 VALA           
 \** z **\ \char 7a TW_14 QUESSE          
 \** { **\ \char 7b DASH_SUP_L           
-\** | **\ \char 7c SHOOK_LEFT_L          
-\** } **\ \char 7d SHOOK_LEFT_S          
+\** | **\ \char 7c SARINCE_LEFT_V1 SHOOK_LEFT_L          
+\** } **\ \char 7d SARINCE_LEFT_V2 SHOOK_LEFT_S          
 \** ~ **\ \char 7e ARA              
 \char a0 NBSP
-\** ¡ **\ \char a1 ?                
-\** ¢ **\ \char a2 ?                
-\** £ **\ \char a3 SARINCE_FLOURISHED SHOOK_BEAUTIFUL      
-\**   **\ \char a4 ?          
-\** ¥ **\ \char a5 ?                
+\** ¡ **\ \char a1 SARINCE_SEMI_ASCENDING_V1                
+\** ¢ **\ \char a2 SARINCE_RIGHT_V3                
+\** £ **\ \char a3 SARINCE_FLOURISHED_V1 SARINCE_FLOURISHED SHOOK_BEAUTIFUL                
+\** ¥ **\ \char a5 SARINCE_FLOURISHED_V2                  
 \** ¦ **\ \char a6 HWESTA_TINCO                
 \** § **\ \char a7 AHA_TINCO                
 \** ¨ **\ \char a8 TH_SUB_CIRC_S          
@@ -158,15 +157,15 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 \** » **\ \char bb DQUOT_CLOSE           
 \** ¼ **\ \char bc LIGATING_SHORT_CARRIER                
 \** ½ **\ \char bd HALLA              
-\** ¾ **\ \char be ?                
-\** ¿ **\ \char bf ?                
+\** ¾ **\ \char be BOMBADIL_W           
+\** ¿ **\ \char bf BOMBADIL_HW           
 \** À **\ \char c0 PUNCT_INTERR           
 \** Á **\ \char c1 PUNCT_EXCLAM           
 \** Â **\ \char c2 PUNCT_TILD            
 \** Ã **\ \char c3 ?                
-\** Ä **\ \char c4 ?                
-\** Å **\ \char c5 ?                
-\** Æ **\ \char c6 ?                
+\** Ä **\ \char c4 CHRISTOPHER_QU                    
+\** Å **\ \char c5 SARINCE_ASCENDING_V1                
+\** Æ **\ \char c6 SARINCE_ASCENDING_V3                   
 \** Ç **\ \char c7 ?                
 \** È **\ \char c8 THINF_DOT_XL           
 \** É **\ \char c9 THINF_DOT_L           
@@ -228,6 +227,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 \** NEW BLOCK HERE : 0x100 => 0x13F : lot of chars are in alternate font in eldamar **\
 \** DOUBLE TEHTAR ARE HERE **\
 
+\char 123 ANNA_OPEN
+\char 129 NUM_12
                            
 \char 108 A_TEHTA_INV_XL A_TEHTA_DOUBLE_XL
 \char 109 A_TEHTA_INV_L  A_TEHTA_DOUBLE_L
