@@ -1,10 +1,10 @@
 SplineFontDB: 3.0
-FontName: TengwarAnnatarGlaemscrafuBold
-FullName: Tengwar Annatar Glaemscrafu Bold
-FamilyName: Tengwar Annatar Glaemscrafu
+FontName: TengwarAnnatarGlaemUnicodeBold
+FullName: Tengwar Annatar GlaemUnicode Bold
+FamilyName: Tengwar Annatar GlaemUnicode
 Weight: Bold
-Copyright: Copyright (c) 2004-2005 by Johan Winge,\nModified by Talagan (Benjamin Babut) for Glaemscrafu
-Version: 1.20
+Copyright: Copyright (c) 2004-2005 by Johan Winge,\nModified by Talagan (Benjamin Babut) for Glaemscribe
+Version: 1.0.0
 ItalicAngle: 0
 UnderlinePosition: -265
 UnderlineWidth: 130

@@ -117,6 +117,13 @@ module SFD
       touch!
     end
     
+    def rename(version, font_name,full_name,family_name)
+      @header.gsub!(/^Version: (.*)/, "Version: #{version}")
+      @header.gsub!(/^FontName: (.*)/, "FontName: #{font_name}")
+      @header.gsub!(/^FullName: (.*)/, "FullName: #{full_name}")
+      @header.gsub!(/^FamilyName: (.*)/, "FamilyName: #{family_name}") 
+    end
+    
     def valid?
       lookup = {}
       
@@ -318,6 +325,17 @@ module SFD
         ":#{line}".ljust(6) + "EX Partial".ljust(16) + file_path
       end
     end    
+    
+    class RenameDirective < Directive
+      attr_accessor :version, :font_name, :full_name, :family_name
+      def initialize
+        @command = "rename_font"
+      end
+      def dump
+        ":#{line}".ljust(6) + "Renaming font : V #{version}, #{font_name}, #{full_name}, #{family_name}"
+      end
+    end
+    
       
     def initialize(file_path)
       read_from_file(file_path)
@@ -343,8 +361,23 @@ module SFD
           l = l.strip
           next if l.start_with? "#"
           next if l.empty?
-          l = l.split.reject{|w| w.empty?}
+          l = l.shellsplit.reject{|w| w.empty?}
+          
           case l[0]
+            
+          when 'RENAME'
+
+            if l.length != 5
+              @errors << "#{line} : Rename directive should have 4 params"
+              next
+            end
+            
+            d = RenameDirective.new
+            d.version = l[1]
+            d.font_name = l[2]
+            d.full_name = l[3]
+            d.family_name = l[4]
+
           when 'M' #move
             if l.length != 3
               @errors << "#{line} : Move directive should have 2 params"
@@ -428,6 +461,8 @@ module SFD
           inner_file = SFD::Modifier.new(d.file_path)
           res = inner_file.apply(sfd_file)
           msg = "Failed to execute partial #{d.file_path} totally" if !res
+        when "rename_font"
+          sfd_file.rename(d.version,d.font_name,d.full_name,d.family_name)  
         else
           raise "WTF"
         end
