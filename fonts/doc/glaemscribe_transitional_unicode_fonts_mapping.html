@@ -1,0 +1,262 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+</head>
+<body>
+  
+  
+  <style>
+    table {
+      border-collapse:collapse;
+    }
+    .rangetable tr, .rangetable td {
+      border:1px solid;
+      border-collapse:collapse;
+    }
+    td {
+      padding:5px;
+    }
+    .range {
+      font-family: monospace;
+      font-size: 20px;
+      font-weight: bold;
+      background-color: #e3e3ff;
+    }
+    span.range {
+      padding:5px;
+      border:1px solid black;
+      background-color:#ffdb85;
+    }
+    p {
+     
+    }
+  </style>
+  
+  <h1>Transitional layout for tengwar legacy fonts</h1>
+
+  <div style="margin-left:40px"> Used by *.glaemunicode fonts (in the Private Use Area of the Unicode)</div>
+  
+  <h2><span class="range">0xE800-9xEBFF</span> Ligatures</h2> 
+  
+  
+  <div style="margin-left:40px">
+
+  <p>This block has been reserved to remap tengwar with ligature variants and fonctions</p>
+
+  <h3>Zero-Width joiner ligatures equivalents</h3> 
+  <table class="rangetable">
+
+    <tbody>
+      <tr>
+       <td class="range">
+         0xE800-0xE80F
+       </td>
+       <td>
+         AHA_TINCO
+       </td>
+       <td>
+         HWESTA_TINCO
+       </td>
+       <td>
+         ANCA_CLOSED
+       </td>
+       <td>...</td>
+      </tr>
+    </tbody>    
+  </table>  
+  
+    
+  <h3>Various ligature legacy characters</h3> 
+  <table class="rangetable">
+    <tbody>
+      <tr>
+       <td class="range">
+         0xE900-0xE90F
+       </td>
+       <td>
+         LAMBE_LIG
+       </td>
+       <td>...</td>
+      </tr>
+    </tbody>      
+  </table>    
+  
+  <style>
+    table.block {
+      border:none;
+    }
+    </style>
+  
+  <h3>Sa-rince variants (0xEBD0-9xEBFF)</h3> 
+  <div>   
+    <table>
+      <tr>
+        <td>
+          <table class="rangetable">
+            <tbody>
+              <tr>
+                <td class="range">
+                  0xEBD0-0xEBD7
+                </td>
+                <td>
+                  SARINCE_LEFT variants
+                </td>
+              </tr>
+            </tbody>  
+          </table>
+        </td>
+        <td>
+          <table class="rangetable" style="float:right">
+            <tbody>
+              <tr>
+                <td>
+                  SARINCE_RIGHT variants
+                </td>
+                <td class="range">
+                  0xEBD8-0xEBDF
+                </td>
+              </tr>
+            </tbody>  
+          </table>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <table class="rangetable">
+            <tbody>
+              <tr>
+                <td class="range">
+                  0xEBE0-0xEBE7
+                </td>
+                <td>
+                  SARINCE_RIGHT_SEMI_ASCENDING variants
+                </td>
+              </tr>
+            </tbody>  
+          </table>
+        </td>
+        <td>
+          <table class="rangetable" style="float:right">
+            <tbody>
+              <tr>
+                <td>
+                  SARINCE_RIGHT_ASCENDING variants
+                </td>
+                <td class="range">
+                  0xEBE8-0xEBEF
+                </td>
+              </tr>
+            </tbody>  
+          </table>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <table class="rangetable">
+            <tbody>
+              <tr>
+                <td class="range">
+                  0xEBF0-0xEBF7
+                </td>
+                <td>
+                  SARINCE_RIGHT_DESCENDING variants
+                </td>
+              </tr>
+            </tbody>  
+          </table>
+        </td>
+        <td>
+          <table class="rangetable" style="float:right">
+            <tbody>
+              <tr>
+                <td>
+                  SARINCE_RIGHT_FLOURISHED variants
+                </td>
+                <td class="range">
+                  0xEBF8-0xEBFF
+                </td>
+              </tr>
+            </tbody>  
+          </table>
+        </td>
+      </tr>
+    </table>
+  </div>
+  
+</div>
+  <h2><span class="range">0xEC00-9xEFFF</span> Consonant modifiers & Tehtar</h2> 
+  <div style="margin-left:40px">
+
+  <p>Up to 16 variants may be ported per char</p>
+  <pre>
+    0xEC00-0xEC0F    GEMINATE_DASH (dash_inf)
+    0xEC10-0xEC1F    GEMINATE_TILD (tild_inf)
+    0xEC20-0xEC2F    NASALIZE_DASH (dash_sup)
+    0xEC30-0xEC3F    NASALIZE_TILD (tild_sup)
+    0xEC40-0xEC4F    A_TEHTA
+    0xEC50-0xEC5F    E_TEHTA
+    0xEC60-0xEC6F    I_TEHTA
+    0xEC70-0xEC7F    O_TEHTA
+    0xEC80-0xEC8F    U_TEHTA
+    0xEC90-0xEC9F    A_TEHTA_INF
+    0xECA0-0xECAF    E_TEHTA_INF
+    0xECB0-0xECBF    I_TEHTA_INF
+    0xECC0-0xECCF    O_TEHTA_INF
+    0xECD0-0xECDF    U_TEHTA_INF
+    0xECE0-0xECEF    A_TEHTA_DOUBLE *
+    0xECF0-0xECFF    E_TEHTA_DOUBLE
+    0xED00-0xED0F    I_TEHTA_DOUBLE
+    0xED10-0xED1F    O_TEHTA_DOUBLE
+    0xED20-0xED2F    U_TEHTA_DOUBLE
+    0xED30-0xED3F    E_TEHTA_INF_DOUBLE
+    0xED40-0xED4F    I_TEHTA_INF_DOUBLE
+    0xED50-0xED5F    LABIAL_MODIFIER (sev_tehta)
+    0xED60-0xED6F    THINNAS (thinf_stroke)
+    0xED70-0xED7F    MSB (th_sub_circ)
+    0xED80-0xED8F    A_TEHTA_INV
+    0xED90-0xED9F    A_TEHTA_CIRCUM
+    0xEDA0-0xEDAF    A_TEHTA_CIRCUM_INV (thsup_tick)
+    0xEDB0-0xEDBF    A_TEHTA_LAMBDA (thsup_lambda)
+    0xEDC0-0xEDCF    E_TEHTA_GRAVE
+    0xEDD0-0xEDDF    BREVE_TEHTA
+    0xEDE0-0xEDEF   
+    0xEDF0-0xEDFF   
+    0xEE00-0xEE0F   
+    0xEE10-0xEE1F   
+    0xEE20-0xEE2F   
+    0xEE30-0xEE3F   
+    0xEE40-0xEE4F   
+    0xEE50-0xEE5F   
+    0xEE60-0xEE6F   
+    0xEE70-0xEE7F   
+    0xEE80-0xEE8F   
+    0xEE90-0xEE9F   
+    0xEEA0-0xEEAF   
+    0xEEB0-0xEEBF   
+    0xEEC0-0xEECF   
+    0xEED0-0xEEDF   
+    0xEEE0-0xEEEF   
+    0xEEF0-0xEEFF   
+    0xEF00-0xEF0F   
+    0xEF10-0xEF1F   
+    0xEF20-0xEF2F   
+    0xEF30-0xEF3F   
+    0xEF40-0xEF4F   
+    0xEF50-0xEF5F   
+    0xEF60-0xEF6F   
+    0xEF70-0xEF7F   
+    0xEF80-0xEF8F   
+    0xEF90-0xEF9F   
+    0xEFA0-0xEFAF   
+    0xEFB0-0xEFBF   
+    0xEFC0-0xEFCF   
+    0xEFD0-0xEFDF   
+    0xEFE0-0xEFEF   
+    0xEFF0-0xEFFF   
+  </pre>
+</div>
+
+  
+  </body>
+</html>
