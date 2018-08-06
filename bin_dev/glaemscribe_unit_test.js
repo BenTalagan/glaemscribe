@@ -62,10 +62,10 @@ function unit_test_directory(directory) {
     if(Fs.existsSync(opt_file)) {
       
       var ofl = Fs.readFileSync(opt_file,'utf-8').split("\n");
-      var charset_name = ofl[0].trim();
-      var opt_line     = ofl[1].trim();
+      var charset_name = (ofl[0] || "").trim();
+      var opt_line     = (ofl[1] || "").trim();
   
-      var a = opt_line.trim().split(",").map(function(o) { return o.split(":")} );
+      var a = opt_line.split(",").filter(function(a) { return a != ""}).map(function(o) { return o.split(":")} );
       a.glaem_each(function(_,opt_val_pair) {
         mode_options[opt_val_pair[0].trim()] = opt_val_pair[1].trim();
       });

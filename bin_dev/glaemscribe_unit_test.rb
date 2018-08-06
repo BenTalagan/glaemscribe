@@ -102,8 +102,8 @@ def read_mode_options_file(dirent, copy_to_directory = nil)
         content = f.read
         ofl = content.lines
         charset_name = ofl[0].strip
-        opt_line     = ofl[1].strip
-        a = opt_line.strip.split(",").map{ |o| o.split(":") }.flatten.map{|s| s.strip }
+        opt_line     = (ofl[1] || '').strip
+        a = opt_line.split(",").map{ |o| o.split(":") }.flatten.map{|s| s.strip }
         mode_options = Hash[*a]    
     
         if copy_to_directory
