@@ -26,7 +26,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   \entry "0.0.1" "Initial version."
   \entry "0.0.2" "Added missing extended tengwar."
   \entry "0.0.3" "Added support for non-breaking spaces"  
-  \entry "0.0.4" "Added support for new unicode charsets"   
+  \entry "0.0.4" "Added support for new unicode charsets"  
+  \entry "0.0.5" "Added support for the Tengwar Telcontar font" 
 \end
 
 \language "Raw Tengwar"
@@ -53,6 +54,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 \charset  tengwar_guni_elfica   false
 
 \charset  tengwar_freemono    false
+\charset  tengwar_telcontar   false
 
 
 \beg      options

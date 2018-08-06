@@ -35,12 +35,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   \entry "0.1.2" "Added support for non-breaking spaces"   
   \entry "0.1.3" "Correcting visibility options to conform to new glaeml args strict syntax"  
   \entry "0.1.4" "Added support for new unicode charsets"   
+  \entry "0.1.5" "Added support for the Tengwar Telcontar font"
 \end
 
 \language "Telerin"
 \writing  "Tengwar"
 \mode     "Telerin Tengwar - G*"
-\version  "0.1.4"
+\version  "0.1.5"
 \authors  "Talagan (Benjamin Babut), based on J.R.R Tolkien"
 
 \world      arda
@@ -59,6 +60,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 \charset  tengwar_guni_elfica   false
 
 \charset  tengwar_freemono    false
+\charset  tengwar_telcontar   false
 
 \raw_mode "raw-tengwar"
 

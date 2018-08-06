@@ -54,8 +54,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   \entry "0.9.9" "Hotfix on 0.9.8"
   \entry "0.9.10" "Removing option on palatalized geminates (always accumulate)"
   \entry "0.9.11" "Added support for new unicode charsets"
+  \entry "0.9.12" "Added support for the Tengwar Telcontar font"
 \end
-\version  "0.9.11"
+\version  "0.9.12"
 
 \language "Quenya"
 \writing  "Tengwar"
@@ -78,6 +79,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 \charset  tengwar_guni_elfica   false
 
 \charset  tengwar_freemono    false
+\charset  tengwar_telcontar   false
 
 \raw_mode "raw-tengwar"
 

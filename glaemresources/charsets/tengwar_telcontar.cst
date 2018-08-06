@@ -22,16 +22,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 **\
 
-\** Charset for the FreeMonoTengwar font **\ 
+\** Charset for the FreeTelcontar font. Basically this is the same one as freemono **\ 
 
-\version 0.0.8
+\version 0.0.1
 
 \beg changelog
-  \entry "0.0.5" "Added VALA_W_HOOK."
-  \entry "0.0.6" "Updating punctuation"
-  \entry "0.0.7" "Fixed missing tinco_ext / sule_ext"
-  \entry "0.0.8" "Added NBSP"
-  \entry "0.0.9" "Replaced fixed ligatures by their dynamic sequence"
+  \entry "0.0.1" "Copy pasted freemono charset"
 \end
 
 \char 20 SPACE
@@ -188,13 +184,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 \char e07B NUM_11
 
 \char e07D CIRC_TEHTA_INF
-
-\** Ligatured results are mapped here **\
-\**
-\char 10037 AHA_TINCO
-\char 10038 HWESTA_TINCO
-\char 10039 ANCA_CLOSED SILME_AHA
-**\
 
 \char 200d ZWJ
 

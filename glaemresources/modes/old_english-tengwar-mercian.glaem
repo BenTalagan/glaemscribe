@@ -55,8 +55,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
 \** List of features that would prevent use of other charsets 
-\charset  tengwar_freemono    false
- Free Mono Tengwar : missing [OLD_ENGLISH_AND,SARINCE_FLOURISHED] / sa-rince management not accurate
+  \charset  tengwar_freemono    false
+  \charset  tengwar_telcontar   false
+
+   Free Mono Tengwar : missing [OLD_ENGLISH_AND,SARINCE_FLOURISHED] / sa-rince management not accurate
 **\
 
 
