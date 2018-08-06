@@ -384,10 +384,17 @@ Glaemscribe.Char.prototype.is_virtual = function()
   return false;
 }
 
+Glaemscribe.Char.prototype.is_sequence = function()
+{
+  return false;
+}
+
 Glaemscribe.Char.prototype.output = function()
 {
   return this.str;
 }
+
+// ======================
 
 Glaemscribe.VirtualChar = function()
 {
@@ -407,6 +414,11 @@ Glaemscribe.VirtualChar.VirtualClass = function()
 Glaemscribe.VirtualChar.prototype.is_virtual = function()
 {
   return true;
+}
+
+Glaemscribe.VirtualChar.prototype.is_sequence = function()
+{
+  return false;
 }
 
 Glaemscribe.VirtualChar.prototype.output = function()
@@ -469,6 +481,45 @@ Glaemscribe.VirtualChar.prototype.n2c = function(trigger_char_name) {
   return this.lookup_table[trigger_char_name];
 }
 
+// =======================
+
+Glaemscribe.SequenceChar = function()
+{
+  this.sequence = [];
+  return this;
+}
+
+Glaemscribe.SequenceChar.prototype.is_virtual = function()
+{
+  return false;
+}
+
+Glaemscribe.SequenceChar.prototype.is_sequence = function()
+{
+  return true;
+}
+
+Glaemscribe.SequenceChar.prototype.str = function()
+{
+  // A sequence char should never arrive unreplaced
+  return Glaemscribe.VIRTUAL_CHAR_OUTPUT;
+}
+  
+Glaemscribe.SequenceChar.prototype.finalize = function()
+{
+  var sq = this;
+  if(sq.sequence.length == 0)
+  {
+    sq.charset.errors.push(new Glaemscribe.Glaeml.Error(sq.line, "Sequence for sequence char is empty."));
+  }
+  sq.sequence.glaem_each(function(_,symbol) {
+    if(!sq.charset.n2c(symbol))
+      sq.charset.errors.push(new Glaemscribe.Glaeml.Error(sq.line, "Sequence char " + symbol + "cannot be found in the charset."));     
+  });
+}
+    
+// =========================
+
 Glaemscribe.Charset = function(charset_name) {
   
   this.name         = charset_name;
@@ -504,6 +555,19 @@ Glaemscribe.Charset.prototype.add_virtual_char = function(line, classes, names, 
   c.default  = deflt;
   c.reversed = reversed;
   this.chars.push(c);  
+}
+
+Glaemscribe.Charset.prototype.add_sequence_char = function(line, names, seq) {
+  
+  if(names == undefined || names.length == 0 || names.indexOf("?") != -1) // Ignore characters with '?'
+    return;
+ 
+  var c         = new Glaemscribe.SequenceChar();    
+  c.line        = line;
+  c.names       = names;
+  c.sequence    = stringListToCleanArray(seq,/\s/);
+  c.charset     = this;
+  this.chars.push(c); 
 }
 
 Glaemscribe.Charset.prototype.finalize = function()
@@ -546,6 +610,11 @@ Glaemscribe.Charset.prototype.finalize = function()
     }
   });
   
+  charset.chars.glaem_each(function(_,c) {
+     if(c.is_sequence()) {
+       c.finalize();
+     }
+  });
 }
 
 Glaemscribe.Charset.prototype.n2c = function(cname)
@@ -584,6 +653,13 @@ Glaemscribe.CharsetParser.prototype.parse_raw = function(charset_name, raw)
     var names   = char.args.slice(1);
     charset.add_char(char.line, code, names)
   }  
+  
+  doc.root_node.gpath("seq").glaem_each(function(_,seq_elemnt) {
+    var names       = seq_elemnt.args;
+    var child_node  = seq_elemnt.children[0];   
+    var seq         = (child_node && child_node.is_text())?(child_node.args[0]):("")
+    charset.add_sequence_char(seq_elemnt.line,names,seq);
+  });
   
   doc.root_node.gpath("virtual").glaem_each(function(_,virtual_element) { 
     var names     = virtual_element.args;
@@ -3458,12 +3534,25 @@ Glaemscribe.ResolveVirtualsPostProcessorOperator.prototype.apply_loop = function
     if(rc != null)
       op.last_triggers[vc.object_reference] = rc;
   });
-
 }
 
 
+Glaemscribe.ResolveVirtualsPostProcessorOperator.prototype.apply_sequences = function(charset,tokens) {
+  var ret = [];
+  tokens.glaem_each(function(_, token) {
+    var c = charset.n2c(token);
+    if(c && c.is_sequence())
+      Array.prototype.push.apply(ret,c.sequence);
+    else
+      ret.push(token);
+  });
+  return ret;
+}
+
 Glaemscribe.ResolveVirtualsPostProcessorOperator.prototype.apply = function(tokens, charset) {   
   var op = this;
+  
+  tokens = op.apply_sequences(charset, tokens);
   
   // Clone the array so that we can perform diacritics and ligatures without interfering
   var new_tokens = tokens.slice(0);
