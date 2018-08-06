@@ -50,8 +50,8 @@ module Glaemscribe
           # Try to replace
           last_trigger = @last_triggers[c]
           if last_trigger != nil
-            new_tokens[idx] = last_trigger.names.first # Take the first name of the non-virtual replacement.
-            token = new_tokens[idx] # Consider the token replaced, being itself a potential trigger for further virtuals (cascading virtuals)
+            new_tokens[idx] = last_trigger.names.first  # Take the first name of the non-virtual replacement.
+            token           = new_tokens[idx]           # Consider the token replaced, being itself a potential trigger for further virtuals (cascading virtuals)
           end
         end
         
@@ -62,8 +62,23 @@ module Glaemscribe
         }
       end
       
+      def apply_sequences(charset,tokens)
+        ret = []
+        tokens.each { |token|
+          c = charset[token]
+          if c && c.sequence?
+            ret += c.sequence
+          else
+            ret << token
+          end
+        }
+        ret
+      end
+      
       def apply(tokens,charset)
-        
+        # Apply sequence chars
+        tokens = apply_sequences(charset,tokens)
+      
         # Clone the tokens so that we can perform ligatures AND diacritics without interferences
         new_tokens = tokens.clone
         

@@ -32,10 +32,17 @@ Glaemscribe.Char.prototype.is_virtual = function()
   return false;
 }
 
+Glaemscribe.Char.prototype.is_sequence = function()
+{
+  return false;
+}
+
 Glaemscribe.Char.prototype.output = function()
 {
   return this.str;
 }
+
+// ======================
 
 Glaemscribe.VirtualChar = function()
 {
@@ -55,6 +62,11 @@ Glaemscribe.VirtualChar.VirtualClass = function()
 Glaemscribe.VirtualChar.prototype.is_virtual = function()
 {
   return true;
+}
+
+Glaemscribe.VirtualChar.prototype.is_sequence = function()
+{
+  return false;
 }
 
 Glaemscribe.VirtualChar.prototype.output = function()
@@ -117,6 +129,45 @@ Glaemscribe.VirtualChar.prototype.n2c = function(trigger_char_name) {
   return this.lookup_table[trigger_char_name];
 }
 
+// =======================
+
+Glaemscribe.SequenceChar = function()
+{
+  this.sequence = [];
+  return this;
+}
+
+Glaemscribe.SequenceChar.prototype.is_virtual = function()
+{
+  return false;
+}
+
+Glaemscribe.SequenceChar.prototype.is_sequence = function()
+{
+  return true;
+}
+
+Glaemscribe.SequenceChar.prototype.str = function()
+{
+  // A sequence char should never arrive unreplaced
+  return Glaemscribe.VIRTUAL_CHAR_OUTPUT;
+}
+  
+Glaemscribe.SequenceChar.prototype.finalize = function()
+{
+  var sq = this;
+  if(sq.sequence.length == 0)
+  {
+    sq.charset.errors.push(new Glaemscribe.Glaeml.Error(sq.line, "Sequence for sequence char is empty."));
+  }
+  sq.sequence.glaem_each(function(_,symbol) {
+    if(!sq.charset.n2c(symbol))
+      sq.charset.errors.push(new Glaemscribe.Glaeml.Error(sq.line, "Sequence char " + symbol + "cannot be found in the charset."));     
+  });
+}
+    
+// =========================
+
 Glaemscribe.Charset = function(charset_name) {
   
   this.name         = charset_name;
@@ -152,6 +203,19 @@ Glaemscribe.Charset.prototype.add_virtual_char = function(line, classes, names, 
   c.default  = deflt;
   c.reversed = reversed;
   this.chars.push(c);  
+}
+
+Glaemscribe.Charset.prototype.add_sequence_char = function(line, names, seq) {
+  
+  if(names == undefined || names.length == 0 || names.indexOf("?") != -1) // Ignore characters with '?'
+    return;
+ 
+  var c         = new Glaemscribe.SequenceChar();    
+  c.line        = line;
+  c.names       = names;
+  c.sequence    = stringListToCleanArray(seq,/\s/);
+  c.charset     = this;
+  this.chars.push(c); 
 }
 
 Glaemscribe.Charset.prototype.finalize = function()
@@ -194,6 +258,11 @@ Glaemscribe.Charset.prototype.finalize = function()
     }
   });
   
+  charset.chars.glaem_each(function(_,c) {
+     if(c.is_sequence()) {
+       c.finalize();
+     }
+  });
 }
 
 Glaemscribe.Charset.prototype.n2c = function(cname)

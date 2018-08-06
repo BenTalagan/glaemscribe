@@ -47,6 +47,13 @@ module Glaemscribe
           names  = char_element.args[1..-1].map{|cname| cname.strip }.reject{ |cname| cname.empty? }
           @charset.add_char(char_element.line,code,names)
         }
+               
+        doc.root_node.gpath("seq").each{ |seq_elemnt| 
+          names       = seq_elemnt.args
+          child_node  = seq_elemnt.children.first
+          seq         = (child_node && child_node.text?)?(child_node.args.first):("")
+          @charset.add_sequence_char(seq_elemnt.line,names,seq)
+        }
         
         doc.root_node.gpath("virtual").each { |virtual_element|
           names     = virtual_element.args

@@ -72,12 +72,25 @@ Glaemscribe.ResolveVirtualsPostProcessorOperator.prototype.apply_loop = function
     if(rc != null)
       op.last_triggers[vc.object_reference] = rc;
   });
-
 }
 
 
+Glaemscribe.ResolveVirtualsPostProcessorOperator.prototype.apply_sequences = function(charset,tokens) {
+  var ret = [];
+  tokens.glaem_each(function(_, token) {
+    var c = charset.n2c(token);
+    if(c && c.is_sequence())
+      Array.prototype.push.apply(ret,c.sequence);
+    else
+      ret.push(token);
+  });
+  return ret;
+}
+
 Glaemscribe.ResolveVirtualsPostProcessorOperator.prototype.apply = function(tokens, charset) {   
   var op = this;
+  
+  tokens = op.apply_sequences(charset, tokens);
   
   // Clone the array so that we can perform diacritics and ligatures without interfering
   var new_tokens = tokens.slice(0);

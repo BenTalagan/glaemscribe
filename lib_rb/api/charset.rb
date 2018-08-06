@@ -30,11 +30,11 @@ module Glaemscribe
       attr_reader   :virtual_chars
             
       class Char
-        attr_accessor :line
-        attr_accessor :code
-        attr_accessor :names
-        attr_accessor :str
-        attr_accessor :charset
+        attr_accessor :line     # Line num in the sourcecode
+        attr_accessor :code     # Position in unicode
+        attr_accessor :names    # Names
+        attr_accessor :str      # How does this char resolve as a string
+        attr_accessor :charset  # Pointer to parent charset
         
         def initialize
           @names = {}
@@ -43,9 +43,13 @@ module Glaemscribe
         def virtual?
           false
         end
+        
+        def sequence?
+          false
+        end
       end
       
-      class VirtualChar
+      class VirtualChar # Could have had inheritance here ... 
         attr_accessor :line
         attr_accessor :names
         attr_accessor :classes
@@ -121,6 +125,45 @@ module Glaemscribe
         def virtual?
           true
         end
+        
+        def sequence?
+          false
+        end
+      end
+      
+      class SequenceChar
+        attr_accessor :line     # Line of code
+        attr_accessor :names    # Names
+        attr_accessor :sequence # The sequence of chars
+        attr_accessor :charset  # Pointer to parent charset
+        
+        def virtual?
+          false
+        end
+        
+        def sequence?
+          true
+        end   
+        
+        def str
+          # A sequence char should never arrive unreplaced
+          VIRTUAL_CHAR_OUTPUT
+        end
+        
+        def finalize          
+          if @sequence.count == 0
+            @charset.errors << Glaeml::Error.new(@line, "Sequence for sequence char is empty.")    
+          end
+          
+          @sequence.each{ |symbol|
+            # Check that the sequence is correct
+            found = @charset[symbol]
+            if !found
+              @charset.errors << Glaeml::Error.new(@line, "Sequence char #{symbol} cannot be found in the charset.")
+            end
+          }    
+        end
+        
       end
       
       def initialize(name)
@@ -156,10 +199,21 @@ module Glaemscribe
         @chars << c   
       end
       
+      def add_sequence_char(line, names, seq)
+        return if names.empty? || names.include?("?") # Ignore characters with '?'
+        
+        c             = SequenceChar.new
+        c.line        = line
+        c.names       = names
+        c.sequence    = seq.split.reject{|token| token.empty? }    
+        c.charset     = self
+        @chars << c
+      end
+      
       def finalize
         @errors         = []
         @lookup_table   = {}
-        @virtual_chars  = []
+        @virtual_chars  = [] # A convenient filtered array
         
         @chars.each { |c|
           c.names.each { |cname|
@@ -176,6 +230,12 @@ module Glaemscribe
           if c.class == VirtualChar
             c.finalize
             @virtual_chars << c
+          end
+        }
+        
+        @chars.each{|c|
+          if c.class == SequenceChar
+            c.finalize
           end
         }
         

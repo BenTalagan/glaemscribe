@@ -48,6 +48,13 @@ Glaemscribe.CharsetParser.prototype.parse_raw = function(charset_name, raw)
     charset.add_char(char.line, code, names)
   }  
   
+  doc.root_node.gpath("seq").glaem_each(function(_,seq_elemnt) {
+    var names       = seq_elemnt.args;
+    var child_node  = seq_elemnt.children[0];   
+    var seq         = (child_node && child_node.is_text())?(child_node.args[0]):("")
+    charset.add_sequence_char(seq_elemnt.line,names,seq);
+  });
+  
   doc.root_node.gpath("virtual").glaem_each(function(_,virtual_element) { 
     var names     = virtual_element.args;
     var classes   = [];
