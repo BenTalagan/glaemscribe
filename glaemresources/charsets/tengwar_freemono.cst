@@ -186,6 +186,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 \char e079 NUM_9 
 \char e07A NUM_10
 \char e07B NUM_11
+\char e07B NUM_12
 
 \char e07D CIRC_TEHTA_INF
 
@@ -195,6 +196,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 \char 10038 HWESTA_TINCO
 \char 10039 ANCA_CLOSED SILME_AHA
 **\
+
+\char 204A OLD_ENGLISH_AND
 
 \char 200d ZWJ
 

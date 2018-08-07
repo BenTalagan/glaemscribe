@@ -197,8 +197,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 \char e07C NUM_12
 
 \** MISSING in the norm**\
-\char e03e OLD_ENGLISH_AND
-\char e03f SILME_NUQUERNA_ALT
+\char 204A OLD_ENGLISH_AND
+
+\char e03e SILME_NUQUERNA_ALT
 \char e06e RING_MARK_L 
 \char e06f RING_MARK_R
 
