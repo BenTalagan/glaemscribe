@@ -86,13 +86,13 @@ NameList: AGL For New Fonts
 DisplaySize: -48
 AntiAlias: 1
 FitToEm: 0
-WinInfo: 46 23 9
+WinInfo: 0 23 9
 BeginPrivate: 0
 EndPrivate
-BeginChars: 65536 344
+BeginChars: 65540 329
 
 StartChar: space
-Encoding: 32 32 0
+Encoding: 32 32 3
 Width: 630
 Flags: W
 LayerCount: 2
@@ -101,7 +101,8 @@ Validated: 1
 EndChar
 
 StartChar: uniEC43
-Encoding: 60483 60483 1
+Encoding: 60483 60483 4
+
 Width: 2
 Flags: W
 LayerCount: 2
@@ -149,7 +150,8 @@ Validated: 9
 EndChar
 
 StartChar: uniEC53
-Encoding: 60499 60499 2
+Encoding: 60499 60499 5
+
 Width: 2
 Flags: W
 LayerCount: 2
@@ -177,7 +179,8 @@ Validated: 1
 EndChar
 
 StartChar: uniEC63
-Encoding: 60515 60515 3
+Encoding: 60515 60515 6
+
 Width: 2
 Flags: W
 LayerCount: 2
@@ -205,7 +208,8 @@ Validated: 1
 EndChar
 
 StartChar: uniEC83
-Encoding: 60547 60547 4
+Encoding: 60547 60547 7
+
 Width: 2
 Flags: W
 LayerCount: 2
@@ -256,7 +260,8 @@ Validated: 1
 EndChar
 
 StartChar: uniEC01
-Encoding: 60417 60417 5
+Encoding: 60417 60417 8
+
 Width: 2
 Flags: W
 LayerCount: 2
@@ -278,7 +283,7 @@ Validated: 1
 EndChar
 
 StartChar: uni6028
-Encoding: 24616 24616 6
+Encoding: 24616 24616 9
 Width: 2
 Flags: W
 LayerCount: 2
@@ -306,7 +311,8 @@ Validated: 1
 EndChar
 
 StartChar: uni6029
-Encoding: 24617 24617 7
+Encoding: 24617 24617 10
+
 Width: 2
 Flags: W
 LayerCount: 2
@@ -350,7 +356,7 @@ Validated: 1
 EndChar
 
 StartChar: uni602A
-Encoding: 24618 24618 8
+Encoding: 24618 24618 11
 Width: 1449
 Flags: W
 LayerCount: 2
@@ -413,7 +419,7 @@ Validated: 33
 EndChar
 
 StartChar: uniEBD8
-Encoding: 60376 60376 9
+Encoding: 60376 60376 12
 Width: 207
 Flags: W
 LayerCount: 2
@@ -466,7 +472,7 @@ Validated: 1
 EndChar
 
 StartChar: uniE027
-Encoding: 57383 57383 10
+Encoding: 57383 57383 13
 Width: 1364
 Flags: W
 LayerCount: 2
@@ -558,7 +564,8 @@ Validated: 33
 EndChar
 
 StartChar: colon
-Encoding: 58 58 11
+Encoding: 58 58 14
+
 Width: 526
 Flags: W
 LayerCount: 2
@@ -603,7 +610,8 @@ Validated: 1
 EndChar
 
 StartChar: uniE02B
-Encoding: 57387 57387 12
+Encoding: 57387 57387 15
+
 Width: 1125
 Flags: W
 LayerCount: 2
@@ -648,7 +656,8 @@ Validated: 33
 EndChar
 
 StartChar: uni602F
-Encoding: 24623 24623 13
+Encoding: 24623 24623 16
+
 Width: 5
 Flags: W
 LayerCount: 2
@@ -689,7 +698,8 @@ Validated: 1
 EndChar
 
 StartChar: uni6030
-Encoding: 24624 24624 14
+Encoding: 24624 24624 17
+
 Width: 5
 Flags: W
 LayerCount: 2
@@ -730,7 +740,8 @@ Validated: 1
 EndChar
 
 StartChar: uniE000
-Encoding: 57344 57344 15
+Encoding: 57344 57344 18
+
 Width: 1289
 Flags: W
 LayerCount: 2
@@ -818,7 +829,8 @@ Validated: 1
 EndChar
 
 StartChar: uniE004
-Encoding: 57348 57348 16
+Encoding: 57348 57348 19
+
 Width: 1958
 Flags: W
 LayerCount: 2
@@ -954,7 +966,8 @@ Validated: 1
 EndChar
 
 StartChar: uniE008
-Encoding: 57352 57352 17
+Encoding: 57352 57352 20
+
 Width: 1338
 Flags: W
 LayerCount: 2
@@ -1045,7 +1058,8 @@ Validated: 33
 EndChar
 
 StartChar: uniE00C
-Encoding: 57356 57356 18
+Encoding: 57356 57356 21
+
 Width: 2007
 Flags: W
 LayerCount: 2
@@ -1182,7 +1196,8 @@ Validated: 33
 EndChar
 
 StartChar: uniE010
-Encoding: 57360 57360 19
+Encoding: 57360 57360 22
+
 Width: 2007
 Flags: W
 LayerCount: 2
@@ -1308,7 +1323,8 @@ Validated: 1
 EndChar
 
 StartChar: uniE014
-Encoding: 57364 57364 20
+Encoding: 57364 57364 23
+
 Width: 1338
 Flags: W
 LayerCount: 2
@@ -1388,7 +1404,8 @@ Validated: 1
 EndChar
 
 StartChar: uniE024
-Encoding: 57380 57380 21
+Encoding: 57380 57380 24
+
 Width: 1146
 Flags: W
 LayerCount: 2
@@ -1460,7 +1477,8 @@ Validated: 33
 EndChar
 
 StartChar: uniE028
-Encoding: 57384 57384 22
+Encoding: 57384 57384 25
+
 Width: 1340
 Flags: W
 LayerCount: 2
@@ -1524,11 +1542,12 @@ SplineSet
  1083 271 l 2,0,1
 EndSplineSet
 Validated: 33
-Kerns2: 72 -140 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 71 50 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 69 -60 "'kern' Horizontal Kerning in Latin lookup 0 subtable"
+Kerns2: 75 -140 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 74 50 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 72 -60 "'kern' Horizontal Kerning in Latin lookup 0 subtable"
 EndChar
 
 StartChar: uniEC12
-Encoding: 60434 60434 23
+Encoding: 60434 60434 26
+
 Width: 2
 Flags: W
 LayerCount: 2
@@ -1572,7 +1591,8 @@ Validated: 1
 EndChar
 
 StartChar: uniEC11
-Encoding: 60433 60433 24
+Encoding: 60433 60433 27
+
 Width: 2
 Flags: W
 LayerCount: 2
@@ -1613,7 +1633,8 @@ Validated: 1
 EndChar
 
 StartChar: uni603C
-Encoding: 24636 24636 25
+Encoding: 24636 24636 28
+
 Width: 1381
 Flags: W
 LayerCount: 2
@@ -1693,7 +1714,8 @@ Validated: 1
 EndChar
 
 StartChar: uni2E31
-Encoding: 11825 11825 26
+Encoding: 11825 11825 29
+
 Width: 526
 Flags: W
 LayerCount: 2
@@ -1721,7 +1743,8 @@ Validated: 1
 EndChar
 
 StartChar: uni603F
-Encoding: 24639 24639 27
+Encoding: 24639 24639 30
+
 Width: 2
 Flags: W
 LayerCount: 2
@@ -1765,7 +1788,8 @@ Validated: 1
 EndChar
 
 StartChar: uniE01C
-Encoding: 57372 57372 28
+Encoding: 57372 57372 31
+
 Width: 1958
 Flags: W
 LayerCount: 2
@@ -1900,7 +1924,8 @@ Validated: 1
 EndChar
 
 StartChar: uniE01A
-Encoding: 57370 57370 29
+Encoding: 57370 57370 32
+
 Width: 1268
 Flags: W
 LayerCount: 2
@@ -1989,7 +2014,8 @@ Validated: 1
 EndChar
 
 StartChar: uniEC60
-Encoding: 60512 60512 30
+Encoding: 60512 60512 33
+
 Width: 2
 Flags: W
 LayerCount: 2
@@ -2017,7 +2043,8 @@ Validated: 1
 EndChar
 
 StartChar: uniEC40
-Encoding: 60480 60480 31
+Encoding: 60480 60480 34
+
 Width: 2
 Flags: W
 LayerCount: 2
@@ -2065,7 +2092,8 @@ Validated: 9
 EndChar
 
 StartChar: uniEC41
-Encoding: 60481 60481 32
+Encoding: 60481 60481 35
+
 Width: 2
 Flags: W
 LayerCount: 2
@@ -2113,7 +2141,8 @@ Validated: 9
 EndChar
 
 StartChar: uniEC42
-Encoding: 60482 60482 33
+Encoding: 60482 60482 36
+
 Width: 2
 Flags: W
 LayerCount: 2
@@ -2161,7 +2190,8 @@ Validated: 9
 EndChar
 
 StartChar: uniEC51
-Encoding: 60497 60497 34
+Encoding: 60497 60497 37
+
 Width: 2
 Flags: W
 LayerCount: 2
@@ -2189,7 +2219,8 @@ Validated: 1
 EndChar
 
 StartChar: uniEC61
-Encoding: 60513 60513 35
+Encoding: 60513 60513 38
+
 Width: 2
 Flags: W
 LayerCount: 2
@@ -2217,7 +2248,8 @@ Validated: 1
 EndChar
 
 StartChar: uniEC71
-Encoding: 60529 60529 36
+Encoding: 60529 60529 39
+
 Width: 2
 Flags: W
 LayerCount: 2
@@ -2268,8 +2300,8 @@ EndSplineSet
 Validated: 1
 EndChar
 
-StartChar: uniE03F
-Encoding: 57407 57407 37
+StartChar: uniE03E
+Encoding: 57406 57406 40
 Width: 1411
 Flags: W
 LayerCount: 2
@@ -2335,7 +2367,8 @@ Validated: 33
 EndChar
 
 StartChar: uniEC81
-Encoding: 60545 60545 38
+Encoding: 60545 60545 41
+
 Width: 2
 Flags: W
 LayerCount: 2
@@ -2386,7 +2419,8 @@ Validated: 1
 EndChar
 
 StartChar: uniECBF
-Encoding: 60607 60607 39
+Encoding: 60607 60607 42
+
 Width: 2
 Flags: W
 LayerCount: 2
@@ -2414,7 +2448,8 @@ Validated: 1
 EndChar
 
 StartChar: uniEC80
-Encoding: 60544 60544 40
+Encoding: 60544 60544 43
+
 Width: 2
 Flags: W
 LayerCount: 2
@@ -2465,7 +2500,8 @@ Validated: 1
 EndChar
 
 StartChar: uniEC70
-Encoding: 60528 60528 41
+Encoding: 60528 60528 44
+
 Width: 2
 Flags: W
 LayerCount: 2
@@ -2517,7 +2553,7 @@ Validated: 1
 EndChar
 
 StartChar: uni604F
-Encoding: 24655 24655 42
+Encoding: 24655 24655 45
 Width: 2
 Flags: W
 LayerCount: 2
@@ -2545,7 +2581,8 @@ Validated: 1
 EndChar
 
 StartChar: uniEC32
-Encoding: 60466 60466 43
+Encoding: 60466 60466 46
+
 Width: 2
 Flags: W
 LayerCount: 2
@@ -2589,7 +2626,8 @@ Validated: 1
 EndChar
 
 StartChar: uniE019
-Encoding: 57369 57369 44
+Encoding: 57369 57369 47
+
 Width: 1379
 Flags: W
 LayerCount: 2
@@ -2674,7 +2712,8 @@ Validated: 1
 EndChar
 
 StartChar: uniEC52
-Encoding: 60498 60498 45
+Encoding: 60498 60498 48
+
 Width: 2
 Flags: W
 LayerCount: 2
@@ -2702,7 +2741,8 @@ Validated: 1
 EndChar
 
 StartChar: uniE01E
-Encoding: 57374 57374 46
+Encoding: 57374 57374 49
+
 Width: 1937
 Flags: W
 LayerCount: 2
@@ -2837,7 +2877,8 @@ Validated: 1
 EndChar
 
 StartChar: uniEC62
-Encoding: 60514 60514 47
+Encoding: 60514 60514 50
+
 Width: 2
 Flags: W
 LayerCount: 2
@@ -2865,7 +2906,8 @@ Validated: 1
 EndChar
 
 StartChar: uniEC82
-Encoding: 60546 60546 48
+Encoding: 60546 60546 51
+
 Width: 2
 Flags: W
 LayerCount: 2
@@ -2916,7 +2958,8 @@ Validated: 1
 EndChar
 
 StartChar: uniEC50
-Encoding: 60496 60496 49
+Encoding: 60496 60496 52
+
 Width: 2
 Flags: W
 LayerCount: 2
@@ -2944,7 +2987,8 @@ Validated: 1
 EndChar
 
 StartChar: uniE01D
-Encoding: 57373 57373 50
+Encoding: 57373 57373 53
+
 Width: 2048
 Flags: W
 LayerCount: 2
@@ -3056,7 +3100,8 @@ Validated: 1
 EndChar
 
 StartChar: uniE01F
-Encoding: 57375 57375 51
+Encoding: 57375 57375 54
+
 Width: 1933
 Flags: W
 LayerCount: 2
@@ -3184,7 +3229,8 @@ Validated: 33
 EndChar
 
 StartChar: uniEC72
-Encoding: 60530 60530 52
+Encoding: 60530 60530 55
+
 Width: 2
 Flags: W
 LayerCount: 2
@@ -3236,7 +3282,8 @@ Validated: 1
 EndChar
 
 StartChar: uniE01B
-Encoding: 57371 57371 53
+Encoding: 57371 57371 56
+
 Width: 1283
 Flags: W
 LayerCount: 2
@@ -3328,7 +3375,8 @@ Validated: 33
 EndChar
 
 StartChar: uniEC21
-Encoding: 60449 60449 54
+Encoding: 60449 60449 57
+
 Width: 2
 Flags: W
 LayerCount: 2
@@ -3350,7 +3398,7 @@ Validated: 1
 EndChar
 
 StartChar: uni605C
-Encoding: 24668 24668 55
+Encoding: 24668 24668 58
 Width: 1169
 Flags: W
 LayerCount: 2
@@ -3391,7 +3439,8 @@ Validated: 1
 EndChar
 
 StartChar: uniE032
-Encoding: 57394 57394 56
+Encoding: 57394 57394 59
+
 Width: 1110
 Flags: W
 LayerCount: 2
@@ -3448,7 +3497,8 @@ Validated: 1
 EndChar
 
 StartChar: uniEC73
-Encoding: 60531 60531 57
+Encoding: 60531 60531 60
+
 Width: 2
 Flags: W
 LayerCount: 2
@@ -3500,7 +3550,7 @@ Validated: 1
 EndChar
 
 StartChar: uniEBD9
-Encoding: 60377 60377 58
+Encoding: 60377 60377 61
 Width: 517
 Flags: W
 LayerCount: 2
@@ -3548,7 +3598,8 @@ Validated: 1
 EndChar
 
 StartChar: uniE02E
-Encoding: 57390 57390 59
+Encoding: 57390 57390 62
+
 Width: 567
 Flags: W
 LayerCount: 2
@@ -3592,7 +3643,8 @@ Validated: 1
 EndChar
 
 StartChar: uniE002
-Encoding: 57346 57346 60
+Encoding: 57346 57346 63
+
 Width: 1277
 Flags: W
 LayerCount: 2
@@ -3677,7 +3729,8 @@ Validated: 37
 EndChar
 
 StartChar: uniE013
-Encoding: 57363 57363 61
+Encoding: 57363 57363 64
+
 Width: 1995
 Flags: W
 LayerCount: 2
@@ -3791,7 +3844,8 @@ Validated: 33
 EndChar
 
 StartChar: uniE00B
-Encoding: 57355 57355 62
+Encoding: 57355 57355 65
+
 Width: 1344
 Flags: W
 LayerCount: 2
@@ -3881,7 +3935,8 @@ Validated: 33
 EndChar
 
 StartChar: uniE00A
-Encoding: 57354 57354 63
+Encoding: 57354 57354 66
+
 Width: 1330
 Flags: W
 LayerCount: 2
@@ -3969,7 +4024,8 @@ Validated: 1
 EndChar
 
 StartChar: uniE009
-Encoding: 57353 57353 64
+Encoding: 57353 57353 67
+
 Width: 1429
 Flags: W
 LayerCount: 2
@@ -4046,7 +4102,8 @@ Validated: 33
 EndChar
 
 StartChar: uniE00E
-Encoding: 57358 57358 65
+Encoding: 57358 57358 68
+
 Width: 1999
 Flags: W
 LayerCount: 2
@@ -4179,7 +4236,8 @@ Validated: 33
 EndChar
 
 StartChar: uniE012
-Encoding: 57362 57362 66
+Encoding: 57362 57362 69
+
 Width: 1999
 Flags: W
 LayerCount: 2
@@ -4302,7 +4360,8 @@ Validated: 33
 EndChar
 
 StartChar: uniE016
-Encoding: 57366 57366 67
+Encoding: 57366 57366 70
+
 Width: 1330
 Flags: W
 LayerCount: 2
@@ -4380,7 +4439,8 @@ Validated: 1
 EndChar
 
 StartChar: uniE025
-Encoding: 57381 57381 68
+Encoding: 57381 57381 71
+
 Width: 1156
 Flags: W
 LayerCount: 2
@@ -4452,7 +4512,8 @@ Validated: 33
 EndChar
 
 StartChar: uniE022
-Encoding: 57378 57378 69
+Encoding: 57378 57378 72
+
 Width: 1674
 Flags: W
 LayerCount: 2
@@ -4550,7 +4611,8 @@ Validated: 1
 EndChar
 
 StartChar: uniE026
-Encoding: 57382 57382 70
+Encoding: 57382 57382 73
+
 Width: 1143
 Flags: W
 LayerCount: 2
@@ -4658,7 +4720,8 @@ Validated: 33
 EndChar
 
 StartChar: uniE02A
-Encoding: 57386 57386 71
+Encoding: 57386 57386 74
+
 Width: 1343
 Flags: W
 LayerCount: 2
@@ -4721,11 +4784,12 @@ SplineSet
  578 643 l 1,0,1
 EndSplineSet
 Validated: 33
-Kerns2: 72 -140 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 69 -60 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 22 50 "'kern' Horizontal Kerning in Latin lookup 0 subtable"
+Kerns2: 75 -140 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 72 -60 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 25 50 "'kern' Horizontal Kerning in Latin lookup 0 subtable"
 EndChar
 
 StartChar: uniE023
-Encoding: 57379 57379 72
+Encoding: 57379 57379 75
+
 Width: 1674
 Flags: W
 LayerCount: 2
@@ -4839,7 +4903,8 @@ Validated: 33
 EndChar
 
 StartChar: uniE017
-Encoding: 57367 57367 73
+Encoding: 57367 57367 76
+
 Width: 1345
 Flags: W
 LayerCount: 2
@@ -4917,7 +4982,8 @@ Validated: 33
 EndChar
 
 StartChar: uniE029
-Encoding: 57385 57385 74
+Encoding: 57385 57385 77
+
 Width: 1399
 Flags: W
 LayerCount: 2
@@ -5010,7 +5076,8 @@ Validated: 33
 EndChar
 
 StartChar: uniEC31
-Encoding: 60465 60465 75
+Encoding: 60465 60465 78
+
 Width: 2
 Flags: W
 LayerCount: 2
@@ -5051,7 +5118,8 @@ Validated: 1
 EndChar
 
 StartChar: uniE001
-Encoding: 57345 57345 76
+Encoding: 57345 57345 79
+
 Width: 1379
 Flags: W
 LayerCount: 2
@@ -5137,7 +5205,8 @@ Validated: 1
 EndChar
 
 StartChar: uniE00D
-Encoding: 57357 57357 77
+Encoding: 57357 57357 80
+
 Width: 2097
 Flags: W
 LayerCount: 2
@@ -5241,7 +5310,8 @@ Validated: 33
 EndChar
 
 StartChar: uniE006
-Encoding: 57350 57350 78
+Encoding: 57350 57350 81
+
 Width: 1946
 Flags: W
 LayerCount: 2
@@ -5369,7 +5439,8 @@ Validated: 33
 EndChar
 
 StartChar: uniE011
-Encoding: 57361 57361 79
+Encoding: 57361 57361 82
+
 Width: 2097
 Flags: W
 LayerCount: 2
@@ -5465,7 +5536,8 @@ Validated: 1
 EndChar
 
 StartChar: uniE00F
-Encoding: 57359 57359 80
+Encoding: 57359 57359 83
+
 Width: 1995
 Flags: W
 LayerCount: 2
@@ -5591,7 +5663,8 @@ Validated: 33
 EndChar
 
 StartChar: uniE005
-Encoding: 57349 57349 81
+Encoding: 57349 57349 84
+
 Width: 2048
 Flags: W
 LayerCount: 2
@@ -5703,7 +5776,8 @@ Validated: 1
 EndChar
 
 StartChar: uniE007
-Encoding: 57351 57351 82
+Encoding: 57351 57351 85
+
 Width: 1995
 Flags: W
 LayerCount: 2
@@ -5821,7 +5895,8 @@ Validated: 33
 EndChar
 
 StartChar: uniE015
-Encoding: 57365 57365 83
+Encoding: 57365 57365 86
+
 Width: 1429
 Flags: W
 LayerCount: 2
@@ -5889,7 +5964,8 @@ Validated: 1
 EndChar
 
 StartChar: uniE003
-Encoding: 57347 57347 84
+Encoding: 57347 57347 87
+
 Width: 1345
 Flags: W
 LayerCount: 2
@@ -5971,7 +6047,8 @@ Validated: 33
 EndChar
 
 StartChar: uniEC22
-Encoding: 60450 60450 85
+Encoding: 60450 60450 88
+
 Width: 2
 Flags: W
 LayerCount: 2
@@ -5993,7 +6070,7 @@ Validated: 1
 EndChar
 
 StartChar: uniEBD0
-Encoding: 60368 60368 86
+Encoding: 60368 60368 89
 Width: 2
 Flags: W
 LayerCount: 2
@@ -6042,7 +6119,7 @@ Validated: 1
 EndChar
 
 StartChar: uniEBD1
-Encoding: 60369 60369 87
+Encoding: 60369 60369 90
 Width: 2
 Flags: W
 LayerCount: 2
@@ -6093,7 +6170,8 @@ Validated: 1
 EndChar
 
 StartChar: uniE02C
-Encoding: 57388 57388 88
+Encoding: 57388 57388 91
+
 Width: 537
 Flags: W
 LayerCount: 2
@@ -6142,7 +6220,7 @@ Validated: 1
 EndChar
 
 StartChar: uni00A0
-Encoding: 160 160 89
+Encoding: 160 160 92
 Width: 630
 Flags: W
 LayerCount: 2
@@ -6151,7 +6229,7 @@ Validated: 1
 EndChar
 
 StartChar: uniEBE0
-Encoding: 60384 60384 90
+Encoding: 60384 60384 93
 Width: 762
 Flags: W
 LayerCount: 2
@@ -6205,7 +6283,7 @@ Validated: 33
 EndChar
 
 StartChar: uniEBDA
-Encoding: 60378 60378 91
+Encoding: 60378 60378 94
 Width: 621
 Flags: W
 LayerCount: 2
@@ -6256,7 +6334,7 @@ Validated: 1
 EndChar
 
 StartChar: uniEBF8
-Encoding: 60408 60408 92
+Encoding: 60408 60408 95
 Width: 785
 Flags: W
 LayerCount: 2
@@ -6348,7 +6426,7 @@ Validated: 37
 EndChar
 
 StartChar: uni60A4
-Encoding: 24740 24740 93
+Encoding: 24740 24740 96
 Width: 983
 Flags: W
 LayerCount: 2
@@ -6392,7 +6470,7 @@ Validated: 1
 EndChar
 
 StartChar: uniEBF9
-Encoding: 60409 60409 94
+Encoding: 60409 60409 97
 Width: 997
 Flags: W
 LayerCount: 2
@@ -6484,7 +6562,8 @@ Validated: 37
 EndChar
 
 StartChar: uniE801
-Encoding: 59393 59393 95
+Encoding: 59393 59393 98
+
 Width: 1962
 Flags: W
 LayerCount: 2
@@ -6625,7 +6704,8 @@ Validated: 33
 EndChar
 
 StartChar: uniE800
-Encoding: 59392 59392 96
+Encoding: 59392 59392 99
+
 Width: 1966
 Flags: W
 LayerCount: 2
@@ -6764,7 +6844,7 @@ Validated: 1
 EndChar
 
 StartChar: uniED71
-Encoding: 60785 60785 97
+Encoding: 60785 60785 100
 Width: 2
 Flags: W
 LayerCount: 2
@@ -6807,7 +6887,7 @@ Validated: 1
 EndChar
 
 StartChar: uniED70
-Encoding: 60784 60784 98
+Encoding: 60784 60784 101
 Width: 2
 Flags: W
 LayerCount: 2
@@ -6850,7 +6930,8 @@ Validated: 1
 EndChar
 
 StartChar: uni60AA
-Encoding: 24746 24746 99
+Encoding: 24746 24746 102
+
 Width: 2
 Flags: W
 LayerCount: 2
@@ -6886,7 +6967,7 @@ Validated: 1
 EndChar
 
 StartChar: uniE06A
-Encoding: 57450 57450 100
+Encoding: 57450 57450 103
 Width: 705
 Flags: W
 LayerCount: 2
@@ -6933,7 +7014,7 @@ Validated: 1
 EndChar
 
 StartChar: uniE069
-Encoding: 57449 57449 101
+Encoding: 57449 57449 104
 Width: 1169
 Flags: W
 LayerCount: 2
@@ -7004,7 +7085,8 @@ Validated: 1
 EndChar
 
 StartChar: uni60AD
-Encoding: 24749 24749 102
+Encoding: 24749 24749 105
+
 Width: 2
 Flags: W
 LayerCount: 2
@@ -7040,7 +7122,7 @@ Validated: 1
 EndChar
 
 StartChar: uni60AE
-Encoding: 24750 24750 103
+Encoding: 24750 24750 106
 Width: 1044
 Flags: W
 LayerCount: 2
@@ -7121,7 +7203,8 @@ Validated: 33
 EndChar
 
 StartChar: uni60AF
-Encoding: 24751 24751 104
+Encoding: 24751 24751 107
+
 Width: 2
 Flags: W
 LayerCount: 2
@@ -7157,7 +7240,8 @@ Validated: 1
 EndChar
 
 StartChar: uniEC1F
-Encoding: 60447 60447 105
+Encoding: 60447 60447 108
+
 Width: 2
 Flags: W
 LayerCount: 2
@@ -7198,7 +7282,7 @@ Validated: 1
 EndChar
 
 StartChar: quoteleft
-Encoding: 8216 8216 106
+Encoding: 8216 8216 109
 Width: 425
 Flags: W
 LayerCount: 2
@@ -7227,7 +7311,8 @@ Validated: 1
 EndChar
 
 StartChar: quoteright
-Encoding: 8217 8217 107
+Encoding: 8217 8217 110
+
 Width: 425
 Flags: W
 LayerCount: 2
@@ -7256,7 +7341,8 @@ Validated: 1
 EndChar
 
 StartChar: uni60B3
-Encoding: 24755 24755 108
+Encoding: 24755 24755 111
+
 Width: 1228
 Flags: W
 LayerCount: 2
@@ -7334,7 +7420,8 @@ Validated: 33
 EndChar
 
 StartChar: uniED4F
-Encoding: 60751 60751 109
+Encoding: 60751 60751 112
+
 Width: 0
 Flags: W
 LayerCount: 2
@@ -7379,7 +7466,8 @@ Validated: 1
 EndChar
 
 StartChar: uni60B5
-Encoding: 24757 24757 110
+Encoding: 24757 24757 113
+
 Width: 2
 Flags: W
 LayerCount: 2
@@ -7415,7 +7503,7 @@ Validated: 1
 EndChar
 
 StartChar: uni60B6
-Encoding: 24758 24758 111
+Encoding: 24758 24758 114
 Width: 795
 Flags: W
 LayerCount: 2
@@ -7442,7 +7530,8 @@ Validated: 1
 EndChar
 
 StartChar: uni60B7
-Encoding: 24759 24759 112
+Encoding: 24759 24759 115
+
 Width: 626
 Flags: W
 LayerCount: 2
@@ -7470,7 +7559,8 @@ Validated: 1
 EndChar
 
 StartChar: uniEC0F
-Encoding: 60431 60431 113
+Encoding: 60431 60431 116
+
 Width: 2
 Flags: W
 LayerCount: 2
@@ -7492,7 +7582,8 @@ Validated: 1
 EndChar
 
 StartChar: uni60B9
-Encoding: 24761 24761 114
+Encoding: 24761 24761 117
+
 Width: 614
 Flags: W
 LayerCount: 2
@@ -7531,7 +7622,7 @@ Validated: 1
 EndChar
 
 StartChar: uni60BA
-Encoding: 24762 24762 115
+Encoding: 24762 24762 118
 Width: 566
 Flags: W
 LayerCount: 2
@@ -7559,7 +7650,7 @@ Validated: 1
 EndChar
 
 StartChar: uniE06B
-Encoding: 57451 57451 116
+Encoding: 57451 57451 119
 Width: 705
 Flags: W
 LayerCount: 2
@@ -7606,7 +7697,8 @@ Validated: 1
 EndChar
 
 StartChar: uniE034
-Encoding: 57396 57396 117
+Encoding: 57396 57396 120
+
 Width: 1167
 Flags: W
 LayerCount: 2
@@ -7665,7 +7757,8 @@ Validated: 1
 EndChar
 
 StartChar: uniE02D
-Encoding: 57389 57389 118
+Encoding: 57389 57389 121
+
 Width: 511
 Flags: W
 LayerCount: 2
@@ -7716,7 +7809,8 @@ Validated: 1
 EndChar
 
 StartChar: uniE031
-Encoding: 57393 57393 119
+Encoding: 57393 57393 122
+
 Width: 1024
 Flags: W
 LayerCount: 2
@@ -7787,7 +7881,8 @@ Validated: 33
 EndChar
 
 StartChar: uniE066
-Encoding: 57446 57446 120
+Encoding: 57446 57446 123
+
 Width: 1034
 Flags: W
 LayerCount: 2
@@ -7889,7 +7984,8 @@ Validated: 1
 EndChar
 
 StartChar: uniE065
-Encoding: 57445 57445 121
+Encoding: 57445 57445 124
+
 Width: 743
 Flags: W
 LayerCount: 2
@@ -7941,7 +8037,8 @@ Validated: 1
 EndChar
 
 StartChar: uniE068
-Encoding: 57448 57448 122
+Encoding: 57448 57448 125
+
 Width: 1496
 Flags: W
 LayerCount: 2
@@ -7987,7 +8084,7 @@ Validated: 1
 EndChar
 
 StartChar: uni60C3
-Encoding: 24771 24771 123
+Encoding: 24771 24771 126
 Width: 614
 Flags: W
 LayerCount: 2
@@ -8043,7 +8140,8 @@ Validated: 1
 EndChar
 
 StartChar: uniE037
-Encoding: 57399 57399 124
+Encoding: 57399 57399 127
+
 Width: 1317
 Flags: W
 LayerCount: 2
@@ -8120,7 +8218,7 @@ Validated: 33
 EndChar
 
 StartChar: uniEBE8
-Encoding: 60392 60392 125
+Encoding: 60392 60392 128
 Width: 747
 Flags: W
 LayerCount: 2
@@ -8173,7 +8271,7 @@ Validated: 33
 EndChar
 
 StartChar: uniEBEA
-Encoding: 60394 60394 126
+Encoding: 60394 60394 129
 Width: 564
 Flags: W
 LayerCount: 2
@@ -8229,7 +8327,7 @@ Validated: 1
 EndChar
 
 StartChar: uni60C7
-Encoding: 24775 24775 127
+Encoding: 24775 24775 130
 Width: 690
 Flags: W
 LayerCount: 2
@@ -8298,7 +8396,8 @@ Validated: 33
 EndChar
 
 StartChar: uniECB3
-Encoding: 60595 60595 128
+Encoding: 60595 60595 131
+
 Width: 2
 Flags: W
 LayerCount: 2
@@ -8326,7 +8425,8 @@ Validated: 1
 EndChar
 
 StartChar: uniECB2
-Encoding: 60594 60594 129
+Encoding: 60594 60594 132
+
 Width: 2
 Flags: W
 LayerCount: 2
@@ -8354,7 +8454,8 @@ Validated: 1
 EndChar
 
 StartChar: uniECB1
-Encoding: 60593 60593 130
+Encoding: 60593 60593 133
+
 Width: 2
 Flags: W
 LayerCount: 2
@@ -8382,7 +8483,8 @@ Validated: 1
 EndChar
 
 StartChar: uniECB0
-Encoding: 60592 60592 131
+Encoding: 60592 60592 134
+
 Width: 2
 Flags: W
 LayerCount: 2
@@ -8410,7 +8512,8 @@ Validated: 1
 EndChar
 
 StartChar: uniED43
-Encoding: 60739 60739 132
+Encoding: 60739 60739 135
+
 Width: 2
 Flags: W
 LayerCount: 2
@@ -8455,7 +8558,8 @@ Validated: 1
 EndChar
 
 StartChar: uniED42
-Encoding: 60738 60738 133
+Encoding: 60738 60738 136
+
 Width: 2
 Flags: W
 LayerCount: 2
@@ -8500,7 +8604,8 @@ Validated: 1
 EndChar
 
 StartChar: uniED41
-Encoding: 60737 60737 134
+Encoding: 60737 60737 137
+
 Width: 2
 Flags: W
 LayerCount: 2
@@ -8545,7 +8650,8 @@ Validated: 1
 EndChar
 
 StartChar: uniED40
-Encoding: 60736 60736 135
+Encoding: 60736 60736 138
+
 Width: 2
 Flags: W
 LayerCount: 2
@@ -8590,7 +8696,8 @@ Validated: 1
 EndChar
 
 StartChar: uniEC93
-Encoding: 60563 60563 136
+Encoding: 60563 60563 139
+
 Width: 2
 Flags: W
 LayerCount: 2
@@ -8626,7 +8733,8 @@ Validated: 1
 EndChar
 
 StartChar: uniEC91
-Encoding: 60561 60561 137
+Encoding: 60561 60561 140
+
 Width: 2
 Flags: W
 LayerCount: 2
@@ -8662,7 +8770,8 @@ Validated: 1
 EndChar
 
 StartChar: uniEC92
-Encoding: 60562 60562 138
+Encoding: 60562 60562 141
+
 Width: 2
 Flags: W
 LayerCount: 2
@@ -8698,7 +8807,8 @@ Validated: 1
 EndChar
 
 StartChar: uniEC90
-Encoding: 60560 60560 139
+Encoding: 60560 60560 142
+
 Width: 2
 Flags: W
 LayerCount: 2
@@ -8734,7 +8844,8 @@ Validated: 1
 EndChar
 
 StartChar: uniED03
-Encoding: 60675 60675 140
+Encoding: 60675 60675 143
+
 Width: 2
 Flags: W
 LayerCount: 2
@@ -8779,7 +8890,8 @@ Validated: 1
 EndChar
 
 StartChar: uniED02
-Encoding: 60674 60674 141
+Encoding: 60674 60674 144
+
 Width: 2
 Flags: W
 LayerCount: 2
@@ -8824,7 +8936,8 @@ Validated: 1
 EndChar
 
 StartChar: uniED01
-Encoding: 60673 60673 142
+Encoding: 60673 60673 145
+
 Width: 2
 Flags: W
 LayerCount: 2
@@ -8869,7 +8982,8 @@ Validated: 1
 EndChar
 
 StartChar: uniED00
-Encoding: 60672 60672 143
+Encoding: 60672 60672 146
+
 Width: 2
 Flags: W
 LayerCount: 2
@@ -8914,7 +9028,8 @@ Validated: 1
 EndChar
 
 StartChar: uniEDA3
-Encoding: 60835 60835 144
+Encoding: 60835 60835 147
+
 Width: 2
 Flags: W
 LayerCount: 2
@@ -8948,7 +9063,8 @@ Validated: 1
 EndChar
 
 StartChar: uniEDA2
-Encoding: 60834 60834 145
+Encoding: 60834 60834 148
+
 Width: 2
 Flags: W
 LayerCount: 2
@@ -8982,7 +9098,8 @@ Validated: 1
 EndChar
 
 StartChar: uniEDA1
-Encoding: 60833 60833 146
+Encoding: 60833 60833 149
+
 Width: 2
 Flags: W
 LayerCount: 2
@@ -9016,7 +9133,8 @@ Validated: 1
 EndChar
 
 StartChar: uniEDA0
-Encoding: 60832 60832 147
+Encoding: 60832 60832 150
+
 Width: 2
 Flags: W
 LayerCount: 2
@@ -9050,7 +9168,8 @@ Validated: 1
 EndChar
 
 StartChar: uniED93
-Encoding: 60819 60819 148
+Encoding: 60819 60819 151
+
 Width: 2
 Flags: W
 LayerCount: 2
@@ -9086,7 +9205,8 @@ Validated: 1
 EndChar
 
 StartChar: uniED92
-Encoding: 60818 60818 149
+Encoding: 60818 60818 152
+
 Width: 2
 Flags: W
 LayerCount: 2
@@ -9122,7 +9242,8 @@ Validated: 1
 EndChar
 
 StartChar: uniED91
-Encoding: 60817 60817 150
+Encoding: 60817 60817 153
+
 Width: 2
 Flags: W
 LayerCount: 2
@@ -9158,7 +9279,8 @@ Validated: 1
 EndChar
 
 StartChar: uniED90
-Encoding: 60816 60816 151
+Encoding: 60816 60816 154
+
 Width: 2
 Flags: W
 LayerCount: 2
@@ -9194,7 +9316,8 @@ Validated: 1
 EndChar
 
 StartChar: uni60E0
-Encoding: 24800 24800 152
+Encoding: 24800 24800 155
+
 Width: 2
 Flags: W
 LayerCount: 2
@@ -9246,7 +9369,8 @@ Validated: 1
 EndChar
 
 StartChar: uni60E1
-Encoding: 24801 24801 153
+Encoding: 24801 24801 156
+
 Width: 2
 Flags: W
 LayerCount: 2
@@ -9298,7 +9422,8 @@ Validated: 1
 EndChar
 
 StartChar: uni60E2
-Encoding: 24802 24802 154
+Encoding: 24802 24802 157
+
 Width: 2
 Flags: W
 LayerCount: 2
@@ -9350,7 +9475,8 @@ Validated: 1
 EndChar
 
 StartChar: uni60E3
-Encoding: 24803 24803 155
+Encoding: 24803 24803 158
+
 Width: 2
 Flags: W
 LayerCount: 2
@@ -9402,7 +9528,8 @@ Validated: 1
 EndChar
 
 StartChar: uniECC3
-Encoding: 60611 60611 156
+Encoding: 60611 60611 159
+
 Width: 2
 Flags: W
 LayerCount: 2
@@ -9453,7 +9580,8 @@ Validated: 1
 EndChar
 
 StartChar: uniECC2
-Encoding: 60610 60610 157
+Encoding: 60610 60610 160
+
 Width: 2
 Flags: W
 LayerCount: 2
@@ -9504,7 +9632,8 @@ Validated: 1
 EndChar
 
 StartChar: uniECC1
-Encoding: 60609 60609 158
+Encoding: 60609 60609 161
+
 Width: 2
 Flags: W
 LayerCount: 2
@@ -9555,7 +9684,8 @@ Validated: 1
 EndChar
 
 StartChar: uniECC0
-Encoding: 60608 60608 159
+Encoding: 60608 60608 162
+
 Width: 2
 Flags: W
 LayerCount: 2
@@ -9606,7 +9736,8 @@ Validated: 1
 EndChar
 
 StartChar: uniED53
-Encoding: 60755 60755 160
+Encoding: 60755 60755 163
+
 Width: 0
 Flags: W
 LayerCount: 2
@@ -9650,7 +9781,8 @@ Validated: 1
 EndChar
 
 StartChar: uniED52
-Encoding: 60754 60754 161
+Encoding: 60754 60754 164
+
 Width: 0
 Flags: W
 LayerCount: 2
@@ -9694,7 +9826,8 @@ Validated: 1
 EndChar
 
 StartChar: uniED51
-Encoding: 60753 60753 162
+Encoding: 60753 60753 165
+
 Width: 0
 Flags: W
 LayerCount: 2
@@ -9738,7 +9871,8 @@ Validated: 1
 EndChar
 
 StartChar: uniED50
-Encoding: 60752 60752 163
+Encoding: 60752 60752 166
+
 Width: 2
 Flags: W
 LayerCount: 2
@@ -9782,7 +9916,8 @@ Validated: 1
 EndChar
 
 StartChar: uni60EC
-Encoding: 24812 24812 164
+Encoding: 24812 24812 167
+
 Width: 2
 Flags: W
 LayerCount: 2
@@ -9804,7 +9939,8 @@ Validated: 1
 EndChar
 
 StartChar: uni60ED
-Encoding: 24813 24813 165
+Encoding: 24813 24813 168
+
 Width: 2
 Flags: W
 LayerCount: 2
@@ -9826,7 +9962,8 @@ Validated: 1
 EndChar
 
 StartChar: uni60EE
-Encoding: 24814 24814 166
+Encoding: 24814 24814 169
+
 Width: 2
 Flags: W
 LayerCount: 2
@@ -9848,7 +9985,8 @@ Validated: 1
 EndChar
 
 StartChar: uni60EF
-Encoding: 24815 24815 167
+Encoding: 24815 24815 170
+
 Width: 2
 Flags: W
 LayerCount: 2
@@ -9870,7 +10008,8 @@ Validated: 1
 EndChar
 
 StartChar: uniE070
-Encoding: 57456 57456 168
+Encoding: 57456 57456 171
+
 Width: 1035
 Flags: W
 LayerCount: 2
@@ -9931,11 +10070,12 @@ SplineSet
  995 558 995 558 995 451 c 0,0,1
 EndSplineSet
 Validated: 1
-Kerns2: 172 -300 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 171 -300 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 170 -300 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 339 -300 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 340 -300 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 341 -300 "'kern' Horizontal Kerning in Latin lookup 0 subtable"
+Kerns2: 175 -300 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 174 -300 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 173 -300 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 343 -300 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 344 -300 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 345 -300 "'kern' Horizontal Kerning in Latin lookup 0 subtable"
 EndChar
 
 StartChar: uniE074
-Encoding: 57460 57460 169
+Encoding: 57460 57460 172
+
 Width: 1258
 Flags: W
 LayerCount: 2
@@ -9994,11 +10134,12 @@ SplineSet
  678 -867 678 -867 765 -866 c 0,0,1
 EndSplineSet
 Validated: 33
-Kerns2: 271 -300 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 270 -300 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 269 -300 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 173 -300 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 168 -300 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 325 -300 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 332 -300 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 333 -300 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 334 -300 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 335 -300 "'kern' Horizontal Kerning in Latin lookup 0 subtable"
+Kerns2: 274 -300 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 273 -300 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 272 -300 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 176 -300 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 171 -300 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 329 -300 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 336 -300 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 337 -300 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 338 -300 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 339 -300 "'kern' Horizontal Kerning in Latin lookup 0 subtable"
 EndChar
 
 StartChar: uniE077
-Encoding: 57463 57463 170
+Encoding: 57463 57463 173
+
 Width: 1199
 Flags: W
 LayerCount: 2
@@ -10060,7 +10201,8 @@ Validated: 33
 EndChar
 
 StartChar: uniE078
-Encoding: 57464 57464 171
+Encoding: 57464 57464 174
+
 Width: 2109
 Flags: W
 LayerCount: 2
@@ -10156,11 +10298,12 @@ SplineSet
  422 -865 422 -865 493 -866 c 0,17,18
 EndSplineSet
 Validated: 33
-Kerns2: 174 68 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 173 68 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 172 -300 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 171 -300 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 170 -300 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 339 -300 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 340 -300 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 341 -300 "'kern' Horizontal Kerning in Latin lookup 0 subtable"
+Kerns2: 177 68 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 176 68 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 175 -300 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 174 -300 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 173 -300 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 343 -300 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 344 -300 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 345 -300 "'kern' Horizontal Kerning in Latin lookup 0 subtable"
 EndChar
 
 StartChar: uniE079
-Encoding: 57465 57465 172
+Encoding: 57465 57465 175
+
 Width: 2778
 Flags: W
 LayerCount: 2
@@ -10283,11 +10426,12 @@ SplineSet
  422 -865 422 -865 493 -866 c 0,41,42
 EndSplineSet
 Validated: 33
-Kerns2: 174 70 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 173 70 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 172 -300 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 171 -300 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 170 -300 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 339 -300 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 340 -300 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 341 -300 "'kern' Horizontal Kerning in Latin lookup 0 subtable"
+Kerns2: 177 70 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 176 70 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 175 -300 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 174 -300 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 173 -300 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 343 -300 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 344 -300 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 345 -300 "'kern' Horizontal Kerning in Latin lookup 0 subtable"
 EndChar
 
 StartChar: uniE07A
-Encoding: 57466 57466 173
+Encoding: 57466 57466 176
+
 Width: 1116
 Flags: W
 LayerCount: 2
@@ -10361,11 +10505,12 @@ SplineSet
  602 746 602 746 602 721 c 0,0,1
 EndSplineSet
 Validated: 1
-Kerns2: 172 -300 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 171 -300 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 170 -300 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 339 -300 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 340 -300 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 341 -300 "'kern' Horizontal Kerning in Latin lookup 0 subtable"
+Kerns2: 175 -300 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 174 -300 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 173 -300 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 343 -300 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 344 -300 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 345 -300 "'kern' Horizontal Kerning in Latin lookup 0 subtable"
 EndChar
 
 StartChar: uniE07B
-Encoding: 57467 57467 174
+Encoding: 57467 57467 177
+
 Width: 1116
 Flags: W
 LayerCount: 2
@@ -10490,7 +10635,8 @@ Validated: 1
 EndChar
 
 StartChar: uniED63
-Encoding: 60771 60771 175
+Encoding: 60771 60771 178
+
 Width: 2
 Flags: W
 LayerCount: 2
@@ -10514,7 +10660,8 @@ Validated: 1
 EndChar
 
 StartChar: uniED62
-Encoding: 60770 60770 176
+Encoding: 60770 60770 179
+
 Width: 2
 Flags: W
 LayerCount: 2
@@ -10538,7 +10685,8 @@ Validated: 1
 EndChar
 
 StartChar: uniED61
-Encoding: 60769 60769 177
+Encoding: 60769 60769 180
+
 Width: 2
 Flags: W
 LayerCount: 2
@@ -10562,7 +10710,8 @@ Validated: 1
 EndChar
 
 StartChar: uniED60
-Encoding: 60768 60768 178
+Encoding: 60768 60768 181
+
 Width: 2
 Flags: W
 LayerCount: 2
@@ -10586,7 +10735,8 @@ Validated: 1
 EndChar
 
 StartChar: uni6100
-Encoding: 24832 24832 179
+Encoding: 24832 24832 182
+
 Width: 2
 Flags: W
 LayerCount: 2
@@ -10648,7 +10798,8 @@ Validated: 1
 EndChar
 
 StartChar: uni6101
-Encoding: 24833 24833 180
+Encoding: 24833 24833 183
+
 Width: 2
 Flags: W
 LayerCount: 2
@@ -10710,7 +10861,8 @@ Validated: 1
 EndChar
 
 StartChar: uni6102
-Encoding: 24834 24834 181
+Encoding: 24834 24834 184
+
 Width: 2
 Flags: W
 LayerCount: 2
@@ -10772,7 +10924,8 @@ Validated: 1
 EndChar
 
 StartChar: uni6103
-Encoding: 24835 24835 182
+Encoding: 24835 24835 185
+
 Width: 2
 Flags: W
 LayerCount: 2
@@ -10834,7 +10987,8 @@ Validated: 1
 EndChar
 
 StartChar: uni6104
-Encoding: 24836 24836 183
+Encoding: 24836 24836 186
+
 Width: 2
 Flags: W
 LayerCount: 2
@@ -10896,7 +11050,8 @@ Validated: 1
 EndChar
 
 StartChar: uni6105
-Encoding: 24837 24837 184
+Encoding: 24837 24837 187
+
 Width: 2
 Flags: W
 LayerCount: 2
@@ -10958,7 +11113,8 @@ Validated: 1
 EndChar
 
 StartChar: uni6106
-Encoding: 24838 24838 185
+Encoding: 24838 24838 188
+
 Width: 2
 Flags: W
 LayerCount: 2
@@ -11020,7 +11176,8 @@ Validated: 1
 EndChar
 
 StartChar: uni6107
-Encoding: 24839 24839 186
+Encoding: 24839 24839 189
+
 Width: 2
 Flags: W
 LayerCount: 2
@@ -11082,7 +11239,8 @@ Validated: 1
 EndChar
 
 StartChar: uniED83
-Encoding: 60803 60803 187
+Encoding: 60803 60803 190
+
 Width: 2
 Flags: W
 LayerCount: 2
@@ -11144,7 +11302,8 @@ Validated: 1
 EndChar
 
 StartChar: uniED82
-Encoding: 60802 60802 188
+Encoding: 60802 60802 191
+
 Width: 2
 Flags: W
 LayerCount: 2
@@ -11206,7 +11365,8 @@ Validated: 1
 EndChar
 
 StartChar: uniED81
-Encoding: 60801 60801 189
+Encoding: 60801 60801 192
+
 Width: 2
 Flags: W
 LayerCount: 2
@@ -11268,7 +11428,8 @@ Validated: 1
 EndChar
 
 StartChar: uniED80
-Encoding: 60800 60800 190
+Encoding: 60800 60800 193
+
 Width: 2
 Flags: W
 LayerCount: 2
@@ -11330,7 +11491,8 @@ Validated: 1
 EndChar
 
 StartChar: uniED13
-Encoding: 60691 60691 191
+Encoding: 60691 60691 194
+
 Width: 2
 Flags: W
 LayerCount: 2
@@ -11393,7 +11555,8 @@ Validated: 1
 EndChar
 
 StartChar: uniED12
-Encoding: 60690 60690 192
+Encoding: 60690 60690 195
+
 Width: 2
 Flags: W
 LayerCount: 2
@@ -11456,7 +11619,8 @@ Validated: 1
 EndChar
 
 StartChar: uniED11
-Encoding: 60689 60689 193
+Encoding: 60689 60689 196
+
 Width: 2
 Flags: W
 LayerCount: 2
@@ -11519,7 +11683,8 @@ Validated: 1
 EndChar
 
 StartChar: uniED10
-Encoding: 60688 60688 194
+Encoding: 60688 60688 197
+
 Width: 95
 Flags: W
 LayerCount: 2
@@ -11582,7 +11747,8 @@ Validated: 1
 EndChar
 
 StartChar: uniEDC3
-Encoding: 60867 60867 195
+Encoding: 60867 60867 198
+
 Width: 2
 Flags: W
 LayerCount: 2
@@ -11610,7 +11776,8 @@ Validated: 1
 EndChar
 
 StartChar: uniEDC2
-Encoding: 60866 60866 196
+Encoding: 60866 60866 199
+
 Width: 2
 Flags: W
 LayerCount: 2
@@ -11638,7 +11805,8 @@ Validated: 1
 EndChar
 
 StartChar: uniEDC1
-Encoding: 60865 60865 197
+Encoding: 60865 60865 200
+
 Width: 2
 Flags: W
 LayerCount: 2
@@ -11666,7 +11834,8 @@ Validated: 1
 EndChar
 
 StartChar: uniEDC0
-Encoding: 60864 60864 198
+Encoding: 60864 60864 201
+
 Width: 2
 Flags: W
 LayerCount: 2
@@ -11694,7 +11863,8 @@ Validated: 1
 EndChar
 
 StartChar: uni612A
-Encoding: 24874 24874 199
+Encoding: 24874 24874 202
+
 Width: 2
 Flags: W
 LayerCount: 2
@@ -11716,7 +11886,8 @@ Validated: 1
 EndChar
 
 StartChar: uni612B
-Encoding: 24875 24875 200
+Encoding: 24875 24875 203
+
 Width: 2
 Flags: W
 LayerCount: 2
@@ -11738,7 +11909,7 @@ Validated: 1
 EndChar
 
 StartChar: parenleft
-Encoding: 40 40 201
+Encoding: 40 40 204
 Width: 700
 Flags: W
 LayerCount: 2
@@ -11786,7 +11957,7 @@ Validated: 1
 EndChar
 
 StartChar: parenright
-Encoding: 41 41 202
+Encoding: 41 41 205
 Width: 656
 Flags: W
 LayerCount: 2
@@ -11834,7 +12005,8 @@ Validated: 1
 EndChar
 
 StartChar: uniECA2
-Encoding: 60578 60578 203
+Encoding: 60578 60578 206
+
 Width: 2
 Flags: W
 LayerCount: 2
@@ -11862,7 +12034,8 @@ Validated: 1
 EndChar
 
 StartChar: uniE03A
-Encoding: 57402 57402 204
+Encoding: 57402 57402 207
+
 Width: 2097
 Flags: W
 LayerCount: 2
@@ -11982,7 +12155,8 @@ Validated: 1
 EndChar
 
 StartChar: uniECA0
-Encoding: 60576 60576 205
+Encoding: 60576 60576 208
+
 Width: 2
 Flags: W
 LayerCount: 2
@@ -12010,7 +12184,8 @@ Validated: 1
 EndChar
 
 StartChar: uni617D
-Encoding: 24957 24957 206
+Encoding: 24957 24957 209
+
 Width: 1153
 Flags: W
 LayerCount: 2
@@ -12118,7 +12293,8 @@ Validated: 33
 EndChar
 
 StartChar: uni617E
-Encoding: 24958 24958 207
+Encoding: 24958 24958 210
+
 Width: 2
 Flags: W
 LayerCount: 2
@@ -12159,7 +12335,8 @@ Validated: 1
 EndChar
 
 StartChar: uni6192
-Encoding: 24978 24978 208
+Encoding: 24978 24978 211
+
 Width: 2
 Flags: W
 LayerCount: 2
@@ -12204,7 +12381,8 @@ Validated: 1
 EndChar
 
 StartChar: uni205D
-Encoding: 8285 8285 209
+Encoding: 8285 8285 212
+
 Width: 526
 Flags: W
 LayerCount: 2
@@ -12266,7 +12444,7 @@ Validated: 1
 EndChar
 
 StartChar: uniED73
-Encoding: 60787 60787 210
+Encoding: 60787 60787 213
 Width: 2
 Flags: W
 LayerCount: 2
@@ -12309,7 +12487,8 @@ Validated: 1
 EndChar
 
 StartChar: uniE802
-Encoding: 59394 59394 211
+Encoding: 59394 59394 214
+
 Width: 1996
 Flags: W
 LayerCount: 2
@@ -12430,7 +12609,8 @@ Validated: 33
 EndChar
 
 StartChar: uni8018
-Encoding: 32792 32792 212
+Encoding: 32792 32792 215
+
 Width: 2
 Flags: W
 LayerCount: 2
@@ -12489,7 +12669,8 @@ Validated: 1
 EndChar
 
 StartChar: uni8019
-Encoding: 32793 32793 213
+Encoding: 32793 32793 216
+
 Width: 2
 Flags: W
 LayerCount: 2
@@ -12549,7 +12730,8 @@ Validated: 1
 EndChar
 
 StartChar: uni801A
-Encoding: 32794 32794 214
+Encoding: 32794 32794 217
+
 Width: 2
 Flags: W
 LayerCount: 2
@@ -12594,7 +12776,8 @@ Validated: 1
 EndChar
 
 StartChar: uni801C
-Encoding: 32796 32796 215
+Encoding: 32796 32796 218
+
 Width: 2
 Flags: W
 LayerCount: 2
@@ -12652,7 +12835,8 @@ Validated: 1
 EndChar
 
 StartChar: uni801D
-Encoding: 32797 32797 216
+Encoding: 32797 32797 219
+
 Width: 2
 Flags: W
 LayerCount: 2
@@ -12710,7 +12894,8 @@ Validated: 1
 EndChar
 
 StartChar: uni801E
-Encoding: 32798 32798 217
+Encoding: 32798 32798 220
+
 Width: 2
 Flags: W
 LayerCount: 2
@@ -12755,7 +12940,8 @@ Validated: 1
 EndChar
 
 StartChar: uni8020
-Encoding: 32800 32800 218
+Encoding: 32800 32800 221
+
 Width: 2
 Flags: W
 LayerCount: 2
@@ -12800,7 +12986,7 @@ Validated: 1
 EndChar
 
 StartChar: uni8021
-Encoding: 32801 32801 219
+Encoding: 32801 32801 222
 Width: 1065
 Flags: W
 LayerCount: 2
@@ -12867,7 +13053,8 @@ Validated: 1
 EndChar
 
 StartChar: uni8026
-Encoding: 32806 32806 220
+Encoding: 32806 32806 223
+
 Width: 2
 Flags: W
 LayerCount: 2
@@ -12912,7 +13099,8 @@ Validated: 1
 EndChar
 
 StartChar: uniECA3
-Encoding: 60579 60579 221
+Encoding: 60579 60579 224
+
 Width: 2
 Flags: W
 LayerCount: 2
@@ -12940,7 +13128,8 @@ Validated: 1
 EndChar
 
 StartChar: uniECA1
-Encoding: 60577 60577 222
+Encoding: 60577 60577 225
+
 Width: 2
 Flags: W
 LayerCount: 2
@@ -12968,7 +13157,8 @@ Validated: 1
 EndChar
 
 StartChar: uniE067
-Encoding: 57447 57447 223
+Encoding: 57447 57447 226
+
 Width: 915
 Flags: W
 LayerCount: 2
@@ -13080,7 +13270,7 @@ Validated: 1
 EndChar
 
 StartChar: uniED72
-Encoding: 60786 60786 224
+Encoding: 60786 60786 227
 Width: 2
 Flags: W
 LayerCount: 2
@@ -13123,7 +13313,8 @@ Validated: 1
 EndChar
 
 StartChar: uni62D8
-Encoding: 25304 25304 225
+Encoding: 25304 25304 228
+
 Width: 2
 Flags: W
 LayerCount: 2
@@ -13164,7 +13355,8 @@ Validated: 1
 EndChar
 
 StartChar: uni6119
-Encoding: 24857 24857 226
+Encoding: 24857 24857 229
+
 Width: 2
 Flags: W
 LayerCount: 2
@@ -13251,7 +13443,8 @@ Validated: 1
 EndChar
 
 StartChar: uni611A
-Encoding: 24858 24858 227
+Encoding: 24858 24858 230
+
 Width: 46
 Flags: W
 LayerCount: 2
@@ -13347,7 +13540,8 @@ Validated: 1
 EndChar
 
 StartChar: uni611B
-Encoding: 24859 24859 228
+Encoding: 24859 24859 231
+
 Width: 2
 Flags: W
 LayerCount: 2
@@ -13439,7 +13633,8 @@ Validated: 1
 EndChar
 
 StartChar: uni6118
-Encoding: 24856 24856 229
+Encoding: 24856 24856 232
+
 Width: 2
 Flags: W
 LayerCount: 2
@@ -13527,7 +13722,8 @@ Validated: 1
 EndChar
 
 StartChar: uni6114
-Encoding: 24852 24852 230
+Encoding: 24852 24852 233
+
 Width: 2
 Flags: W
 LayerCount: 2
@@ -13587,7 +13783,8 @@ Validated: 1
 EndChar
 
 StartChar: uni6115
-Encoding: 24853 24853 231
+Encoding: 24853 24853 234
+
 Width: 2
 Flags: W
 LayerCount: 2
@@ -13643,7 +13840,8 @@ Validated: 1
 EndChar
 
 StartChar: uni6116
-Encoding: 24854 24854 232
+Encoding: 24854 24854 235
+
 Width: 2
 Flags: W
 LayerCount: 2
@@ -13713,7 +13911,8 @@ Validated: 1
 EndChar
 
 StartChar: uni6117
-Encoding: 24855 24855 233
+Encoding: 24855 24855 236
+
 Width: 2
 Flags: W
 LayerCount: 2
@@ -13775,7 +13974,8 @@ Validated: 1
 EndChar
 
 StartChar: uni611C
-Encoding: 24860 24860 234
+Encoding: 24860 24860 237
+
 Width: 692
 Flags: W
 LayerCount: 2
@@ -13864,7 +14064,8 @@ Validated: 5
 EndChar
 
 StartChar: uni611D
-Encoding: 24861 24861 235
+Encoding: 24861 24861 238
+
 Width: 647
 Flags: W
 LayerCount: 2
@@ -13918,7 +14119,8 @@ Validated: 1
 EndChar
 
 StartChar: uni611E
-Encoding: 24862 24862 236
+Encoding: 24862 24862 239
+
 Width: 102
 Flags: W
 LayerCount: 2
@@ -13968,7 +14170,8 @@ Validated: 1
 EndChar
 
 StartChar: uni612C
-Encoding: 24876 24876 237
+Encoding: 24876 24876 240
+
 Width: 2
 Flags: W
 LayerCount: 2
@@ -13990,7 +14193,8 @@ Validated: 1
 EndChar
 
 StartChar: uni612D
-Encoding: 24877 24877 238
+Encoding: 24877 24877 241
+
 Width: 2
 Flags: W
 LayerCount: 2
@@ -14012,7 +14216,8 @@ Validated: 1
 EndChar
 
 StartChar: uni612E
-Encoding: 24878 24878 239
+Encoding: 24878 24878 242
+
 Width: 1289
 Flags: W
 LayerCount: 2
@@ -14092,7 +14297,8 @@ Validated: 1
 EndChar
 
 StartChar: uni612F
-Encoding: 24879 24879 240
+Encoding: 24879 24879 243
+
 Width: 1959
 Flags: W
 LayerCount: 2
@@ -14196,7 +14402,8 @@ Validated: 1
 EndChar
 
 StartChar: uniE07C
-Encoding: 57468 57468 241
+Encoding: 57468 57468 244
+
 Width: 1173
 Flags: W
 LayerCount: 2
@@ -14254,7 +14461,8 @@ Validated: 1
 EndChar
 
 StartChar: uni6130
-Encoding: 24880 24880 242
+Encoding: 24880 24880 245
+
 Width: 1339
 Flags: W
 LayerCount: 2
@@ -14325,7 +14533,8 @@ Validated: 33
 EndChar
 
 StartChar: uni6131
-Encoding: 24881 24881 243
+Encoding: 24881 24881 246
+
 Width: 2008
 Flags: W
 LayerCount: 2
@@ -14422,7 +14631,8 @@ Validated: 37
 EndChar
 
 StartChar: uni6132
-Encoding: 24882 24882 244
+Encoding: 24882 24882 247
+
 Width: 2008
 Flags: W
 LayerCount: 2
@@ -14511,7 +14721,8 @@ Validated: 5
 EndChar
 
 StartChar: uni6133
-Encoding: 24883 24883 245
+Encoding: 24883 24883 248
+
 Width: 1339
 Flags: W
 LayerCount: 2
@@ -14573,7 +14784,8 @@ Validated: 1
 EndChar
 
 StartChar: uni6134
-Encoding: 24884 24884 246
+Encoding: 24884 24884 249
+
 Width: 1289
 Flags: W
 LayerCount: 2
@@ -14652,7 +14864,8 @@ Validated: 1
 EndChar
 
 StartChar: uni6135
-Encoding: 24885 24885 247
+Encoding: 24885 24885 250
+
 Width: 1959
 Flags: W
 LayerCount: 2
@@ -14757,7 +14970,8 @@ Validated: 5
 EndChar
 
 StartChar: uni6136
-Encoding: 24886 24886 248
+Encoding: 24886 24886 251
+
 Width: 1684
 Flags: W
 LayerCount: 2
@@ -14849,7 +15063,8 @@ Validated: 33
 EndChar
 
 StartChar: uni6137
-Encoding: 24887 24887 249
+Encoding: 24887 24887 252
+
 Width: 2353
 Flags: W
 LayerCount: 2
@@ -14987,7 +15202,8 @@ Validated: 33
 EndChar
 
 StartChar: uni611F
-Encoding: 24863 24863 250
+Encoding: 24863 24863 253
+
 Width: 2423
 Flags: W
 LayerCount: 2
@@ -15103,7 +15319,8 @@ Validated: 1
 EndChar
 
 StartChar: uni6120
-Encoding: 24864 24864 251
+Encoding: 24864 24864 254
+
 Width: 1978
 Flags: W
 LayerCount: 2
@@ -15222,7 +15439,8 @@ Validated: 1
 EndChar
 
 StartChar: uni6121
-Encoding: 24865 24865 252
+Encoding: 24865 24865 255
+
 Width: 2404
 Flags: W
 LayerCount: 2
@@ -15384,7 +15602,8 @@ Validated: 5
 EndChar
 
 StartChar: uni6122
-Encoding: 24866 24866 253
+Encoding: 24866 24866 256
+
 Width: 1837
 Flags: W
 LayerCount: 2
@@ -15515,7 +15734,8 @@ Validated: 37
 EndChar
 
 StartChar: uniE036
-Encoding: 57398 57398 254
+Encoding: 57398 57398 257
+
 Width: 1215
 Flags: W
 LayerCount: 2
@@ -15584,7 +15804,8 @@ Validated: 1
 EndChar
 
 StartChar: uniE03D
-Encoding: 57405 57405 255
+Encoding: 57405 57405 258
+
 Width: 1599
 Flags: W
 LayerCount: 2
@@ -15638,7 +15859,7 @@ Validated: 33
 EndChar
 
 StartChar: uni6124
-Encoding: 24868 24868 256
+Encoding: 24868 24868 259
 Width: 1398
 Flags: W
 LayerCount: 2
@@ -15709,7 +15930,8 @@ Validated: 33
 EndChar
 
 StartChar: uni6126
-Encoding: 24870 24870 257
+Encoding: 24870 24870 260
+
 Width: 2000
 Flags: W
 LayerCount: 2
@@ -15814,7 +16036,8 @@ Validated: 33
 EndChar
 
 StartChar: uni6127
-Encoding: 24871 24871 258
+Encoding: 24871 24871 261
+
 Width: 789
 Flags: W
 LayerCount: 2
@@ -15861,7 +16084,8 @@ Validated: 33
 EndChar
 
 StartChar: uni6128
-Encoding: 24872 24872 259
+Encoding: 24872 24872 262
+
 Width: 581
 Flags: W
 LayerCount: 2
@@ -15897,7 +16121,8 @@ Validated: 33
 EndChar
 
 StartChar: uni6138
-Encoding: 24888 24888 260
+Encoding: 24888 24888 263
+
 Width: 1684
 Flags: W
 LayerCount: 2
@@ -15985,7 +16210,8 @@ Validated: 33
 EndChar
 
 StartChar: uni6139
-Encoding: 24889 24889 261
+Encoding: 24889 24889 264
+
 Width: 2353
 Flags: W
 LayerCount: 2
@@ -16118,7 +16344,8 @@ Validated: 33
 EndChar
 
 StartChar: uni613A
-Encoding: 24890 24890 262
+Encoding: 24890 24890 265
+
 Width: 2
 Flags: W
 LayerCount: 2
@@ -16152,7 +16379,8 @@ Validated: 1
 EndChar
 
 StartChar: uni613B
-Encoding: 24891 24891 263
+Encoding: 24891 24891 266
+
 Width: 5
 Flags: W
 LayerCount: 2
@@ -16186,7 +16414,8 @@ Validated: 1
 EndChar
 
 StartChar: uni613C
-Encoding: 24892 24892 264
+Encoding: 24892 24892 267
+
 Width: 653
 Flags: W
 LayerCount: 2
@@ -16249,7 +16478,7 @@ Validated: 33
 EndChar
 
 StartChar: uni613D
-Encoding: 24893 24893 265
+Encoding: 24893 24893 268
 Width: 60
 Flags: W
 LayerCount: 2
@@ -16258,7 +16487,7 @@ Validated: 1
 EndChar
 
 StartChar: uni603E
-Encoding: 24638 24638 266
+Encoding: 24638 24638 269
 Width: 2
 Flags: W
 LayerCount: 2
@@ -16294,7 +16523,7 @@ Validated: 1
 EndChar
 
 StartChar: uni604B
-Encoding: 24651 24651 267
+Encoding: 24651 24651 270
 Width: 1304
 Flags: W
 LayerCount: 2
@@ -16383,8 +16612,8 @@ EndSplineSet
 Validated: 33
 EndChar
 
-StartChar: uniE03E
-Encoding: 57406 57406 268
+StartChar: uni204A
+Encoding: 8266 8266 271
 Width: 1077
 Flags: W
 LayerCount: 2
@@ -16448,7 +16677,8 @@ Validated: 33
 EndChar
 
 StartChar: uniE071
-Encoding: 57457 57457 269
+Encoding: 57457 57457 272
+
 Width: 1094
 Flags: W
 LayerCount: 2
@@ -16506,11 +16736,12 @@ SplineSet
  361 678 l 1,0,-1
 EndSplineSet
 Validated: 33
-Kerns2: 172 -300 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 171 -300 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 170 -300 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 339 -300 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 340 -300 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 341 -300 "'kern' Horizontal Kerning in Latin lookup 0 subtable"
+Kerns2: 175 -300 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 174 -300 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 173 -300 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 343 -300 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 344 -300 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 345 -300 "'kern' Horizontal Kerning in Latin lookup 0 subtable"
 EndChar
 
 StartChar: uniE072
-Encoding: 57458 57458 270
+Encoding: 57458 57458 273
+
 Width: 1519
 Flags: W
 LayerCount: 2
@@ -16584,11 +16815,12 @@ SplineSet
  35 885 35 885 66 895 c 1,14,15
 EndSplineSet
 Validated: 33
-Kerns2: 172 -300 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 171 -300 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 170 -300 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 339 -300 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 340 -300 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 341 -300 "'kern' Horizontal Kerning in Latin lookup 0 subtable"
+Kerns2: 175 -300 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 174 -300 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 173 -300 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 343 -300 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 344 -300 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 345 -300 "'kern' Horizontal Kerning in Latin lookup 0 subtable"
 EndChar
 
 StartChar: uniE073
-Encoding: 57459 57459 271
+Encoding: 57459 57459 274
+
 Width: 1944
 Flags: W
 LayerCount: 2
@@ -16678,11 +16910,12 @@ SplineSet
  1111 867 l 2,28,29
 EndSplineSet
 Validated: 33
-Kerns2: 172 -300 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 171 -300 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 170 -300 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 339 -300 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 340 -300 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 341 -300 "'kern' Horizontal Kerning in Latin lookup 0 subtable"
+Kerns2: 175 -300 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 174 -300 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 173 -300 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 343 -300 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 344 -300 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 345 -300 "'kern' Horizontal Kerning in Latin lookup 0 subtable"
 EndChar
 
 StartChar: uniE075
-Encoding: 57461 57461 272
+Encoding: 57461 57461 275
+
 Width: 1542
 Flags: W
 LayerCount: 2
@@ -16791,11 +17024,12 @@ SplineSet
  678 -867 678 -867 765 -866 c 0,0,1
 EndSplineSet
 Validated: 33
-Kerns2: 172 -150 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 171 -150 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 170 -150 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 339 -150 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 340 -150 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 341 -150 "'kern' Horizontal Kerning in Latin lookup 0 subtable"
+Kerns2: 175 -150 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 174 -150 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 173 -150 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 343 -150 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 344 -150 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 345 -150 "'kern' Horizontal Kerning in Latin lookup 0 subtable"
 EndChar
 
 StartChar: uniE076
-Encoding: 57462 57462 273
+Encoding: 57462 57462 276
+
 Width: 1963
 Flags: W
 LayerCount: 2
@@ -16920,11 +17154,12 @@ SplineSet
  1554 -701 1554 -701 1518 -750 c 0,14,15
 EndSplineSet
 Validated: 33
-Kerns2: 172 -150 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 171 -150 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 170 -150 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 339 -150 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 340 -150 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 341 -150 "'kern' Horizontal Kerning in Latin lookup 0 subtable"
+Kerns2: 175 -150 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 174 -150 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 173 -150 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 343 -150 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 344 -150 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 345 -150 "'kern' Horizontal Kerning in Latin lookup 0 subtable"
 EndChar
 
 StartChar: uniEC02
-Encoding: 60418 60418 274
+Encoding: 60418 60418 277
+
 Width: 2
 Flags: W
 LayerCount: 2
@@ -16946,7 +17181,8 @@ Validated: 1
 EndChar
 
 StartChar: uniE018
-Encoding: 57368 57368 275
+Encoding: 57368 57368 278
+
 Width: 1289
 Flags: W
 LayerCount: 2
@@ -17035,7 +17271,7 @@ Validated: 1
 EndChar
 
 StartChar: uni8780
-Encoding: 34688 34688 276
+Encoding: 34688 34688 279
 Width: 2851
 Flags: W
 LayerCount: 2
@@ -17876,7 +18112,7 @@ Validated: 133
 EndChar
 
 StartChar: uni61AD
-Encoding: 25005 25005 277
+Encoding: 25005 25005 281
 Width: 2
 Flags: W
 LayerCount: 2
@@ -17904,7 +18140,8 @@ Validated: 1
 EndChar
 
 StartChar: uniECF3
-Encoding: 60659 60659 278
+Encoding: 60659 60659 282
+
 Width: 2
 Flags: W
 LayerCount: 2
@@ -17949,7 +18186,7 @@ Validated: 1
 EndChar
 
 StartChar: uniECF2
-Encoding: 60658 60658 279
+Encoding: 60658 60658 283
 Width: 2
 Flags: W
 LayerCount: 2
@@ -17994,7 +18231,7 @@ Validated: 1
 EndChar
 
 StartChar: uniECF1
-Encoding: 60657 60657 280
+Encoding: 60657 60657 284
 Width: 2
 Flags: W
 LayerCount: 2
@@ -18039,7 +18276,7 @@ Validated: 1
 EndChar
 
 StartChar: uniECF0
-Encoding: 60656 60656 281
+Encoding: 60656 60656 285
 Width: 2
 Flags: W
 LayerCount: 2
@@ -18084,7 +18321,8 @@ Validated: 1
 EndChar
 
 StartChar: uniE03C
-Encoding: 57404 57404 282
+Encoding: 57404 57404 286
+
 Width: 1331
 Flags: W
 LayerCount: 2
@@ -18169,7 +18407,8 @@ Validated: 1
 EndChar
 
 StartChar: uniE020
-Encoding: 57376 57376 283
+Encoding: 57376 57376 287
+
 Width: 1320
 Flags: W
 LayerCount: 2
@@ -18243,11 +18482,12 @@ SplineSet
  680 683 680 683 638 665 c 0,69,70
 EndSplineSet
 Validated: 33
-Kerns2: 71 -50 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 22 -100 "'kern' Horizontal Kerning in Latin lookup 0 subtable"
+Kerns2: 74 -50 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 25 -100 "'kern' Horizontal Kerning in Latin lookup 0 subtable"
 EndChar
 
 StartChar: uniE021
-Encoding: 57377 57377 284
+Encoding: 57377 57377 288
+
 Width: 1320
 Flags: W
 LayerCount: 2
@@ -18346,11 +18586,11 @@ SplineSet
  680 683 680 683 638 665 c 0,106,107
 EndSplineSet
 Validated: 33
-Kerns2: 71 -50 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 22 -100 "'kern' Horizontal Kerning in Latin lookup 0 subtable"
+Kerns2: 74 -50 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 25 -100 "'kern' Horizontal Kerning in Latin lookup 0 subtable"
 EndChar
 
 StartChar: uniED23
-Encoding: 60707 60707 285
+Encoding: 60707 60707 289
 Width: 2
 Flags: W
 LayerCount: 2
@@ -18428,7 +18668,7 @@ Validated: 5
 EndChar
 
 StartChar: uniED22
-Encoding: 60706 60706 286
+Encoding: 60706 60706 290
 Width: 2
 Flags: W
 LayerCount: 2
@@ -18501,7 +18741,7 @@ Validated: 1
 EndChar
 
 StartChar: uniED21
-Encoding: 60705 60705 287
+Encoding: 60705 60705 291
 Width: 2
 Flags: W
 LayerCount: 2
@@ -18574,7 +18814,7 @@ Validated: 1
 EndChar
 
 StartChar: uniED20
-Encoding: 60704 60704 288
+Encoding: 60704 60704 292
 Width: 2
 Flags: W
 LayerCount: 2
@@ -18647,7 +18887,7 @@ Validated: 1
 EndChar
 
 StartChar: uni61A8
-Encoding: 25000 25000 289
+Encoding: 25000 25000 293
 Width: 2
 Flags: W
 LayerCount: 2
@@ -18692,7 +18932,7 @@ Validated: 1
 EndChar
 
 StartChar: uni61A9
-Encoding: 25001 25001 290
+Encoding: 25001 25001 294
 Width: 2
 Flags: W
 LayerCount: 2
@@ -18737,7 +18977,7 @@ Validated: 1
 EndChar
 
 StartChar: uni61AA
-Encoding: 25002 25002 291
+Encoding: 25002 25002 295
 Width: 2
 Flags: W
 LayerCount: 2
@@ -18782,7 +19022,7 @@ Validated: 1
 EndChar
 
 StartChar: uni61AB
-Encoding: 25003 25003 292
+Encoding: 25003 25003 296
 Width: 2
 Flags: W
 LayerCount: 2
@@ -18827,7 +19067,7 @@ Validated: 1
 EndChar
 
 StartChar: uni61B0
-Encoding: 25008 25008 293
+Encoding: 25008 25008 297
 Width: 2
 Flags: W
 LayerCount: 2
@@ -18851,7 +19091,8 @@ Validated: 1
 EndChar
 
 StartChar: uniE03B
-Encoding: 57403 57403 294
+Encoding: 57403 57403 298
+
 Width: 1428
 Flags: W
 LayerCount: 2
@@ -18945,7 +19186,8 @@ Validated: 1
 EndChar
 
 StartChar: uni2058
-Encoding: 8280 8280 295
+Encoding: 8280 8280 299
+
 Width: 1184
 Flags: W
 LayerCount: 2
@@ -19024,7 +19266,8 @@ Validated: 1
 EndChar
 
 StartChar: uni2E2D
-Encoding: 11821 11821 296
+Encoding: 11821 11821 300
+
 Width: 1184
 Flags: W
 LayerCount: 2
@@ -19120,7 +19363,7 @@ Validated: 1
 EndChar
 
 StartChar: uniEDB3
-Encoding: 60851 60851 297
+Encoding: 60851 60851 301
 Width: 2
 Flags: W
 LayerCount: 2
@@ -19179,7 +19422,7 @@ Validated: 1
 EndChar
 
 StartChar: uniEDB2
-Encoding: 60850 60850 298
+Encoding: 60850 60850 302
 Width: 2
 Flags: W
 LayerCount: 2
@@ -19238,7 +19481,7 @@ Validated: 1
 EndChar
 
 StartChar: uniEDB1
-Encoding: 60849 60849 299
+Encoding: 60849 60849 303
 Width: 2
 Flags: W
 LayerCount: 2
@@ -19297,7 +19540,7 @@ Validated: 1
 EndChar
 
 StartChar: uniEDB0
-Encoding: 60848 60848 300
+Encoding: 60848 60848 304
 Width: 2
 Flags: W
 LayerCount: 2
@@ -19356,7 +19599,8 @@ Validated: 1
 EndChar
 
 StartChar: uni6183
-Encoding: 24963 24963 301
+Encoding: 24963 24963 305
+
 Width: 1496
 Flags: W
 LayerCount: 2
@@ -19437,7 +19681,7 @@ Validated: 1
 EndChar
 
 StartChar: uni61AC
-Encoding: 25004 25004 302
+Encoding: 25004 25004 306
 Width: 2
 Flags: W
 LayerCount: 2
@@ -19473,7 +19717,7 @@ Validated: 1
 EndChar
 
 StartChar: uni61AE
-Encoding: 25006 25006 303
+Encoding: 25006 25006 307
 Width: 2
 Flags: W
 LayerCount: 2
@@ -19524,7 +19768,7 @@ Validated: 1
 EndChar
 
 StartChar: uni61AF
-Encoding: 25007 25007 304
+Encoding: 25007 25007 308
 Width: 2
 Flags: W
 LayerCount: 2
@@ -19576,7 +19820,7 @@ Validated: 1
 EndChar
 
 StartChar: uni61B1
-Encoding: 25009 25009 305
+Encoding: 25009 25009 309
 Width: 2
 Flags: W
 LayerCount: 2
@@ -19638,7 +19882,7 @@ Validated: 1
 EndChar
 
 StartChar: uni61B6
-Encoding: 25014 25014 306
+Encoding: 25014 25014 310
 Width: 2
 Flags: W
 LayerCount: 2
@@ -19666,7 +19910,7 @@ Validated: 1
 EndChar
 
 StartChar: uni61B7
-Encoding: 25015 25015 307
+Encoding: 25015 25015 311
 Width: 0
 Flags: W
 LayerCount: 2
@@ -19711,7 +19955,8 @@ Validated: 1
 EndChar
 
 StartChar: uniE039
-Encoding: 57401 57401 308
+Encoding: 57401 57401 312
+
 Width: 1302
 Flags: W
 LayerCount: 2
@@ -19804,7 +20049,7 @@ Validated: 1
 EndChar
 
 StartChar: uni6184
-Encoding: 24964 24964 309
+Encoding: 24964 24964 313
 Width: 1345
 Flags: W
 LayerCount: 2
@@ -19891,7 +20136,7 @@ Validated: 33
 EndChar
 
 StartChar: uni10FB
-Encoding: 4347 4347 310
+Encoding: 4347 4347 314
 Width: 840
 Flags: W
 LayerCount: 2
@@ -19953,7 +20198,7 @@ Validated: 1
 EndChar
 
 StartChar: uni2E2C
-Encoding: 11820 11820 311
+Encoding: 11820 11820 315
 Width: 1184
 Flags: W
 LayerCount: 2
@@ -20032,7 +20277,7 @@ Validated: 1
 EndChar
 
 StartChar: uniEC00
-Encoding: 60416 60416 312
+Encoding: 60416 60416 316
 Width: 2
 Flags: W
 LayerCount: 2
@@ -20054,7 +20299,7 @@ Validated: 1
 EndChar
 
 StartChar: uniEC10
-Encoding: 60432 60432 313
+Encoding: 60432 60432 317
 Width: 2
 Flags: W
 LayerCount: 2
@@ -20091,11 +20336,11 @@ SplineSet
  -252.120117188 -355.049804688 -252.120117188 -355.049804688 -271.754882812 -349.349609375 c 6,42,-1
  -476.51953125 -287.599609375 l 6,0,1
 EndSplineSet
-Validated: 1
+Validated: 524289
 EndChar
 
 StartChar: uniEC20
-Encoding: 60448 60448 314
+Encoding: 60448 60448 318
 Width: 2
 Flags: W
 LayerCount: 2
@@ -20117,7 +20362,7 @@ Validated: 1
 EndChar
 
 StartChar: uniEC30
-Encoding: 60464 60464 315
+Encoding: 60464 60464 319
 Width: 2
 Flags: W
 LayerCount: 2
@@ -20154,11 +20399,11 @@ SplineSet
  -193.290039062 934.400390625 -193.290039062 934.400390625 -212.924804688 940.100585938 c 6,42,-1
  -417.689453125 1001.85058594 l 6,0,1
 EndSplineSet
-Validated: 1
+Validated: 524289
 EndChar
 
 StartChar: uniECD3
-Encoding: 60627 60627 316
+Encoding: 60627 60627 320
 Width: 2
 Flags: W
 LayerCount: 2
@@ -20210,7 +20455,7 @@ Validated: 1
 EndChar
 
 StartChar: uniECD2
-Encoding: 60626 60626 317
+Encoding: 60626 60626 321
 Width: 2
 Flags: W
 LayerCount: 2
@@ -20258,11 +20503,11 @@ SplineSet
  -985.5 -713 -985.5 -713 -999.5 -681 c 128,-1,54
  -1013.5 -649 -1013.5 -649 -1013.5 -612 c 0,0,1
 EndSplineSet
-Validated: 1
+Validated: 524289
 EndChar
 
 StartChar: uniECD1
-Encoding: 60625 60625 318
+Encoding: 60625 60625 322
 Width: 2
 Flags: W
 LayerCount: 2
@@ -20314,7 +20559,7 @@ Validated: 1
 EndChar
 
 StartChar: uniECD0
-Encoding: 60624 60624 319
+Encoding: 60624 60624 323
 Width: 2
 Flags: W
 LayerCount: 2
@@ -20366,7 +20611,7 @@ Validated: 1
 EndChar
 
 StartChar: uniED33
-Encoding: 60723 60723 320
+Encoding: 60723 60723 324
 Width: 2
 Flags: W
 LayerCount: 2
@@ -20411,7 +20656,7 @@ Validated: 1
 EndChar
 
 StartChar: uniED32
-Encoding: 60722 60722 321
+Encoding: 60722 60722 325
 Width: 2
 Flags: W
 LayerCount: 2
@@ -20456,7 +20701,7 @@ Validated: 1
 EndChar
 
 StartChar: uniED31
-Encoding: 60721 60721 322
+Encoding: 60721 60721 326
 Width: 2
 Flags: W
 LayerCount: 2
@@ -20501,7 +20746,7 @@ Validated: 1
 EndChar
 
 StartChar: uniED30
-Encoding: 60720 60720 323
+Encoding: 60720 60720 327
 Width: 2
 Flags: W
 LayerCount: 2
@@ -20546,7 +20791,7 @@ Validated: 1
 EndChar
 
 StartChar: uniED3F
-Encoding: 60735 60735 324
+Encoding: 60735 60735 328
 Width: 2
 Flags: W
 LayerCount: 2
@@ -20591,7 +20836,8 @@ Validated: 1
 EndChar
 
 StartChar: uniE030
-Encoding: 57392 57392 325
+Encoding: 57392 57392 329
+
 Width: 1035
 Flags: W
 LayerCount: 2
@@ -20652,11 +20898,11 @@ SplineSet
  995 558 995 558 995 451 c 0,0,1
 EndSplineSet
 Validated: 1
-Kerns2: 172 -300 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 171 -300 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 170 -300 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 339 -300 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 340 -300 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 341 -300 "'kern' Horizontal Kerning in Latin lookup 0 subtable"
+Kerns2: 175 -300 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 174 -300 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 173 -300 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 343 -300 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 344 -300 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 345 -300 "'kern' Horizontal Kerning in Latin lookup 0 subtable"
 EndChar
 
 StartChar: bracketleft
-Encoding: 91 91 326
+Encoding: 91 91 330
 Width: 700
 Flags: W
 LayerCount: 2
@@ -20704,7 +20950,7 @@ Validated: 1
 EndChar
 
 StartChar: bracketright
-Encoding: 93 93 327
+Encoding: 93 93 331
 Width: 656
 Flags: W
 LayerCount: 2
@@ -20752,7 +20998,7 @@ Validated: 1
 EndChar
 
 StartChar: quotedblright
-Encoding: 8221 8221 328
+Encoding: 8221 8221 332
 Width: 705
 Flags: W
 LayerCount: 2
@@ -20799,7 +21045,7 @@ Validated: 1
 EndChar
 
 StartChar: quotedblleft
-Encoding: 8220 8220 329
+Encoding: 8220 8220 333
 Width: 705
 Flags: W
 LayerCount: 2
@@ -20846,7 +21092,7 @@ Validated: 1
 EndChar
 
 StartChar: uni201F
-Encoding: 8223 8223 330
+Encoding: 8223 8223 334
 Width: 705
 Flags: W
 LayerCount: 2
@@ -20893,7 +21139,7 @@ Validated: 1
 EndChar
 
 StartChar: quotedblbase
-Encoding: 8222 8222 331
+Encoding: 8222 8222 335
 Width: 705
 Flags: W
 LayerCount: 2
@@ -20940,7 +21186,8 @@ Validated: 1
 EndChar
 
 StartChar: zero
-Encoding: 48 48 332
+Encoding: 48 48 336
+
 Width: 1035
 Flags: W
 LayerCount: 2
@@ -21001,11 +21248,12 @@ SplineSet
  995 558 995 558 995 451 c 0,0,1
 EndSplineSet
 Validated: 1
-Kerns2: 172 -300 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 171 -300 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 170 -300 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 339 -300 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 340 -300 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 341 -300 "'kern' Horizontal Kerning in Latin lookup 0 subtable"
+Kerns2: 175 -300 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 174 -300 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 173 -300 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 343 -300 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 344 -300 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 345 -300 "'kern' Horizontal Kerning in Latin lookup 0 subtable"
 EndChar
 
 StartChar: one
-Encoding: 49 49 333
+Encoding: 49 49 337
+
 Width: 1094
 Flags: W
 LayerCount: 2
@@ -21063,11 +21311,12 @@ SplineSet
  361 678 l 1,0,-1
 EndSplineSet
 Validated: 33
-Kerns2: 172 -300 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 171 -300 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 170 -300 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 339 -300 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 340 -300 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 341 -300 "'kern' Horizontal Kerning in Latin lookup 0 subtable"
+Kerns2: 175 -300 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 174 -300 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 173 -300 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 343 -300 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 344 -300 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 345 -300 "'kern' Horizontal Kerning in Latin lookup 0 subtable"
 EndChar
 
 StartChar: two
-Encoding: 50 50 334
+Encoding: 50 50 338
+
 Width: 1519
 Flags: W
 LayerCount: 2
@@ -21141,11 +21390,12 @@ SplineSet
  35 885 35 885 66 895 c 1,14,15
 EndSplineSet
 Validated: 33
-Kerns2: 172 -300 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 171 -300 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 170 -300 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 339 -300 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 340 -300 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 341 -300 "'kern' Horizontal Kerning in Latin lookup 0 subtable"
+Kerns2: 175 -300 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 174 -300 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 173 -300 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 343 -300 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 344 -300 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 345 -300 "'kern' Horizontal Kerning in Latin lookup 0 subtable"
 EndChar
 
 StartChar: three
-Encoding: 51 51 335
+Encoding: 51 51 339
+
 Width: 1944
 Flags: W
 LayerCount: 2
@@ -21235,11 +21485,12 @@ SplineSet
  1111 867 l 2,28,29
 EndSplineSet
 Validated: 33
-Kerns2: 172 -300 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 171 -300 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 170 -300 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 339 -300 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 340 -300 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 341 -300 "'kern' Horizontal Kerning in Latin lookup 0 subtable"
+Kerns2: 175 -300 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 174 -300 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 173 -300 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 343 -300 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 344 -300 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 345 -300 "'kern' Horizontal Kerning in Latin lookup 0 subtable"
 EndChar
 
 StartChar: four
-Encoding: 52 52 336
+Encoding: 52 52 340
+
 Width: 1258
 Flags: W
 LayerCount: 2
@@ -21298,11 +21549,12 @@ SplineSet
  678 -867 678 -867 765 -866 c 0,0,1
 EndSplineSet
 Validated: 33
-Kerns2: 271 -300 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 270 -300 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 269 -300 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 173 -300 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 168 -300 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 325 -300 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 332 -300 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 333 -300 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 334 -300 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 335 -300 "'kern' Horizontal Kerning in Latin lookup 0 subtable"
+Kerns2: 274 -300 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 273 -300 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 272 -300 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 176 -300 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 171 -300 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 329 -300 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 336 -300 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 337 -300 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 338 -300 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 339 -300 "'kern' Horizontal Kerning in Latin lookup 0 subtable"
 EndChar
 
 StartChar: five
-Encoding: 53 53 337
+Encoding: 53 53 341
+
 Width: 1542
 Flags: W
 LayerCount: 2
@@ -21411,11 +21663,12 @@ SplineSet
  678 -867 678 -867 765 -866 c 0,0,1
 EndSplineSet
 Validated: 33
-Kerns2: 172 -150 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 171 -150 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 170 -150 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 339 -150 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 340 -150 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 341 -150 "'kern' Horizontal Kerning in Latin lookup 0 subtable"
+Kerns2: 175 -150 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 174 -150 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 173 -150 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 343 -150 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 344 -150 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 345 -150 "'kern' Horizontal Kerning in Latin lookup 0 subtable"
 EndChar
 
 StartChar: six
-Encoding: 54 54 338
+Encoding: 54 54 342
+
 Width: 1963
 Flags: W
 LayerCount: 2
@@ -21540,11 +21793,12 @@ SplineSet
  1554 -701 1554 -701 1518 -750 c 0,14,15
 EndSplineSet
 Validated: 33
-Kerns2: 172 -150 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 171 -150 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 170 -150 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 339 -150 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 340 -150 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 341 -150 "'kern' Horizontal Kerning in Latin lookup 0 subtable"
+Kerns2: 175 -150 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 174 -150 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 173 -150 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 343 -150 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 344 -150 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 345 -150 "'kern' Horizontal Kerning in Latin lookup 0 subtable"
 EndChar
 
 StartChar: seven
-Encoding: 55 55 339
+Encoding: 55 55 343
+
 Width: 1199
 Flags: W
 LayerCount: 2
@@ -21606,7 +21860,8 @@ Validated: 33
 EndChar
 
 StartChar: eight
-Encoding: 56 56 340
+Encoding: 56 56 344
+
 Width: 2109
 Flags: W
 LayerCount: 2
@@ -21702,11 +21957,12 @@ SplineSet
  422 -865 422 -865 493 -866 c 0,17,18
 EndSplineSet
 Validated: 33
-Kerns2: 174 68 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 173 68 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 172 -300 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 171 -300 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 170 -300 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 339 -300 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 340 -300 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 341 -300 "'kern' Horizontal Kerning in Latin lookup 0 subtable"
+Kerns2: 177 68 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 176 68 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 175 -300 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 174 -300 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 173 -300 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 343 -300 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 344 -300 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 345 -300 "'kern' Horizontal Kerning in Latin lookup 0 subtable"
 EndChar
 
 StartChar: nine
-Encoding: 57 57 341
+Encoding: 57 57 345
+
 Width: 2778
 Flags: W
 LayerCount: 2
@@ -21829,11 +22085,11 @@ SplineSet
  422 -865 422 -865 493 -866 c 0,41,42
 EndSplineSet
 Validated: 33
-Kerns2: 174 70 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 173 70 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 172 -300 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 171 -300 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 170 -300 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 339 -300 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 340 -300 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 341 -300 "'kern' Horizontal Kerning in Latin lookup 0 subtable"
+Kerns2: 177 70 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 176 70 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 175 -300 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 174 -300 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 173 -300 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 343 -300 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 344 -300 "'kern' Horizontal Kerning in Latin lookup 0 subtable" 345 -300 "'kern' Horizontal Kerning in Latin lookup 0 subtable"
 EndChar
 
 StartChar: uniE06E
-Encoding: 57454 57454 342
+Encoding: 57454 57454 346
 Width: 1169
 Flags: W
 LayerCount: 2
@@ -21904,7 +22160,7 @@ Validated: 1
 EndChar
 
 StartChar: uniE06F
-Encoding: 57455 57455 343
+Encoding: 57455 57455 347
 Width: 1169
 Flags: W
 LayerCount: 2
@@ -21973,5 +22229,6 @@ SplineSet
 EndSplineSet
 Validated: 1
 EndChar
+
 EndChars
 EndSplineFont

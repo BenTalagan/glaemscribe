@@ -8,10 +8,10 @@ Generate a partial modifier remapping file from charset diff (to include in a mo
 
 Generate a new remapped font using a modifier file
 
-./sfd_remapper.rb ../sfds/legacy/TengwarAnnatarGlaemscrafu.sfd        _annatar_modifier.mod         ../sfds/TengwarAnnatarGlaemUnicode.sfd
-./sfd_remapper.rb ../sfds/legacy/TengwarAnnatarGlaemscrafuItalic.sfd  _annatar_modifier_italic.mod  ../sfds/TengwarAnnatarGlaemUnicodeItalic.sfd
-./sfd_remapper.rb ../sfds/legacy/TengwarAnnatarGlaemscrafuBold.sfd    _annatar_modifier_bold.mod    ../sfds/TengwarAnnatarGlaemUnicodeBold.sfd
-./sfd_remapper.rb ../sfds/legacy/TengwarEldamarGlaemscrafu.sfd        _eldamar_modifier.mod         ../sfds/TengwarEldamarGlaemUnicode.sfd
-./sfd_remapper.rb ../sfds/legacy/TengwarSindarinGlaemscrafu.sfd       _sindarin_modifier.mod        ../sfds/TengwarSindarinGlaemUnicode.sfd
-./sfd_remapper.rb ../sfds/legacy/TengwarParmaiteGlaemscrafu.sfd       _parmaite_modifier.mod        ../sfds/TengwarParmaiteGlaemUnicode.sfd
-./sfd_remapper.rb ../sfds/legacy/TengwarElficaGlaemscrafu.sfd         _elfica_modifier.mod          ../sfds/TengwarElficaGlaemUnicode.sfd
+./sfd_remapper.rb ../src/sfds/legacy/TengwarAnnatarGlaemscrafu.sfd        _annatar_modifier.mod         ../src/sfds/TengwarAnnatarGlaemUnicode.sfd
+./sfd_remapper.rb ../src/sfds/legacy/TengwarAnnatarGlaemscrafuItalic.sfd  _annatar_modifier_italic.mod  ../src/sfds/TengwarAnnatarGlaemUnicodeItalic.sfd
+./sfd_remapper.rb ../src/sfds/legacy/TengwarAnnatarGlaemscrafuBold.sfd    _annatar_modifier_bold.mod    ../src/sfds/TengwarAnnatarGlaemUnicodeBold.sfd
+./sfd_remapper.rb ../src/sfds/legacy/TengwarEldamarGlaemscrafu.sfd        _eldamar_modifier.mod         ../src/sfds/TengwarEldamarGlaemUnicode.sfd
+./sfd_remapper.rb ../src/sfds/legacy/TengwarSindarinGlaemscrafu.sfd       _sindarin_modifier.mod        ../src/sfds/TengwarSindarinGlaemUnicode.sfd
+./sfd_remapper.rb ../src/sfds/legacy/TengwarParmaiteGlaemscrafu.sfd       _parmaite_modifier.mod        ../src/sfds/TengwarParmaiteGlaemUnicode.sfd
+./sfd_remapper.rb ../src/sfds/legacy/TengwarElficaGlaemscrafu.sfd         _elfica_modifier.mod          ../src/sfds/TengwarElficaGlaemUnicode.sfd
