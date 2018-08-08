@@ -133,15 +133,27 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 \char e046  E_TEHTA
 \char e047  E_TEHTA_INF
 
-\char e048  E_TEHTA_DOUBLE
+
+\** The two following one is boguous in the font atm so replace them by a seq which works **\
+\** \char e048  E_TEHTA_DOUBLE **\
+\beg seq E_TEHTA_DOUBLE
+  E_TEHTA E_TEHTA
+\end
 \char e049  E_TEHTA_DOUBLE_INF GEMINATE_DOUBLE
 \char e04A  O_TEHTA
 \char e04B  O_TEHTA_INF
 
 \char e04C  U_TEHTA
 \char e04D  U_TEHTA_INF
-\char e04E  O_TEHTA_DOUBLE
-\char e04F  U_TEHTA_DOUBLE
+\** The two following ones are buguous in the font atm so replace them by a seq which works **\
+\** \char e04E  O_TEHTA_DOUBLE **\
+\beg seq O_TEHTA_DOUBLE
+  O_TEHTA O_TEHTA
+\end 
+\** \char e04F  U_TEHTA_DOUBLE **\
+\beg seq U_TEHTA_DOUBLE
+  U_TEHTA U_TEHTA
+\end
 
 \char e050  NASALIZE_SIGN NASALIZE_SIGN_TILD      
 \char e051  GEMINATE_SIGN GEMINATE_SIGN_TILD
