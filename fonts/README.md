@@ -82,6 +82,7 @@ The complete of list of changes made from the original versions of the fonts :
 * Added double tehtar for long _e, o and u_ have been added.
 * Added _e grave tehtar_ . 
 * Added pustar combinations (4/4-halfed/4-squared/5)
+* Added num_12
 * A serie of 4 inferior tehtar has been added for the reversed, small, u-curl.
   
 **Sarati Eldamar**, created and designed by **Måns Björkman**

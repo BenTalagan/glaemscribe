@@ -241,6 +241,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 \** USING TENGWAR ELFICA POS TO AVOID PROBLEMS **\
 \char 125 VAIA WAIA VAIYA
+
+\char 129 NUM_12
                             
 \** Œ **\ \char 152 PUNCT_PAREN_L PUNCT_PAREN_L_ALT                          
 \** œ **\ \char 153 PUNCT_PAREN_R PUNCT_PAREN_R_ALT                          
