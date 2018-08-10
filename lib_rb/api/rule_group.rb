@@ -102,7 +102,6 @@ module Glaemscribe
           break if !had_replacements
           
           if stack_depth > 16
-            exit
             @mode.errors << Glaeml::Error.new(line, "In expression: #{string}: evaluation stack overflow.") 
             return nil
           end
