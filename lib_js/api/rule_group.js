@@ -30,7 +30,15 @@ Glaemscribe.RuleGroup = function(mode,name) {
   return this;
 }
 
-Glaemscribe.RuleGroup.VAR_NAME_REGEXP = /{([0-9A-Z_]+)}/g ;
+Glaemscribe.RuleGroup.VAR_NAME_REGEXP             = /{([0-9A-Z_]+)}/g ;
+Glaemscribe.RuleGroup.VAR_DECL_REGEXP             = /^\s*{([0-9A-Z_]+)}\s+===\s+(.+?)\s*$/
+Glaemscribe.RuleGroup.UNICODE_VAR_NAME_REGEXP_IN  = /^UNI_([0-9A-F]+)$/
+Glaemscribe.RuleGroup.UNICODE_VAR_NAME_REGEXP_OUT = /{UNI_([0-9A-F]+)}/
+Glaemscribe.RuleGroup.RULE_REGEXP                 = /^\s*(.*?)\s+-->\s+(.+?)\s*$/
+Glaemscribe.RuleGroup.CROSS_SCHEMA_REGEXP         = /[0-9]+(\s*,\s*[0-9]+)*/
+// Glaemscribe.RuleGroup.CROSS_RULE_REGEXP           = /^\s*(.*?)\s+-->\s+([\s0-9,]+)\s+-->\s+(.+?)\s*$/
+Glaemscribe.RuleGroup.CROSS_RULE_REGEXP           = /^\s*(.*?)\s+-->\s+([0-9]+(\s*,\s*[0-9]+)*|{([0-9A-Z_]+)}|identity)\s+-->\s+(.+?)\s*$/
+
 
 Glaemscribe.RuleGroup.prototype.add_var = function(var_name, value) {
   this.vars[var_name] = value;
@@ -124,13 +132,6 @@ Glaemscribe.RuleGroup.prototype.descend_if_tree = function(code_block,options)
   }
 }
 
-Glaemscribe.RuleGroup.VAR_DECL_REGEXP             = /^\s*{([0-9A-Z_]+)}\s+===\s+(.+?)\s*$/
-Glaemscribe.RuleGroup.UNICODE_VAR_NAME_REGEXP_IN  = /^UNI_([0-9A-F]+)$/
-Glaemscribe.RuleGroup.UNICODE_VAR_NAME_REGEXP_OUT = /{UNI_([0-9A-F]+)}/
-Glaemscribe.RuleGroup.RULE_REGEXP                 = /^\s*(.*?)\s+-->\s+(.+?)\s*$/
-Glaemscribe.RuleGroup.CROSS_RULE_REGEXP           = /^\s*(.*?)\s+-->\s+([\s0-9,]+)\s+-->\s+(.+?)\s*$/
-
-
 Glaemscribe.RuleGroup.prototype.finalize_rule = function(line, match_exp, replacement_exp, cross_schema)
 {
   var match             = this.apply_vars(line, match_exp, true);
@@ -167,11 +168,28 @@ Glaemscribe.RuleGroup.prototype.finalize_code_line = function(code_line) {
          
     this.add_var(var_name,var_value);                         
   }
-  else if(exp = Glaemscribe.RuleGroup.CROSS_RULE_REGEXP.exec(code_line.expression ))
+  else if(exp = Glaemscribe.RuleGroup.CROSS_RULE_REGEXP.exec(code_line.expression))
   {
     var match         = exp[1];
     var cross         = exp[2];
-    var replacement   = exp[3]; 
+
+    var var_name      = exp[4];
+    var replacement   = exp[5];      
+    
+    if(var_name)
+    {
+      // This was a variable declaration           
+      var var_value = this.apply_vars(code_line.line, cross, false);
+      if(!var_value)
+      {
+        mode.errors.push(new Glaemscribe.Glaeml.Error(code_line.line, "Thus, variable {"+ var_name + "} could not be declared."));
+        return;
+      }
+      cross = var_value;
+    }
+    
+    if(cross == "identity")
+      cross = null;    
       
     this.finalize_rule(code_line.line, match, replacement, cross)
   }

@@ -30,7 +30,10 @@ module Glaemscribe
       
       VAR_DECL_REGEXP             = /^\s*{([0-9A-Z_]+)}\s+===\s+(.+?)\s*$/
       RULE_REGEXP                 = /^\s*(.*?)\s+-->\s+(.+?)\s*$/
-      CROSS_RULE_REGEXP           = /^\s*(.*?)\s+-->\s+([\s0-9,]+)\s+-->\s+(.+?)\s*$/
+      
+      CROSS_SCHEMA_REGEXP         = /[0-9]+(\s*,\s*[0-9]+)*/
+      
+      CROSS_RULE_REGEXP           = /^\s*(.*?)\s+-->\s+(#{CROSS_SCHEMA_REGEXP}|#{VAR_NAME_REGEXP}|identity)\s+-->\s+(.+?)\s*$/
   
       attr_reader :root_code_block, :name, :mode, :in_charset, :rules
   
@@ -130,7 +133,22 @@ module Glaemscribe
         
             match         = $1
             cross         = $2
-            replacement   = $3      
+            var_name      = $4
+            replacement   = $5      
+            
+            if var_name
+              # This was a variable declaration           
+              var_value = apply_vars(code_line.line, cross, false)
+              if !var_value
+                @mode.errors << Glaeml::Error.new(code_line.line, "Thus, variable {#{var_name}} could not be declared.")
+                return
+              end
+              cross = var_value
+            end
+            
+            if cross == "identity"
+              cross = nil              
+            end
       
             finalize_rule(code_line.line, match, replacement, cross)
       
