@@ -817,7 +817,7 @@ GlaemscribeEditor.prototype.refreshCharset = function()
   for(var i=0;i<editor.charset.chars.length;i++)
   {
     var c = editor.charset.chars[i];
-    if(c.is_virtual())
+    if(c.is_virtual() || c.is_sequence())
       continue;
     
     var tr = $("<tr class='char_entry' data-num='" + i + "'/>");
@@ -857,6 +857,34 @@ GlaemscribeEditor.prototype.refreshCharset = function()
   {
     var c = editor.charset.chars[i];
     if(!c.is_virtual())
+      continue;
+    
+    var tr = $("<tr class='char_entry' data-num='" + i + "'/>");
+    
+    /* 
+    // CHARSET EDITOR REMOVED, TO BE REWRITTEN
+    var edit_button = $("<td class='edit_char_button'><div class='fa fa-pencil'></div></td>");
+    
+    edit_button.click(function() {
+      var elt=$(this);
+      editor.charEditorAskedOn(elt,parseInt(elt.parent().data("num")));
+    });
+    tr.append(edit_button);
+    */
+    tr.append("<td>X</td><td class='char'></td><td class='left'>" + c.names.join("<br>") + "</td>");
+    t.append(tr);
+  }
+  
+  var tr = $("<tr/>");
+  
+  tr.append("<th>S</th><th></th><th class='left'>Sequence Char names</th>");
+  
+  t.append(tr);  
+  
+  for(var i=0;i<editor.charset.chars.length;i++)
+  {
+    var c = editor.charset.chars[i];
+    if(!c.is_sequence())
       continue;
     
     var tr = $("<tr class='char_entry' data-num='" + i + "'/>");
