@@ -22,6 +22,19 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 */
 
+Glaemscribe.RuleGroupVar = function(name, value, is_pointer) {
+
+  this.name       = name;
+  this.value      = value;
+  this.is_p       = is_pointer;
+}
+
+Glaemscribe.RuleGroupVar.prototype.is_pointer = function() {
+  return this.is_p;
+}
+
+////////
+
 Glaemscribe.RuleGroup = function(mode,name) {
   this.name             = name;
   this.mode             = mode;
@@ -30,18 +43,18 @@ Glaemscribe.RuleGroup = function(mode,name) {
   return this;
 }
 
-Glaemscribe.RuleGroup.VAR_NAME_REGEXP             = /{([0-9A-Z_]+)}/g ;
+Glaemscribe.RuleGroup.VAR_NAME_REGEXP             = /{([0-9A-Z_]+)}/g;
 Glaemscribe.RuleGroup.VAR_DECL_REGEXP             = /^\s*{([0-9A-Z_]+)}\s+===\s+(.+?)\s*$/
+Glaemscribe.RuleGroup.POINTER_VAR_DECL_REGEXP     = /^\s*{([0-9A-Z_]+)}\s+<=>\s+(.+?)\s*$/
 Glaemscribe.RuleGroup.UNICODE_VAR_NAME_REGEXP_IN  = /^UNI_([0-9A-F]+)$/
 Glaemscribe.RuleGroup.UNICODE_VAR_NAME_REGEXP_OUT = /{UNI_([0-9A-F]+)}/
 Glaemscribe.RuleGroup.RULE_REGEXP                 = /^\s*(.*?)\s+-->\s+(.+?)\s*$/
 Glaemscribe.RuleGroup.CROSS_SCHEMA_REGEXP         = /[0-9]+(\s*,\s*[0-9]+)*/
-// Glaemscribe.RuleGroup.CROSS_RULE_REGEXP           = /^\s*(.*?)\s+-->\s+([\s0-9,]+)\s+-->\s+(.+?)\s*$/
 Glaemscribe.RuleGroup.CROSS_RULE_REGEXP           = /^\s*(.*?)\s+-->\s+([0-9]+(\s*,\s*[0-9]+)*|{([0-9A-Z_]+)}|identity)\s+-->\s+(.+?)\s*$/
 
 
-Glaemscribe.RuleGroup.prototype.add_var = function(var_name, value) {
-  this.vars[var_name] = value;
+Glaemscribe.RuleGroup.prototype.add_var = function(var_name, value, is_pointer) {
+  this.vars[var_name] = new Glaemscribe.RuleGroupVar(var_name,value,is_pointer);
 }
 
 // Replace all vars in expression
@@ -49,42 +62,69 @@ Glaemscribe.RuleGroup.prototype.apply_vars = function(line,string,allow_unicode_
   var rule_group  = this;
   var mode        = this.mode;
   var goterror    = false;  
+  
+  var ret               = string;  
+  var had_replacements  = true;
+  var stack_depth       = 0;
+  
+  while(had_replacements) {
     
-  var ret = string.replace(Glaemscribe.RuleGroup.VAR_NAME_REGEXP, function(match,p1,offset,str) { 
-    var vname = p1;
-    var rep = rule_group.vars[vname];
+    had_replacements = false;
+    ret = ret.replace(Glaemscribe.RuleGroup.VAR_NAME_REGEXP, function(match,p1,offset,str) { 
+      var vname = p1;
+      var v     = rule_group.vars[vname];
+      var rep   = null;
 
-    if(rep == null)
-    {
-       if(Glaemscribe.RuleGroup.UNICODE_VAR_NAME_REGEXP_IN.exec(vname))
+      if(v == null)
       {
-        // A unicode variable.
-        if(allow_unicode_vars)
+        if(Glaemscribe.RuleGroup.UNICODE_VAR_NAME_REGEXP_IN.exec(vname))
         {
-          // Just keep this variable intact, it will be replaced at the last moment of the parsing
-          rep = match;
+          // A unicode variable.
+          if(allow_unicode_vars)
+          {
+            // Just keep this variable intact, it will be replaced at the last moment of the parsing
+            rep = match;
+          }
+          else
+          {
+            mode.errors.push(new Glaemscribe.Glaeml.Error(line, "In expression: "+ string + ": making wrong use of unicode variable: " + match + ". Unicode vars can only be used in source members of a rule or in the definition of another variable."))
+            goterror = true;
+            return ""; 
+          }  
         }
         else
         {
-          mode.errors.push(new Glaemscribe.Glaeml.Error(line, "In expression: "+ string + ": making wrong use of unicode variable: " + match + ". Unicode vars can only be used in source members of a rule or in the definition of another variable."))
+          mode.errors.push(new Glaemscribe.Glaeml.Error(line, "In expression: "+ string + ": failed to evaluate variable: " + match + "."));
           goterror = true;
           return ""; 
-        }  
+        }      
       }
       else
       {
-        mode.errors.push(new Glaemscribe.Glaeml.Error(line, "In expression: " + string + ": failed to evaluate variable: " + p1 + "."))
-        goterror = true;
-        return ""; 
-      }      
+        rep = v.value;
+        // Only count replacements on non unicode vars
+        had_replacements = true;
+      }
+    
+      return rep;
+    });
+    
+    if(goterror)
+      return null;
+    
+    stack_depth += 1
+    
+    if(!had_replacements)
+      break;
+    
+    if(stack_depth > 16)
+    {
+      mode.errors.push(new Glaemscribe.Glaeml.Error(line, "In expression: "+ string + ": evaluation stack overflow."));
+      return nil;
     }
     
-    return rep;
-  });
-  
-  if(goterror)
-    return null;
-  
+  }
+    
   return ret;
 }
 
@@ -166,7 +206,13 @@ Glaemscribe.RuleGroup.prototype.finalize_code_line = function(code_line) {
       return;
     }
          
-    this.add_var(var_name,var_value);                         
+    this.add_var(var_name,var_value,false);                         
+  }
+  else if(exp = Glaemscribe.RuleGroup.POINTER_VAR_DECL_REGEXP.exec(code_line.expression))
+  {
+    var var_name      = exp[1];
+    var var_value_ex  = exp[2];         
+    this.add_var(var_name,var_value_ex,true);    
   }
   else if(exp = Glaemscribe.RuleGroup.CROSS_RULE_REGEXP.exec(code_line.expression))
   {
@@ -217,23 +263,23 @@ Glaemscribe.RuleGroup.prototype.finalize = function(options) {
   this.in_charset = {}
   this.rules      = []
   
-  this.add_var("NULL","");
+  this.add_var("NULL","",false);
  
   // Characters that are not easily entered or visible in a text editor
-  this.add_var("NBSP",           "{UNI_A0}")
-  this.add_var("WJ",             "{UNI_2060}")
-  this.add_var("ZWSP",           "{UNI_200B}")
-  this.add_var("ZWNJ",           "{UNI_200C}")        
+  this.add_var("NBSP",           "{UNI_A0}"  , false)
+  this.add_var("WJ",             "{UNI_2060}", false)
+  this.add_var("ZWSP",           "{UNI_200B}", false)
+  this.add_var("ZWNJ",           "{UNI_200C}", false)        
 
   // The following characters are used by the mode syntax.
   // Redefine some convenient tools.
-  this.add_var("UNDERSCORE",     "{UNI_5F}")
-  this.add_var("ASTERISK",       "{UNI_2A}")
-  this.add_var("COMMA",          "{UNI_2C}")
-  this.add_var("LPAREN",         "{UNI_28}")
-  this.add_var("RPAREN",         "{UNI_29}")
-  this.add_var("LBRACKET",       "{UNI_5B}")
-  this.add_var("RBRACKET",       "{UNI_5D}")
+  this.add_var("UNDERSCORE",     "{UNI_5F}", false)
+  this.add_var("ASTERISK",       "{UNI_2A}", false)
+  this.add_var("COMMA",          "{UNI_2C}", false)
+  this.add_var("LPAREN",         "{UNI_28}", false)
+  this.add_var("RPAREN",         "{UNI_29}", false)
+  this.add_var("LBRACKET",       "{UNI_5B}", false)
+  this.add_var("RBRACKET",       "{UNI_5D}", false)
 
   this.descend_if_tree(this.root_code_block, options)
   

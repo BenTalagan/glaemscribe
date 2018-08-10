@@ -22,6 +22,21 @@
 
 module Glaemscribe
   module API
+    
+    class RuleGroupVar
+      attr_reader :name, :value
+      
+      def initialize(name, value, is_pointer)
+        @name       = name
+        @value      = value
+        @is_pointer = is_pointer
+      end
+      
+      def pointer?
+        is_pointer
+      end
+    end
+    
     class RuleGroup
   
       VAR_NAME_REGEXP             = /{([0-9A-Z_]+)}/
@@ -29,6 +44,7 @@ module Glaemscribe
       UNICODE_VAR_NAME_REGEXP_OUT = /{UNI_([0-9A-F]+)}/
       
       VAR_DECL_REGEXP             = /^\s*{([0-9A-Z_]+)}\s+===\s+(.+?)\s*$/
+      POINTER_VAR_DECL_REGEXP     = /^\s*{([0-9A-Z_]+)}\s+<=>\s+(.+?)\s*$/
       RULE_REGEXP                 = /^\s*(.*?)\s+-->\s+(.+?)\s*$/
       
       CROSS_SCHEMA_REGEXP         = /[0-9]+(\s*,\s*[0-9]+)*/
@@ -43,32 +59,55 @@ module Glaemscribe
         @root_code_block  = IfTree::CodeBlock.new       
       end
   
-      def add_var(var_name, value)
-        @vars[var_name] = value
+      def add_var(var_name, value, is_pointer)
+        @vars[var_name] = RuleGroupVar.new(var_name, value, is_pointer)
       end
-  
+      
       # Replace all vars in expression
       def apply_vars(line, string, allow_unicode_vars=false)
-        ret = string.gsub(VAR_NAME_REGEXP) { |cap_var|
-          vname = $1
-          rep   = @vars[vname]
-          if !rep
-            if vname =~ UNICODE_VAR_NAME_REGEXP_IN
-              # A unicode variable.
-              if allow_unicode_vars
-                # Just keep this variable intact, it will be replaced at the last moment of the parsing
-                rep = cap_var
+        
+        ret               = string
+        stack_depth       = 0
+        had_replacements  = true
+        
+        while had_replacements
+          
+          had_replacements = false
+          ret = ret.gsub(VAR_NAME_REGEXP) { |cap_var|
+            vname = $1
+            v     = @vars[vname]
+            if !v
+              if vname =~ UNICODE_VAR_NAME_REGEXP_IN
+                # A unicode variable.
+                if allow_unicode_vars
+                  # Just keep this variable intact, it will be replaced at the last moment of the parsing
+                  rep = cap_var
+                else
+                  @mode.errors << Glaeml::Error.new(line, "In expression: #{string}: making wrong use of unicode variable: #{cap_var}. Unicode vars can only be used in source members of a rule or in the definition of another variable.") 
+                  return nil
+                end
               else
-                @mode.errors << Glaeml::Error.new(line, "In expression: #{string}: making wrong use of unicode variable: #{cap_var}. Unicode vars can only be used in source members of a rule or in the definition of another variable.") 
+                @mode.errors << Glaeml::Error.new(line, "In expression: #{string}: failed to evaluate variable: #{cap_var}.") 
                 return nil
               end
             else
-              @mode.errors << Glaeml::Error.new(line, "In expression: #{string}: failed to evaluate variable: #{cap_var}.") 
-              return nil
+              rep = v.value
+              # Only count replacements on non unicode vars
+              had_replacements = true
             end
+            rep
+          }
+          stack_depth += 1
+                           
+          break if !had_replacements
+          
+          if stack_depth > 16
+            exit
+            @mode.errors << Glaeml::Error.new(line, "In expression: #{string}: evaluation stack overflow.") 
+            return nil
           end
-          rep
-        }
+        end
+                
         ret
       end
       
@@ -127,8 +166,15 @@ module Glaemscribe
               return
             end
         
-            add_var(var_name,var_value)
+            add_var(var_name, var_value, false)
  
+          elsif code_line.expression =~ POINTER_VAR_DECL_REGEXP
+            
+            var_name      = $1
+            var_value_ex  = $2
+       
+            add_var(var_name, var_value_ex, true)
+            
           elsif code_line.expression =~ CROSS_RULE_REGEXP
         
             match         = $1
@@ -172,23 +218,23 @@ module Glaemscribe
         @in_charset       = {}
         @rules            = []
         
-        add_var("NULL","")
+        add_var("NULL","",false)
   
         # Characters that are not easily entered or visible in a text editor
-        add_var("NBSP",           "{UNI_A0}")
-        add_var("WJ",             "{UNI_2060}")
-        add_var("ZWSP",           "{UNI_200B}")
-        add_var("ZWNJ",           "{UNI_200C}")        
+        add_var("NBSP",           "{UNI_A0}",   false)
+        add_var("WJ",             "{UNI_2060}", false)
+        add_var("ZWSP",           "{UNI_200B}", false)
+        add_var("ZWNJ",           "{UNI_200C}", false)        
 
         # The following characters are used by the mode syntax.
         # Redefine some convenient tools.
-        add_var("UNDERSCORE",     "{UNI_5F}")
-        add_var("ASTERISK",       "{UNI_2A}")
-        add_var("COMMA",          "{UNI_2C}")
-        add_var("LPAREN",         "{UNI_28}")
-        add_var("RPAREN",         "{UNI_29}")
-        add_var("LBRACKET",       "{UNI_5B}")
-        add_var("RBRACKET",       "{UNI_5D}")
+        add_var("UNDERSCORE",     "{UNI_5F}",  false)
+        add_var("ASTERISK",       "{UNI_2A}",  false)
+        add_var("COMMA",          "{UNI_2C}",  false)
+        add_var("LPAREN",         "{UNI_28}",  false)
+        add_var("RPAREN",         "{UNI_29}",  false)
+        add_var("LBRACKET",       "{UNI_5B}",  false)
+        add_var("RBRACKET",       "{UNI_5D}",  false)
        
         descend_if_tree(@root_code_block, trans_options)
                             
