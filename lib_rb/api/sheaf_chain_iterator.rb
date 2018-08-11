@@ -108,7 +108,7 @@ module Glaemscribe
         return false
       end
   
-      # Calculate all cominations for the chain
+      # Calculate all cominations for the chain, for the current iterator value
       def combinations
         resolved = []
         @iterators.each_with_index{ |counter, index|

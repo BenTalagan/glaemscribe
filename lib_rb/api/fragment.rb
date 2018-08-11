@@ -87,6 +87,7 @@ module Glaemscribe
         # Calculate all combinations for this fragment (productize the array of arrays)
         res = equivalences[0]
     
+        # ((eq0 x eq1) x eq2) x eq3 ) ... )))))
         (equivalences.length-1).times { |i|
           prod  = res.product(equivalences[i+1]).map{ |x,y| x+y}
           res   = prod
