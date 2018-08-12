@@ -102,9 +102,13 @@ Glaemscribe.ModeParser.prototype.create_if_cond_for_if_term = function(line, if_
   return ifcond;            
 }
 
-Glaemscribe.ModeParser.prototype.traverse_if_tree = function(root_code_block, root_element, text_procedure, element_procedure)
+Glaemscribe.ModeParser.prototype.traverse_if_tree = function(context, text_procedure, element_procedure)
 {
   var mode                      = this.mode;
+  var owner                     = context.owner;
+  var root_element              = context.root_element;
+  var rule_group                = context.rule_group;
+  var root_code_block           = owner.root_code_block;
   var current_parent_code_block = root_code_block;
   
   for(var c = 0;c<root_element.children.length;c++)
@@ -176,6 +180,71 @@ Glaemscribe.ModeParser.prototype.traverse_if_tree = function(root_code_block, ro
         current_parent_code_block           = if_term.parent_code_block;
               
         break;
+        
+      case 'macro':
+        
+        // Macro definition, cannot be defined in conditional blocks
+        if(current_parent_code_block.parent_if_cond || root_element.name != "rules") {
+          mode.errors.push(new Glaemscribe.Glaeml.Error(child.line, "Macros can only defined in the 'rules' scope, not in a conditional block (because they are replaced and used at parsing time) or a macro block (local macros are not handled)."));
+          return;      
+        }
+        
+        if(!child.args || child.args.length == 0) {
+          mode.errors.push(new Glaemscribe.Glaeml.Error(child.line, "Macro misses a name."));
+          return;   
+        }
+
+        var macro_args = child.args.slice(0);
+        var macro_name = macro_args.shift();
+        macro_args.glaem_each( function(_,arg) {      
+          if(!arg.match(/[0-9A-Z_]+/)) {
+            mode.errors.push(new Glaemscribe.Glaeml.Error(child.line, "Macro argument name " + arg + " has wrong format."));
+            return;
+          }
+        });
+        
+        if(rule_group.macros[macro_name] != null) {
+          mode.errors.push(new Glaemscribe.Glaeml.Error(child.line, "Redefining macro " + macro_name + "."));
+          return;           
+        }
+        
+        var macro         = new Glaemscribe.Macro(rule_group,macro_name,macro_args);
+        var macro_context = {owner: macro, root_element: child, rule_group: rule_group};
+        
+        this.traverse_if_tree(macro_context, text_procedure, element_procedure);
+
+        rule_group.macros[macro_name] = macro;
+      
+        break;
+      case 'deploy':
+
+        if(!rule_group) {
+          mode.errors.push(new Glaemscribe.Glaeml.Error(child.line,"Macros can only be deployed in a rule group."));
+          return;   
+        }
+
+        var macro_args = child.args.slice(0);
+        var macro_name = macro_args.shift();
+        var macro      = rule_group.macros[macro_name]
+
+        if(macro == null) {
+          mode.errors.push(new Glaemscribe.Glaeml.Error(child.line,"Macro '" + macro_name + "' not found in rule group '" + rule_group.name + "'."));
+          return;   
+        }
+
+        var wanted_argcount = macro.arg_names.length;
+        var given_argcount  = macro_args.length;
+        
+        if(wanted_argcount != given_argcount) {
+          mode.errors.push(new Glaemscribe.Glaeml.Error(child.line,"Macro '" + macro_name + "' takes " + wanted_argcount + " arguments, not " + given_argcount + "."));
+          return;          
+        }
+
+        var macro_node = new Glaemscribe.IfTree.MacroDeployTerm(macro, child.line, current_parent_code_block, macro_args);
+        current_parent_code_block.terms.push(macro_node);
+        
+        break;
+        
       default:
         
         // Do something with this child element
@@ -228,9 +297,13 @@ Glaemscribe.ModeParser.prototype.parse_pre_post_processor = function(processor_e
     }     
   }  
   
-  var root_code_block = ((pre_not_post)?(mode.pre_processor.root_code_block):(mode.post_processor.root_code_block))
+  var processor_context = {
+    owner:        ((pre_not_post)?(mode.pre_processor):(mode.post_processor)),
+    root_element: processor_element,
+    rule_group:   null
+  }
   
-  this.traverse_if_tree(root_code_block, processor_element, text_procedure, element_procedure )                       
+  this.traverse_if_tree(processor_context, text_procedure, element_procedure )                       
 }
 
 Glaemscribe.ModeParser.prototype.parse_raw = function(mode_name, raw, mode_options) {
@@ -395,7 +468,13 @@ Glaemscribe.ModeParser.prototype.parse_raw = function(mode_name, raw, mode_optio
       mode.errors.push(new Glaemscribe.Glaeml.Error(element.line, "Unknown directive " + element.name + "."));
     }  
     
-    this.traverse_if_tree( rule_group.root_code_block, rules_element, text_procedure, element_procedure );                 
+    var processor_context = {
+      owner:        rule_group,
+      root_element: rules_element,
+      rule_group:   rule_group
+    }
+    
+    this.traverse_if_tree(processor_context, text_procedure, element_procedure );                 
   }
    
   if(mode.errors.length == 0)

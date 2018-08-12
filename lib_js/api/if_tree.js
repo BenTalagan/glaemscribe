@@ -45,6 +45,9 @@ Glaemscribe.IfTree.Term.prototype.is_code_lines = function()
 {
   return false;
 }
+Glaemscribe.IfTree.Term.prototype.is_macro_deploy = function() {
+  return false;
+}
 Glaemscribe.IfTree.Term.prototype.is_pre_post_processor_operators = function()
 {
   return false;
@@ -125,6 +128,27 @@ Glaemscribe.IfTree.CodeLinesTerm.prototype.name = function()
   return "CL_TERM";
 }
 Glaemscribe.IfTree.CodeLinesTerm.prototype.is_code_lines = function()
+{
+  return true;
+}
+
+/* ================ */
+
+Glaemscribe.IfTree.MacroDeployTerm = function(macro, line, parent_code_block, arg_value_expressions)
+{
+  Glaemscribe.IfTree.Term.call(this,parent_code_block); //super
+  this.line                   = line;
+  this.macro                  = macro;
+  this.arg_value_expressions  = arg_value_expressions
+  return this;
+}
+Glaemscribe.IfTree.MacroDeployTerm.inheritsFrom( Glaemscribe.IfTree.Term );  
+
+Glaemscribe.IfTree.MacroDeployTerm.prototype.name = function()
+{
+  return "DEPLOY_TERM";
+}
+Glaemscribe.IfTree.MacroDeployTerm.prototype.is_macro_deploy = function()
 {
   return true;
 }

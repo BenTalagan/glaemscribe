@@ -38,6 +38,7 @@ Glaemscribe.RuleGroupVar.prototype.is_pointer = function() {
 Glaemscribe.RuleGroup = function(mode,name) {
   this.name             = name;
   this.mode             = mode;
+  this.macros           = {}
   this.root_code_block  = new Glaemscribe.IfTree.CodeBlock();       
   
   return this;
@@ -130,7 +131,8 @@ Glaemscribe.RuleGroup.prototype.apply_vars = function(line,string,allow_unicode_
 
 Glaemscribe.RuleGroup.prototype.descend_if_tree = function(code_block,options)
 {    
-  var mode = this.mode;
+  var rule_group  = this;
+  var mode        = this.mode;
   
   for(var t=0; t < code_block.terms.length; t++)
   {
@@ -143,6 +145,59 @@ Glaemscribe.RuleGroup.prototype.descend_if_tree = function(code_block,options)
         var cl = term.code_lines[o];
         this.finalize_code_line(cl);
       } 
+    }
+    else if(term.is_macro_deploy()) 
+    {      
+      // Ok this is a bit dirty but I don't want to rewrite the error managamenet
+      // So add an error and if it's still the last (meaning there were no error) one remove it      
+      var possible_error = new Glaemscribe.Glaeml.Error(term.line,  ">> Macro backtrace : " + term.macro.name + "");
+      mode.errors.push(possible_error);
+    
+      // First, test if variable is pushable
+      var arg_values = []
+      term.macro.arg_names.glaem_each(function(i,arg_name) {
+      
+        var var_value = null;
+        
+        if(rule_group.vars[arg_name]) {
+          mode.errors.push(new Glaemscribe.Glaeml.Error(term.line, "Local variable " + arg_name + " hinders a variable with the same name in this context. Use only local variable names in macros!"));
+        }
+        else
+        {
+          // Evaluate local var
+          var var_value_ex  = term.arg_value_expressions[i];
+          var var_value     = rule_group.apply_vars(term.line, var_value_ex, true)      
+        
+          if(var_value == null) {
+            mode.errors.push(new Glaemscribe.Glaeml.Error(term.line,  "Thus, variable " + var_name + " could not be declared."));
+          }
+        }    
+        arg_values.push({name: arg_name, val: var_value});
+      });
+    
+      // We push local vars after the whole loop to avoid interferences between them when evaluating them
+      arg_values.glaem_each(function(_,v) {
+        if(v.val != null)
+          rule_group.add_var(v.name,v.val,false)
+      });
+
+      rule_group.descend_if_tree(term.macro.root_code_block, options)
+    
+      // Remove the local vars from the scope (only if they were leggit)
+      arg_values.glaem_each(function(_,v) {
+        if(v.val != null)
+          rule_group.vars[v.name] = null;
+      });
+              
+      if(mode.errors[mode.errors.length-1] == possible_error) {
+        // Remove the error scope if there were no errors
+        mode.errors.pop();
+      }
+      else
+      {
+        // Add another one to close the context
+        mode.errors.push(new Glaemscribe.Glaeml.Error(term.line,  "<< Macro backtrace : " + term.macro.name + ""));
+      }
     }
     else
     { 

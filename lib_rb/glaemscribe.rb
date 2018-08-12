@@ -42,6 +42,7 @@ module Glaemscribe
     require API_PATH + "/api/rule.rb"
     require API_PATH + "/api/sub_rule.rb"
     require API_PATH + "/api/rule_group.rb"
+    require API_PATH + "/api/macro.rb"
     
     require API_PATH + "/api/eval.rb"
     require API_PATH + "/api/if_tree.rb"

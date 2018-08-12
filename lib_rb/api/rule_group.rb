@@ -51,11 +51,12 @@ module Glaemscribe
       
       CROSS_RULE_REGEXP           = /^\s*(.*?)\s+-->\s+(#{CROSS_SCHEMA_REGEXP}|#{VAR_NAME_REGEXP}|identity)\s+-->\s+(.+?)\s*$/
   
-      attr_reader :root_code_block, :name, :mode, :in_charset, :rules
+      attr_reader :root_code_block, :name, :mode, :in_charset, :rules, :macros
   
       def initialize(mode,name)
         @name             = name
         @mode             = mode
+        @macros           = {}
         @root_code_block  = IfTree::CodeBlock.new       
       end
   
@@ -116,6 +117,58 @@ module Glaemscribe
             term.code_lines.each{ |cl|
               finalize_code_line(cl) 
             } 
+          elsif(term.is_macro_deploy?)
+                      
+            # Ok this is a bit dirty but I don't want to rewrite the error managamenet
+            # So add an error and if it's still the last (meaning there were no error) one remove it
+            possible_error = Glaeml::Error.new(term.line, ">> Macro backtrace : #{term.macro.name}")
+            @mode.errors << possible_error
+            
+            # First, test if variable is pushable
+            arg_values = []
+            term.macro.arg_names.each_with_index { |arg_name, i|
+              
+              var_value = nil
+              
+              if @vars[arg_name]
+                @mode.errors << Glaeml::Error.new(term.line, "Local variable #{arg_name} hinders a variable with the same name in this context. Use only local variable names in macros!")
+              else
+                # Evaluate local var
+                var_value_ex  = term.arg_value_expressions[i]
+                var_value     = apply_vars(term.line, var_value_ex, true)      
+                
+                if !var_value
+                  @mode.errors << Glaeml::Error.new(term.line, "Thus, variable {#{var_name}} could not be declared.")
+                end              
+              end
+            
+              arg_values << {name: arg_name, val: var_value}
+            }
+            
+            # We push local vars after the whole loop to avoid interferences between them when evaluating them
+            arg_values.each { |v| 
+              if v[:val]
+                add_var(v[:name],v[:val],false)
+              end
+            }
+        
+            descend_if_tree(term.macro.root_code_block, trans_options)
+            
+            # Remove the local vars from the scope (only if they were leggit)
+            arg_values.each { |v| 
+              if v[:val]
+                @vars[v[:name]] = nil
+              end
+            }
+                      
+            if mode.errors.last == possible_error
+              # Remove the error scope if there were no errors
+              mode.errors.pop
+            else
+              # Add another one to close the context
+              @mode.errors << Glaeml::Error.new(term.line, "<< Macro backtrace : #{term.macro.name}")
+            end
+                        
           else
             term.if_conds.each{ |if_cond|
               

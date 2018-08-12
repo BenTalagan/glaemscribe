@@ -24,14 +24,36 @@ module Glaemscribe
   module API
     module IfTree
       
+      # A branching if condition
       class IfCond
         attr_accessor :line, :expression, :parent_if_term, :child_code_block
         def initialize(line, parent_if_term, expression)
           @parent_if_term     = parent_if_term
           @expression         = expression
         end
+        def offset
+          parent_if_term.offset + " "
+        end
+        def prefix
+          offset + "|-"
+        end
+        def inspect
+          "#{prefix} IF #{expression}\n" + 
+          "#{child_code_block.inspect}"
+        end
       end
       
+      # A line of code
+      class CodeLine
+        attr_accessor :expression, :line
+        def initialize(expression, line)
+          @expression   = expression
+          @line         = line
+        end
+      end
+      
+      # A node (code lines / preprocessor operators / ... )
+      # A node may have children or not depending on their nature
       class Term
         attr_accessor :parent_code_block
         def initialize(parent_code_block)
@@ -43,24 +65,30 @@ module Glaemscribe
         def is_pre_post_processor_operators?
           false
         end
+        def is_macro_deploy?
+          false
+        end
+        def offset
+          parent_code_block.offset + " "
+        end
+        def prefix
+          offset + "|- "
+        end
       end
  
+      # A ifterm may have multiple ifconds (if,elsif,elsif,...,else)
       class IfTerm < Term
         attr_accessor :if_conds
         def initialize(parent_code_block)
           super(parent_code_block)  
           @if_conds = []
         end
-      end
-      
-      class CodeLine
-        attr_accessor :expression, :line
-        def initialize(expression, line)
-          @expression   = expression
-          @line         = line
+        def inspect
+          "#{prefix} CONDITIONAL BLOCK\n" +
+            @if_conds.map{ |c| c.inspect }.join("\n")          
         end
       end
-      
+         
       class PrePostProcessorOperatorsTerm < Term
         attr_accessor :operators
         def initialize(parent_code_block)
@@ -69,6 +97,9 @@ module Glaemscribe
         end
         def is_pre_post_processor_operators?
           true
+        end
+        def inspect
+          "#{prefix} OPERATORS (#{@operators.count})"
         end
       end
       
@@ -81,6 +112,25 @@ module Glaemscribe
         def is_code_lines?
           true
         end
+        def inspect
+          "#{prefix} CODE LINES (#{@code_lines.count})"
+        end
+      end
+      
+      class MacroDeployTerm < Term
+        attr_accessor :macro, :line, :arg_value_expressions
+        def initialize(macro, line, parent_code_block, arg_value_expressions)
+          super(parent_code_block)
+          @line                   = line
+          @macro                  = macro
+          @arg_value_expressions  = arg_value_expressions
+        end
+        def is_macro_deploy?
+          true
+        end
+        def inspect
+          "#{prefix} MACRO DEPLOY (#{macro.name})"
+        end
       end
       
       class CodeBlock
@@ -88,6 +138,18 @@ module Glaemscribe
         def initialize(parent_if_cond = nil)
           @parent_if_cond = parent_if_cond
           @terms          = []
+        end
+        def offset
+          ((parent_if_cond)?(parent_if_cond.offset):("")) + " "
+        end
+        def prefix
+          offset + "|- "
+        end
+        def inspect
+          ret = ""
+          ret += "|-ROOT\n" if !parent_if_cond
+          ret += "#{prefix} Code block\n" +
+          @terms.map{|t| t.inspect}.join("\n")
         end
       end
 

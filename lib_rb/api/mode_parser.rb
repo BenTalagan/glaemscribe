@@ -94,7 +94,13 @@ module Glaemscribe
         ifcond            
       end
       
-      def traverse_if_tree(root_code_block, root_element, text_procedure, element_procedure)
+      def traverse_if_tree(context, text_procedure, element_procedure)
+
+        owner         = context[:owner]           # The root object of the if tree
+        root_element  = context[:root_element]    # The glaeml root_element of that if tree
+        rule_group    = context[:rule_group]      # The rule group in which this traversal happens (may be null for pre/post processors)
+
+        root_code_block           = owner.root_code_block
         current_parent_code_block = root_code_block
         
         root_element.children.each{ |child|
@@ -145,7 +151,65 @@ module Glaemscribe
               end
               
               current_parent_code_block       = if_term.parent_code_block
+            when 'macro'
+        
+              # Macro definition, cannot be defined in conditional blocks
+              if current_parent_code_block.parent_if_cond || root_element.name != "rules"
+                @mode.errors << Glaeml::Error.new(child.line, "Macros can only defined in the 'rules' scope, not in a conditional block (because they are replaced and used at parsing time) or a macro block (local macros are not handled).")
+                return
+              end
               
+              if !child.args || child.args.count == 0
+                @mode.errors << Glaeml::Error.new(child.line, "Macro misses a name.")
+                return   
+              end
+
+              macro_args = child.args.clone
+              macro_name = macro_args.shift
+              macro_args.each{ |arg|
+                if(!arg =~ /[0-9A-Z_]+/)
+                  @mode.errors << Glaeml::Error.new(child.line, "Macro argument name #{arg} has wrong format.")
+                  return
+                end
+              }
+              
+              if rule_group.macros[macro_name]
+                @mode.errors << Glaeml::Error.new(child.line, "Redefining macro #{macro_name}.")
+                return
+              end
+              
+              macro = Macro.new(rule_group,macro_name,macro_args)
+              macro_context = {:owner => macro, :root_element => child, :rule_group => rule_group}
+              traverse_if_tree(macro_context, text_procedure, element_procedure)
+
+              rule_group.macros[macro_name] = macro
+
+            when 'deploy'
+
+              if !rule_group
+                @mode.errors << Glaeml::Error.new(child.line, "Macros can only be deployed in a rule group.")
+                return
+              end
+
+              macro_args = child.args.clone
+              macro_name = macro_args.shift
+              macro      = rule_group.macros[macro_name]
+
+              if !macro
+                @mode.errors << Glaeml::Error.new(child.line, "Macro '#{macro_name}' not found in rule group '#{rule_group.name}'.")
+                return
+              end
+
+              wanted_argcount = macro.arg_names.count
+              given_argcount  = macro_args.count
+              if wanted_argcount != given_argcount
+                @mode.errors << Glaeml::Error.new(child.line, "Macro '#{macro_name}' takes #{wanted_argcount} arguments, not #{given_argcount}.")
+                return
+              end
+
+              macro_node = IfTree::MacroDeployTerm.new(macro, child.line, current_parent_code_block, macro_args)
+              current_parent_code_block.terms << macro_node
+
             else
               # Do something with this child element
               element_procedure.call(current_parent_code_block, child)            
@@ -184,10 +248,13 @@ module Glaemscribe
             term.operators << operator_class.new(element.clone)
           end  
         }  
-        
-        root_code_block = ((pre_not_post)?(@mode.pre_processor.root_code_block):(@mode.post_processor.root_code_block))
-               
-        self.traverse_if_tree(root_code_block, processor_element, text_procedure, element_procedure )                       
+
+        processor_context = {
+            owner: ((pre_not_post)?(@mode.pre_processor):(@mode.post_processor)),
+            root_element: processor_element,
+            rule_group: nil
+        }
+        traverse_if_tree(processor_context, text_procedure, element_procedure )
       end
       
       def parse(file_path, mode_options = {})
@@ -305,6 +372,7 @@ module Glaemscribe
                                    
             lcount  = element.line
             element.args[0].lines.to_a.each{ |l| 
+              # Split into lines of code and count the lines
               l       = l.strip
               term.code_lines << IfTree::CodeLine.new(l, lcount)           
               lcount  += 1                         
@@ -314,11 +382,16 @@ module Glaemscribe
           element_procedure = Proc.new { |current_parent_code_block, element|
             # This is fatal.
             @mode.errors << Glaeml::Error.new(element.line, "Unknown directive #{element.name}.")      
-          }  
-          
-          self.traverse_if_tree( rule_group.root_code_block, rules_element, text_procedure, element_procedure )                 
+          }
+
+          processor_context = {
+              owner:           rule_group,
+              root_element:   rules_element,
+              rule_group:     rule_group
+          }
+          traverse_if_tree(processor_context, text_procedure, element_procedure )
         }
-                                                         
+                                                              
         @mode.finalize(mode_options) if !@mode.errors.any?
         
         @mode
