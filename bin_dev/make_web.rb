@@ -31,6 +31,7 @@ JS_FILES = [
   "api/fragment.js",
   "api/mode.js",
   "api/option.js",
+  "api/macro.js",
   "api/mode_parser.js",
   "api/rule.js",
   "api/rule_group.js",
