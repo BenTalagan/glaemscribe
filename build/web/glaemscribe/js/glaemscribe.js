@@ -1466,6 +1466,21 @@ Glaemscribe.Option.prototype.is_visible = function() {
 
 
 /*
+  Adding api/macro.js 
+*/
+
+
+Glaemscribe.Macro = function(rule_group, name, arg_names) {
+  var macro = this;
+  macro.rule_group = rule_group;
+  macro.module     = rule_group.mode;
+  macro.name       = rule_group.name;
+  macro.arg_names  = arg_names;
+  macro.root_code_block = new Glaemscribe.IfTree.CodeBlock();
+}
+
+
+/*
   Adding api/mode_parser.js 
 */
 
@@ -1550,9 +1565,13 @@ Glaemscribe.ModeParser.prototype.create_if_cond_for_if_term = function(line, if_
   return ifcond;            
 }
 
-Glaemscribe.ModeParser.prototype.traverse_if_tree = function(root_code_block, root_element, text_procedure, element_procedure)
+Glaemscribe.ModeParser.prototype.traverse_if_tree = function(context, text_procedure, element_procedure)
 {
   var mode                      = this.mode;
+  var owner                     = context.owner;
+  var root_element              = context.root_element;
+  var rule_group                = context.rule_group;
+  var root_code_block           = owner.root_code_block;
   var current_parent_code_block = root_code_block;
   
   for(var c = 0;c<root_element.children.length;c++)
@@ -1624,6 +1643,71 @@ Glaemscribe.ModeParser.prototype.traverse_if_tree = function(root_code_block, ro
         current_parent_code_block           = if_term.parent_code_block;
               
         break;
+        
+      case 'macro':
+        
+        // Macro definition, cannot be defined in conditional blocks
+        if(current_parent_code_block.parent_if_cond || root_element.name != "rules") {
+          mode.errors.push(new Glaemscribe.Glaeml.Error(child.line, "Macros can only defined in the 'rules' scope, not in a conditional block (because they are replaced and used at parsing time) or a macro block (local macros are not handled)."));
+          return;      
+        }
+        
+        if(!child.args || child.args.length == 0) {
+          mode.errors.push(new Glaemscribe.Glaeml.Error(child.line, "Macro misses a name."));
+          return;   
+        }
+
+        var macro_args = child.args.slice(0);
+        var macro_name = macro_args.shift();
+        macro_args.glaem_each( function(_,arg) {      
+          if(!arg.match(/[0-9A-Z_]+/)) {
+            mode.errors.push(new Glaemscribe.Glaeml.Error(child.line, "Macro argument name " + arg + " has wrong format."));
+            return;
+          }
+        });
+        
+        if(rule_group.macros[macro_name] != null) {
+          mode.errors.push(new Glaemscribe.Glaeml.Error(child.line, "Redefining macro " + macro_name + "."));
+          return;           
+        }
+        
+        var macro         = new Glaemscribe.Macro(rule_group,macro_name,macro_args);
+        var macro_context = {owner: macro, root_element: child, rule_group: rule_group};
+        
+        this.traverse_if_tree(macro_context, text_procedure, element_procedure);
+
+        rule_group.macros[macro_name] = macro;
+      
+        break;
+      case 'deploy':
+
+        if(!rule_group) {
+          mode.errors.push(new Glaemscribe.Glaeml.Error(child.line,"Macros can only be deployed in a rule group."));
+          return;   
+        }
+
+        var macro_args = child.args.slice(0);
+        var macro_name = macro_args.shift();
+        var macro      = rule_group.macros[macro_name]
+
+        if(macro == null) {
+          mode.errors.push(new Glaemscribe.Glaeml.Error(child.line,"Macro '" + macro_name + "' not found in rule group '" + rule_group.name + "'."));
+          return;   
+        }
+
+        var wanted_argcount = macro.arg_names.length;
+        var given_argcount  = macro_args.length;
+        
+        if(wanted_argcount != given_argcount) {
+          mode.errors.push(new Glaemscribe.Glaeml.Error(child.line,"Macro '" + macro_name + "' takes " + wanted_argcount + " arguments, not " + given_argcount + "."));
+          return;          
+        }
+
+        var macro_node = new Glaemscribe.IfTree.MacroDeployTerm(macro, child.line, current_parent_code_block, macro_args);
+        current_parent_code_block.terms.push(macro_node);
+        
+        break;
+        
       default:
         
         // Do something with this child element
@@ -1676,9 +1760,13 @@ Glaemscribe.ModeParser.prototype.parse_pre_post_processor = function(processor_e
     }     
   }  
   
-  var root_code_block = ((pre_not_post)?(mode.pre_processor.root_code_block):(mode.post_processor.root_code_block))
+  var processor_context = {
+    owner:        ((pre_not_post)?(mode.pre_processor):(mode.post_processor)),
+    root_element: processor_element,
+    rule_group:   null
+  }
   
-  this.traverse_if_tree(root_code_block, processor_element, text_procedure, element_procedure )                       
+  this.traverse_if_tree(processor_context, text_procedure, element_procedure )                       
 }
 
 Glaemscribe.ModeParser.prototype.parse_raw = function(mode_name, raw, mode_options) {
@@ -1843,7 +1931,13 @@ Glaemscribe.ModeParser.prototype.parse_raw = function(mode_name, raw, mode_optio
       mode.errors.push(new Glaemscribe.Glaeml.Error(element.line, "Unknown directive " + element.name + "."));
     }  
     
-    this.traverse_if_tree( rule_group.root_code_block, rules_element, text_procedure, element_procedure );                 
+    var processor_context = {
+      owner:        rule_group,
+      root_element: rules_element,
+      rule_group:   rule_group
+    }
+    
+    this.traverse_if_tree(processor_context, text_procedure, element_procedure );                 
   }
    
   if(mode.errors.length == 0)
@@ -1938,18 +2032,40 @@ Glaemscribe.Rule.prototype.finalize = function(cross_schema) {
 */
 
 
+Glaemscribe.RuleGroupVar = function(name, value, is_pointer) {
+
+  this.name       = name;
+  this.value      = value;
+  this.is_p       = is_pointer;
+}
+
+Glaemscribe.RuleGroupVar.prototype.is_pointer = function() {
+  return this.is_p;
+}
+
+////////
+
 Glaemscribe.RuleGroup = function(mode,name) {
   this.name             = name;
   this.mode             = mode;
+  this.macros           = {}
   this.root_code_block  = new Glaemscribe.IfTree.CodeBlock();       
   
   return this;
 }
 
-Glaemscribe.RuleGroup.VAR_NAME_REGEXP = /{([0-9A-Z_]+)}/g ;
+Glaemscribe.RuleGroup.VAR_NAME_REGEXP             = /{([0-9A-Z_]+)}/g;
+Glaemscribe.RuleGroup.VAR_DECL_REGEXP             = /^\s*{([0-9A-Z_]+)}\s+===\s+(.+?)\s*$/
+Glaemscribe.RuleGroup.POINTER_VAR_DECL_REGEXP     = /^\s*{([0-9A-Z_]+)}\s+<=>\s+(.+?)\s*$/
+Glaemscribe.RuleGroup.UNICODE_VAR_NAME_REGEXP_IN  = /^UNI_([0-9A-F]+)$/
+Glaemscribe.RuleGroup.UNICODE_VAR_NAME_REGEXP_OUT = /{UNI_([0-9A-F]+)}/
+Glaemscribe.RuleGroup.RULE_REGEXP                 = /^\s*(.*?)\s+-->\s+(.+?)\s*$/
+Glaemscribe.RuleGroup.CROSS_SCHEMA_REGEXP         = /[0-9]+(\s*,\s*[0-9]+)*/
+Glaemscribe.RuleGroup.CROSS_RULE_REGEXP           = /^\s*(.*?)\s+-->\s+([0-9]+(\s*,\s*[0-9]+)*|{([0-9A-Z_]+)}|identity)\s+-->\s+(.+?)\s*$/
 
-Glaemscribe.RuleGroup.prototype.add_var = function(var_name, value) {
-  this.vars[var_name] = value;
+
+Glaemscribe.RuleGroup.prototype.add_var = function(var_name, value, is_pointer) {
+  this.vars[var_name] = new Glaemscribe.RuleGroupVar(var_name,value,is_pointer);
 }
 
 // Replace all vars in expression
@@ -1957,48 +2073,76 @@ Glaemscribe.RuleGroup.prototype.apply_vars = function(line,string,allow_unicode_
   var rule_group  = this;
   var mode        = this.mode;
   var goterror    = false;  
+  
+  var ret               = string;  
+  var had_replacements  = true;
+  var stack_depth       = 0;
+  
+  while(had_replacements) {
     
-  var ret = string.replace(Glaemscribe.RuleGroup.VAR_NAME_REGEXP, function(match,p1,offset,str) { 
-    var vname = p1;
-    var rep = rule_group.vars[vname];
+    had_replacements = false;
+    ret = ret.replace(Glaemscribe.RuleGroup.VAR_NAME_REGEXP, function(match,p1,offset,str) { 
+      var vname = p1;
+      var v     = rule_group.vars[vname];
+      var rep   = null;
 
-    if(rep == null)
-    {
-       if(Glaemscribe.RuleGroup.UNICODE_VAR_NAME_REGEXP_IN.exec(vname))
+      if(v == null)
       {
-        // A unicode variable.
-        if(allow_unicode_vars)
+        if(Glaemscribe.RuleGroup.UNICODE_VAR_NAME_REGEXP_IN.exec(vname))
         {
-          // Just keep this variable intact, it will be replaced at the last moment of the parsing
-          rep = match;
+          // A unicode variable.
+          if(allow_unicode_vars)
+          {
+            // Just keep this variable intact, it will be replaced at the last moment of the parsing
+            rep = match;
+          }
+          else
+          {
+            mode.errors.push(new Glaemscribe.Glaeml.Error(line, "In expression: "+ string + ": making wrong use of unicode variable: " + match + ". Unicode vars can only be used in source members of a rule or in the definition of another variable."))
+            goterror = true;
+            return ""; 
+          }  
         }
         else
         {
-          mode.errors.push(new Glaemscribe.Glaeml.Error(line, "In expression: "+ string + ": making wrong use of unicode variable: " + match + ". Unicode vars can only be used in source members of a rule or in the definition of another variable."))
+          mode.errors.push(new Glaemscribe.Glaeml.Error(line, "In expression: "+ string + ": failed to evaluate variable: " + match + "."));
           goterror = true;
           return ""; 
-        }  
+        }      
       }
       else
       {
-        mode.errors.push(new Glaemscribe.Glaeml.Error(line, "In expression: " + string + ": failed to evaluate variable: " + p1 + "."))
-        goterror = true;
-        return ""; 
-      }      
+        rep = v.value;
+        // Only count replacements on non unicode vars
+        had_replacements = true;
+      }
+    
+      return rep;
+    });
+    
+    if(goterror)
+      return null;
+    
+    stack_depth += 1
+    
+    if(!had_replacements)
+      break;
+    
+    if(stack_depth > 16)
+    {
+      mode.errors.push(new Glaemscribe.Glaeml.Error(line, "In expression: "+ string + ": evaluation stack overflow."));
+      return nil;
     }
     
-    return rep;
-  });
-  
-  if(goterror)
-    return null;
-  
+  }
+    
   return ret;
 }
 
 Glaemscribe.RuleGroup.prototype.descend_if_tree = function(code_block,options)
 {    
-  var mode = this.mode;
+  var rule_group  = this;
+  var mode        = this.mode;
   
   for(var t=0; t < code_block.terms.length; t++)
   {
@@ -2011,6 +2155,59 @@ Glaemscribe.RuleGroup.prototype.descend_if_tree = function(code_block,options)
         var cl = term.code_lines[o];
         this.finalize_code_line(cl);
       } 
+    }
+    else if(term.is_macro_deploy()) 
+    {      
+      // Ok this is a bit dirty but I don't want to rewrite the error managamenet
+      // So add an error and if it's still the last (meaning there were no error) one remove it      
+      var possible_error = new Glaemscribe.Glaeml.Error(term.line,  ">> Macro backtrace : " + term.macro.name + "");
+      mode.errors.push(possible_error);
+    
+      // First, test if variable is pushable
+      var arg_values = []
+      term.macro.arg_names.glaem_each(function(i,arg_name) {
+      
+        var var_value = null;
+        
+        if(rule_group.vars[arg_name]) {
+          mode.errors.push(new Glaemscribe.Glaeml.Error(term.line, "Local variable " + arg_name + " hinders a variable with the same name in this context. Use only local variable names in macros!"));
+        }
+        else
+        {
+          // Evaluate local var
+          var var_value_ex  = term.arg_value_expressions[i];
+          var var_value     = rule_group.apply_vars(term.line, var_value_ex, true)      
+        
+          if(var_value == null) {
+            mode.errors.push(new Glaemscribe.Glaeml.Error(term.line,  "Thus, variable " + var_name + " could not be declared."));
+          }
+        }    
+        arg_values.push({name: arg_name, val: var_value});
+      });
+    
+      // We push local vars after the whole loop to avoid interferences between them when evaluating them
+      arg_values.glaem_each(function(_,v) {
+        if(v.val != null)
+          rule_group.add_var(v.name,v.val,false)
+      });
+
+      rule_group.descend_if_tree(term.macro.root_code_block, options)
+    
+      // Remove the local vars from the scope (only if they were leggit)
+      arg_values.glaem_each(function(_,v) {
+        if(v.val != null)
+          rule_group.vars[v.name] = null;
+      });
+              
+      if(mode.errors[mode.errors.length-1] == possible_error) {
+        // Remove the error scope if there were no errors
+        mode.errors.pop();
+      }
+      else
+      {
+        // Add another one to close the context
+        mode.errors.push(new Glaemscribe.Glaeml.Error(term.line,  "<< Macro backtrace : " + term.macro.name + ""));
+      }
     }
     else
     { 
@@ -2039,13 +2236,6 @@ Glaemscribe.RuleGroup.prototype.descend_if_tree = function(code_block,options)
     }
   }
 }
-
-Glaemscribe.RuleGroup.VAR_DECL_REGEXP             = /^\s*{([0-9A-Z_]+)}\s+===\s+(.+?)\s*$/
-Glaemscribe.RuleGroup.UNICODE_VAR_NAME_REGEXP_IN  = /^UNI_([0-9A-F]+)$/
-Glaemscribe.RuleGroup.UNICODE_VAR_NAME_REGEXP_OUT = /{UNI_([0-9A-F]+)}/
-Glaemscribe.RuleGroup.RULE_REGEXP                 = /^\s*(.*?)\s+-->\s+(.+?)\s*$/
-Glaemscribe.RuleGroup.CROSS_RULE_REGEXP           = /^\s*(.*?)\s+-->\s+([\s0-9,]+)\s+-->\s+(.+?)\s*$/
-
 
 Glaemscribe.RuleGroup.prototype.finalize_rule = function(line, match_exp, replacement_exp, cross_schema)
 {
@@ -2081,13 +2271,36 @@ Glaemscribe.RuleGroup.prototype.finalize_code_line = function(code_line) {
       return;
     }
          
-    this.add_var(var_name,var_value);                         
+    this.add_var(var_name,var_value,false);                         
   }
-  else if(exp = Glaemscribe.RuleGroup.CROSS_RULE_REGEXP.exec(code_line.expression ))
+  else if(exp = Glaemscribe.RuleGroup.POINTER_VAR_DECL_REGEXP.exec(code_line.expression))
+  {
+    var var_name      = exp[1];
+    var var_value_ex  = exp[2];         
+    this.add_var(var_name,var_value_ex,true);    
+  }
+  else if(exp = Glaemscribe.RuleGroup.CROSS_RULE_REGEXP.exec(code_line.expression))
   {
     var match         = exp[1];
     var cross         = exp[2];
-    var replacement   = exp[3]; 
+
+    var var_name      = exp[4];
+    var replacement   = exp[5];      
+    
+    if(var_name)
+    {
+      // This was a variable declaration           
+      var var_value = this.apply_vars(code_line.line, cross, false);
+      if(!var_value)
+      {
+        mode.errors.push(new Glaemscribe.Glaeml.Error(code_line.line, "Thus, variable {"+ var_name + "} could not be declared."));
+        return;
+      }
+      cross = var_value;
+    }
+    
+    if(cross == "identity")
+      cross = null;    
       
     this.finalize_rule(code_line.line, match, replacement, cross)
   }
@@ -2115,23 +2328,23 @@ Glaemscribe.RuleGroup.prototype.finalize = function(options) {
   this.in_charset = {}
   this.rules      = []
   
-  this.add_var("NULL","");
+  this.add_var("NULL","",false);
  
   // Characters that are not easily entered or visible in a text editor
-  this.add_var("NBSP",           "{UNI_A0}")
-  this.add_var("WJ",             "{UNI_2060}")
-  this.add_var("ZWSP",           "{UNI_200B}")
-  this.add_var("ZWNJ",           "{UNI_200C}")        
+  this.add_var("NBSP",           "{UNI_A0}"  , false)
+  this.add_var("WJ",             "{UNI_2060}", false)
+  this.add_var("ZWSP",           "{UNI_200B}", false)
+  this.add_var("ZWNJ",           "{UNI_200C}", false)        
 
   // The following characters are used by the mode syntax.
   // Redefine some convenient tools.
-  this.add_var("UNDERSCORE",     "{UNI_5F}")
-  this.add_var("ASTERISK",       "{UNI_2A}")
-  this.add_var("COMMA",          "{UNI_2C}")
-  this.add_var("LPAREN",         "{UNI_28}")
-  this.add_var("RPAREN",         "{UNI_29}")
-  this.add_var("LBRACKET",       "{UNI_5B}")
-  this.add_var("RBRACKET",       "{UNI_5D}")
+  this.add_var("UNDERSCORE",     "{UNI_5F}", false)
+  this.add_var("ASTERISK",       "{UNI_2A}", false)
+  this.add_var("COMMA",          "{UNI_2C}", false)
+  this.add_var("LPAREN",         "{UNI_28}", false)
+  this.add_var("RPAREN",         "{UNI_29}", false)
+  this.add_var("LBRACKET",       "{UNI_5B}", false)
+  this.add_var("RBRACKET",       "{UNI_5D}", false)
 
   this.descend_if_tree(this.root_code_block, options)
   
@@ -2411,6 +2624,9 @@ Glaemscribe.IfTree.Term.prototype.is_code_lines = function()
 {
   return false;
 }
+Glaemscribe.IfTree.Term.prototype.is_macro_deploy = function() {
+  return false;
+}
 Glaemscribe.IfTree.Term.prototype.is_pre_post_processor_operators = function()
 {
   return false;
@@ -2491,6 +2707,27 @@ Glaemscribe.IfTree.CodeLinesTerm.prototype.name = function()
   return "CL_TERM";
 }
 Glaemscribe.IfTree.CodeLinesTerm.prototype.is_code_lines = function()
+{
+  return true;
+}
+
+/* ================ */
+
+Glaemscribe.IfTree.MacroDeployTerm = function(macro, line, parent_code_block, arg_value_expressions)
+{
+  Glaemscribe.IfTree.Term.call(this,parent_code_block); //super
+  this.line                   = line;
+  this.macro                  = macro;
+  this.arg_value_expressions  = arg_value_expressions
+  return this;
+}
+Glaemscribe.IfTree.MacroDeployTerm.inheritsFrom( Glaemscribe.IfTree.Term );  
+
+Glaemscribe.IfTree.MacroDeployTerm.prototype.name = function()
+{
+  return "DEPLOY_TERM";
+}
+Glaemscribe.IfTree.MacroDeployTerm.prototype.is_macro_deploy = function()
 {
   return true;
 }
