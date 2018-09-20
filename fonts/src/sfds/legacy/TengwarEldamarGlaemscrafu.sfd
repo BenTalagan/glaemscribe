@@ -21,7 +21,7 @@ OS2Version: 3
 OS2_WeightWidthSlopeOnly: 0
 OS2_UseTypoMetrics: 1
 CreationTime: 1144315769
-ModificationTime: 1515336587
+ModificationTime: 1537425041
 PfmFamily: 81
 TTFWeight: 400
 TTFWidth: 5
@@ -596,7 +596,7 @@ ShortTable: maxp 16
   0
   0
 EndShort
-LangName: 1033 "Copyright (c) 2006-2009 by M+AOUA-ns Bj+APYA-rkman. All rights reserved." "" "Regular" "" "" "Version 3.000" "" "Tengwar Eldamar is a trademark of M+AOUA-ns Bj+APYA-rkman." "M+AOUA-ns Bj+APYA-rkman" "M+AOUA-ns Bj+APYA-rkman" "Copyright (c) 2006-2009 by M+AOUA-ns Bj+APYA-rkman. All rights reserved." "" "http://mansbjorkman.net" "" "" "" "Tengwar Eldamar Glaemscrafu" "" "Tengwar Eldamar Glaemscrafu"
+LangName: 1033 "Copyright (c) 2006-2009 by M+AOUA-ns Bj+APYA-rkman. All rights reserved." "" "Regular" "" "" "Version 3.000" "" "Tengwar Eldamar is a trademark of M+AOUA-ns Bj+APYA-rkman." "M+AOUA-ns Bj+APYA-rkman" "M+AOUA-ns Bj+APYA-rkman" "Copyright (c) 2006-2009 by M+AOUA-ns Bj+APYA-rkman. All rights reserved." "" "http://mansbjorkman.net"
 GaspTable: 3 8 2 16 1 65535 3 0
 Encoding: UnicodeBmp
 UnicodeInterp: none
@@ -604,7 +604,7 @@ NameList: AGL For New Fonts
 DisplaySize: -48
 AntiAlias: 1
 FitToEm: 1
-WinInfo: 0 23 9
+WinInfo: 46 23 9
 BeginPrivate: 0
 EndPrivate
 BeginChars: 65537 458
