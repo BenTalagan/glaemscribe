@@ -47,6 +47,9 @@ VIRTUALS_DS = {
   "E_TEHTA_INF"               => { names: ["E_TEHTA_INF"] ,                                 classes:  ["THINF_ACCENT_XS", "THINF_ACCENT_S", "THINF_ACCENT_L", "THINF_ACCENT_XL"] },
   "O_TEHTA_INF"               => { names: ["O_TEHTA_INF"] ,                                 classes:  ["THINF_CURL_XS", "THINF_CURL_S", "THINF_CURL_L", "THINF_CURL_XL"] },
   "U_TEHTA_INF"               => { names: ["U_TEHTA_INF"] ,                                 classes:  ["THINF_CURL_INV_XS", "THINF_CURL_INV_S", "THINF_CURL_INV_L", "THINF_CURL_INV_XL"] },
+
+  "E_TEHTA_GRAVE_INF"         => { names: ["E_TEHTA_GRAVE_INF"] ,                           classes:  ["E_TEHTA_GRAVE_INF_XS", "E_TEHTA_GRAVE_INF_S", "E_TEHTA_GRAVE_INF_L", "E_TEHTA_GRAVE_INF_XL"] },
+
   "CIRC_TEHTA_INF"            => { names: ["CIRC_TEHTA_INF"] ,                              classes:  ["TH_SUB_CIRC_XS", "TH_SUB_CIRC_S", "TH_SUB_CIRC_L", "TH_SUB_CIRC_XL"] },
   "THINNAS"                   => { names: ["THINNAS","SEV_TEHTA_INF","THINF_STROKE"] ,      classes:  ["THINF_STROKE_XS", "THINF_STROKE_S", "THINF_STROKE_L", "THINF_STROKE_XL"] },
                                                                       
@@ -81,12 +84,15 @@ DIACTRITICS_WITH_SIMILAR_PLACEMENT_DS = [
    ["I_TEHTA_DOUBLE"], 
    ["O_TEHTA_DOUBLE"],
    ["U_TEHTA_DOUBLE"],
+   
    ["A_TEHTA_INF"],
    ["E_TEHTA_INF"],
-   ["CIRC_TEHTA_INF"],
-   ["THINNAS"],
    ["O_TEHTA_INF"],
    ["U_TEHTA_INF"],
+   ["E_TEHTA_GRAVE_INF"],
+      
+   ["CIRC_TEHTA_INF"],
+   ["THINNAS"],
    ["PALATAL_SIGN"],
    ["E_TEHTA_DOUBLE_INF"],
    ["UNUTIXE"],
