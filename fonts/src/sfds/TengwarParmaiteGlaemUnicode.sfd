@@ -22,7 +22,7 @@ OS2Version: 1
 OS2_WeightWidthSlopeOnly: 0
 OS2_UseTypoMetrics: 0
 CreationTime: 1106669751
-ModificationTime: 1515338062
+ModificationTime: 1537622373
 PfmFamily: 81
 TTFWeight: 400
 TTFWidth: 5
@@ -212,10 +212,10 @@ NameList: AGL For New Fonts
 DisplaySize: -48
 AntiAlias: 1
 FitToEm: 0
-WinInfo: 272 17 9
+WinInfo: 476 17 9
 BeginPrivate: 0
 EndPrivate
-BeginChars: 65543 306
+BeginChars: 65543 310
 
 StartChar: .null
 Encoding: 24577 -1 1
@@ -26310,8 +26310,64 @@ SplineSet
 EndSplineSet
 EndChar
 
+StartChar: uniEDE0
+Encoding: 60896 60896 306
+Width: 0
+Flags: W
+LayerCount: 2
+Fore
+SplineSet
+-124 -400 m 5,0,-1
+ -405 -82 l 5,1,-1
+ -149 -435 l 5,2,-1
+ -124 -400 l 5,0,-1
+EndSplineSet
+EndChar
+
+StartChar: uniEDE2
+Encoding: 60898 60898 307
+Width: 0
+Flags: W
+LayerCount: 2
+Fore
+SplineSet
+-154 -516 m 5,0,-1
+ -530 -82 l 5,1,-1
+ -182 -560 l 5,2,-1
+ -154 -516 l 5,0,-1
+EndSplineSet
+EndChar
+
+StartChar: uniEDE1
+Encoding: 60897 60897 308
+Width: 0
+Flags: W
+LayerCount: 2
+Fore
+SplineSet
+-334 -496 m 5,0,-1
+ -669 -82 l 5,1,-1
+ -363 -540 l 5,2,-1
+ -334 -496 l 5,0,-1
+EndSplineSet
+EndChar
+
+StartChar: uniEDE3
+Encoding: 60899 60899 309
+Width: 0
+Flags: W
+LayerCount: 2
+Fore
+SplineSet
+-613 -636 m 5,0,-1
+ -1087 -82 l 5,1,-1
+ -648 -686 l 5,2,-1
+ -613 -636 l 5,0,-1
+EndSplineSet
+EndChar
+
 StartChar: uniE030
-Encoding: 57392 57392 306
+Encoding: 57392 57392 310
 Width: 778
 Flags: W
 TtInstrs:
@@ -26408,7 +26464,7 @@ Validated: 1
 EndChar
 
 StartChar: bracketleft
-Encoding: 91 91 307
+Encoding: 91 91 311
 Width: 410
 Flags: W
 LayerCount: 2
@@ -26428,7 +26484,7 @@ EndSplineSet
 EndChar
 
 StartChar: bracketright
-Encoding: 93 93 308
+Encoding: 93 93 312
 Width: 410
 Flags: W
 LayerCount: 2
@@ -26448,7 +26504,7 @@ EndSplineSet
 EndChar
 
 StartChar: quotedblright
-Encoding: 8221 8221 309
+Encoding: 8221 8221 313
 Width: 592
 Flags: W
 LayerCount: 2
@@ -26479,7 +26535,7 @@ Validated: 1
 EndChar
 
 StartChar: quotedblleft
-Encoding: 8220 8220 310
+Encoding: 8220 8220 314
 Width: 592
 Flags: W
 LayerCount: 2
@@ -26510,7 +26566,7 @@ Validated: 1
 EndChar
 
 StartChar: uni201F
-Encoding: 8223 8223 311
+Encoding: 8223 8223 315
 Width: 592
 Flags: W
 LayerCount: 2
@@ -26541,7 +26597,7 @@ Validated: 1
 EndChar
 
 StartChar: quotedblbase
-Encoding: 8222 8222 312
+Encoding: 8222 8222 316
 Width: 592
 Flags: W
 LayerCount: 2
@@ -26572,7 +26628,7 @@ Validated: 1
 EndChar
 
 StartChar: zero
-Encoding: 48 48 313
+Encoding: 48 48 317
 Width: 778
 Flags: W
 TtInstrs:
@@ -26669,7 +26725,7 @@ Validated: 1
 EndChar
 
 StartChar: one
-Encoding: 49 49 314
+Encoding: 49 49 318
 Width: 768
 Flags: W
 TtInstrs:
@@ -26786,7 +26842,7 @@ Validated: 33
 EndChar
 
 StartChar: two
-Encoding: 50 50 315
+Encoding: 50 50 319
 Width: 1078
 Flags: W
 TtInstrs:
@@ -26932,7 +26988,7 @@ Validated: 33
 EndChar
 
 StartChar: three
-Encoding: 51 51 316
+Encoding: 51 51 320
 Width: 1382
 Flags: W
 TtInstrs:
@@ -27105,7 +27161,7 @@ Validated: 33
 EndChar
 
 StartChar: four
-Encoding: 52 52 317
+Encoding: 52 52 321
 Width: 798
 Flags: W
 TtInstrs:
@@ -27219,7 +27275,7 @@ Validated: 33
 EndChar
 
 StartChar: five
-Encoding: 53 53 318
+Encoding: 53 53 322
 Width: 1050
 Flags: W
 TtInstrs:
@@ -27384,7 +27440,7 @@ Validated: 33
 EndChar
 
 StartChar: six
-Encoding: 54 54 319
+Encoding: 54 54 323
 Width: 1379
 Flags: W
 TtInstrs:
@@ -27582,7 +27638,7 @@ Validated: 33
 EndChar
 
 StartChar: seven
-Encoding: 55 55 320
+Encoding: 55 55 324
 Width: 798
 Flags: W
 LayerCount: 2
@@ -27609,7 +27665,7 @@ Validated: 1
 EndChar
 
 StartChar: eight
-Encoding: 56 56 321
+Encoding: 56 56 325
 Width: 1260
 Flags: W
 TtInstrs:
@@ -27767,7 +27823,7 @@ Validated: 33
 EndChar
 
 StartChar: nine
-Encoding: 57 57 322
+Encoding: 57 57 326
 Width: 1748
 Flags: W
 TtInstrs:
@@ -27957,7 +28013,7 @@ Validated: 33
 EndChar
 
 StartChar: uniE06E
-Encoding: 57454 57454 323
+Encoding: 57454 57454 327
 Width: 768
 Flags: W
 TtInstrs:
@@ -28067,7 +28123,7 @@ Validated: 1
 EndChar
 
 StartChar: uniE06F
-Encoding: 57455 57455 324
+Encoding: 57455 57455 328
 Width: 768
 Flags: W
 TtInstrs:

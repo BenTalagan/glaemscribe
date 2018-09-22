@@ -352,6 +352,12 @@
 \char EDD2 BREVE_TEHTA_L
 \char EDD3 BREVE_TEHTA_XL
 
+\** Unattested but probable **\
+
+\char EDE0 E_TEHTA_GRAVE_INF_XS
+\char EDE1 E_TEHTA_GRAVE_INF_S
+\char EDE2 E_TEHTA_GRAVE_INF_L
+\char EDE3 E_TEHTA_GRAVE_INF_XL
 
 
 \** Ligatured results are mapped here **\
