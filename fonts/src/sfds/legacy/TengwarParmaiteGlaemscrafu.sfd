@@ -22,7 +22,7 @@ OS2Version: 1
 OS2_WeightWidthSlopeOnly: 0
 OS2_UseTypoMetrics: 0
 CreationTime: 1106669751
-ModificationTime: 1537622373
+ModificationTime: 1549574302
 PfmFamily: 81
 TTFWeight: 400
 TTFWidth: 5
@@ -212,7 +212,7 @@ NameList: AGL For New Fonts
 DisplaySize: -48
 AntiAlias: 1
 FitToEm: 0
-WinInfo: 476 17 9
+WinInfo: 462 14 6
 BeginPrivate: 0
 EndPrivate
 BeginChars: 65543 310
@@ -26422,10 +26422,10 @@ Flags: W
 LayerCount: 2
 Fore
 SplineSet
--124 -400 m 5,0,-1
- -405 -82 l 5,1,-1
- -149 -435 l 5,2,-1
- -124 -400 l 5,0,-1
+6 -400 m 5,0,-1
+ -275 -82 l 5,1,-1
+ -19 -435 l 5,2,-1
+ 6 -400 l 5,0,-1
 EndSplineSet
 EndChar
 
@@ -26436,10 +26436,10 @@ Flags: W
 LayerCount: 2
 Fore
 SplineSet
--154 -516 m 5,0,-1
- -530 -82 l 5,1,-1
- -182 -560 l 5,2,-1
- -154 -516 l 5,0,-1
+-104 -516 m 5,0,-1
+ -480 -82 l 5,1,-1
+ -132 -560 l 5,2,-1
+ -104 -516 l 5,0,-1
 EndSplineSet
 EndChar
 
@@ -26464,10 +26464,10 @@ Flags: W
 LayerCount: 2
 Fore
 SplineSet
--613 -636 m 5,0,-1
- -1087 -82 l 5,1,-1
- -648 -686 l 5,2,-1
- -613 -636 l 5,0,-1
+-343 -636 m 5,0,-1
+ -817 -82 l 5,1,-1
+ -378 -686 l 5,2,-1
+ -343 -636 l 5,0,-1
 EndSplineSet
 EndChar
 EndChars
