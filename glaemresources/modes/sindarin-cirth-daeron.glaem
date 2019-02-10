@@ -131,16 +131,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     (k,c)     --> CIRTH_18
     (kh,ch)   --> CIRTH_20
     
-    ghw   --> CIRTH_26
-    gw    --> CIRTH_24
     
     h     --> CIRTH_54 \**  13 is more eng. ch like in chin and 15 is more eng. sh like in shoe **\
-    hw    --> CIRTH_5
     
     j     --> CIRTH_14
     
-    khw   --> CIRTH_25
-    kw    --> CIRTH_23
     l     --> CIRTH_31
     lh    --> CIRTH_32
     m     --> CIRTH_6
@@ -151,11 +146,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     nd    --> CIRTH_38
     
     \** Normalisation of ng **\
-    (ng,ngg,ŋg,ñg)  --> CIRTH_33
-    (ng_,_ng,ŋ,ñ)   --> CIRTH_22
+    (ng,ngg,ŋg,ñg)  --> CIRTH_33 \** strong **\
+    (ng_,_ng,ŋ,ñ)   --> CIRTH_22 \** weak **\
   
-    nw    --> CIRTH_28
-    ngw   --> CIRTH_27
     nj    --> CIRTH_17
     r     --> CIRTH_29
     rh    --> CIRTH_30
@@ -163,8 +156,18 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     sh    --> CIRTH_15
     ss    --> CIRTH_36
     (þ,th) --> CIRTH_10
-    w     --> CIRTH_44
     zh    --> CIRTH_16
+    
+    \** Labials **\
+    hw                --> CIRTH_5
+    ghw               --> CIRTH_26
+    gw                --> CIRTH_24    
+    (ng,ngg,ŋg,ñg)w   --> CIRTH_27     \** STRONG NG + W **\
+    khw               --> CIRTH_25
+    kw                --> CIRTH_23
+    nw                --> CIRTH_28
+    w                 --> CIRTH_44
+
   \end
   
   \beg    rules punctuation

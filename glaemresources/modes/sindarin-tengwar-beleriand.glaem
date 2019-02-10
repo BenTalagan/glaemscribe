@@ -289,12 +289,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     hw   --> HWESTA_SINDARINWA
 
     \** labialized consonants **\
-    bw   --> UMBAR  WA_TEHTA \** Gnomish **\
-    dw   --> ANDO   WA_TEHTA
-    gw   --> ANGA   WA_TEHTA
-    lw   --> LAMBE  WA_TEHTA
-    nw   --> ORE    WA_TEHTA
-    rw   --> ROMEN  WA_TEHTA 
+    bw              --> UMBAR  WA_TEHTA \** Gnomish **\
+    dw              --> ANDO   WA_TEHTA
+    gw              --> ANGA   WA_TEHTA
+    lw              --> LAMBE  WA_TEHTA
+    nw              --> ORE    WA_TEHTA
+    rw              --> ROMEN  WA_TEHTA 
+    (ng,ngg,ŋg,ñg)w --> ANGA {NASAL} WA_TEHTA
+    (_ng,ng_,ŋ,ñ)w  --> NOLDO  WA_TEHTA
   
   \end
   

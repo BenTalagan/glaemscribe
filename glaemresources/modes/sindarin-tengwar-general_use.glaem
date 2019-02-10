@@ -237,8 +237,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     {V_D_WN}[{L4}] --> 2,1 --> [{_L4_}]{_V_D_WN_}
 
     \** 5TH LINE **\
-    {L5}        === n * m * (_ng,ng_,ŋ,ñ) * _mh  \** weak ng at initial and final **\
-    {_L5_}      === NUMEN * MALTA * NWALME * MALTA_W_HOOK 
+    {L5}        === n     *   m       * (_ng,ng_,ŋ,ñ)   * _mh  \** weak ng at initial and final **\
+    {_L5_}      === NUMEN *   MALTA   * NWALME          * MALTA_W_HOOK 
 
     {V_D_WN}[{L5}] --> 2,1 --> [{_L5_}]{_V_D_WN_}
 
@@ -289,15 +289,19 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
       lw   --> LAMBE WA_TEHTA
       nw   --> NUMEN WA_TEHTA   
       rw   --> ROMEN WA_TEHTA   
+      (ng,ngg,ŋg,ñg)w --> UNGWE {NASAL} WA_TEHTA
+      (_ng,ng_,ŋ,ñ)w  --> NWALME WA_TEHTA
     \endif
 
     \if "labialized_consonants_u_curl == LABIALIZED_U_CURL_ALWAYS"    
-      {V_D}bw   --> UMBAR WA_TEHTA {_V_D_}
-      {V_D}dw   --> ANDO  WA_TEHTA {_V_D_}
-      {V_D}gw   --> UNGWE WA_TEHTA {_V_D_}
-      {V_D}lw   --> LAMBE WA_TEHTA {_V_D_}   
-      {V_D}nw   --> NUMEN WA_TEHTA {_V_D_}
-      {V_D}rw   --> ROMEN WA_TEHTA {_V_D_}
+      {V_D}bw               --> UMBAR WA_TEHTA {_V_D_}
+      {V_D}dw               --> ANDO  WA_TEHTA {_V_D_}
+      {V_D}gw               --> UNGWE WA_TEHTA {_V_D_}
+      {V_D}lw               --> LAMBE WA_TEHTA {_V_D_}   
+      {V_D}nw               --> NUMEN WA_TEHTA {_V_D_}
+      {V_D}rw               --> ROMEN WA_TEHTA {_V_D_}
+      {V_D}(ng,ngg,ŋg,ñg)w  --> UNGWE {NASAL} WA_TEHTA {_V_D_}
+      {V_D}(_ng,ng_,ŋ,ñ)w   --> NWALME WA_TEHTA {_V_D_}
     \endif
   \end
   
