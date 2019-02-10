@@ -12,17 +12,17 @@ Since 1.2.0, they have been transformed to a new generation of transitional form
 
 So the aim was, at first, to have a first *port* of these legacy fonts. Still, part of their mechanisms are still legacy (they still contain the multiple versions of tehtar, for example) because the OpenType features to have correct diacritic placement, ligatures, stacking and so on are difficult and long to implement and to design. Thus, all these legacy variants have been mapped in far blocks of the Private Use Area of the Unicode. That chosen *hacky* and *transitional* mapping can be consulted here :
 
-./remap_tool/__layout_mapping.md
+[**Transitional Mapping**](http://htmlpreview.github.io/?https://github.com/BenTalagan/glaemscribe/blob/master/fonts/doc/glaemscribe_transitional_unicode_fonts_mapping)
 
 See also the [**comparison chart for tengwar fonts**](http://htmlpreview.github.io/?https://github.com/BenTalagan/glaemscribe/blob/master/fonts/doc/glaemscribe_tengwar_fonts.html) for an overview of all features and changes.
 
 To summarize, Glǽmscribe relies at the moment on three families of fonts :
 
-1) The **-glaemsrafu** fonts, which are patched versions of the original fonts made by their authors. They are patched to solve a certain amount of problems due to the fact that their mapping overlaps the real alphabets unicode mapping - breaking correct word/line wrap in navigators amonst other problems. Also, the original fonts were sometimes lacking some attested mandatory characters.
+1) The **-glaemsrafu** fonts. **_Legacy._**. These are patched versions of the original fonts made by their authors. They are patched to solve a certain amount of problems due to the fact that their mapping overlaps the real alphabets unicode mapping - breaking correct word/line wrap in navigators amonst other problems. Also, the original fonts were sometimes lacking some attested mandatory characters.
 
-2) The **-glaemunicode** fonts. They are generated automatically from the **-glaemscrafu** fonts, but they are remapping
+2) The **-glaemunicode** fonts. **_Transitional._** They are generated automatically from the **-glaemscrafu** fonts, but they remap characters to the unicode mapping defined by the Free Tengwar Font project. However, since these are not opentype fonts, they do not handle automatic tehtar placement, ligatures & so on. Instead, they remap somewhere in the private use area the multiple variants of tehtar, consonant modifiers & co that were present in the original fonts. This is hacky, but solves a certain number of rendering problems. 
 
-
+3) The **OpenType** fonts. **_Experimental._** These fonts are the way to go for Tolkien specific matters. They are able to handle by themselves the placement of diacritic & modification signs, by embedding some kind of "coding rules" that describe how to handle certain sequences of logical characters and perform substitutions, ligatures, placements, etc. The Free Tengwar Font project currently offers two fonts of this kind : Tengwar Telcontar & Tengwar FreeMono. Glaemscribe now supports these awesome fonts, but since their development is not totally finished and still lack some polishing (IOHO), we consider them as "experimental". But truly, this is the future.
 
 The complete of list of changes made from the original versions of the fonts :
 
