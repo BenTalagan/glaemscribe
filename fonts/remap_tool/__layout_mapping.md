@@ -33,7 +33,7 @@ In addition to the unicode mapping from the free tengwar font project, glaemunic
 0xED20 U_TEHTA_DOUBLE
 0xED30 E_TEHTA_INF_DOUBLE
 0xED40 I_TEHTA_INF_DOUBLE
-0xED50 LABIAL_MODIFIER (sev_tehta)
+0xED50 LABIAL_MODIFIER (wa_tehta)
 0xED60 THINNAS (thinf_stroke)
 0xED70 MSB (th_sub_circ)
 0xED80 A_TEHTA_INV

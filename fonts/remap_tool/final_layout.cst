@@ -301,10 +301,10 @@
 
 \** Labializer **\
 
-\char ED50 SEV_TEHTA_XS           
-\char ED51 SEV_TEHTA_S           
-\char ED52 SEV_TEHTA_L           
-\char ED53 SEV_TEHTA_XL  
+\char ED50 WA_TEHTA_XS           
+\char ED51 WA_TEHTA_S           
+\char ED52 WA_TEHTA_L           
+\char ED53 WA_TEHTA_XL  
 
 \** Thinnas **\
 

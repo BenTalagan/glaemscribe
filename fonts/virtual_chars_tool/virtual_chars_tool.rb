@@ -41,7 +41,7 @@ VIRTUALS_DS = {
   "O_TEHTA_DOUBLE"            => { names: ["O_TEHTA_DOUBLE"] ,                              classes: ["O_TEHTA_DOUBLE_XS", "O_TEHTA_DOUBLE_S", "O_TEHTA_DOUBLE_L", "O_TEHTA_DOUBLE_XL"] },
   "U_TEHTA"                   => { names: ["U_TEHTA"] ,                                     classes: ["U_TEHTA_XS",        "U_TEHTA_S",        "U_TEHTA_L",        "U_TEHTA_XL"] },
   "U_TEHTA_DOUBLE"            => { names: ["U_TEHTA_DOUBLE"] ,                              classes: ["U_TEHTA_DOUBLE_XS", "U_TEHTA_DOUBLE_S", "U_TEHTA_DOUBLE_L", "U_TEHTA_DOUBLE_XL"] },
-  "SEV_TEHTA"                 => { names: ["SEV_TEHTA"] ,                                   classes: ["SEV_TEHTA_XS",      "SEV_TEHTA_S",      "SEV_TEHTA_L",      "SEV_TEHTA_XL"] },
+  "WA_TEHTA"                 => { names: ["WA_TEHTA", "SEV_TEHTA"] ,                                   classes: ["WA_TEHTA_XS",      "WA_TEHTA_S",      "WA_TEHTA_L",      "WA_TEHTA_XL"] },
                                                             
   "A_TEHTA_INF"               => { names: ["A_TEHTA_INF"] ,                                 classes:  ["THINF_TDOT_XS", "THINF_TDOT_S", "THINF_TDOT_L", "THINF_TDOT_XL"] },
   "E_TEHTA_INF"               => { names: ["E_TEHTA_INF"] ,                                 classes:  ["THINF_ACCENT_XS", "THINF_ACCENT_S", "THINF_ACCENT_L", "THINF_ACCENT_XL"] },
@@ -51,7 +51,7 @@ VIRTUALS_DS = {
   "E_TEHTA_GRAVE_INF"         => { names: ["E_TEHTA_GRAVE_INF"] ,                           classes:  ["E_TEHTA_GRAVE_INF_XS", "E_TEHTA_GRAVE_INF_S", "E_TEHTA_GRAVE_INF_L", "E_TEHTA_GRAVE_INF_XL"] },
 
   "CIRC_TEHTA_INF"            => { names: ["CIRC_TEHTA_INF"] ,                              classes:  ["TH_SUB_CIRC_XS", "TH_SUB_CIRC_S", "TH_SUB_CIRC_L", "TH_SUB_CIRC_XL"] },
-  "THINNAS"                   => { names: ["THINNAS","SEV_TEHTA_INF","THINF_STROKE"] ,      classes:  ["THINF_STROKE_XS", "THINF_STROKE_S", "THINF_STROKE_L", "THINF_STROKE_XL"] },
+  "THINNAS"                   => { names: ["THINNAS","THINF_STROKE"] ,      classes:  ["THINF_STROKE_XS", "THINF_STROKE_S", "THINF_STROKE_L", "THINF_STROKE_XL"] },
                                                                       
   "PALATAL_SIGN"              => { names: ["PALATAL_SIGN", "I_TEHTA_DOUBLE_INF", "Y_TEHTA_INF" ] ,           classes: ["THINF_DDOT_XS", "THINF_DDOT_S", "THINF_DDOT_L", "THINF_DDOT_XL", "LAMBE_MARK_DDOT"] },
   "E_TEHTA_DOUBLE_INF"        => { names: ["E_TEHTA_DOUBLE_INF","GEMINATE_DOUBLE"],         classes: ["THINF_DSTROKE_XS" , "THINF_DSTROKE_S" ,"THINF_DSTROKE_L" , "THINF_DSTROKE_XL"  , "LAMBE_MARK_DSTROKE"] },
@@ -78,7 +78,7 @@ DIACTRITICS_WITH_SIMILAR_PLACEMENT_DS = [
    ["I_TEHTA"],
    ["O_TEHTA"],
    ["U_TEHTA"],
-   ["SEV_TEHTA"],
+   ["WA_TEHTA"],
    ["A_TEHTA_DOUBLE"],
    ["E_TEHTA_DOUBLE"],
    ["I_TEHTA_DOUBLE"], 
