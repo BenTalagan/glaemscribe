@@ -6,15 +6,23 @@ That's why, at some point, they needed some patching ; here are these fonts, wit
 
 **All these fonts are the propriety of their authors. Tengwar, Sarati and Cirth are writing systems invented and designed by J.R.R. Tolkien.**
 
-**A note on unicode** : Since Glaemscribe 1.2.0, legacy fonts with a Dan Smith layout have been deprecated. They can still be found in the build/\_legacy directory (with the \*-glaemscrafu suffix) and their charsets are still available as tengwar\_ds\_\*.cst files, these fonts had already been patched to solve some problems and add missing chars. 
+**A note on unicode** : Since Glaemscribe 1.2.0, legacy fonts with a Dan Smith layout have been deprecated. They can still be found in the build/\*\*/legacy directories (with the \*-glaemscrafu suffix) and their charsets are still available as tengwar\_ds\_\*.cst files, these fonts had already been patched to solve some problems and add missing chars. 
 
 Since 1.2.0, they have been transformed to a new generation of transitional format (with a new \*-glaemunicode suffix) and remapped to unicode to be closer to the norm proposed by the Free Tengwar font project (emending itself the original proposition from Michael Everson). The main reason is a transitional one ; every new font should try to tend towards the unicode norm, cleaner, more robust. Having each character at the right place is certainly the best way to go if one wants these writings to be processable by the modern tools without problems.
 
 So the aim was, at first, to have a first *port* of these legacy fonts. Still, part of their mechanisms are still legacy (they still contain the multiple versions of tehtar, for example) because the OpenType features to have correct diacritic placement, ligatures, stacking and so on are difficult and long to implement and to design. Thus, all these legacy variants have been mapped in far blocks of the Private Use Area of the Unicode. That chosen *hacky* and *transitional* mapping can be consulted here :
 
-[TODO]
+./remap_tool/__layout_mapping.md
 
 See also the [**comparison chart for tengwar fonts**](http://htmlpreview.github.io/?https://github.com/BenTalagan/glaemscribe/blob/master/fonts/doc/glaemscribe_tengwar_fonts.html) for an overview of all features and changes.
+
+To summarize, Glǽmscribe relies at the moment on three families of fonts :
+
+1) The **-glaemsrafu** fonts, which are patched versions of the original fonts made by their authors. They are patched to solve a certain amount of problems due to the fact that their mapping overlaps the real alphabets unicode mapping - breaking correct word/line wrap in navigators amonst other problems. Also, the original fonts were sometimes lacking some attested mandatory characters.
+
+2) The **-glaemunicode** fonts. They are generated automatically from the **-glaemscrafu** fonts, but they are remapping
+
+
 
 The complete of list of changes made from the original versions of the fonts :
 

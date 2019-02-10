@@ -1,3 +1,4 @@
+In addition to the unicode mapping from the free tengwar font project, glaemunicode fonts use these back-portability slots.
 
 
 0xE800 > 0xEBFF : Ligature solving space
