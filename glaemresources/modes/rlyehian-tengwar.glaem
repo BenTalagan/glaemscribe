@@ -189,7 +189,7 @@ y palatal semi vowel ?
     {O_LOOP}        === O_TEHTA
     {U_LOOP}        === U_TEHTA
        
-    {TEHTAR}            === A_TEHTA      * E_TEHTA      * I_TEHTA    * O_TEHTA     * U_TEHTA * SEV_TEHTA
+    {TEHTAR}            === A_TEHTA      * E_TEHTA      * I_TEHTA    * O_TEHTA     * U_TEHTA * WA_TEHTA
   
     [{VOWELS}]          --> TELCO [{TEHTAR}]  \** Replace isolated short vowels **\
   

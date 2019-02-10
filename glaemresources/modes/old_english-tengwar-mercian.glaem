@@ -133,13 +133,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     {S_VOWELS_WP_KERNEL}   === {S_VOWELS_NP_KERNEL} * @                           
 
     \** UP TEHTAS **\    
-    {TEHTAR_UP_NP}  === A_TEHTA    * Y_TEHTA     * E_TEHTA_DOUBLE   * E_TEHTA   *   I_TEHTA    * O_TEHTA    * U_TEHTA   * SEV_TEHTA 
+    {TEHTAR_UP_NP}  === A_TEHTA    * Y_TEHTA     * E_TEHTA_DOUBLE   * E_TEHTA   *   I_TEHTA    * O_TEHTA    * U_TEHTA   * WA_TEHTA 
  
     {TEHTAR_UP}     === {TEHTAR_UP_NP}  * {NULL}
 
     \** FOR LONG VOWELS **\
     {LVOWELS}       === {AA}           * {AEAE}       * {OEOE}             * {EE}         * {II}         * {OO}          * {UU}         * {YY}  
-    {LTEHTAR}       === ARA A_TEHTA    * ARA Y_TEHTA  * ARA E_TEHTA_DOUBLE * ARA E_TEHTA  * ARA I_TEHTA  * ARA O_TEHTA   * ARA U_TEHTA  * ARA SEV_TEHTA    
+    {LTEHTAR}       === ARA A_TEHTA    * ARA Y_TEHTA  * ARA E_TEHTA_DOUBLE * ARA E_TEHTA  * ARA I_TEHTA  * ARA O_TEHTA   * ARA U_TEHTA  * ARA WA_TEHTA    
 
     {LVOWEL_MARKER}  === THINNAS
   
