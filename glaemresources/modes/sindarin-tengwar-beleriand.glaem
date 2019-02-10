@@ -35,12 +35,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   \entry "0.1.3" "Merging au/aw"
   \entry "0.1.4" "Added support for new unicode charsets"   
   \entry "0.1.5" "Added support for the Tengwar Telcontar font"
+  \entry "0.1.6" "Corrected use of silme_nuquerna in ns / y, added a few exotic combinations. Reworked median point behaviour, and ng."
 \end
 
 \language "Sindarin"
 \writing  "Tengwar"
 \mode     "Sindarin Tengwar - Beleriand"
-\version  "0.1.5"
+\version  "0.1.6"
 \authors  "J.R.R. Tolkien, impl. Talagan (Benjamin Babut)"
 
 \world      arda
@@ -115,6 +116,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   since it seems more logical that aw would behave as a semi vowel **\
   \rxsubstitute "aw([aeouyáāâéēêíīîóōôúūûýȳŷ])" "a|w\\1"
   
+  \** Avoid mutated ng of being treated as strong middle word n|g (ex : i·ngelaidh [iŋɛlaið] ) **\
+  \substitute "·ng" "·ŋ"  
+  \** But avoid losing the strong g in nasal mutation of g (ex : in·Gelydh [iŋgɛlyð]] ) **\
+  \substitute "n·g" "·ŋg"
+  \** Use median dot as word joiner **\
+  \substitute "·" ""
+
   \** Preprocess numbers **\
   \elvish_numbers "\\eval numbers_base" "\\eval reverse_numbers"
 \end
@@ -161,26 +169,26 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     {O}                 --> ANNA
     {U}                 --> URE
     
-    {Y}                 --> SILME_NUQUERNA_ALT
+    {Y}                 --> SILME_NUQUERNA
 
     {AA}                --> OSSE  E_TEHTA
     {EE}                --> YANTA E_TEHTA
     {II}                --> TELCO E_TEHTA
     {OO}                --> ANNA  E_TEHTA
     {UU}                --> URE   E_TEHTA
-    {YY}                --> SILME_NUQUERNA_ALT E_TEHTA
+    {YY}                --> SILME_NUQUERNA E_TEHTA
 
     {AE}                --> OSSE  YANTA  \** Should chose between OSSE YANTA and OSSE THSUP_TICK_INV_L. Old tengscribe had second one, amanye tenceli has first one. **\ 
     {AI}                --> OSSE  Y_TEHTA
-    {AU}                --> OSSE  SEV_TEHTA 
+    {AU}                --> OSSE  WA_TEHTA 
     
     \if "beleriand_aw_diphthong == AW_VILYA_AT_ENDINGS_CURL_ELSE"
-      ({AU},{AW})         --> OSSE SEV_TEHTA
+      ({AU},{AW})         --> OSSE WA_TEHTA
       ({AU},{AW})_        --> OSSE VILYA
     \elsif "beleriand_aw_diphthong == AW_ALWAYS_VILYA"
       ({AU},{AW})         --> OSSE VILYA
     \elsif "beleriand_aw_diphthong == AW_ALWAYS_CURL"
-      ({AU},{AW})         --> OSSE SEV_TEHTA
+      ({AU},{AW})         --> OSSE WA_TEHTA
     \endif
       
     {EI}                --> YANTA Y_TEHTA
@@ -207,9 +215,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
     [{L2}] --> [{_L2_}]
 
-    mb   --> UMBAR  {NASAL}
-    nd   --> ANDO   {NASAL}
-
+    mb          --> UMBAR  {NASAL}
+    nd          --> ANDO   {NASAL}
+    
+    \** /ŋg/ : this is ng in middle of words + might be found at word start on mutation.
+    \** See also final/initial ng_ / _ng below **\
+    (ng,ngg,ŋg,ñg)    --> ANGA   {NASAL} 
+    
     \** ======== **\
     \** 3RD LINE **\
     \** ======== **\
@@ -234,7 +246,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     \** ======== **\
     \** 5TH LINE **\
     \** ======== **\
-    {L5}    === nn    * mm    * ng
+    {L5}    === nn    * mm    * (ng_,_ng,ŋ,ñ)
     {_L5_}  === NUMEN * MALTA * NOLDO 
 
     [{L5}] --> [{_L5_}]
@@ -263,7 +275,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
     [{S_LINE}] --> [{_S_LINE_}]
 
-    ns --> SILME_NUQUERNA {NASAL}
+    \** REMOVING NEXT ONE WHICH CLASHES WITH Y **\
+    \** ns --> SILME_NUQUERNA {NASAL} **\
 
     \** ======== **\
     \** OTHERS **\
@@ -276,12 +289,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     hw   --> HWESTA_SINDARINWA
 
     \** labialized consonants **\
-    dw   --> ANDO   SEV_TEHTA
-    gw   --> ANGA   SEV_TEHTA
-    lw   --> LAMBE  SEV_TEHTA
-    nw   --> ORE    SEV_TEHTA
-    rw   --> ROMEN  SEV_TEHTA 
-
+    bw   --> UMBAR  WA_TEHTA \** Gnomish **\
+    dw   --> ANDO   WA_TEHTA
+    gw   --> ANGA   WA_TEHTA
+    lw   --> LAMBE  WA_TEHTA
+    nw   --> ORE    WA_TEHTA
+    rw   --> ROMEN  WA_TEHTA 
+  
   \end
   
   \beg    rules punctuation

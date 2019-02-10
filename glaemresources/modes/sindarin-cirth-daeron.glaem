@@ -28,12 +28,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   \entry 0.0.2 "Added thorn as equivalent for th"
   \entry 0.0.3 "Moved out space to general element"
   \entry 0.0.4 "Fixed wrong ch, hw, h"
+  \entry 0.0.5 "Added disambiguations from the tengwar modes. Reworked median point behaviour, and ng."
 \end
 
 \language "Sindarin"
 \writing  "Cirth"
 \mode     "Sindarin Cirth - Angerthas Daeron"
-\version  "0.0.4"
+\version  "0.0.5"
 \authors  "J.R.R. Tolkien, impl. Talagan (Benjamin Babut)"
 
 \world      arda
@@ -63,6 +64,21 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   \rxsubstitute "(ō|ô|oo)" "ó"
   \rxsubstitute "(ū|û|uu)" "ú"
   \rxsubstitute "(ȳ|ŷ|yy)" "ý"
+  
+  \** Special case of starting 'i' before vowels, replace i by j **\     
+  \rxsubstitute "\\bi([aeouyáāâéēêíīîóōôúūûýȳŷ])" "j\\1"
+  
+  \** Special case of diphtong aw. Before vowels, do not treat 'aw' as diphthong, 
+  since it seems more logical that aw would behave as a semi vowel **\
+  \rxsubstitute "aw([aeouyáāâéēêíīîóōôúūûýȳŷ])" "a|w\\1"
+  
+  \** Avoid mutated ng of being treated as strong middle word n|g (ex : i·ngelaidh [iŋɛlaið] ) **\
+  \substitute "·ng" "·ŋ"  
+  \** But avoid losing the strong g in nasal mutation of g (ex : in·Gelydh [iŋgɛlyð]] ) **\
+  \substitute "n·g" "·ŋg"
+  \** Use median dot as word joiner **\
+  \substitute "·" ""
+  
 \end
 
 \beg      processor
@@ -133,11 +149,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     n     --> CIRTH_12
     nc_   --> CIRTH_22 CIRTH_18 \** equals ŋc **\
     nd    --> CIRTH_38
-    ng    --> CIRTH_33
-  
-    _ng   --> CIRTH_22
-    ng_   --> CIRTH_22 
-    ŋ     --> CIRTH_22
+    
+    \** Normalisation of ng **\
+    (ng,ngg,ŋg,ñg)  --> CIRTH_33
+    (ng_,_ng,ŋ,ñ)   --> CIRTH_22
   
     nw    --> CIRTH_28
     ngw   --> CIRTH_27

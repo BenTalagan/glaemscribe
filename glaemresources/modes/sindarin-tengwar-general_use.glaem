@@ -37,12 +37,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   \entry "0.1.2" "Added support for non-breaking spaces"  
   \entry "0.1.3" "Added support for new unicode charsets"   
   \entry "0.1.4" "Added support for the Tengwar Telcontar font"
+  \entry "0.1.5" "Added a few labial exotic combinations. Reworked median point behaviour, and ng."
 \end
 
 \language "Sindarin"
 \writing  "Tengwar"
 \mode     "Sindarin Tengwar - General Use"
-\version  "0.1.4"
+\version  "0.1.5"
 \authors  "J.R.R. Tolkien, impl. Talagan (Benjamin Babut)"
 
 \world      arda
@@ -116,6 +117,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   
   \** Special case of starting 'i' before vowels, replace i by j **\     
   \rxsubstitute "\\bi([aeouyáāâéēêíīîóōôúūûýȳŷ])" "j\\1"
+  
+  \** Avoid mutated ng of being treated as strong middle word n|g (ex : i·ngelaidh [iŋɛlaið] ) **\
+  \substitute "·ng" "·ŋ"  
+  \** But avoid losing the strong g in nasal mutation of g (ex : in·Gelydh [iŋgɛlyð]] ) **\
+  \substitute "n·g" "·ŋg"
+  \** Use median dot as word joiner **\
+  \substitute "·" ""
   
   \** Preprocess numbers **\
   \elvish_numbers "\\eval numbers_base" "\\eval reverse_numbers"
@@ -199,8 +207,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     {V_D_WN}n{K} --> CALMA {NASAL} {_V_D_WN_}
 
     \** 2ND LINE **\
-    {L2}        === d     * b     * g     * ng                    \** * g **\
-    {_L2_}      === ANDO  * UMBAR * UNGWE * UNGWE {NASAL}      \** * s **\
+    \** 
+        /ŋg/ : this is ng in middle of words + might be found at word start. 
+        See also final/initial ng_ / _ng below 
+    **\
+    {L2}        === d     * b     * g     * (ng,ngg,ŋg,ñg)              
+    {_L2_}      === ANDO  * UMBAR * UNGWE * UNGWE {NASAL}      
 
     {V_D_WN}[{L2}] --> 2,1 --> [{_L2_}]{_V_D_WN_}
 
@@ -220,12 +232,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
     \** 4TH LINE **\
     {L4}        === (đ,ð,ðh,dh)   * (v,bh,f_) \** Some noldorin variants here ... **\
-    {_L4_}        === ANTO          * AMPA 
+    {_L4_}      === ANTO          * AMPA 
 
     {V_D_WN}[{L4}] --> 2,1 --> [{_L4_}]{_V_D_WN_}
 
     \** 5TH LINE **\
-    {L5}        === n * m * _ng * _mh
+    {L5}        === n * m * (_ng,ng_,ŋ,ñ) * _mh  \** weak ng at initial and final **\
     {_L5_}      === NUMEN * MALTA * NWALME * MALTA_W_HOOK 
 
     {V_D_WN}[{L5}] --> 2,1 --> [{_L5_}]{_V_D_WN_}
@@ -236,7 +248,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     \** 6TH LINE **\
 
     \** 7TH LINE **\
-    {L7}        === r_    * r     * l     * ll                    * w     
+    {L7}        === r_    * r     * l     * ll               * w     
     {_L7_}      === ORE   * ROMEN * LAMBE * LAMBE {GEMINATE} * VALA
         
     {V_D_WN}[{L7}] --> 2,1 --> [{_L7_}]{_V_D_WN_}
@@ -271,19 +283,21 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     **\
     
     \if "labialized_consonants_u_curl == LABIALIZED_U_CURL_NO_TEHTAR || labialized_consonants_u_curl == LABIALIZED_U_CURL_ALWAYS"
-      dw   --> ANDO  SEV_TEHTA  
-      gw   --> UNGWE SEV_TEHTA  
-      lw   --> LAMBE SEV_TEHTA
-      nw   --> NUMEN SEV_TEHTA   
-      rw   --> ROMEN SEV_TEHTA   
+      bw   --> UMBAR WA_TEHTA
+      dw   --> ANDO  WA_TEHTA  
+      gw   --> UNGWE WA_TEHTA  
+      lw   --> LAMBE WA_TEHTA
+      nw   --> NUMEN WA_TEHTA   
+      rw   --> ROMEN WA_TEHTA   
     \endif
 
     \if "labialized_consonants_u_curl == LABIALIZED_U_CURL_ALWAYS"    
-      {V_D}dw   --> ANDO  SEV_TEHTA {_V_D_}
-      {V_D}gw   --> UNGWE SEV_TEHTA {_V_D_}
-      {V_D}lw   --> LAMBE SEV_TEHTA {_V_D_}   
-      {V_D}nw   --> NUMEN SEV_TEHTA {_V_D_}
-      {V_D}rw   --> ROMEN SEV_TEHTA {_V_D_}
+      {V_D}bw   --> UMBAR WA_TEHTA {_V_D_}
+      {V_D}dw   --> ANDO  WA_TEHTA {_V_D_}
+      {V_D}gw   --> UNGWE WA_TEHTA {_V_D_}
+      {V_D}lw   --> LAMBE WA_TEHTA {_V_D_}   
+      {V_D}nw   --> NUMEN WA_TEHTA {_V_D_}
+      {V_D}rw   --> ROMEN WA_TEHTA {_V_D_}
     \endif
   \end
   
