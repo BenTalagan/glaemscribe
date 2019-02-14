@@ -17,15 +17,29 @@ def cleanup
   mkdir_p BUILD_GEM_PATH + "/glaemresources"  
   mkdir_p BUILD_GEM_PATH + "/glaemresources/modes"  
   mkdir_p BUILD_GEM_PATH + "/glaemresources/charsets"  
+  mkdir_p BUILD_GEM_PATH + "/lib_espeak"
 end
 
 def copy_files
-  cp_r      Dir.glob("../lib_rb/*"),           BUILD_GEM_PATH + "/lib"
-  cp_r      Dir.glob("../glaemresources/modes/*.glaem"),   BUILD_GEM_PATH + "/glaemresources/modes"
-  cp_r      Dir.glob("../glaemresources/modes/*.cst"),   BUILD_GEM_PATH + "/glaemresources/charsets"
-  cp_r      "../bin_dev/glaemscribe.gemspec",  BUILD_GEM_PATH
-  cp_r      "../bin/glaemscribe",              BUILD_GEM_PATH + "/bin/" 
-  cp_r      "../LICENSE.txt",                  BUILD_GEM_PATH
+  # API sourcecode
+  cp_r      Dir.glob("../lib_rb/*"),                                  BUILD_GEM_PATH + "/lib"
+
+  # Resources (charsets+modes)
+  cp_r      Dir.glob("../glaemresources/modes/*.glaem"),              BUILD_GEM_PATH + "/glaemresources/modes"
+  cp_r      Dir.glob("../glaemresources/charsets/*.cst"),             BUILD_GEM_PATH + "/glaemresources/charsets"
+
+  # The TTS library
+  cp_r      "../lib_espeak/espeakng.for.glaemscribe.nowasm.sync.js",  BUILD_GEM_PATH + "/lib_espeak"
+  cp_r      "../lib_espeak/glaemscribe_tts.js",                       BUILD_GEM_PATH + "/lib_espeak"
+
+  # The executable
+  cp_r      "../bin/glaemscribe",                                     BUILD_GEM_PATH + "/bin/" 
+
+  # The GEM specification
+  cp_r      "../bin_dev/glaemscribe.gemspec",                         BUILD_GEM_PATH
+
+  # The license
+  cp_r      "../LICENSE.txt",                                         BUILD_GEM_PATH
 end
 
 
@@ -38,6 +52,7 @@ def clean_gem
   rm_rf("lib")
   rm_rf("bin")
   rm_rf("glaemresources")
+  rm_rf("lib_espeak")
   rm_rf("LICENSE.txt")
 end
 

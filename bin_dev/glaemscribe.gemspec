@@ -18,7 +18,7 @@ Gem::Specification.new do |s|
   s.authors     = ["Benjamin 'Talagan' Babut"]
   s.email       = 'please.visit.glaemscribe.s.website@nospam.org'
   
-  s.files       =  Dir.glob("lib/**/*") + Dir.glob("glaemresources/**/*") + ["LICENSE.txt"]
+  s.files       =  Dir.glob("lib/**/*") + Dir.glob("glaemresources/**/*") + Dir.glob("lib_espeak/**/*") + ["LICENSE.txt"]
   
   s.executables << "glaemscribe"
   
