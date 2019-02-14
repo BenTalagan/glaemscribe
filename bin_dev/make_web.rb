@@ -76,7 +76,7 @@ def generate_js_modes
     
     File.open(fmode,"rb:utf-8") { |fin|
       File.open(BUILD_JS_PATH + "/modes/#{fname}.glaem.js","wb:utf-8") { |fjs|
-        fjs << "Glaemscribe.resource_manager.raw_modes[\"#{fname}\"] = \"#{EscapeUtils.escape_javascript(fin.read)}\""      
+        fjs << "Glaemscribe.resource_manager.mode_source_codes[\"#{fname}\"] = \"#{EscapeUtils.escape_javascript(fin.read)}\""      
       }
     }
   }
@@ -88,7 +88,7 @@ def generate_js_charsets
     fname = File.basename(fc,".cst")
     File.open(fc,"rb:utf-8") { |fin|
       File.open(BUILD_JS_PATH + "/charsets/#{fname}.cst.js","wb:utf-8") { |fjs|
-        fjs << "Glaemscribe.resource_manager.raw_charsets[\"#{fname}\"] = \"#{EscapeUtils.escape_javascript(fin.read)}\""      
+        fjs << "Glaemscribe.resource_manager.charset_source_codes[\"#{fname}\"] = \"#{EscapeUtils.escape_javascript(fin.read)}\""      
       }
     }
   }
