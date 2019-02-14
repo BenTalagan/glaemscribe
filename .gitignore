@@ -6,4 +6,6 @@
 *.glaem.dev
 npm-debug.log
 
+/lib_espeak/tests/node_modules
+
 /bin_dev/unit_test_errors.html
