@@ -23,6 +23,7 @@ module Glaemscribe
   module API
     module ResourceManager
         
+      # The same structure is kept within the gem
       MODE_PATH     = File.dirname(__FILE__) + "/../../glaemresources/modes/"
       MODE_EXT      = "glaem"
     

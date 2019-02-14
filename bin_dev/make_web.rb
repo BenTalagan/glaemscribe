@@ -51,7 +51,8 @@ JS_FILES = [
   "api/pre_processor/elvish_numbers.js",
   "api/post_processor/reverse.js",
   "api/post_processor/resolve_virtuals.js",
-  "extern/object-clone.js"
+  "extern/object-clone.js",
+  "../lib_espeak/glaemscribe_tts.js"
 ]
 
 def cleanup
@@ -122,8 +123,9 @@ def build_ugly_min
     full_js  = File.read(BUILD_JS_PATH + "/glaemscribe.js")
     begin
       f << Uglifier.compile(full_js, :comments => :none)
-    rescue ExecJS::ProgramError => e
-
+    rescue Uglifier::Error => e
+      raise "Could not assemble glaemscribe.js . There's probably a syntax error.\nMessage from uglifier:\n#{e.message}" 
+=begin
       if !(e.message =~ /line: ([0-9]+), col: ([0-9]+), pos: ([0-9]+)/)
         raise "Could not assemble glaemscribe.js . I can't retrieve the line number, you should install node js for that."
         raise GlaemJSError  		
@@ -143,9 +145,14 @@ def build_ugly_min
 
         raise "Could not assemble glaemscribe.js . There's probably a syntax error.\nMessage from uglifier:\n#{e.message.lines.first}\n#{line_content} "  
       end
+=end      
     end
     
   }
+end
+
+def copy_tts_engine
+  FileUtils.cp("../lib_espeak/espeakng.for.glaemscribe.nowasm.sync.js",BUILD_JS_PATH)
 end
 
 cleanup
@@ -153,5 +160,4 @@ generate_js_modes
 generate_js_charsets
 build_engine
 build_ugly_min
-
-
+copy_tts_engine

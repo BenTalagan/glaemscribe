@@ -25,6 +25,16 @@ var mfiles = Glob.sync(__dirname + "/../build/web/glaemscribe/js/modes/*.glaem.j
 for(var c=0;c<mfiles.length;c++)
   include(mfiles[c]);
 
+// Load the tts engine
+include(__dirname + "/../build/web/glaemscribe/js/espeakng.for.glaemscribe.nowasm.sync.js")
+
+if(!Glaemscribe.TTS.is_engine_loaded())
+{
+  console.log("*** CRITICAL : The TTS Engine is not loaded!");
+  exit(666);
+}
+
+
 // =======================
 // === UNIT TEST TOOL ====
 // =======================
@@ -176,8 +186,9 @@ for(var mode_name in Glaemscribe.resource_manager.loaded_modes)
   }
 }
 
-unit_test_directory(__dirname + "/../unit_tests/glaemscrafu")
-unit_test_directory(__dirname + "/../unit_tests/technical")
+var error_context = {ecount: 0, wcount: 0}
+unit_test_directory(__dirname + "/../unit_tests/glaemscrafu",error_context)
+unit_test_directory(__dirname + "/../unit_tests/technical",error_context)
 
 // unit_test_directory(__dirname + "/../unit_tests/old")
 // console.log(Glaemscribe.resource_manager.loaded_modes['quenya'].finalize({"implicit_a" : "false"}).options['implicit_a_unutixe'].is_visible())

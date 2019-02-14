@@ -366,7 +366,7 @@ Glaemscribe.ModeParser.prototype.parse_raw = function(mode_name, raw, mode_optio
       mode.errors.push(new Glaemscribe.Glaeml.Error(option_element.line, "Missing option 'default' value."));
     }
     
-    var option                = new Glaemscribe.Option(mode, option_name_at, option_default_val_at, values, visibility);
+    var option                = new Glaemscribe.Option(mode, option_name_at, option_default_val_at, values, option_element.line, visibility);
     option.is_radio           = is_radio;
     mode.options[option.name] = option;
   }); 
@@ -476,7 +476,23 @@ Glaemscribe.ModeParser.prototype.parse_raw = function(mode_name, raw, mode_optio
     
     this.traverse_if_tree(processor_context, text_procedure, element_procedure );                 
   }
-   
+ 
+  var espeak_option = mode.options['espeak_voice'];
+  if(espeak_option) {
+    // IN JS, TTS ENGINE SHOULD BE LOADED SEPARATELY AND MAYBE AFTERWARDS OR ASYNCHRONOUSLY. DON'T LOAD HERE.
+    // TTS::load_engine
+    mode.has_tts = true;
+    
+    espeak_option.values.glaem_each(function(vname,_) {
+      var voice = Glaemscribe.TTS.option_name_to_voice(vname);
+      // Even if the TTS engine may not be loaded, the wrapper is. 
+      // As such, we can check if voices are correct here.
+      if(!Glaemscribe.TTS.voice_list().includes(voice)) {
+        mode.errors.push(new Glaemscribe.Glaeml.Error(espeak_option.line, "Option has unhandled voice  " + voice + "."));
+      }  
+    });
+  }
+  
   if(mode.errors.length == 0)
     mode.finalize(mode_options);
 

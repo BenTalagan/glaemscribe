@@ -1,0 +1,28 @@
+<!doctype HTML>
+<html>
+<body>
+  <meta charset="UTF-8">
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  
+  <script type="text/javascript" charset="UTF-8" src="../espeakng.for.glaemscribe.nowasm.sync.js"></script> 
+  <script src="../glaemscribe_tts.js"></script> 
+</body>
+<head>
+  
+  <script>
+    client = new GlaemscribeTTS();
+
+    var hi = "Hi, my name is toto! ";
+    var r = ""
+    for(var i=0;i<1000;i++)
+      r = r + hi;
+
+    client.synthesize_ipa(r,{voice:'en'},function(ipa) {
+      document.write(JSON.stringify(ipa))
+    });
+    
+  </script>
+    
+  
+</head>
+</html>

@@ -306,7 +306,7 @@ module Glaemscribe
             @mode.errors << Glaeml::Error.new(option_element.line, "Missing option default value.")
           end
             
-          option                      = Option.new(@mode, option_name_at, option_default_val_at, values, visibility)
+          option                      = Option.new(@mode, option_name_at, option_default_val_at, values, option_element.line, visibility)
           option.is_radio             = is_radio
           @mode.options[option.name]  = option
         }
@@ -392,8 +392,25 @@ module Glaemscribe
           traverse_if_tree(processor_context, text_procedure, element_procedure )
         }
                                                               
-        @mode.finalize(mode_options) if !@mode.errors.any?
         
+        espeak_option = @mode.options['espeak_voice']
+        if espeak_option
+          # Singleton lazy load the TTS engine
+          # If the mode relies on espeak
+          TTS::load_engine
+          @mode.has_tts = true
+          
+          # Check if all voices are supported
+          espeak_option.values.keys.each { |vname|
+            voice = TTS::option_name_to_voice(vname)
+            if !(TTS::voice_list.include? voice)
+              @mode.errors << Glaeml::Error.new(espeak_option.line, "Option has unhandled voice #{voice}.")   
+            end
+          }
+        end
+        
+        @mode.finalize(mode_options) if !@mode.errors.any?
+    
         @mode
       end
     end

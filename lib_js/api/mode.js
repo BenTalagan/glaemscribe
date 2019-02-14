@@ -40,12 +40,15 @@ Glaemscribe.Mode = function(mode_name) {
   this.errors               = [];
   this.warnings             = [];
   this.latest_option_values = {};
+  this.has_tts              = false;
+  this.current_tts_voice    = null;
   
   this.raw_mode_name        = null;
 
   this.pre_processor    = new Glaemscribe.TranscriptionPreProcessor(this);
   this.processor        = new Glaemscribe.TranscriptionProcessor(this);
   this.post_processor   = new Glaemscribe.TranscriptionPostProcessor(this);
+  
   return this;
 }
 
@@ -104,6 +107,11 @@ Glaemscribe.Mode.prototype.finalize = function(options) {
   if(mode.get_raw_mode())
     mode.get_raw_mode().finalize(options);
   
+  if(this.has_tts) {
+    var espeak_option       = mode.options['espeak_voice'].value_name_for_value(mode.latest_option_values['espeak_voice'])
+    this.current_tts_voice  = Glaemscribe.TTS.option_name_to_voice(espeak_option)
+  }
+  
   return this;
 }
 
@@ -121,12 +129,28 @@ Glaemscribe.Mode.prototype.get_raw_mode = function() {
 }
 
 Glaemscribe.Mode.prototype.strict_transcribe = function(content, charset, debug_context) {
+  
+  var mode = this;
 
   if(charset == null)
     charset = this.default_charset;
   
   if(charset == null)
     return [false, "*** No charset usable for transcription. Failed!"];
+
+  // TTS pre-transcription
+  if(mode.has_tts) {
+    try {
+      // Pre-ipa conversion with TTS engine
+      var esp = new Glaemscribe.TTS(); 
+      var res = esp.synthesize_ipa(content,{voice: mode.current_tts_voice, has_raw_mode: (mode.get_raw_mode() != null) });
+      content = res['ipa'];
+
+      debug_context.tts_output += content;
+    } catch(e) {
+      return [false, "TTS pre-transcription failed : #{e}."];
+    }
+  }
 
   var ret   = ""
   var lines = content.split(/(\n)/);
@@ -141,7 +165,6 @@ Glaemscribe.Mode.prototype.strict_transcribe = function(content, charset, debug_
       restore_lf = true;
       l = l.slice(0,-1);
     }
-    
     
     l = this.pre_processor.apply(l);
     debug_context.preprocessor_output += l + "\n";
@@ -170,6 +193,8 @@ Glaemscribe.Mode.prototype.transcribe = function(content, charset) {
 
   var ret = "";
   var res = true;
+  
+  debug_context.tts_output = "";
  
   if(raw_mode != null)
   {
@@ -185,23 +210,28 @@ Glaemscribe.Mode.prototype.transcribe = function(content, charset) {
       {
         to_transcribe = rmatch[1];
         tr_mode       = raw_mode;
+        // Don't forget to keep raw things inside tts output
+        // debug_context.tts_output += "{{" + to_transcribe + "}}";
       }
       
       var rr = tr_mode.strict_transcribe(to_transcribe,charset,debug_context);
       var succ = rr[0]; var r = rr[1]; 
       
-      res = res && succ;
-      if(succ)
-        ret += r;   
+      if(!succ)
+        return [false, r , debug_context];
+        
+      ret += r;   
     });
   }
   else
   {
     var rr = mode.strict_transcribe(content,charset,debug_context);
     var succ = rr[0]; var r = rr[1]; 
-    res = res && succ;
-    if(succ)
-      ret += r;   
+
+    if(!succ)
+      return [false, r , debug_context];
+      
+    ret += r;   
   }
     
   return [res, ret, debug_context];  

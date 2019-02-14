@@ -28,47 +28,49 @@ require "FileUtils" if !defined? FileUtils
 
 module Glaemscribe
   module API
-    API_PATH = File.dirname(__FILE__)
+    API_PATH = File.dirname(__FILE__) + "/api/"
     
-    require API_PATH + "/api/debug.rb"
-    require API_PATH + "/api/constants.rb"
-    require API_PATH + "/api/object_additions.rb"
+    require API_PATH + "debug.rb"
+    require API_PATH + "constants.rb"
+    require API_PATH + "object_additions.rb"
     
-    require API_PATH + "/api/fragment.rb"
-    require API_PATH + "/api/sheaf_chain_iterator.rb"
-    require API_PATH + "/api/sheaf_chain.rb"
-    require API_PATH + "/api/sheaf.rb"
+    require API_PATH + "fragment.rb"
+    require API_PATH + "sheaf_chain_iterator.rb"
+    require API_PATH + "sheaf_chain.rb"
+    require API_PATH + "sheaf.rb"
   
-    require API_PATH + "/api/rule.rb"
-    require API_PATH + "/api/sub_rule.rb"
-    require API_PATH + "/api/rule_group.rb"
-    require API_PATH + "/api/macro.rb"
+    require API_PATH + "rule.rb"
+    require API_PATH + "sub_rule.rb"
+    require API_PATH + "rule_group.rb"
+    require API_PATH + "macro.rb"
     
-    require API_PATH + "/api/eval.rb"
-    require API_PATH + "/api/if_tree.rb"
+    require API_PATH + "eval.rb"
+    require API_PATH + "if_tree.rb"
     
-    require API_PATH + "/api/transcription_tree_node.rb"  
+    require API_PATH + "transcription_tree_node.rb"  
     
-    require API_PATH + "/api/transcription_pre_post_processor.rb"
-    require API_PATH + "/api/transcription_processor.rb"
+    require API_PATH + "transcription_pre_post_processor.rb"
+    require API_PATH + "transcription_processor.rb"
     
-    require API_PATH + "/api/charset.rb"
-    require API_PATH + "/api/mode.rb"
-    require API_PATH + "/api/option.rb"
+    require API_PATH + "charset.rb"
+    require API_PATH + "mode.rb"
+    require API_PATH + "option.rb"
     
-    require API_PATH + "/api/resource_manager.rb"
-    require API_PATH + "/api/glaeml.rb"
-    require API_PATH + "/api/glaeml_shellwords.rb"
-    require API_PATH + "/api/mode_parser.rb"
-    require API_PATH + "/api/charset_parser.rb"
+    require API_PATH + "resource_manager.rb"
+    require API_PATH + "glaeml.rb"
+    require API_PATH + "glaeml_shellwords.rb"
+    require API_PATH + "mode_parser.rb"
+    require API_PATH + "charset_parser.rb"
     
-    require API_PATH + "/api/pre_processor/elvish_numbers.rb"
-    require API_PATH + "/api/pre_processor/downcase.rb"
-    require API_PATH + "/api/pre_processor/substitute.rb"
-    require API_PATH + "/api/pre_processor/rxsubstitute.rb"
-    require API_PATH + "/api/pre_processor/up_down_tehta_split.rb"
-    require API_PATH + "/api/post_processor/reverse.rb"
-    require API_PATH + "/api/post_processor/resolve_virtuals.rb"
+    require API_PATH + "pre_processor/elvish_numbers.rb"
+    require API_PATH + "pre_processor/downcase.rb"
+    require API_PATH + "pre_processor/substitute.rb"
+    require API_PATH + "pre_processor/rxsubstitute.rb"
+    require API_PATH + "pre_processor/up_down_tehta_split.rb"
+    require API_PATH + "post_processor/reverse.rb"
+    require API_PATH + "post_processor/resolve_virtuals.rb"
+    
+    require API_PATH + "tts.rb"
     
   end
 end

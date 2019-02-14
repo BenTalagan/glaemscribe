@@ -41,7 +41,12 @@ module Glaemscribe
       
       attr_accessor :world, :invention
       
+      attr_accessor :has_tts
+      attr_reader   :current_tts_voice
+      
       attr_reader   :latest_option_values
+         
+      
          
       def initialize(name)
         @name               = name
@@ -50,6 +55,8 @@ module Glaemscribe
         @supported_charsets = {}
         @options            = {}
         @last_raw_options   = nil
+        @has_tts            = false
+        @current_tts_voice  = nil
        
         @pre_processor    = TranscriptionPreProcessor.new(self)
         @processor        = TranscriptionProcessor.new(self)
@@ -95,7 +102,7 @@ module Glaemscribe
     
         trans_options_converted = {}
 
-        # Do a conversion to values space
+        # Do a conversion from names to values space
         trans_options.each{ |oname,valname| 
           trans_options_converted[oname] = @options[oname].value_for_value_name(valname)
         }
@@ -117,7 +124,13 @@ module Glaemscribe
         @processor.finalize(@latest_option_values)
     
         raw_mode.finalize options if raw_mode
-          
+        
+        # Update the current espeak voice
+        if @has_tts
+          espeak_option       = @options['espeak_voice'].value_name_for_value(@latest_option_values['espeak_voice'])
+          @current_tts_voice  = TTS.option_name_to_voice(espeak_option)
+        end
+        
         self
       end
       
@@ -131,6 +144,14 @@ module Glaemscribe
       def strict_transcribe(content, charset = nil)
         charset = default_charset if !charset
         return false, "*** No charset usable for transcription. Failed!" if !charset
+  
+        if has_tts
+          begin
+            content = TTS.ipa(content, @current_tts_voice, (raw_mode != nil) )['ipa']
+          rescue StandardError => e
+            return false, "TTS pre-transcription failed : #{e}."
+          end
+        end
   
         # Parser works line by line
         ret = content.lines.map{ |l| 
@@ -156,12 +177,20 @@ module Glaemscribe
           chunks.each{ |c|
             if c =~ /{{(.*?)}}/m
               succ, r = raw_mode.strict_transcribe($1,charset)
-              res = res && succ
-              ret += r if succ
+      
+              if !succ
+                return false, r # Propagate error
+              end
+      
+              ret += r
             else
               succ, r = strict_transcribe(c,charset)
-              res = res && succ
-              ret += r if succ
+
+              if !succ
+                return false, r # Propagate error 
+              end
+      
+              ret += r
             end
           }
           return res,ret

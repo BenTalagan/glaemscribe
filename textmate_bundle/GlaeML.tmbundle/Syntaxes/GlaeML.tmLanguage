@@ -43,7 +43,7 @@
 				</dict>
 			</dict>
 			<key>match</key>
-			<string>^\s*(\\beg|\\end\s*$)\s*(".*"|[^\s]*)\s*(.*)</string>
+			<string>^\s*(\\beg|\\end\s*$)\s*(".*?"|[^\s]*)\s*(".*?"|[^\s]*)\s*(".*?"|[^\s]*)\s*</string>
 		</dict>
 		<dict>
 			<key>captures</key>

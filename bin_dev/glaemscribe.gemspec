@@ -25,6 +25,8 @@ Gem::Specification.new do |s|
   s.homepage    = 'https://jrrvf.com/~glaemscrafu/english/glaemscribe.html'
   s.license     = 'AGPL-3.0'
   
-  s.add_runtime_dependency 'commander', '~> 4.3'
-  
+  # command line tool
+  s.add_runtime_dependency 'commander', '~> 4.4.7'
+  # tts engine in js
+  s.add_runtime_dependency 'mini_racer', '~> 0.2.4'
 end

@@ -25,6 +25,7 @@ module Glaemscribe
     
     class Option
       attr_reader   :mode
+      attr_reader   :line
       attr_reader   :name
       attr_reader   :type
       attr_reader   :default_value_name      
@@ -37,13 +38,16 @@ module Glaemscribe
         BOOL = "BOOL"
       end
          
-      def initialize(mode, name, default_value_name, values, visibility = nil)
+      def initialize(mode,  name, default_value_name, values, line, visibility = nil)
         @mode               = mode
         @name               = name
         @default_value_name = default_value_name
         @type               = (values.keys.count == 0)?(Type::BOOL):(Type::ENUM)
         @values             = values
         @visibility         = visibility
+        @line               = line
+        @value_to_names = {}
+        @values.each { |vname, val| @value_to_names[val] = vname }
       end
       
       def default_value
@@ -61,6 +65,16 @@ module Glaemscribe
           return nil
         else
           return @values[val_name]
+        end
+      end
+      
+      def value_name_for_value(value)
+        if @type == Type::BOOL
+          return "true"  if value == true  || value == "true"
+          return "false" if value == false || value == "false"
+          return nil
+        else
+          return @value_to_names[value]
         end
       end
       

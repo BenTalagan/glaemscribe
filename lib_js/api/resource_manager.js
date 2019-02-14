@@ -23,7 +23,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 Glaemscribe.ResourceManager = function() {  
-  this.raw_modes                    = {};
+  this.raw_modes                    = {}; // name is misleading it clashes with raw mode. TODO : refactor? Maybe not it could break the js loading
   this.raw_charsets                 = {};
   this.loaded_modes                     = {};
   this.loaded_charsets                  = {};

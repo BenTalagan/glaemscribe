@@ -22,6 +22,7 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+require 'mini_racer'
 
 SCRIPT_PATH = File.dirname(__FILE__)
 require SCRIPT_PATH + "/../lib_rb/glaemscribe.rb"
@@ -118,7 +119,7 @@ def read_mode_options_file(dirent, copy_to_directory = nil)
   return charset_name, mode_options
 end
 
-def unit_test_directory(directory)
+def unit_test_directory(directory, error_context = {ecount: 0, wcount: 0})
   
   puts "Testing now test base : #{directory}"
   
@@ -130,11 +131,13 @@ def unit_test_directory(directory)
     mode      = Glaemscribe::API::ResourceManager::loaded_modes[mode_name]
     if !mode
       puts "[    ] " + full_name + " : this mode is not loaded."
+      error_context[:wcount] += 1
       next      
     end
     
     if mode.errors.any?
       puts "[    ] " + full_name + " : this mode has some errors."
+      error_context[:ecount] += 1
       next     
     end
     
@@ -159,6 +162,7 @@ def unit_test_directory(directory)
         File.open( directory + "/sources/" + full_name + "/" + bfname,"rb:utf-8") { |f| source = f.read}
       rescue Exception
         puts "[    ] " + prefix + "Could not open source file."
+        error_context[:wcount] += 1
         next
       end
     
@@ -166,11 +170,13 @@ def unit_test_directory(directory)
         File.open( directory + "/expecteds/" + full_name + "/" + bfname,"rb:utf-8") { |f| true_teng = f.read}
       rescue Exception
         puts "[    ] " + prefix + "Could not open expected file."
+        error_context[:wcount] += 1
         next
       end     
     
       if true_teng.strip == ""
         puts "[    ] " + prefix + "Expected file is empty!!"
+        error_context[:wcount] += 1
         next
       end
     
@@ -180,6 +186,7 @@ def unit_test_directory(directory)
    
       if !success
         puts "[****]" + teng
+        error_context[:ecount] += 1
         next
       end
     
@@ -187,6 +194,7 @@ def unit_test_directory(directory)
     
       if true_teng != teng
         puts "[****] " + prefix
+        error_context[:ecount] += 1
             
         teng_lines      = teng.lines.to_a
         true_teng_lines = true_teng.lines.to_a
@@ -312,8 +320,10 @@ if ARGV[0] == "--dump"
   dump_test_directory(SCRIPT_PATH + "/../unit_tests/technical", SCRIPT_PATH + "/../unit_tests_dumped/technical" )
 else
   delete_html_error_file
-  unit_test_directory(SCRIPT_PATH + "/../unit_tests/glaemscrafu")
-  unit_test_directory(SCRIPT_PATH + "/../unit_tests/technical")
+  error_context = {ecount: 0, wcount: 0}
+  unit_test_directory(SCRIPT_PATH + "/../unit_tests/glaemscrafu",error_context)
+  unit_test_directory(SCRIPT_PATH + "/../unit_tests/technical",error_context)
+  puts"\n#{error_context[:ecount]} errors, #{error_context[:wcount]} warnings.\n\n"
   close_html_error_file
 end
 
