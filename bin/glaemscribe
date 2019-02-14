@@ -32,6 +32,13 @@ rescue Exception => e
   exit(0)
 end
 
+begin
+  require 'mini_racer'
+rescue Exception => e
+  puts "The 'glaemscribe' binary requires the 'mini_racer' gem to work. Please 'gem install mini_racer' to make it work or add it to your Gemfile."
+  exit(0)
+end
+
 env_version = ""
 begin
   # Try to load dev version before loading the gem one
@@ -59,8 +66,8 @@ end
 #############
 
 def puts_available_modes
-  puts "\n #{$terminal.color 'Available modes are :', :bold }\n\n"
-  puts Glaemscribe::API::ResourceManager.available_mode_names.map{|k| ". " + k.strip}.join("\n")
+  puts "\n #{HighLine.default_instance.color 'Available modes are :', :bold }\n\n"
+  puts Glaemscribe::API::ResourceManager.available_mode_names.sort.map{|k| ". " + k.strip}.join("\n")
   puts "\n"
 end
 
@@ -237,8 +244,7 @@ command :transcribe do |c|
           if success
             STDOUT.puts ret
           else
-            perxit("The transcription failed.")
-            perxit(ret, 42)    
+            perxit("The transcription failed : #{ret}", 42)
           end 
         end
       rescue Interrupt
@@ -301,22 +307,20 @@ command :info do |c|
       perxit(nil, 3)
     end
     
-    puts "#{$terminal.color "Mode ID   " , :bold} : #{mode.name}"
-    puts "#{$terminal.color "Language  " , :bold} : #{mode.language}"
-    puts "#{$terminal.color "Writing   " , :bold} : #{mode.writing}"
-    puts "#{$terminal.color "Human Name" , :bold} : #{mode.human_name}"
-    puts "#{$terminal.color "Authors   " , :bold} : #{mode.authors}"
-    puts "#{$terminal.color "Version   " , :bold} : #{mode.version}"
+    puts "#{HighLine.default_instance.color "Mode ID   " , :bold} : #{mode.name}"
+    puts "#{HighLine.default_instance.color "Language  " , :bold} : #{mode.language}"
+    puts "#{HighLine.default_instance.color "Writing   " , :bold} : #{mode.writing}"
+    puts "#{HighLine.default_instance.color "Human Name" , :bold} : #{mode.human_name}"
+    puts "#{HighLine.default_instance.color "Authors   " , :bold} : #{mode.authors}"
+    puts "#{HighLine.default_instance.color "Version   " , :bold} : #{mode.version}"
     puts ""
-    puts "#{$terminal.color "Options   " , :bold} :"
+    puts "#{HighLine.default_instance.color "Options   " , :bold} :"
     mode.options.each { |name,option|
-      puts "  #{$terminal.color name, :bold} (#{option.type}) [#{option.default_value_name}]"
+      puts "  #{HighLine.default_instance.color name, :bold} (#{option.type}) [#{option.default_value_name}]"
       option.values.each{ |oname,ovalue|
-        puts "    #{$terminal.color oname, :bold}"
+        puts "    #{HighLine.default_instance.color oname, :bold}"
       }
     }
   end
   
 end
-
-
