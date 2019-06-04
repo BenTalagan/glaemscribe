@@ -39,6 +39,7 @@ Changelog
 
 | Version | Date | Comment |
 |---------|------|---------|
+| 1.2.0 | 07/01/2019 | Added support for hybrid unicode 'GlaemUnicode' fonts (see the font directory for details).<br>Added support for the Free Tengwar Font project fonts (experimental).<br>Added support for {UNI_XXX} unicode entry variables in rule source member.<br>Added "sequence" type for virtual chars.<br>Added "pointer" (dynamic) variable type using the '<=>' syntax.<br>Added macro/deploy directives for declaring and using macros and avoid code repetition.<br>Cross rules can now use a variable as cross schema.<br>[Khuzdul] : Added missing long o.<br>[Sindarin][All Modes] Reworked and uniformised phonology disambiguation (median point, ng, ngw).<br>[Japanese] Added japanese tengwar mode. |
 | 1.1.14 | 12/17/2017 | Minor bug fix on 1.1.13 |
 | 1.1.13 | 12/17/2017 | [Quenya] Adding support for palatalized geminates (requested exotic feature) |
 | 1.1.12 | 11/28/2017 | Minor bug fix on 1.1.11 |
