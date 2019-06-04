@@ -36,6 +36,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   \entry "0.1.4" "Added support for new unicode charsets"   
   \entry "0.1.5" "Added support for the Tengwar Telcontar font"
   \entry "0.1.6" "Corrected use of silme_nuquerna in ns / y, added a few exotic combinations. Reworked median point behaviour, and ng."
+  \entry "0.1.7" "Added variants with dot for short vowels, added gasdil."
 \end
 
 \language "Sindarin"
@@ -65,6 +66,47 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 \charset  tengwar_telcontar   false
 
 \beg      options
+
+  \beg option short_a SHORT_A_WITHOUT_DOT
+    \radio
+    \value SHORT_A_WITHOUT_DOT 0
+    \value SHORT_A_WITH_DOT    1
+  \end
+  
+  \beg option short_e SHORT_E_WITHOUT_DOT
+    \radio
+    \value SHORT_E_WITHOUT_DOT 0
+    \value SHORT_E_WITH_DOT    1
+  \end
+  
+  \beg option short_i SHORT_I_WITHOUT_DOT
+    \radio
+    \value SHORT_I_WITHOUT_DOT 0
+    \value SHORT_I_WITH_DOT    1
+  \end
+  
+  \beg option short_o SHORT_O_WITHOUT_DOT
+    \radio
+    \value SHORT_O_WITHOUT_DOT 0
+    \value SHORT_O_WITH_DOT    1
+  \end
+  
+  \beg option short_u SHORT_U_WITHOUT_DOT
+    \radio
+    \value SHORT_U_WITHOUT_DOT 0
+    \value SHORT_U_WITH_DOT    1
+  \end
+  
+  \beg option short_y SHORT_Y_WITHOUT_DOT
+    \radio
+    \value SHORT_Y_WITHOUT_DOT 0
+    \value SHORT_Y_WITH_DOT    1
+  \end  
+  
+  \beg option apostrophe APOSTROPHE_IGNORED
+    \value APOSTROPHE_IGNORED 0
+    \value APOSTROPHE_GASDIL  1
+  \end
 
   \beg option beleriand_aw_diphthong AW_VILYA_AT_ENDINGS_CURL_ELSE
     \value AW_VILYA_AT_ENDINGS_CURL_ELSE 0
@@ -161,15 +203,42 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     {OE}                === {O}{E}
              
     {K}                 === (c,k)
-
-    \** RULES **\
-    {A}                 --> OSSE
-    {E}                 --> YANTA
-    {I}                 --> TELCO
-    {O}                 --> ANNA
-    {U}                 --> URE
     
-    {Y}                 --> SILME_NUQUERNA
+    \if "short_a == SHORT_A_WITH_DOT"
+      {A}                 --> OSSE I_TEHTA
+    \else
+      {A}                 --> OSSE
+    \endif
+    
+    \if "short_e == SHORT_E_WITH_DOT"
+      {E}                 --> YANTA I_TEHTA
+    \else
+      {E}                 --> YANTA
+    \endif
+    
+    \if "short_i == SHORT_I_WITH_DOT"
+      {I}                 --> TELCO I_TEHTA
+    \else
+      {I}                 --> TELCO
+    \endif
+    
+    \if "short_o == SHORT_O_WITH_DOT"
+      {O}                 --> ANNA I_TEHTA
+    \else
+      {O}                 --> ANNA
+    \endif
+    
+    \if "short_u == SHORT_U_WITH_DOT"
+      {U}                 --> URE I_TEHTA
+    \else
+      {U}                 --> URE
+    \endif
+
+    \if "short_y == SHORT_Y_WITH_DOT"
+      {Y}                 --> SILME_NUQUERNA I_TEHTA
+    \else
+      {Y}                 --> SILME_NUQUERNA
+    \endif
 
     {AA}                --> OSSE  E_TEHTA
     {EE}                --> YANTA E_TEHTA
@@ -178,7 +247,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     {UU}                --> URE   E_TEHTA
     {YY}                --> SILME_NUQUERNA E_TEHTA
 
-    {AE}                --> OSSE  YANTA  \** Should chose between OSSE YANTA and OSSE THSUP_TICK_INV_L. Old tengscribe had second one, amanye tenceli has first one. **\ 
+    \** Should chose between OSSE YANTA and OSSE THSUP_TICK_INV. Old tengscribe had second one, amanye tenceli has first one. **\ 
+    {AE}                --> OSSE  YANTA  
     {AI}                --> OSSE  Y_TEHTA
     {AU}                --> OSSE  WA_TEHTA 
     
@@ -297,7 +367,18 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     rw              --> ROMEN  WA_TEHTA 
     (ng,ngg,ŋg,ñg)w --> ANGA {NASAL} WA_TEHTA
     (_ng,ng_,ŋ,ñ)w  --> NOLDO  WA_TEHTA
-  
+    
+    \if "apostrophe == APOSTROPHE_IGNORED"
+      ' --> {NULL}
+      ’ --> {NULL}
+    \else
+      \** use gasdil **\
+      ' --> HALLA
+      ’ --> HALLA
+    \endif
+    
+    \** Forced gasdil **\
+    ° --> HALLA
   \end
   
   \beg    rules punctuation
@@ -323,8 +404,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
     \** Apostrophe **\
 
-    ' --> {NULL}
-    ’ --> {NULL}
+
     
     \** NBSP **\
     {NBSP} --> NBSP
