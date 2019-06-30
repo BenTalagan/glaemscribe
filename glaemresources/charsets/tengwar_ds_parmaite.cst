@@ -24,7 +24,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 \** Charset specially customized for Tengwar Parmaite (Glaemscrafu patched version) **\ 
 
-\version 0.0.9
+\version 0.1.0
 
 \beg changelog
   \entry "0.0.6" "Added VALA_W_HOOK, VAIYA. Moved A_TEHTA_INV_L due to soft hyphen bug."
@@ -32,6 +32,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   \entry "0.0.7" "Fixed missing tinco_ext / sule_ext"
   \entry "0.0.8" "Added NBSP"  
   \entry "0.0.9" "Moved back some chars to latin blocks to avoid word-wrapping problems"  
+  \entry "0.1.0" "Added ELVISH_PAREN tokien, reworked sarince token names."
 \end
 
 \**   **\ \char 20 SPACE              
@@ -299,7 +300,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 \char 2026 THINF_DSTROKE_S                                
 \char 2030 THINF_ACCENT_XL                                
 \char 2039 THINF_ACCENT_S                                
-\char 203a BOOKMARK_SIGN                                
+\char 203a ELVISH_PAREN BOOKMARK_SIGN                                
 \char 2122 TH_SUB_CIRC_L       
 
 \char 2FFC E_TEHTA_GRAVE_XL

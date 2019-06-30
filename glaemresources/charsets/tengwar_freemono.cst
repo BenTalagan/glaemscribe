@@ -24,7 +24,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 \** Charset for the FreeMonoTengwar font **\ 
 
-\version 0.0.8
+\version 0.1.0
 
 \beg changelog
   \entry "0.0.5" "Added VALA_W_HOOK."
@@ -32,6 +32,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   \entry "0.0.7" "Fixed missing tinco_ext / sule_ext"
   \entry "0.0.8" "Added NBSP"
   \entry "0.0.9" "Replaced fixed ligatures by their dynamic sequence"
+  \entry "0.1.0" "Added ELVISH_PAREN tokien, reworked sarince token names."
 \end
 
 \char 20 SPACE
@@ -158,8 +159,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 \char e057  THINNAS  THINF_STROKE
 
 \** THE TWO FOLLOWING ONES ARE HIGHLY DISCUSSABLE, MAYBE WE SHOULD ADD A VIRTUAL CHAR FOR THESE **\
-\char e058  SARINCE_ENDING_LONG SHOOK_LEFT_L
-\char e059  SARINCE COMBINING_SARINCE SHOOK_RIGHT_L 
+\char e058  SARINCE_ENDING_LONG SARINCE_FLOURISHED
+\char e059  SARINCE COMBINING_SARINCE SHOOK_RIGHT_L SHOOK_LEFT_L 
 \char e05A  ?
 \char e05B  ?
 

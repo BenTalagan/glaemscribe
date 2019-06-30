@@ -24,10 +24,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 \** Charset for the FreeTelcontar font. Basically this is the same one as freemono **\ 
 
-\version 0.0.1
+\version 0.0.2
 
 \beg changelog
   \entry "0.0.1" "Copy pasted freemono charset"
+  \entry "0.0.2" "Added ELVISH_PAREN tokien, reworked sarince token names."
 \end
 
 \char 20 SPACE
@@ -166,8 +167,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 \char e057  THINNAS  THINF_STROKE
 
 \** THE TWO FOLLOWING ONES ARE HIGHLY DISCUSSABLE, MAYBE WE SHOULD ADD A VIRTUAL CHAR FOR THESE **\
-\char e058  SARINCE_ENDING_LONG SHOOK_LEFT_L
-\char e059  SARINCE COMBINING_SARINCE SHOOK_RIGHT_L 
+\char e058  SARINCE_ENDING_LONG SARINCE_FLOURISHED
+\char e059  SARINCE COMBINING_SARINCE SHOOK_RIGHT_L SHOOK_LEFT_L 
 \char e05A  ?
 \char e05B  ?
 
