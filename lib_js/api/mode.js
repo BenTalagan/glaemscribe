@@ -126,6 +126,7 @@ Glaemscribe.Mode.prototype.get_raw_mode = function() {
     return null;
   
   mode.raw_mode = Object.glaem_clone(loaded_raw_mode);
+  return mode.raw_mode;
 }
 
 Glaemscribe.Mode.prototype.strict_transcribe = function(content, charset, debug_context) {
