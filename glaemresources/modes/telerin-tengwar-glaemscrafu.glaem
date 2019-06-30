@@ -379,7 +379,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     > --> PUNCT_PAREN_R  
 
     \** Not universal between fonts ... **\
-    $ --> BOOKMARK_SIGN
+    $ --> ELVISH_PAREN
     ≤ --> RING_MARK_L \** Ring inscription left beautiful stuff **\
     ≥ --> RING_MARK_R \** Ring inscription right beautiful stuff **\
  
