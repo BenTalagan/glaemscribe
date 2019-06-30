@@ -38,12 +38,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   \entry "0.1.3" "Added support for new unicode charsets"   
   \entry "0.1.4" "Added support for the Tengwar Telcontar font"
   \entry "0.1.5" "Added a few labial exotic combinations. Reworked median point behaviour, and ng."
+  \entry "0.1.6" "Added gasdil handling."
 \end
 
 \language "Sindarin"
 \writing  "Tengwar"
 \mode     "Sindarin Tengwar - General Use"
-\version  "0.1.5"
+\version  "0.1.6"
 \authors  "J.R.R. Tolkien, impl. Talagan (Benjamin Babut)"
 
 \world      arda
@@ -73,6 +74,16 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     \value U_UP_O_DOWN 2
   \end
 
+  \beg option apostrophe APOSTROPHE_IGNORED
+    \value APOSTROPHE_IGNORED 0
+    \value APOSTROPHE_GASDIL  1
+  \end
+  
+  \beg option hyphen HYPHEN_WORD_BREAKER
+    \value HYPHEN_WORD_BREAKER  0
+    \value HYPHEN_WORD_JOINER   1
+  \end
+
   \beg option consonant_modification_style CONSONANT_MODIFICATION_STYLE_BAR
     \value CONSONANT_MODIFICATION_STYLE_WAVE 0
     \value CONSONANT_MODIFICATION_STYLE_BAR 1
@@ -96,6 +107,17 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   \** Work exclusively downcase **\
   \downcase
   
+  \if "hyphen == HYPHEN_WORD_JOINER"
+    \** Replace hyphen by median point **\
+    \substitute "-" "·"  
+  \else
+    \** Replace hyphen by glaemscribe's word breaker **\
+    \substitute "-" "|"
+  \endif
+  
+  \** Add keyboard friendly word joiner **\
+  \substitute "*" "·"
+  
   \** Simplify trema vowels **\
   \substitute ä a
   \substitute ë e
@@ -117,6 +139,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   
   \** Special case of starting 'i' before vowels, replace i by j **\     
   \rxsubstitute "\\bi([aeouyáāâéēêíīîóōôúūûýȳŷ])" "j\\1"
+  
+  \** Special case for ng : before the vast majority of consonnants, treat as ŋ **\
+  \** Don't include r / l / lh / w **\
+  \rxsubstitute "ng([tpckbdfðvnmhs])" "ŋ\\1"
   
   \** Avoid mutated ng of being treated as strong middle word n|g (ex : i·ngelaidh [iŋɛlaið] ) **\
   \substitute "·ng" "·ŋ"  
@@ -274,12 +300,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
     \** 
         Ok here come the labialized consonants which are really tricky
-        The fonts generally do not handle well the u curl + tehtar, this should be one more argument for
+        The fonts generally do not handle well the wa-tehta curl + tehtar, this should be one more argument for
         adopting open type anchors with which we can stack diacritics (see the sarati modes).
         For here, we cheat. Either we don't have any tehta on the tengwa, and it's easy.
         Or, we put the two signs in their small versions, side by side.
         We give an option not to use that trick, if the option is not set, we simply do not use
-        the u-curl at all when there's a tehta on the tengwa.
+        the wa-tehta curl at all when there's a tehta on the tengwa.
     **\
     
     \if "labialized_consonants_u_curl == LABIALIZED_U_CURL_NO_TEHTAR || labialized_consonants_u_curl == LABIALIZED_U_CURL_ALWAYS"
@@ -303,6 +329,18 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
       {V_D}(ng,ngg,ŋg,ñg)w  --> UNGWE {NASAL} WA_TEHTA {_V_D_}
       {V_D}(_ng,ng_,ŋ,ñ)w   --> NWALME WA_TEHTA {_V_D_}
     \endif
+    
+    \if "apostrophe == APOSTROPHE_IGNORED"
+      ' --> {NULL}
+      ’ --> {NULL}
+    \else
+      \** use gasdil **\
+      ' --> HALLA
+      ’ --> HALLA
+    \endif
+    
+    \** Forced gasdil **\
+    ° --> HALLA
   \end
   
   \beg rules punctuation
@@ -325,11 +363,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     - --> {NULL} 
     – --> PUNCT_TILD  
     — --> PUNCT_TILD
-
-    \** Apostrophe **\
-
-    ' --> {NULL}
-    ’ --> {NULL}
     
     \** NBSP **\
     {NBSP} --> NBSP
@@ -351,7 +384,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     > --> PUNCT_PAREN_R
 
     \** Not universal between fonts ... **\
-    $ --> BOOKMARK_SIGN
+    $ --> ELVISH_PAREN
     ≤ --> RING_MARK_L \** Ring inscription left beautiful stuff **\
     ≥ --> RING_MARK_R \** Ring inscription right beautiful stuff **\
   \end

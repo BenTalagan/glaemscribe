@@ -45,9 +45,28 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 \** We redefine the output space to have something beautiful, especially with erebor1 and erebor2 **\ 
 \outspace CIRTH_SPACE_BIG
 
+\beg options
+  \beg option hyphen HYPHEN_WORD_BREAKER
+    \value HYPHEN_WORD_BREAKER  0
+    \value HYPHEN_WORD_JOINER   1
+  \end
+\end
+
+
 \beg      preprocessor
   \** Work exclusively downcase **\
   \downcase
+  
+  \if "hyphen == HYPHEN_WORD_JOINER"
+    \** Replace hyphen by median point **\
+    \substitute "-" "·"  
+  \else
+    \** Replace hyphen by glaemscribe's word breaker **\
+    \substitute "-" "|"
+  \endif
+  
+  \** Add keyboard friendly word joiner **\
+  \substitute "*" "·"
   
   \** Simplify trema vowels **\
   \substitute ä a
@@ -71,6 +90,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   \** Special case of diphtong aw. Before vowels, do not treat 'aw' as diphthong, 
   since it seems more logical that aw would behave as a semi vowel **\
   \rxsubstitute "aw([aeouyáāâéēêíīîóōôúūûýȳŷ])" "a|w\\1"
+
+  \** Special case for ng : before the vast majority of consonnants, treat as ŋ **\
+  \** Don't include r / l / lh / w **\
+  \rxsubstitute "ng([tpckbdfðvnmhs])" "ŋ\\1"
   
   \** Avoid mutated ng of being treated as strong middle word n|g (ex : i·ngelaidh [iŋɛlaið] ) **\
   \substitute "·ng" "·ŋ"  
