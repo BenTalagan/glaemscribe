@@ -1317,6 +1317,7 @@ Glaemscribe.Mode.prototype.get_raw_mode = function() {
     return null;
   
   mode.raw_mode = Object.glaem_clone(loaded_raw_mode);
+  return mode.raw_mode;
 }
 
 Glaemscribe.Mode.prototype.strict_transcribe = function(content, charset, debug_context) {
@@ -3565,10 +3566,27 @@ Glaemscribe.SubstitutePreProcessorOperator.inheritsFrom( Glaemscribe.PreProcesso
 
 Glaemscribe.SubstitutePreProcessorOperator.prototype.apply = function(str)
 {
-  var what  = new RegExp(this.finalized_glaeml_element.args[0],"g");
-  var to    = this.finalized_glaeml_element.args[1];
+  //This is bad to use a regexp if there are special chars like '*'
+  //var what  = new RegExp(this.finalized_glaeml_element.args[0],"g");
+  //var to    = this.finalized_glaeml_element.args[1];
+  //return str.replace(what,to);
 
-  return str.replace(what,to);
+  var inSource      = str;
+  var inToReplace   = this.finalized_glaeml_element.args[0];
+  var inReplaceWith = this.finalized_glaeml_element.args[1];
+  
+  var outString = [];
+  var repLen = inToReplace.length;
+  var idx = inSource.indexOf(inToReplace);
+  while (idx !== -1) {
+    outString.push(inSource.substring(0, idx))
+    outString.push(inReplaceWith);
+
+    inSource = inSource.substring(idx + repLen);
+    idx = inSource.indexOf(inToReplace);
+  }
+  outString.push(inSource);
+  return outString.join("");
 }  
 
 Glaemscribe.resource_manager.register_pre_processor_class("substitute", Glaemscribe.SubstitutePreProcessorOperator);    
