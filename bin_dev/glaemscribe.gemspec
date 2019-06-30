@@ -26,7 +26,7 @@ Gem::Specification.new do |s|
   s.license     = 'AGPL-3.0'
   
   # command line tool
-  s.add_runtime_dependency 'commander', '~> 4.4.7'
+  s.add_runtime_dependency 'commander',  '~> 4.4', '>= 4.4.7'
   # tts engine in js
-  s.add_runtime_dependency 'mini_racer', '~> 0.2.4'
+  s.add_runtime_dependency 'mini_racer', '~> 0.2', '>= 0.2.4'
 end
