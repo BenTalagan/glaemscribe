@@ -27,13 +27,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   \entry "0.0.2" "Added missing extended tengwar."
   \entry "0.0.3" "Added support for non-breaking spaces"  
   \entry "0.0.4" "Added support for new unicode charsets"  
-  \entry "0.0.5" "Added support for the Tengwar Telcontar font" 
+  \entry "0.0.5" "Added support for the Tengwar Telcontar font"
+  \entry "0.0.6" "Added support for Bombadil W/HW"
 \end
 
 \language "Raw Tengwar"
 \writing  "Tengwar"
 \mode     "Raw Tengwar"
-\version  "0.0.4"
+\version  "0.0.6"
 \authors  "Talagan (Benjamin Babut)"
 
 \world      arda
@@ -174,6 +175,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     _(mh)_                --> TW_MH
     _(mhbeleriandic,mhb)_ --> TW_MH_BELERIANDIC
     _(hwlowdham,hwl)_     --> TW_HW_LOWDHAM
+    _(hwbombadil,hwbom)_  --> BOMBADIL_HW
+    _(wbombadil,wbom)_    --> BOMBADIL_W
 
     \** ligatures **\
     _(harmasilme,ahasilme,silmeharma,silmeaha)_ --> ANCA_CLOSED
@@ -192,7 +195,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     _(labial)_    --> WA_TEHTA 
     
     \** SA-Rincer to be enhanced ... **\
-    _(sarince)_  --> SARINCE
+    _(sarince)_           --> SARINCE
+    _(arrince,sarincef)_  --> SARINCE_FLOURISHED
  
     _0_ --> NUM_0
     _1_ --> NUM_1
@@ -262,7 +266,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 \**    > --> PUNCT_PAREN_R : cannot be used since it is already used as a letter in group litteral **\
 
     \** Not universal between fonts ... **\
-    $ --> BOOKMARK_SIGN
+    $ --> ELVISH_PAREN
     ≤ --> RING_MARK_L \** Ring inscription left beautiful stuff **\
     ≥ --> RING_MARK_R \** Ring inscription right beautiful stuff **\
 
