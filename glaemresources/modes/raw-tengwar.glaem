@@ -217,26 +217,35 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   \end
 
   \beg    rules punctuation
+    
+    \** Allow / as word breaker **\
     / --> {NULL}
+    - --> {NULL}
 
-    . --> PUNCT_DDOT
-    .. --> PUNCT_DOT PUNCT_DDOT PUNCT_DOT
+    ·   --> PUNCT_DOT
+    ,   --> PUNCT_DOT
+    :   --> PUNCT_DOT
+    ;   --> PUNCT_DOT
+
+    .   --> PUNCT_DDOT
+    ..  --> PUNCT_DDOT
+    
+    ...   --> PUSTA_3
+    ....  --> PUSTA_4
+    
+    ::    --> PUSTA_4_SQUARED
+    \** PUSTA_4_HALFED ? **\
+    
+    ..... --> PUSTA_5
+    
     …  --> PUNCT_TILD
-    ... --> PUNCT_TILD
-    .... --> PUNCT_TILD
-    ..... --> PUNCT_TILD
-    ...... --> PUNCT_TILD
-    ....... --> PUNCT_TILD
-
-    , --> PUNCT_DOT
-    : --> PUNCT_DOT
-    ; --> PUNCT_DOT
+    ~  --> PUNCT_TILD
+    –  --> PUNCT_TILD
+    —  --> PUNCT_TILD
+    
     ! --> PUNCT_EXCLAM
     ? --> PUNCT_INTERR
-    · --> PUNCT_DOT
-
-    :: --> PUSTA_3
-
+   
     \** Apostrophe **\
 
     ' --> {NULL}
@@ -251,10 +260,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     ” --> DQUOT_CLOSE
     « --> DQUOT_OPEN
     » --> DQUOT_CLOSE
-
-    - --> {NULL}
-    – --> PUNCT_TILD
-    — --> PUNCT_TILD
 
     [ --> PUNCT_PAREN_L
     ] --> PUNCT_PAREN_R
