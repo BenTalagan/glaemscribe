@@ -1,9 +1,9 @@
 # Glǽmscribe
 
 [**_Glǽmscribe_**](https://jrrvf.com/~glaemscrafu/english/glaemscribe.html) (also written **_Glaemscribe_**) is a software dedicated to
-the transcription of texts between writing systems, and more specifically dedicated to the transcription of J.R.R. Tolkien's invented languages to some of his devised writing systems.
+the transcription of texts between writing systems, and more specifically dedicated to the transcription of J.R.R. Tolkien's invented languages to some of his devised writing systems (Tengwar, Sarati, Cirth, ...).
 
-> **NOTE** The current default branch (1.2.0) is far ahead of the master branch and is planned to replace it and to be released on ~~July, 1st 2019~~ July, 15th 2019 (sorry for the delay!).
+The current version is 1.2.0 (August 2019).
 
 Official integration
 --------------------
