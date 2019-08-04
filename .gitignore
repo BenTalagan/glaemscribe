@@ -3,3 +3,4 @@ bin_dev/
 glaemresources/
 unit_tests/
 unit_tests_dumped/
+lib_espeak
