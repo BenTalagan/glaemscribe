@@ -10,6 +10,8 @@ Official integration
 
 Here is [**_the official integration of Glǽmscribe's engine_**](https://jrrvf.com/~glaemscrafu/english/glaemscribe.html).
 
+![Glaemscribe's UI Screenshot](https://raw.githubusercontent.com/BenTalagan/glaemscribe/gh-pages/images/GlaemscribeScreenshot.jpg)
+
 Features
 --------
 
