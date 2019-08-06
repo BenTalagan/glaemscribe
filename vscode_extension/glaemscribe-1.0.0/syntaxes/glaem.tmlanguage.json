@@ -776,8 +776,29 @@
         }
       }
     },
+    "equivalence-expression": {
+      "begin": "\\(",
+      "end": "\\)",
+      "captures": {
+        "0": {
+          "name": "entity.name.function"
+        }
+      },
+      "patterns": [
+        {
+          "include": "#comment-block"
+        },
+        {
+          "include": "#symbol-or-variable"
+        },
+        {
+          "match": "\\,",
+          "name": "entity.name.function"
+        }
+      ]
+    },
     "simple-rule-statement": {
-      "match": "([\\w{}]+)|(-->|===|<=>)|(\\*)|(\\(.+\\))",
+      "match": "([\\w{}]+)|(-->|===|<=>)|(\\*)|(\\([^\\(\\)]+\\))",
       "captures": {
         "1": {
           "patterns": [
@@ -798,18 +819,7 @@
         "4": {
           "patterns": [
             {
-              "include": "#comment-block"
-            },
-            {
-              "match": "([\\(\\),])|({[a-zA-Z0-9_]+})",
-              "captures": {
-                "1": {
-                  "name": "keyword.operator.assignment"
-                },
-                "2": {
-                  "name": "variable"
-                }
-              }
+              "include": "#equivalence-expression"
             }
           ]
         }
