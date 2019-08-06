@@ -454,7 +454,7 @@ repository:
         match: '({UNI_[0-9A-F]{3,}})|({[A-Z0-9_]+})|(identity|(?:\b[0-9]*[A-Z]+[A-Z0-9]*[A-Z0-9]*\b)|(?:\b(?:[A-Z]+_*)+(?:[A-Z0-9]+_*)*[A-Z0-9]+\b)|(?:\b(?:[A-Z0-9]+_*)+[A-Z]+\b)|(?:\b[0-9]+_*[A-Z]+[A-Z0-9_]*_*[0-9]+\b))'
         captures:
             '1':
-                name: variable.other.constant
+                name: constant.numeric
             '2':
                 name: variable
             '3':
