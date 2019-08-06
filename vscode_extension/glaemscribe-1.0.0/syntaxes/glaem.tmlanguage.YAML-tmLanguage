@@ -487,8 +487,12 @@ repository:
                     -
                         include: '#comment-block'
                     -
-                        match: '[\(\),]'
-                        name: keyword.operator.assignment
+                        match: '([\(\),])|({[a-zA-Z0-9_]+})'
+                        captures:
+                            '1':
+                                name: keyword.operator.assignment
+                            '2':
+                                name: 'variable'
     processor-patterns:
         patterns:
             -
