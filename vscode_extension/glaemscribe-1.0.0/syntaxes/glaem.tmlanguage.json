@@ -847,8 +847,32 @@
         }
       ]
     },
+    "fragment-expression": {
+      "begin": "\\[",
+      "end": "\\]",
+      "captures": {
+        "0": {
+          "name": "entity.name.type.section"
+        }
+      },
+      "patterns": [
+        {
+          "include": "#comment-block"
+        },
+        {
+          "include": "#symbol-or-variable"
+        },
+        {
+          "include": "#equivalence-expression"
+        },
+        {
+          "match": "\\*",
+          "name": "entity.name.function"
+        }
+      ]
+    },
     "simple-rule-statement": {
-      "match": "([\\w{}]+)|(-->|===|<=>)|(\\*)|(\\([^\\(\\)]+\\))",
+      "match": "([\\w{}]+)|(-->|===|<=>)|(\\([^\\(\\)]+\\))|(\\[[^\\[\\]]+\\])",
       "captures": {
         "1": {
           "patterns": [
@@ -864,12 +888,16 @@
           "name": "keyword.operator.assignment"
         },
         "3": {
-          "name": "entity.name.function"
+          "patterns": [
+            {
+              "include": "#equivalence-expression"
+            }
+          ]
         },
         "4": {
           "patterns": [
             {
-              "include": "#equivalence-expression"
+              "include": "#fragment-expression"
             }
           ]
         }
@@ -885,11 +913,104 @@
         },
         {
           "include": "#simple-rule-statement"
+        },
+        {
+          "include": "#processor-macro-block"
+        },
+        {
+          "include": "#deploy-statement"
         }
       ]
     },
+    "processor-macro-block": {
+      "begin": "(\\\\beg)((?:\\s|(?:\\\\\\*\\*(?:[^\\*\\n\\r]|(?:\\*+[^\\*\\\\\\n\\r]))*?\\*\\*+\\\\))+)(macro)((?:\\s|(?:\\\\\\*\\*(?:[^\\*\\n\\r]|(?:\\*+[^\\*\\\\\\n\\r]))*?\\*\\*+\\\\))+)(\\b[a-zA-Z0-9_]+\\b)((?:\\s|(?:\\\\\\*\\*(?:[^\\*\\n\\r]|(?:\\*+[^\\*\\\\\\n\\r]))*?\\*\\*+\\\\))+)(?:(?:(\\b[A-Z0-9_]+\\b)((?:\\s*?$)|(?:\\s*?\\\\\\*\\*(?:[^\\*]|(?:\\*+[^\\*\\\\]))*?\\*\\*+\\\\)*?\\s*?$))|(.+))",
+      "end": "(\\\\end)((?:\\s*?$)|(?:\\s*?\\\\\\*\\*(?:[^\\*]|(?:\\*+[^\\*\\\\]))*?\\*\\*+\\\\)*?\\s*?$)",
+      "beginCaptures": {
+        "1": {
+          "name": "entity.name.type.module"
+        },
+        "2": {
+          "name": "comment"
+        },
+        "3": {
+          "name": "entity.name.section"
+        },
+        "4": {
+          "name": "comment"
+        },
+        "5": {
+          "name": "keyword.symbol"
+        },
+        "6": {
+          "name": "comment"
+        },
+        "7": {
+          "name": "variable"
+        },
+        "8": {
+          "name": "comment"
+        },
+        "9": {
+          "patterns": [
+            {
+              "include": "#comment-block"
+            },
+            {
+              "match": "\\b[A-Z0-9_]+\\b",
+              "name": "variable"
+            }
+          ]
+        }
+      },
+      "endCaptures": {
+        "1": {
+          "name": "entity.name.type.module"
+        },
+        "2": {
+          "name": "comment"
+        }
+      },
+      "patterns": [
+        {
+          "include": "#processor-patterns"
+        }
+      ]
+    },
+    "deploy-statement": {
+      "match": "(\\\\deploy)((?:\\s|(?:\\\\\\*\\*(?:[^\\*\\n\\r]|(?:\\*+[^\\*\\\\\\n\\r]))*?\\*\\*+\\\\))+)(\\b[a-zA-Z-0-9]+\\b)((?:\\s|(?:\\\\\\*\\*(?:[^\\*\\n\\r]|(?:\\*+[^\\*\\\\\\n\\r]))*?\\*\\*+\\\\))+)({[a-zA-Z0-9_]+})((?:\\s|(?:\\\\\\*\\*(?:[^\\*\\n\\r]|(?:\\*+[^\\*\\\\\\n\\r]))*?\\*\\*+\\\\))+)(.+)",
+      "captures": {
+        "1": {
+          "name": "entity.name.section"
+        },
+        "2": {
+          "name": "comment"
+        },
+        "3": {
+          "name": "keyword.symbol"
+        },
+        "4": {
+          "name": "comment"
+        },
+        "5": {
+          "name": "variable.parameter"
+        },
+        "6": {
+          "name": "comment"
+        },
+        "7": {
+          "patterns": [
+            {
+              "include": "#comment-block"
+            },
+            {
+              "include": "#symbol-or-variable"
+            }
+          ]
+        }
+      }
+    },
     "processor-rule-block": {
-      "begin": "(\\\\beg)((?:\\s|(?:\\\\\\*\\*(?:[^\\*\\n\\r]|(?:\\*+[^\\*\\\\\\n\\r]))*?\\*\\*+\\\\))+)(rules)((?:\\s|(?:\\\\\\*\\*(?:[^\\*\\n\\r]|(?:\\*+[^\\*\\\\\\n\\r]))*?\\*\\*+\\\\))+)(\\b[a-zA-Z-0-9]+\\b)((?:\\s*?$)|(?:\\s*?\\\\\\*\\*(?:[^\\*]|(?:\\*+[^\\*\\\\]))*?\\*\\*+\\\\)*?\\s*?$)",
+      "begin": "(\\\\beg)((?:\\s|(?:\\\\\\*\\*(?:[^\\*\\n\\r]|(?:\\*+[^\\*\\\\\\n\\r]))*?\\*\\*+\\\\))+)(rules)((?:\\s|(?:\\\\\\*\\*(?:[^\\*\\n\\r]|(?:\\*+[^\\*\\\\\\n\\r]))*?\\*\\*+\\\\))+)(?:(\\\"(?:[^\\\"]*?)\\\")|([a-zA-Z0-9_!]+))((?:\\s*?$)|(?:\\s*?\\\\\\*\\*(?:[^\\*]|(?:\\*+[^\\*\\\\]))*?\\*\\*+\\\\)*?\\s*?$)",
       "end": "(\\\\end)((?:\\s*?$)|(?:\\s*?\\\\\\*\\*(?:[^\\*]|(?:\\*+[^\\*\\\\]))*?\\*\\*+\\\\)*?\\s*?$)",
       "beginCaptures": {
         "1": {
@@ -905,9 +1026,12 @@
           "name": "comment"
         },
         "5": {
-          "name": "keyword.symbol"
+          "name": "string"
         },
         "6": {
+          "name": "keyword.symbol"
+        },
+        "7": {
           "name": "comment"
         }
       },
