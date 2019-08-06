@@ -4,32 +4,6 @@
   ],
   "name": "GlaeML",
   "repository": {
-    "fragment-operator": {
-      "match": "\\*",
-      "name": "entity.name.function"
-    },
-    "assign-operator": {
-      "match": "(===|<=>)",
-      "name": "keyword.operator.assignment"
-    },
-    "convert-operator": {
-      "match": "-->",
-      "name": "entity.name.function"
-    },
-    "variable": {
-      "begin": "\\{",
-      "end": "\\}",
-      "name": "variable"
-    },
-    "string": {
-      "begin": "\"",
-      "end": "\"",
-      "captures": {
-        "0": {
-          "name": "comment"
-        }
-      }
-    },
     "keyword": {
       "match": "[a-zA-Z0-9_]",
       "name": "keyword.symbol"
@@ -37,43 +11,6 @@
     "operator": {
       "match": "[=!<>&\\|\\+\\-\\*\\/]+",
       "name": "keyword.operator.assignment"
-    },
-    "rule-symbol": {
-      "match": "\\b([A-Z_][A-Z0-9_]+)\\b|((?<![^\\s])(\\?|_)(?![^\\s]))",
-      "name": "keyword.symbol"
-    },
-    "equivalence": {
-      "captures": {
-        "1": {
-          "name": "keyword.other.template.begin"
-        },
-        "3": {
-          "name": "keyword.other.template.end"
-        }
-      },
-      "match": "(\\()([^\\(\\)\\r\\n]+)(\\))"
-    },
-    "fragment": {
-      "begin": "\\[",
-      "end": "\\]",
-      "beginCaptures": {
-        "0": {
-          "name": "keyword.other.template.begin"
-        }
-      },
-      "endCaptures": {
-        "0": {
-          "name": "keyword.other.template.end"
-        }
-      },
-      "patterns": [
-        {
-          "include": "#fragment-operator"
-        },
-        {
-          "include": "#variable"
-        }
-      ]
     },
     "comment-block": {
       "begin": "\\\\\\*\\*",
