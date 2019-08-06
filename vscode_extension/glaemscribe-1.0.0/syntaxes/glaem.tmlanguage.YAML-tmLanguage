@@ -16,10 +16,10 @@ repository:
         match: '(?:\s|(?:\\\*\*(?:[^\*\n\r]|(?:\*+[^\*\\\n\r]))*?\*\*+\\))+'
         name: comment.block
     comment-or-space-end:
-        match: '(?:\s*?$)|(?:\s*?\\\*\*(?:[^\*]|(?:\*+[^\*\\]))*?\*\*+\\)*?\s*?$'
+        match: '(?:\s*?$)|(?:\s*?\\\*\*(?:[^\*]|(?:\*+?[^\*\\]))*?\*\*+?\\)*?\s*?$'
         name: comment
     changelog-entry-statement:
-        match: '(\\entry)((?:\s|(?:\\\*\*(?:[^\*\n\r]|(?:\*+[^\*\\\n\r]))*?\*\*+\\))+)((?:\"(?:[^\"]*?)\")|(?:[^\s]+))((?:\s|(?:\\\*\*(?:[^\*\n\r]|(?:\*+[^\*\\\n\r]))*?\*\*+\\))+)(\"[^\"]*?\")((?:\s*?$)|(?:\s*?\\\*\*(?:[^\*]|(?:\*+[^\*\\]))*?\*\*+\\)*?\s*?$)'
+        match: '(\\entry)((?:\s|(?:\\\*\*(?:[^\*\n\r]|(?:\*+[^\*\\\n\r]))*?\*\*+?\\))+?)((?:\"(?:[^\"]*?)\")|(?:[^\s]+))((?:\s|(?:\\\*\*(?:[^\*\n\r]|(?:\*+[^\*\\\n\r]))*?\*\*+?\\))+?)(\"[^\"]*?\")((?:\s*?$)|(?:\s*?\\\*\*(?:[^\*]|(?:\*+?[^\*\\]))*?\*\*+?\\)*?\s*?$)'
         captures:
             '1':
                 name: entity.name.function
@@ -34,8 +34,8 @@ repository:
             '6':
                 name: comment
     changelog-block:
-        begin: '(\\beg)((?:\s|(?:\\\*\*(?:[^\*\n\r]|(?:\*+[^\*\\\n\r]))*?\*\*+\\))+)(changelog)((?:\s*?$)|(?:\s*?\\\*\*(?:[^\*]|(?:\*+[^\*\\]))*?\*\*+\\)*?\s*?$)'
-        end: '(\\end)((?:\s*?$)|(?:\s*?\\\*\*(?:[^\*]|(?:\*+[^\*\\]))*?\*\*+\\)*?\s*?$)'
+        begin: '(\\beg)((?:\s|(?:\\\*\*(?:[^\*\n\r]|(?:\*+[^\*\\\n\r]))*?\*\*+?\\))+?)(changelog)((?:\s*?$)|(?:\s*?\\\*\*(?:[^\*]|(?:\*+?[^\*\\]))*?\*\*+?\\)*?\s*?$)'
+        end: '(\\end)((?:\s*?$)|(?:\s*?\\\*\*(?:[^\*]|(?:\*+?[^\*\\]))*?\*\*+?\\)*?\s*?$)'
         beginCaptures:
             '1':
                 name: entity.name.type.module
@@ -56,7 +56,7 @@ repository:
             -
                 include: '#comment-block'
     info-statement:
-        match: '(\\(?:(?!(?:entry|charset|beg|end|value|option|radio|visible_when|downcase|elvish_numbers|up_down_tehta_split|substitute|rxsubstitute|if|else|elsif|endif|deploy|reverse|resolve_virtuals)\b)[a-zA-Z_])*)((?:\s|(?:\\\*\*(?:[^\*\n\r]|(?:\*+[^\*\\\n\r]))*?\*\*+\\))+)([^\s]+|(?:\"[^\"]*?\"))((?:\s*?$)|(?:\s*?\\\*\*(?:[^\*]|(?:\*+[^\*\\]))*?\*\*+\\)*?\s*?$)'
+        match: '(\\(?:(?!(?:entry|charset|beg|end|value|option|radio|visible_when|downcase|elvish_numbers|up_down_tehta_split|substitute|rxsubstitute|if|else|elsif|endif|deploy|reverse|resolve_virtuals)\b)[a-zA-Z_])*)((?:\s|(?:\\\*\*(?:[^\*\n\r]|(?:\*+[^\*\\\n\r]))*?\*\*+?\\))+?)([^\s]+|(?:\"[^\"]*?\"))((?:\s*?$)|(?:\s*?\\\*\*(?:[^\*]|(?:\*+?[^\*\\]))*?\*\*+?\\)*?\s*?$)'
         captures:
             '1':
                 name: entity.name.function
@@ -67,7 +67,7 @@ repository:
             '4':
                 name: comment
     charset-statement:
-        match: '(\\charset)((?:\s|(?:\\\*\*(?:[^\*\n\r]|(?:\*+[^\*\\\n\r]))*?\*\*+\\))+)(\b[a-zA-Z0-9_]+\b)((?:\s|(?:\\\*\*(?:[^\*\n\r]|(?:\*+[^\*\\\n\r]))*?\*\*+\\))+)(true|false)((?:\s*?$)|(?:\s*?\\\*\*(?:[^\*]|(?:\*+[^\*\\]))*?\*\*+\\)*?\s*?$)'
+        match: '(\\charset)((?:\s|(?:\\\*\*(?:[^\*\n\r]|(?:\*+[^\*\\\n\r]))*?\*\*+?\\))+?)(\b[a-zA-Z0-9_]+\b)((?:\s|(?:\\\*\*(?:[^\*\n\r]|(?:\*+[^\*\\\n\r]))*?\*\*+?\\))+?)(true|false)((?:\s*?$)|(?:\s*?\\\*\*(?:[^\*]|(?:\*+?[^\*\\]))*?\*\*+?\\)*?\s*?$)'
         captures:
             '1':
                 name: entity.name.function
@@ -91,7 +91,7 @@ repository:
                     - {include: '#keyword'}
                     - {include: '#operator'}
     option-statement:
-        match: '(\\option)((?:\s|(?:\\\*\*(?:[^\*\n\r]|(?:\*+[^\*\\\n\r]))*?\*\*+\\))+)(\b[a-zA-Z0-9_]+\b)((?:\s|(?:\\\*\*(?:[^\*\n\r]|(?:\*+[^\*\\\n\r]))*?\*\*+\\))+)(true|false)((?:\s*?$)|(?:\s*?\\\*\*(?:[^\*]|(?:\*+[^\*\\]))*?\*\*+\\)*?\s*?$)'
+        match: '(\\option)((?:\s|(?:\\\*\*(?:[^\*\n\r]|(?:\*+[^\*\\\n\r]))*?\*\*+?\\))+?)(\b[a-zA-Z0-9_]+\b)((?:\s|(?:\\\*\*(?:[^\*\n\r]|(?:\*+[^\*\\\n\r]))*?\*\*+?\\))+?)(true|false)((?:\s*?$)|(?:\s*?\\\*\*(?:[^\*]|(?:\*+?[^\*\\]))*?\*\*+?\\)*?\s*?$)'
         captures:
             '1':
                 name: entity.name.function
@@ -106,14 +106,14 @@ repository:
             '6':
                 name: comment
     option-no-arg-statement:
-        match: '(\\(?:radio))((?:\s*?$)|(?:\s*?\\\*\*(?:[^\*]|(?:\*+[^\*\\]))*?\*\*+\\)*?\s*?$)'
+        match: '(\\(?:radio))((?:\s*?$)|(?:\s*?\\\*\*(?:[^\*]|(?:\*+?[^\*\\]))*?\*\*+?\\)*?\s*?$)'
         captures:
             '1':
                 name: entity.name.function
             '2':
                 name: comment
     option-visible_when-statement:
-        match: '(\\visible_when)((?:\s|(?:\\\*\*(?:[^\*\n\r]|(?:\*+[^\*\\\n\r]))*?\*\*+\\))+)(?:(\"([^\"]*?)\")|([a-zA-Z0-9_!]+))((?:\s*?$)|(?:\s*?\\\*\*(?:[^\*]|(?:\*+[^\*\\]))*?\*\*+\\)*?\s*?$)'
+        match: '(\\visible_when)((?:\s|(?:\\\*\*(?:[^\*\n\r]|(?:\*+[^\*\\\n\r]))*?\*\*+?\\))+?)(?:(\"([^\"]*?)\")|([a-zA-Z0-9_!]+))((?:\s*?$)|(?:\s*?\\\*\*(?:[^\*]|(?:\*+?[^\*\\]))*?\*\*+?\\)*?\s*?$)'
         captures:
             '1':
                 name: entity.name.function
@@ -130,7 +130,7 @@ repository:
             '6':
                 name: comment
     option-value-statement:
-        match: '(\\value)((?:\s|(?:\\\*\*(?:[^\*\n\r]|(?:\*+[^\*\\\n\r]))*?\*\*+\\))+)(\b[a-zA-Z0-9_]+\b)((?:\s|(?:\\\*\*(?:[^\*\n\r]|(?:\*+[^\*\\\n\r]))*?\*\*+\\))+)(\b[0-9]+\b)((?:\s*?$)|(?:\s*?\\\*\*(?:[^\*]|(?:\*+[^\*\\]))*?\*\*+\\)*?\s*?$)'
+        match: '(\\value)((?:\s|(?:\\\*\*(?:[^\*\n\r]|(?:\*+[^\*\\\n\r]))*?\*\*+?\\))+?)(\b[a-zA-Z0-9_]+\b)((?:\s|(?:\\\*\*(?:[^\*\n\r]|(?:\*+[^\*\\\n\r]))*?\*\*+?\\))+?)(\b[0-9]+\b)((?:\s*?$)|(?:\s*?\\\*\*(?:[^\*]|(?:\*+?[^\*\\]))*?\*\*+?\\)*?\s*?$)'
         captures:
             '1':
                 name: entity.name.function
@@ -145,8 +145,8 @@ repository:
             '6':
                 name: comment
     option-block:
-        begin: '(\\beg)((?:\s|(?:\\\*\*(?:[^\*\n\r]|(?:\*+[^\*\\\n\r]))*?\*\*+\\))+)(option)((?:\s|(?:\\\*\*(?:[^\*\n\r]|(?:\*+[^\*\\\n\r]))*?\*\*+\\))+)(\b[a-zA-Z0-9_]+\b)((?:\s|(?:\\\*\*(?:[^\*\n\r]|(?:\*+[^\*\\\n\r]))*?\*\*+\\))+)(\b[a-zA-Z0-9_]+\b)((?:\s*?$)|(?:\s*?\\\*\*(?:[^\*]|(?:\*+[^\*\\]))*?\*\*+\\)*?\s*?$)'
-        end: '(\\end)((?:\s*?$)|(?:\s*?\\\*\*(?:[^\*]|(?:\*+[^\*\\]))*?\*\*+\\)*?\s*?$)'
+        begin: '(\\beg)((?:\s|(?:\\\*\*(?:[^\*\n\r]|(?:\*+[^\*\\\n\r]))*?\*\*+?\\))+?)(option)((?:\s|(?:\\\*\*(?:[^\*\n\r]|(?:\*+[^\*\\\n\r]))*?\*\*+?\\))+?)(\b[a-zA-Z0-9_]+\b)((?:\s|(?:\\\*\*(?:[^\*\n\r]|(?:\*+[^\*\\\n\r]))*?\*\*+?\\))+?)(\b[a-zA-Z0-9_]+\b)((?:\s*?$)|(?:\s*?\\\*\*(?:[^\*]|(?:\*+?[^\*\\]))*?\*\*+?\\)*?\s*?$)'
+        end: '(\\end)((?:\s*?$)|(?:\s*?\\\*\*(?:[^\*]|(?:\*+?[^\*\\]))*?\*\*+?\\)*?\s*?$)'
         beginCaptures:
             '1':
                 name: entity.name.type.module
@@ -179,8 +179,8 @@ repository:
             -
                 include: '#comment-block'
     options-block:
-        begin: '(\\beg)((?:\s|(?:\\\*\*(?:[^\*\n\r]|(?:\*+[^\*\\\n\r]))*?\*\*+\\))+)(options)((?:\s*?$)|(?:\s*?\\\*\*(?:[^\*]|(?:\*+[^\*\\]))*?\*\*+\\)*?\s*?$)'
-        end: '(\\end)((?:\s*?$)|(?:\s*?\\\*\*(?:[^\*]|(?:\*+[^\*\\]))*?\*\*+\\)*?\s*?$)'
+        begin: '(\\beg)((?:\s|(?:\\\*\*(?:[^\*\n\r]|(?:\*+[^\*\\\n\r]))*?\*\*+?\\))+?)(options)((?:\s*?$)|(?:\s*?\\\*\*(?:[^\*]|(?:\*+?[^\*\\]))*?\*\*+?\\)*?\s*?$)'
+        end: '(\\end)((?:\s*?$)|(?:\s*?\\\*\*(?:[^\*]|(?:\*+?[^\*\\]))*?\*\*+?\\)*?\s*?$)'
         beginCaptures:
             '1':
                 name: entity.name.type.module
@@ -203,14 +203,14 @@ repository:
             -
                 include: '#comment-block'
     downcase-statement:
-        match: '(\\downcase)((?:\s*?$)|(?:\s*?\\\*\*(?:[^\*]|(?:\*+[^\*\\]))*?\*\*+\\)*?\s*?$)'
+        match: '(\\downcase)((?:\s*?$)|(?:\s*?\\\*\*(?:[^\*]|(?:\*+?[^\*\\]))*?\*\*+?\\)*?\s*?$)'
         captures:
             '1':
                 name: entity.name.function
             '2':
                 name: comment
     elvish_numbers-statement:
-        match: '(\\elvish_numbers)((?:\s|(?:\\\*\*(?:[^\*\n\r]|(?:\*+[^\*\\\n\r]))*?\*\*+\\))+)(\b0*(?:[2-9]|1[0-6])\b|\"[^\"]*?\")((?:\s|(?:\\\*\*(?:[^\*\n\r]|(?:\*+[^\*\\\n\r]))*?\*\*+\\))+)(true|false|\"[^\"]*?\")((?:\s*?$)|(?:\s*?\\\*\*(?:[^\*]|(?:\*+[^\*\\]))*?\*\*+\\)*?\s*?$)'
+        match: '(\\elvish_numbers)((?:\s|(?:\\\*\*(?:[^\*\n\r]|(?:\*+[^\*\\\n\r]))*?\*\*+?\\))+?)(\b0*(?:[2-9]|1[0-6])\b|\"[^\"]*?\")((?:\s|(?:\\\*\*(?:[^\*\n\r]|(?:\*+[^\*\\\n\r]))*?\*\*+?\\))+?)(true|false|\"[^\"]*?\")((?:\s*?$)|(?:\s*?\\\*\*(?:[^\*]|(?:\*+?[^\*\\]))*?\*\*+?\\)*?\s*?$)'
         captures:
             '1':
                 name: entity.name.function
@@ -227,7 +227,7 @@ repository:
             '6':
                 name: comment
     up_down_tehta_split-statement:
-        match: '(\\up_down_tehta_split)((?:\s|(?:\\\*\*(?:[^\*\n\r]|(?:\*+[^\*\\\n\r]))*?\*\*+\\))+)(\"[^\"]*?\")((?:\s|(?:\\\*\*(?:[^\*\n\r]|(?:\*+[^\*\\\n\r]))*?\*\*+\\))+)(\"[^\"]*?\")((?:\s*?$)|(?:\s*?\\\*\*(?:[^\*]|(?:\*+[^\*\\]))*?\*\*+\\)*?\s*?$)'
+        match: '(\\up_down_tehta_split)((?:\s|(?:\\\*\*(?:[^\*\n\r]|(?:\*+[^\*\\\n\r]))*?\*\*+?\\))+?)(\"[^\"]*?\")((?:\s|(?:\\\*\*(?:[^\*\n\r]|(?:\*+[^\*\\\n\r]))*?\*\*+?\\))+?)(\"[^\"]*?\")((?:\s*?$)|(?:\s*?\\\*\*(?:[^\*]|(?:\*+?[^\*\\]))*?\*\*+?\\)*?\s*?$)'
         captures:
             '1':
                 name: entity.name.function
@@ -246,7 +246,7 @@ repository:
             '6':
                 name: comment
     substitute-statement:
-        match: '(\\(?:substitute|rxsubstitute))((?:\s|(?:\\\*\*(?:[^\*\n\r]|(?:\*+[^\*\\\n\r]))*?\*\*+\\))+)([^\s]+|(?:\"[^\"]*?\"))((?:\s|(?:\\\*\*(?:[^\*\n\r]|(?:\*+[^\*\\\n\r]))*?\*\*+\\))+)([^\s]+|(?:\"[^\"]*?\"))((?:\s*?$)|(?:\s*?\\\*\*(?:[^\*]|(?:\*+[^\*\\]))*?\*\*+\\)*?\s*?$)'
+        match: '(\\(?:substitute|rxsubstitute))((?:\s|(?:\\\*\*(?:[^\*\n\r]|(?:\*+[^\*\\\n\r]))*?\*\*+?\\))+?)([^\s]+|(?:\"[^\"]*?\"))((?:\s|(?:\\\*\*(?:[^\*\n\r]|(?:\*+[^\*\\\n\r]))*?\*\*+?\\))+?)([^\s]+|(?:\"[^\"]*?\"))((?:\s*?$)|(?:\s*?\\\*\*(?:[^\*]|(?:\*+?[^\*\\]))*?\*\*+?\\)*?\s*?$)'
         captures:
             '1':
                 name: entity.name.function
@@ -265,14 +265,14 @@ repository:
             '6':
                 name: comment
     else-statement:
-        match: '(\\else)((?:\s*?$)|(?:\s*?\\\*\*(?:[^\*]|(?:\*+[^\*\\]))*?\*\*+\\)*?\s*?$)'
+        match: '(\\else)((?:\s*?$)|(?:\s*?\\\*\*(?:[^\*]|(?:\*+?[^\*\\]))*?\*\*+?\\)*?\s*?$)'
         captures:
             '1':
                 name: entity.name.type.module
             '2':
                 name: comment
     elsif-statement:
-        match: '(\\elsif)((?:\s|(?:\\\*\*(?:[^\*\n\r]|(?:\*+[^\*\\\n\r]))*?\*\*+\\))+)(?:(\"([^\"]*?)\")|([a-zA-Z0-9_!]+))((?:\s*?$)|(?:\s*?\\\*\*(?:[^\*]|(?:\*+[^\*\\]))*?\*\*+\\)*?\s*?$)'
+        match: '(\\elsif)((?:\s|(?:\\\*\*(?:[^\*\n\r]|(?:\*+[^\*\\\n\r]))*?\*\*+?\\))+?)(?:(\"([^\"]*?)\")|([a-zA-Z0-9_!]+))((?:\s*?$)|(?:\s*?\\\*\*(?:[^\*]|(?:\*+?[^\*\\]))*?\*\*+?\\)*?\s*?$)'
         captures:
             '1':
                 name: entity.name.type.module
@@ -289,8 +289,8 @@ repository:
             '6':
                 name: comment
     preprocessor-if-block:
-        begin: '(\\if)((?:\s|(?:\\\*\*(?:[^\*\n\r]|(?:\*+[^\*\\\n\r]))*?\*\*+\\))+)(?:(\"([^\"]*?)\")|([a-zA-Z0-9_!]+))((?:\s*?$)|(?:\s*?\\\*\*(?:[^\*]|(?:\*+[^\*\\]))*?\*\*+\\)*?\s*?$)'
-        end: '(\\endif)((?:\s*?$)|(?:\s*?\\\*\*(?:[^\*]|(?:\*+[^\*\\]))*?\*\*+\\)*?\s*?$)'
+        begin: '(\\if)((?:\s|(?:\\\*\*(?:[^\*\n\r]|(?:\*+[^\*\\\n\r]))*?\*\*+?\\))+?)(?:(\"([^\"]*?)\")|([a-zA-Z0-9_!]+))((?:\s*?$)|(?:\s*?\\\*\*(?:[^\*]|(?:\*+?[^\*\\]))*?\*\*+?\\)*?\s*?$)'
+        end: '(\\endif)((?:\s*?$)|(?:\s*?\\\*\*(?:[^\*]|(?:\*+?[^\*\\]))*?\*\*+?\\)*?\s*?$)'
         beginCaptures:
             '1':
                 name: entity.name.type.module
@@ -333,8 +333,8 @@ repository:
             -
                 include: '#preprocessor-if-block'
     preprocessor-block:
-        begin: '(\\beg)((?:\s|(?:\\\*\*(?:[^\*\n\r]|(?:\*+[^\*\\\n\r]))*?\*\*+\\))+)(preprocessor)((?:\s*?$)|(?:\s*?\\\*\*(?:[^\*]|(?:\*+[^\*\\]))*?\*\*+\\)*?\s*?$)'
-        end: '(\\end)((?:\s*?$)|(?:\s*?\\\*\*(?:[^\*]|(?:\*+[^\*\\]))*?\*\*+\\)*?\s*?$)'
+        begin: '(\\beg)((?:\s|(?:\\\*\*(?:[^\*\n\r]|(?:\*+[^\*\\\n\r]))*?\*\*+?\\))+?)(preprocessor)((?:\s*?$)|(?:\s*?\\\*\*(?:[^\*]|(?:\*+?[^\*\\]))*?\*\*+?\\)*?\s*?$)'
+        end: '(\\end)((?:\s*?$)|(?:\s*?\\\*\*(?:[^\*]|(?:\*+?[^\*\\]))*?\*\*+?\\)*?\s*?$)'
         beginCaptures:
             '1':
                 name: entity.name.type.module
@@ -353,8 +353,8 @@ repository:
             -
                 include: '#preprocessor-patterns'
     postprocessor-if-block:
-        begin: '(\\if)((?:\s|(?:\\\*\*(?:[^\*\n\r]|(?:\*+[^\*\\\n\r]))*?\*\*+\\))+)(?:(\"([^\"]*?)\")|([a-zA-Z0-9_!]+))((?:\s*?$)|(?:\s*?\\\*\*(?:[^\*]|(?:\*+[^\*\\]))*?\*\*+\\)*?\s*?$)'
-        end: '(\\endif)((?:\s*?$)|(?:\s*?\\\*\*(?:[^\*]|(?:\*+[^\*\\]))*?\*\*+\\)*?\s*?$)'
+        begin: '(\\if)((?:\s|(?:\\\*\*(?:[^\*\n\r]|(?:\*+[^\*\\\n\r]))*?\*\*+?\\))+?)(?:(\"([^\"]*?)\")|([a-zA-Z0-9_!]+))((?:\s*?$)|(?:\s*?\\\*\*(?:[^\*]|(?:\*+?[^\*\\]))*?\*\*+?\\)*?\s*?$)'
+        end: '(\\endif)((?:\s*?$)|(?:\s*?\\\*\*(?:[^\*]|(?:\*+?[^\*\\]))*?\*\*+?\\)*?\s*?$)'
         beginCaptures:
             '1':
                 name: entity.name.type.module
@@ -383,7 +383,7 @@ repository:
             -
                 include: '#postprocessor-patterns'
     postprocessor-statement:
-        match: '(\\(?:reverse|resolve_virtuals))((?:\s*?$)|(?:\s*?\\\*\*(?:[^\*]|(?:\*+[^\*\\]))*?\*\*+\\)*?\s*?$)'
+        match: '(\\(?:reverse|resolve_virtuals))((?:\s*?$)|(?:\s*?\\\*\*(?:[^\*]|(?:\*+?[^\*\\]))*?\*\*+?\\)*?\s*?$)'
         captures:
             '1':
                 name: entity.name.function
@@ -398,8 +398,8 @@ repository:
             -
                 include: '#postprocessor-statement'
     postprocessor-block:
-        begin: '(\\beg)((?:\s|(?:\\\*\*(?:[^\*\n\r]|(?:\*+[^\*\\\n\r]))*?\*\*+\\))+)(postprocessor)((?:\s*?$)|(?:\s*?\\\*\*(?:[^\*]|(?:\*+[^\*\\]))*?\*\*+\\)*?\s*?$)'
-        end: '(\\end)((?:\s*?$)|(?:\s*?\\\*\*(?:[^\*]|(?:\*+[^\*\\]))*?\*\*+\\)*?\s*?$)'
+        begin: '(\\beg)((?:\s|(?:\\\*\*(?:[^\*\n\r]|(?:\*+[^\*\\\n\r]))*?\*\*+?\\))+?)(postprocessor)((?:\s*?$)|(?:\s*?\\\*\*(?:[^\*]|(?:\*+?[^\*\\]))*?\*\*+?\\)*?\s*?$)'
+        end: '(\\end)((?:\s*?$)|(?:\s*?\\\*\*(?:[^\*]|(?:\*+?[^\*\\]))*?\*\*+?\\)*?\s*?$)'
         beginCaptures:
             '1':
                 name: entity.name.type.module
@@ -418,8 +418,8 @@ repository:
             -
                 include: '#postprocessor-patterns'
     processor-if-block:
-        begin: '(\\if)((?:\s|(?:\\\*\*(?:[^\*\n\r]|(?:\*+[^\*\\\n\r]))*?\*\*+\\))+)(?:(\"([^\"]*?)\")|([a-zA-Z0-9_!]+))((?:\s*?$)|(?:\s*?\\\*\*(?:[^\*]|(?:\*+[^\*\\]))*?\*\*+\\)*?\s*?$)'
-        end: '(\\endif)((?:\s*?$)|(?:\s*?\\\*\*(?:[^\*]|(?:\*+[^\*\\]))*?\*\*+\\)*?\s*?$)'
+        begin: '(\\if)((?:\s|(?:\\\*\*(?:[^\*\n\r]|(?:\*+[^\*\\\n\r]))*?\*\*+?\\))+?)(?:(\"([^\"]*?)\")|([a-zA-Z0-9_!]+))((?:\s*?$)|(?:\s*?\\\*\*(?:[^\*]|(?:\*+?[^\*\\]))*?\*\*+?\\)*?\s*?$)'
+        end: '(\\endif)((?:\s*?$)|(?:\s*?\\\*\*(?:[^\*]|(?:\*+?[^\*\\]))*?\*\*+?\\)*?\s*?$)'
         beginCaptures:
             '1':
                 name: entity.name.type.module
@@ -447,35 +447,35 @@ repository:
                 include: '#elsif-statement'
             -
                 include: '#processor-patterns'
+    number:
+        match: '[0-9]+?'
+        name: constant.numeric
     symbol-or-variable:
-        match: '({[a-zA-Z0-9_]+})|([0-9]+)|([A-Z0-9_]+|identity)'
+        match: '({UNI_[0-9A-F]{3,}})|({[A-Z0-9_]+})|(identity|(?:\b[0-9]*[A-Z]+[A-Z0-9]*[A-Z0-9]*\b)|(?:\b(?:[A-Z]+_*)+(?:[A-Z0-9]+_*)*[A-Z0-9]+\b)|(?:\b(?:[A-Z0-9]+_*)+[A-Z]+\b)|(?:\b[0-9]+_*[A-Z]+[A-Z0-9_]*_*[0-9]+\b))'
         captures:
             '1':
-                name: variable
+                name: variable.other.constant
             '2':
-                name: constant.numeric
+                name: variable
             '3':
                 name: keyword.symbol
     equivalence-expression:
-        begin: '\('
-        end: '\)'
+        match: '(\()([^\(\)]*?)(\))'
         captures:
-            '0':
+            '1':
                 name: entity.name.function
-        patterns:
-            -
-                include: '#comment-block'
-            -
-                include: '#symbol-or-variable'
-            -
-                match: '\,'
+            '2':
+                patterns:
+                    -
+                        include: '#comment-block'
+                    -
+                        include: '#symbol-or-variable'
+                    -
+                        match: '\,'
+                        name: entity.name.function
+            '3':
                 name: entity.name.function
-    fragment-expression:
-        begin: '\['
-        end: '\]'
-        captures:
-            '0':
-                name: entity.name.type.section
+    single-linkable-expression:
         patterns:
             -
                 include: '#comment-block'
@@ -485,26 +485,108 @@ repository:
                 include: '#equivalence-expression'
             -
                 match: '\*'
-                name: entity.name.function
+                name: entity.name.type.class
+    linkable-expression:
+        match: '(\[)([^\[\]]*?)(\])'
+        captures:
+            '1':
+                name: entity.name.type.class
+            '2':
+                patterns:
+                    -
+                        include: '#single-linkable-expression'
+            '3':
+                name: entity.name.type.class
+    left-sheaf:
+        patterns:
+            -
+                include: '#single-linkable-expression'
+            -
+                include: '#linkable-expression'
+            -
+                match: '_'
+                name: keyword.symbol
+    right-sheaf:
+        patterns:
+            -
+                include: '#single-linkable-expression'
+            -
+                include: '#linkable-expression'
     simple-rule-statement:
-        match: '([\w{}]+)|(-->|===|<=>)|(\([^\(\)]+\))|(\[[^\[\]]+\])'
+        match: '(.+)(-->)(.+)'
         captures:
             '1':
                 patterns:
                     -
                         include: '#comment-block'
                     -
-                        include: '#symbol-or-variable'
+                        include: '#left-sheaf'
             '2':
                 name: keyword.operator.assignment
             '3':
                 patterns:
                     -
-                        include: '#equivalence-expression'
+                        include: '#comment-block'
+                    -
+                        include: '#right-sheaf'
+    cross-rule-statement:
+        match: '(.+)(-->)(.+)(-->)(.+)'
+        captures:
+            '1':
+                patterns:
+                    -
+                        include: '#comment-block'
+                    -
+                        include: '#left-sheaf'
+            '2':
+                name: keyword.operator.assignment
+            '3':
+                patterns:
+                    -
+                        include: '#comment-block'
+                    -
+                        include: '#symbol-or-variable'
+                    -
+                        include: '#number'
+                    -
+                        match: '\,'
+                        name: keyword.operator.assignment
+            '4':
+                name: keyword.operator.assignment
+            '5':
+                patterns:
+                    -
+                        include: '#comment-block'
+                    -
+                        include: '#right-sheaf'
+    rules-statement:
+        match: '(.+?-->.+?-->.+)|(.+?-->.+)'
+        captures:
+            '1':
+                patterns:
+                    -
+                        include: '#cross-rule-statement'
+            '2':
+                patterns:
+                    -
+                        include: '#simple-rule-statement'
+    variable-statement:
+        match: '({[A-Z0-9_]+})((?:\s|(?:\\\*\*(?:[^\*\n\r]|(?:\*+[^\*\\\n\r]))*?\*\*+?\\))+?)(===|<=>)(.+)'
+        captures:
+            '1':
+                name: variable
+            '2':
+                name: comment
+            '3':
+                name: keyword.operator.assignment
             '4':
                 patterns:
                     -
-                        include: '#fragment-expression'
+                        include: '#comment-block'
+                    -
+                        include: '#single-linkable-expression'
+                    -
+                        include: '#linkable-expression'
     processor-patterns:
         patterns:
             -
@@ -512,14 +594,16 @@ repository:
             -
                 include: '#processor-if-block'
             -
-                include: '#simple-rule-statement'
+                include: '#rules-statement'
+            -
+                include: '#variable-statement'
             -
                 include: '#processor-macro-block'
             -
                 include: '#deploy-statement'
     processor-macro-block:
-        begin: '(\\beg)((?:\s|(?:\\\*\*(?:[^\*\n\r]|(?:\*+[^\*\\\n\r]))*?\*\*+\\))+)(macro)((?:\s|(?:\\\*\*(?:[^\*\n\r]|(?:\*+[^\*\\\n\r]))*?\*\*+\\))+)(\b[a-zA-Z0-9_]+\b)((?:\s|(?:\\\*\*(?:[^\*\n\r]|(?:\*+[^\*\\\n\r]))*?\*\*+\\))+)(?:(?:(\b[A-Z0-9_]+\b)((?:\s*?$)|(?:\s*?\\\*\*(?:[^\*]|(?:\*+[^\*\\]))*?\*\*+\\)*?\s*?$))|(.+))'
-        end: '(\\end)((?:\s*?$)|(?:\s*?\\\*\*(?:[^\*]|(?:\*+[^\*\\]))*?\*\*+\\)*?\s*?$)'
+        begin: '(\\beg)((?:\s|(?:\\\*\*(?:[^\*\n\r]|(?:\*+[^\*\\\n\r]))*?\*\*+?\\))+?)(macro)((?:\s|(?:\\\*\*(?:[^\*\n\r]|(?:\*+[^\*\\\n\r]))*?\*\*+?\\))+?)(\b[a-zA-Z0-9_]+\b)((?:\s|(?:\\\*\*(?:[^\*\n\r]|(?:\*+[^\*\\\n\r]))*?\*\*+?\\))+?)(?:(?:(\b[A-Z0-9_]+\b)((?:\s*?$)|(?:\s*?\\\*\*(?:[^\*]|(?:\*+?[^\*\\]))*?\*\*+?\\)*?\s*?$))|(.+))'
+        end: '(\\end)((?:\s*?$)|(?:\s*?\\\*\*(?:[^\*]|(?:\*+?[^\*\\]))*?\*\*+?\\)*?\s*?$)'
         beginCaptures:
             '1':
                 name: entity.name.type.module
@@ -553,7 +637,7 @@ repository:
             -
                 include: '#processor-patterns'
     deploy-statement:
-        match: '(\\deploy)((?:\s|(?:\\\*\*(?:[^\*\n\r]|(?:\*+[^\*\\\n\r]))*?\*\*+\\))+)(\b[a-zA-Z-0-9]+\b)((?:\s|(?:\\\*\*(?:[^\*\n\r]|(?:\*+[^\*\\\n\r]))*?\*\*+\\))+)({[a-zA-Z0-9_]+})((?:\s|(?:\\\*\*(?:[^\*\n\r]|(?:\*+[^\*\\\n\r]))*?\*\*+\\))+)(.+)'
+        match: '(\\deploy)((?:\s|(?:\\\*\*(?:[^\*\n\r]|(?:\*+[^\*\\\n\r]))*?\*\*+?\\))+?)(\b[a-zA-Z-0-9]+\b)((?:\s|(?:\\\*\*(?:[^\*\n\r]|(?:\*+[^\*\\\n\r]))*?\*\*+?\\))+?)({[A-Z0-9_]+})((?:\s|(?:\\\*\*(?:[^\*\n\r]|(?:\*+[^\*\\\n\r]))*?\*\*+?\\))+?)(.+)'
         captures:
             '1':
                 name: entity.name.section
@@ -574,8 +658,8 @@ repository:
                     -
                         include: '#symbol-or-variable'
     processor-rule-block:
-        begin: '(\\beg)((?:\s|(?:\\\*\*(?:[^\*\n\r]|(?:\*+[^\*\\\n\r]))*?\*\*+\\))+)(rules)((?:\s|(?:\\\*\*(?:[^\*\n\r]|(?:\*+[^\*\\\n\r]))*?\*\*+\\))+)(?:(\"(?:[^\"]*?)\")|([a-zA-Z0-9_!]+))((?:\s*?$)|(?:\s*?\\\*\*(?:[^\*]|(?:\*+[^\*\\]))*?\*\*+\\)*?\s*?$)'
-        end: '(\\end)((?:\s*?$)|(?:\s*?\\\*\*(?:[^\*]|(?:\*+[^\*\\]))*?\*\*+\\)*?\s*?$)'
+        begin: '(\\beg)((?:\s|(?:\\\*\*(?:[^\*\n\r]|(?:\*+[^\*\\\n\r]))*?\*\*+?\\))+?)(rules)((?:\s|(?:\\\*\*(?:[^\*\n\r]|(?:\*+[^\*\\\n\r]))*?\*\*+?\\))+?)(?:(\"(?:[^\"]*?)\")|([a-zA-Z0-9_!]+))((?:\s*?$)|(?:\s*?\\\*\*(?:[^\*]|(?:\*+?[^\*\\]))*?\*\*+?\\)*?\s*?$)'
+        end: '(\\end)((?:\s*?$)|(?:\s*?\\\*\*(?:[^\*]|(?:\*+?[^\*\\]))*?\*\*+?\\)*?\s*?$)'
         beginCaptures:
             '1':
                 name: entity.name.type.module
@@ -600,8 +684,8 @@ repository:
             -
                 include: '#processor-patterns'
     processor-block:
-        begin: '(\\beg)((?:\s|(?:\\\*\*(?:[^\*\n\r]|(?:\*+[^\*\\\n\r]))*?\*\*+\\))+)(processor)((?:\s*?$)|(?:\s*?\\\*\*(?:[^\*]|(?:\*+[^\*\\]))*?\*\*+\\)*?\s*?$)'
-        end: '(\\end)((?:\s*?$)|(?:\s*?\\\*\*(?:[^\*]|(?:\*+[^\*\\]))*?\*\*+\\)*?\s*?$)'
+        begin: '(\\beg)((?:\s|(?:\\\*\*(?:[^\*\n\r]|(?:\*+[^\*\\\n\r]))*?\*\*+?\\))+?)(processor)((?:\s*?$)|(?:\s*?\\\*\*(?:[^\*]|(?:\*+?[^\*\\]))*?\*\*+?\\)*?\s*?$)'
+        end: '(\\end)((?:\s*?$)|(?:\s*?\\\*\*(?:[^\*]|(?:\*+?[^\*\\]))*?\*\*+?\\)*?\s*?$)'
         beginCaptures:
             '1':
                 name: entity.name.type.module
