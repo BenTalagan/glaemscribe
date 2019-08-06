@@ -80,8 +80,10 @@ repository:
                 name: comment
             '7':
                 patterns:
-                    - {include: '#comment-block'}
-                    - {include: '#symbol'}
+                    -
+                        include: '#comment-block'
+                    -
+                        include: '#symbol'
     class-statement:
         match: '(\\class)((?:\s|(?:\\\*\*(?:[^\*\n\r]|(?:\*+[^\*\\\n\r]))*?\*\*+\\))+)(\b[A-Z0-9_]+\b)((?:\s|(?:\\\*\*(?:[^\*\n\r]|(?:\*+[^\*\\\n\r]))*?\*\*+\\))+)(?:(?:(\b[A-Z0-9_]+\b)((?:\s*?$)|(?:\s*?\\\*\*(?:[^\*]|(?:\*+[^\*\\]))*?\*\*+\\)*?\s*?$))|(.+))'
         captures:
@@ -93,13 +95,14 @@ repository:
                 name: keyword.symbol
             '4':
                 name: comment
-            '5': {}
             '6':
                 name: comment
             '7':
                 patterns:
-                    - {include: '#comment-block'}
-                    - {match: '[A-Z0-9_]'}
+                    -
+                        include: '#comment-block'
+                    -
+                        match: '[A-Z0-9_]'
     reversed-statement:
         match: '(\\reversed)((?:\s*?$)|(?:\s*?\\\*\*(?:[^\*]|(?:\*+[^\*\\]))*?\*\*+\\)*?\s*?$)'
         captures:
@@ -136,8 +139,10 @@ repository:
                 name: comment
             '7':
                 patterns:
-                    - {include: '#comment-block'}
-                    - {include: '#symbol'}
+                    -
+                        include: '#comment-block'
+                    -
+                        include: '#symbol'
         endCaptures:
             '1':
                 name: entity.name.type.module

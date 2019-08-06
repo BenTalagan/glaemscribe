@@ -87,7 +87,8 @@
           "name": "comment"
         }
       },
-      "patterns": [{
+      "patterns": [
+        {
           "include": "#changelog-entry-statement"
         },
         {
@@ -117,7 +118,8 @@
           "name": "comment"
         },
         "7": {
-          "patterns": [{
+          "patterns": [
+            {
               "include": "#comment-block"
             },
             {
@@ -142,13 +144,12 @@
         "4": {
           "name": "comment"
         },
-        "5": {
-        },
         "6": {
           "name": "comment"
         },
         "7": {
-          "patterns": [{
+          "patterns": [
+            {
               "include": "#comment-block"
             },
             {
@@ -209,7 +210,8 @@
           "name": "comment"
         },
         "7": {
-          "patterns": [{
+          "patterns": [
+            {
               "include": "#comment-block"
             },
             {
@@ -226,7 +228,8 @@
           "name": "comment"
         }
       },
-      "patterns": [{
+      "patterns": [
+        {
           "include": "#comment-block"
         },
         {
@@ -271,7 +274,8 @@
           "name": "comment"
         }
       },
-      "patterns": [{
+      "patterns": [
+        {
           "include": "#comment-block"
         },
         {
@@ -280,7 +284,8 @@
       ]
     }
   },
-  "patterns": [{
+  "patterns": [
+    {
       "include": "#comment-block"
     },
     {
