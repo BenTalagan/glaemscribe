@@ -146,7 +146,7 @@
       ]
     },
     "info-statement": {
-      "match": "(\\\\(?:(?!(?:entry|charset|beg|end|value|option|downcase|elvish_numbers|up_down_tehta_split|substitute|rxsubstitute|if|else|elsif|endif|reverse|resolve_virtuals)\\b)[a-zA-Z_])*)((?:\\s|(?:\\\\\\*\\*(?:[^\\*\\n\\r]|(?:\\*+[^\\*\\\\\\n\\r]))*?\\*\\*+\\\\))+)([^\\s]+|(?:\\\"[^\\\"]*?\\\"))((?:\\s*?$)|(?:\\s*?\\\\\\*\\*(?:[^\\*]|(?:\\*+[^\\*\\\\]))*?\\*\\*+\\\\)*?\\s*?$)",
+      "match": "(\\\\(?:(?!(?:entry|charset|beg|end|value|option|radio|visible_when|downcase|elvish_numbers|up_down_tehta_split|substitute|rxsubstitute|if|else|elsif|endif|deploy|reverse|resolve_virtuals)\\b)[a-zA-Z_])*)((?:\\s|(?:\\\\\\*\\*(?:[^\\*\\n\\r]|(?:\\*+[^\\*\\\\\\n\\r]))*?\\*\\*+\\\\))+)([^\\s]+|(?:\\\"[^\\\"]*?\\\"))((?:\\s*?$)|(?:\\s*?\\\\\\*\\*(?:[^\\*]|(?:\\*+[^\\*\\\\]))*?\\*\\*+\\\\)*?\\s*?$)",
       "captures": {
         "1": {
           "name": "entity.name.function"
