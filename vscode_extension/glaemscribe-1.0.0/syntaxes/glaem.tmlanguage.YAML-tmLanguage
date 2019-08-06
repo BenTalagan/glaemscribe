@@ -148,6 +148,30 @@ repository:
                 name: constant.numeric
             '6':
                 name: comment
+    option-no-arg-statement:
+        match: '(\\(?:radio))((?:\s*?$)|(?:\s*?\\\*\*(?:[^\*]|(?:\*+[^\*\\]))*?\*\*+\\)*?\s*?$)'
+        captures:
+            '1':
+                name: entity.name.function
+            '2':
+                name: comment
+    option-visible_when-statement:
+        match: '(\\visible_when)((?:\s|(?:\\\*\*(?:[^\*\n\r]|(?:\*+[^\*\\\n\r]))*?\*\*+\\))+)(?:(\"([^\"]*?)\")|([a-zA-Z0-9_!]+))((?:\s*?$)|(?:\s*?\\\*\*(?:[^\*]|(?:\*+[^\*\\]))*?\*\*+\\)*?\s*?$)'
+        captures:
+            '1':
+                name: entity.name.function
+            '2':
+                name: comment
+            '3':
+                name: string
+            '4':
+                patterns:
+                    - {include: '#keyword'}
+                    - {include: '#operator'}
+            '5':
+                name: keyword.symbol
+            '6':
+                name: comment
     option-value-statement:
         match: '(\\value)((?:\s|(?:\\\*\*(?:[^\*\n\r]|(?:\*+[^\*\\\n\r]))*?\*\*+\\))+)(\b[a-zA-Z0-9_]+\b)((?:\s|(?:\\\*\*(?:[^\*\n\r]|(?:\*+[^\*\\\n\r]))*?\*\*+\\))+)(\b[0-9]+\b)((?:\s*?$)|(?:\s*?\\\*\*(?:[^\*]|(?:\*+[^\*\\]))*?\*\*+\\)*?\s*?$)'
         captures:
@@ -189,6 +213,10 @@ repository:
             '2':
                 name: comment
         patterns:
+            -
+                include: '#option-no-arg-statement'
+            -
+                include: '#option-visible_when-statement'
             -
                 include: '#option-value-statement'
             -
