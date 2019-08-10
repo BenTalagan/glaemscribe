@@ -8,12 +8,16 @@ repository:
     operator:
         match: '[=!<>&\|\+\-\*\/]+'
         name: keyword.operator.assignment
+    keyword-or-operator:
+        patterns:
+            - include: '#keyword'
+            - include: '#operator'
     comment-block:
         begin: '\\\*\*'
         end: '\*\*\\'
         name: comment.block
     comment-or-space-middle:
-        match: '(?:\s|(?:\\\*\*(?:[^\*\n\r]|(?:\*+[^\*\\\n\r]))*?\*\*+\\))+'
+        match: '(?:\s|(?:\\\*\*(?:[^\*\n\r]|(?:\*+[^\*\\\n\r]))*?\*\*+?\\))+?'
         name: comment.block
     comment-or-space-end:
         match: '(?:\s*?$)|(?:\s*?\\\*\*(?:[^\*]|(?:\*+?[^\*\\]))*?\*\*+?\\)*?\s*?$'
@@ -51,10 +55,8 @@ repository:
             '2':
                 name: comment
         patterns:
-            -
-                include: '#changelog-entry-statement'
-            -
-                include: '#comment-block'
+            - include: '#changelog-entry-statement'
+            - include: '#comment-block'
     info-statement:
         match: '(\\(?:(?!(?:entry|charset|beg|end|value|option|radio|visible_when|downcase|elvish_numbers|up_down_tehta_split|substitute|rxsubstitute|if|else|elsif|endif|deploy|reverse|resolve_virtuals)\b)[a-zA-Z_])*)((?:\s|(?:\\\*\*(?:[^\*\n\r]|(?:\*+[^\*\\\n\r]))*?\*\*+?\\))+?)([^\s]+|(?:\"[^\"]*?\"))((?:\s*?$)|(?:\s*?\\\*\*(?:[^\*]|(?:\*+?[^\*\\]))*?\*\*+?\\)*?\s*?$)'
         captures:
@@ -88,8 +90,7 @@ repository:
                 name: entity.name.type.module
             '2':
                 patterns:
-                    - {include: '#keyword'}
-                    - {include: '#operator'}
+                    - include: '#keyword-or-operator'
     option-statement:
         match: '(\\option)((?:\s|(?:\\\*\*(?:[^\*\n\r]|(?:\*+[^\*\\\n\r]))*?\*\*+?\\))+?)(\b[a-zA-Z0-9_]+\b)((?:\s|(?:\\\*\*(?:[^\*\n\r]|(?:\*+[^\*\\\n\r]))*?\*\*+?\\))+?)(true|false)((?:\s*?$)|(?:\s*?\\\*\*(?:[^\*]|(?:\*+?[^\*\\]))*?\*\*+?\\)*?\s*?$)'
         captures:
@@ -123,8 +124,7 @@ repository:
                 name: string
             '4':
                 patterns:
-                    - {include: '#keyword'}
-                    - {include: '#operator'}
+                    - include: '#keyword-or-operator'
             '5':
                 name: keyword.symbol
             '6':
@@ -170,14 +170,10 @@ repository:
             '2':
                 name: comment
         patterns:
-            -
-                include: '#option-no-arg-statement'
-            -
-                include: '#option-visible_when-statement'
-            -
-                include: '#option-value-statement'
-            -
-                include: '#comment-block'
+            - include: '#option-no-arg-statement'
+            - include: '#option-visible_when-statement'
+            - include: '#option-value-statement'
+            - include: '#comment-block'
     options-block:
         begin: '(\\beg)((?:\s|(?:\\\*\*(?:[^\*\n\r]|(?:\*+[^\*\\\n\r]))*?\*\*+?\\))+?)(options)((?:\s*?$)|(?:\s*?\\\*\*(?:[^\*]|(?:\*+?[^\*\\]))*?\*\*+?\\)*?\s*?$)'
         end: '(\\end)((?:\s*?$)|(?:\s*?\\\*\*(?:[^\*]|(?:\*+?[^\*\\]))*?\*\*+?\\)*?\s*?$)'
@@ -196,12 +192,9 @@ repository:
             '2':
                 name: comment
         patterns:
-            -
-                include: '#option-block'
-            -
-                include: '#option-statement'
-            -
-                include: '#comment-block'
+            - include: '#option-block'
+            - include: '#option-statement'
+            - include: '#comment-block'
     downcase-statement:
         match: '(\\downcase)((?:\s*?$)|(?:\s*?\\\*\*(?:[^\*]|(?:\*+?[^\*\\]))*?\*\*+?\\)*?\s*?$)'
         captures:
@@ -218,12 +211,28 @@ repository:
                 name: comment
             '3':
                 patterns:
-                    - {match: '(0*(?:[2-9]|1[0-6]))|(\"[^\"]*?\")', captures: {'1': {name: constant.numeric}, '2': {name: string, patterns: [{include: '#eval-expression'}]}}}
+                    -
+                        match: '(0*(?:[2-9]|1[0-6]))|(\"[^\"]*?\")'
+                        captures:
+                            '1':
+                                name: constant.numeric
+                            '2':
+                                name: string
+                                patterns:
+                                    - include: '#eval-expression'
             '4':
                 name: comment
             '5':
                 patterns:
-                    - {match: '(true|false)|(\"[^\"]*?\")', captures: {'1': {name: constant.numeric}, '2': {name: string, patterns: [{include: '#eval-expression'}]}}}
+                    -
+                        match: '(true|false)|(\"[^\"]*?\")'
+                        captures:
+                            '1':
+                                name: constant.numeric
+                            '2':
+                                name: string
+                                patterns:
+                                    - include: '#eval-expression'
             '6':
                 name: comment
     up_down_tehta_split-statement:
@@ -236,13 +245,13 @@ repository:
             '3':
                 name: string
                 patterns:
-                    - {include: '#eval-expression'}
+                    - include: '#eval-expression'
             '4':
                 name: comment
             '5':
                 name: string
                 patterns:
-                    - {include: '#eval-expression'}
+                    - include: '#eval-expression'
             '6':
                 name: comment
     substitute-statement:
@@ -255,13 +264,13 @@ repository:
             '3':
                 name: string
                 patterns:
-                    - {include: '#eval-expression'}
+                    - include: '#eval-expression'
             '4':
                 name: comment
             '5':
                 name: string
                 patterns:
-                    - {include: '#eval-expression'}
+                    - include: '#eval-expression'
             '6':
                 name: comment
     else-statement:
@@ -282,8 +291,7 @@ repository:
                 name: string
             '4':
                 patterns:
-                    - {include: '#keyword'}
-                    - {include: '#operator'}
+                    - include: '#keyword-or-operator'
             '5':
                 name: keyword.symbol
             '6':
@@ -300,8 +308,7 @@ repository:
                 name: string
             '4':
                 patterns:
-                    - {include: '#keyword'}
-                    - {include: '#operator'}
+                    - include: '#keyword-or-operator'
             '5':
                 name: keyword.symbol
             '6':
@@ -312,26 +319,17 @@ repository:
             '2':
                 name: comment
         patterns:
-            -
-                include: '#else-statement'
-            -
-                include: '#elsif-statement'
-            -
-                include: '#preprocessor-patterns'
+            - include: '#else-statement'
+            - include: '#elsif-statement'
+            - include: '#preprocessor-patterns'
     preprocessor-patterns:
         patterns:
-            -
-                include: '#comment-block'
-            -
-                include: '#downcase-statement'
-            -
-                include: '#elvish_numbers-statement'
-            -
-                include: '#up_down_tehta_split-statement'
-            -
-                include: '#substitute-statement'
-            -
-                include: '#preprocessor-if-block'
+            - include: '#comment-block'
+            - include: '#downcase-statement'
+            - include: '#elvish_numbers-statement'
+            - include: '#up_down_tehta_split-statement'
+            - include: '#substitute-statement'
+            - include: '#preprocessor-if-block'
     preprocessor-block:
         begin: '(\\beg)((?:\s|(?:\\\*\*(?:[^\*\n\r]|(?:\*+[^\*\\\n\r]))*?\*\*+?\\))+?)(preprocessor)((?:\s*?$)|(?:\s*?\\\*\*(?:[^\*]|(?:\*+?[^\*\\]))*?\*\*+?\\)*?\s*?$)'
         end: '(\\end)((?:\s*?$)|(?:\s*?\\\*\*(?:[^\*]|(?:\*+?[^\*\\]))*?\*\*+?\\)*?\s*?$)'
@@ -350,8 +348,7 @@ repository:
             '2':
                 name: comment
         patterns:
-            -
-                include: '#preprocessor-patterns'
+            - include: '#preprocessor-patterns'
     postprocessor-if-block:
         begin: '(\\if)((?:\s|(?:\\\*\*(?:[^\*\n\r]|(?:\*+[^\*\\\n\r]))*?\*\*+?\\))+?)(?:(\"([^\"]*?)\")|([a-zA-Z0-9_!]+))((?:\s*?$)|(?:\s*?\\\*\*(?:[^\*]|(?:\*+?[^\*\\]))*?\*\*+?\\)*?\s*?$)'
         end: '(\\endif)((?:\s*?$)|(?:\s*?\\\*\*(?:[^\*]|(?:\*+?[^\*\\]))*?\*\*+?\\)*?\s*?$)'
@@ -364,8 +361,7 @@ repository:
                 name: string
             '4':
                 patterns:
-                    - {include: '#keyword'}
-                    - {include: '#operator'}
+                    - include: '#keyword-or-operator'
             '5':
                 name: keyword.symbol
             '6':
@@ -376,12 +372,9 @@ repository:
             '2':
                 name: comment
         patterns:
-            -
-                include: '#else-statement'
-            -
-                include: '#elsif-statement'
-            -
-                include: '#postprocessor-patterns'
+            - include: '#else-statement'
+            - include: '#elsif-statement'
+            - include: '#postprocessor-patterns'
     postprocessor-statement:
         match: '(\\(?:reverse|resolve_virtuals))((?:\s*?$)|(?:\s*?\\\*\*(?:[^\*]|(?:\*+?[^\*\\]))*?\*\*+?\\)*?\s*?$)'
         captures:
@@ -391,12 +384,9 @@ repository:
                 name: comment
     postprocessor-patterns:
         patterns:
-            -
-                include: '#comment-block'
-            -
-                include: '#postprocessor-if-block'
-            -
-                include: '#postprocessor-statement'
+            - include: '#comment-block'
+            - include: '#postprocessor-if-block'
+            - include: '#postprocessor-statement'
     postprocessor-block:
         begin: '(\\beg)((?:\s|(?:\\\*\*(?:[^\*\n\r]|(?:\*+[^\*\\\n\r]))*?\*\*+?\\))+?)(postprocessor)((?:\s*?$)|(?:\s*?\\\*\*(?:[^\*]|(?:\*+?[^\*\\]))*?\*\*+?\\)*?\s*?$)'
         end: '(\\end)((?:\s*?$)|(?:\s*?\\\*\*(?:[^\*]|(?:\*+?[^\*\\]))*?\*\*+?\\)*?\s*?$)'
@@ -415,8 +405,7 @@ repository:
             '2':
                 name: comment
         patterns:
-            -
-                include: '#postprocessor-patterns'
+            - include: '#postprocessor-patterns'
     processor-if-block:
         begin: '(\\if)((?:\s|(?:\\\*\*(?:[^\*\n\r]|(?:\*+[^\*\\\n\r]))*?\*\*+?\\))+?)(?:(\"([^\"]*?)\")|([a-zA-Z0-9_!]+))((?:\s*?$)|(?:\s*?\\\*\*(?:[^\*]|(?:\*+?[^\*\\]))*?\*\*+?\\)*?\s*?$)'
         end: '(\\endif)((?:\s*?$)|(?:\s*?\\\*\*(?:[^\*]|(?:\*+?[^\*\\]))*?\*\*+?\\)*?\s*?$)'
@@ -429,8 +418,7 @@ repository:
                 name: string
             '4':
                 patterns:
-                    - {include: '#keyword'}
-                    - {include: '#operator'}
+                    - include: '#keyword-or-operator'
             '5':
                 name: keyword.symbol
             '6':
@@ -441,24 +429,30 @@ repository:
             '2':
                 name: comment
         patterns:
-            -
-                include: '#else-statement'
-            -
-                include: '#elsif-statement'
-            -
-                include: '#processor-patterns'
-    number:
-        match: '[0-9]+?'
+            - include: '#else-statement'
+            - include: '#elsif-statement'
+            - include: '#processor-patterns'
+    unicode:
+        match: '{UNI_[0-9A-F]{3,}}'
         name: constant.numeric
-    symbol-or-variable:
-        match: '({UNI_[0-9A-F]{3,}})|({[A-Z0-9_]+})|(identity|(?:\b[0-9]*[A-Z]+[A-Z0-9]*[A-Z0-9]*\b)|(?:\b(?:[A-Z]+_*)+(?:[A-Z0-9]+_*)*[A-Z0-9]+\b)|(?:\b(?:[A-Z0-9]+_*)+[A-Z]+\b)|(?:\b[0-9]+_*[A-Z]+[A-Z0-9_]*_*[0-9]+\b))'
-        captures:
-            '1':
-                name: constant.numeric
-            '2':
-                name: variable
-            '3':
-                name: keyword.symbol
+    symbol:
+        match: 'identity|{(?:NULL|NBSP|WJ|ZWSP|ZWNJ|UNDERSCORE|ASTERISK|COMMA|LPAREN|RPAREN|LBRACKET|RBRACKET)}'
+        name: keyword.symbol
+    variable:
+        match: '{(?:(?!(?:NULL|NBSP|WJ|ZWSP|ZWNJ|UNDERSCORE|ASTERISK|COMMA|LPAREN|RPAREN|LBRACKET|RBRACKET)(?:$|}))[A-Z0-9_]*)}'
+        name: variable
+    fragment:
+        patterns:
+            - include: '#comment-block'
+            - include: '#unicode'
+            - include: '#symbol'
+            - include: '#variable'
+    simple-equivalence-expression:
+        patterns:
+            - include: '#fragment'
+            -
+                match: '\,'
+                name: entity.name.function
     equivalence-expression:
         match: '(\()([^\(\)]*?)(\))'
         captures:
@@ -466,23 +460,13 @@ repository:
                 name: entity.name.function
             '2':
                 patterns:
-                    -
-                        include: '#comment-block'
-                    -
-                        include: '#symbol-or-variable'
-                    -
-                        match: '\,'
-                        name: entity.name.function
+                    - include: '#simple-equivalence-expression'
             '3':
                 name: entity.name.function
-    single-linkable-expression:
+    simple-linkable-expression:
         patterns:
-            -
-                include: '#comment-block'
-            -
-                include: '#symbol-or-variable'
-            -
-                include: '#equivalence-expression'
+            - include: '#fragment'
+            - include: '#equivalence-expression'
             -
                 match: '\*'
                 name: entity.name.type.class
@@ -493,114 +477,26 @@ repository:
                 name: entity.name.type.class
             '2':
                 patterns:
-                    -
-                        include: '#single-linkable-expression'
+                    - include: '#simple-linkable-expression'
             '3':
                 name: entity.name.type.class
-    left-sheaf:
+    rule-and-variable-statement:
         patterns:
+            - include: '#comment-block'
+            - include: '#simple-linkable-expression'
+            - include: '#linkable-expression'
+            - include: '#simple-equivalence-expression'
+            - include: '#equivalence-expression'
             -
-                include: '#single-linkable-expression'
-            -
-                include: '#linkable-expression'
-            -
-                match: '_'
-                name: keyword.symbol
-    right-sheaf:
-        patterns:
-            -
-                include: '#single-linkable-expression'
-            -
-                include: '#linkable-expression'
-    simple-rule-statement:
-        match: '(.+)(-->)(.+)'
-        captures:
-            '1':
-                patterns:
-                    -
-                        include: '#comment-block'
-                    -
-                        include: '#left-sheaf'
-            '2':
+                match: '-->|===|<=>'
                 name: keyword.operator.assignment
-            '3':
-                patterns:
-                    -
-                        include: '#comment-block'
-                    -
-                        include: '#right-sheaf'
-    cross-rule-statement:
-        match: '(.+)(-->)(.+)(-->)(.+)'
-        captures:
-            '1':
-                patterns:
-                    -
-                        include: '#comment-block'
-                    -
-                        include: '#left-sheaf'
-            '2':
-                name: keyword.operator.assignment
-            '3':
-                patterns:
-                    -
-                        include: '#comment-block'
-                    -
-                        include: '#symbol-or-variable'
-                    -
-                        include: '#number'
-                    -
-                        match: '\,'
-                        name: keyword.operator.assignment
-            '4':
-                name: keyword.operator.assignment
-            '5':
-                patterns:
-                    -
-                        include: '#comment-block'
-                    -
-                        include: '#right-sheaf'
-    rules-statement:
-        match: '(.+?-->.+?-->.+)|(.+?-->.+)'
-        captures:
-            '1':
-                patterns:
-                    -
-                        include: '#cross-rule-statement'
-            '2':
-                patterns:
-                    -
-                        include: '#simple-rule-statement'
-    variable-statement:
-        match: '({[A-Z0-9_]+})((?:\s|(?:\\\*\*(?:[^\*\n\r]|(?:\*+[^\*\\\n\r]))*?\*\*+?\\))+?)(===|<=>)(.+)'
-        captures:
-            '1':
-                name: variable
-            '2':
-                name: comment
-            '3':
-                name: keyword.operator.assignment
-            '4':
-                patterns:
-                    -
-                        include: '#comment-block'
-                    -
-                        include: '#single-linkable-expression'
-                    -
-                        include: '#linkable-expression'
     processor-patterns:
         patterns:
-            -
-                include: '#comment-block'
-            -
-                include: '#processor-if-block'
-            -
-                include: '#rules-statement'
-            -
-                include: '#variable-statement'
-            -
-                include: '#processor-macro-block'
-            -
-                include: '#deploy-statement'
+            - include: '#comment-block'
+            - include: '#processor-if-block'
+            - include: '#rule-and-variable-statement'
+            - include: '#processor-macro-block'
+            - include: '#deploy-statement'
     processor-macro-block:
         begin: '(\\beg)((?:\s|(?:\\\*\*(?:[^\*\n\r]|(?:\*+[^\*\\\n\r]))*?\*\*+?\\))+?)(macro)((?:\s|(?:\\\*\*(?:[^\*\n\r]|(?:\*+[^\*\\\n\r]))*?\*\*+?\\))+?)(\b[a-zA-Z0-9_]+\b)((?:\s|(?:\\\*\*(?:[^\*\n\r]|(?:\*+[^\*\\\n\r]))*?\*\*+?\\))+?)(?:(?:(\b[A-Z0-9_]+\b)((?:\s*?$)|(?:\s*?\\\*\*(?:[^\*]|(?:\*+?[^\*\\]))*?\*\*+?\\)*?\s*?$))|(.+))'
         end: '(\\end)((?:\s*?$)|(?:\s*?\\\*\*(?:[^\*]|(?:\*+?[^\*\\]))*?\*\*+?\\)*?\s*?$)'
@@ -623,8 +519,7 @@ repository:
                 name: comment
             '9':
                 patterns:
-                    -
-                        include: '#comment-block'
+                    - include: '#comment-block'
                     -
                         match: '\b[A-Z0-9_]+\b'
                         name: variable
@@ -634,8 +529,7 @@ repository:
             '2':
                 name: comment
         patterns:
-            -
-                include: '#processor-patterns'
+            - include: '#processor-patterns'
     deploy-statement:
         match: '(\\deploy)((?:\s|(?:\\\*\*(?:[^\*\n\r]|(?:\*+[^\*\\\n\r]))*?\*\*+?\\))+?)(\b[a-zA-Z-0-9]+\b)((?:\s|(?:\\\*\*(?:[^\*\n\r]|(?:\*+[^\*\\\n\r]))*?\*\*+?\\))+?)({[A-Z0-9_]+})((?:\s|(?:\\\*\*(?:[^\*\n\r]|(?:\*+[^\*\\\n\r]))*?\*\*+?\\))+?)(.+)'
         captures:
@@ -653,10 +547,7 @@ repository:
                 name: comment
             '7':
                 patterns:
-                    -
-                        include: '#comment-block'
-                    -
-                        include: '#symbol-or-variable'
+                    - include: '#fragment'
     processor-rule-block:
         begin: '(\\beg)((?:\s|(?:\\\*\*(?:[^\*\n\r]|(?:\*+[^\*\\\n\r]))*?\*\*+?\\))+?)(rules)((?:\s|(?:\\\*\*(?:[^\*\n\r]|(?:\*+[^\*\\\n\r]))*?\*\*+?\\))+?)(?:(\"(?:[^\"]*?)\")|([a-zA-Z0-9_!]+))((?:\s*?$)|(?:\s*?\\\*\*(?:[^\*]|(?:\*+?[^\*\\]))*?\*\*+?\\)*?\s*?$)'
         end: '(\\end)((?:\s*?$)|(?:\s*?\\\*\*(?:[^\*]|(?:\*+?[^\*\\]))*?\*\*+?\\)*?\s*?$)'
@@ -681,8 +572,7 @@ repository:
             '2':
                 name: comment
         patterns:
-            -
-                include: '#processor-patterns'
+            - include: '#processor-patterns'
     processor-block:
         begin: '(\\beg)((?:\s|(?:\\\*\*(?:[^\*\n\r]|(?:\*+[^\*\\\n\r]))*?\*\*+?\\))+?)(processor)((?:\s*?$)|(?:\s*?\\\*\*(?:[^\*]|(?:\*+?[^\*\\]))*?\*\*+?\\)*?\s*?$)'
         end: '(\\end)((?:\s*?$)|(?:\s*?\\\*\*(?:[^\*]|(?:\*+?[^\*\\]))*?\*\*+?\\)*?\s*?$)'
@@ -701,24 +591,15 @@ repository:
             '2':
                 name: comment
         patterns:
-            -
-                include: '#processor-rule-block'
+            - include: '#processor-rule-block'
 patterns:
-    -
-        include: '#comment-block'
-    -
-        include: '#info-statement'
-    -
-        include: '#charset-statement'
-    -
-        include: '#changelog-block'
-    -
-        include: '#options-block'
-    -
-        include: '#preprocessor-block'
-    -
-        include: '#postprocessor-block'
-    -
-        include: '#processor-block'
+    - include: '#comment-block'
+    - include: '#info-statement'
+    - include: '#charset-statement'
+    - include: '#changelog-block'
+    - include: '#options-block'
+    - include: '#preprocessor-block'
+    - include: '#postprocessor-block'
+    - include: '#processor-block'
 scopeName: source.glaem
 uuid: F261BD11-1AF3-441E-A074-3B0A4C65F61E

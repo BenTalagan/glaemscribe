@@ -12,13 +12,23 @@
       "match": "[=!<>&\\|\\+\\-\\*\\/]+",
       "name": "keyword.operator.assignment"
     },
+    "keyword-or-operator": {
+      "patterns": [
+        {
+          "include": "#keyword"
+        },
+        {
+          "include": "#operator"
+        }
+      ]
+    },
     "comment-block": {
       "begin": "\\\\\\*\\*",
       "end": "\\*\\*\\\\",
       "name": "comment.block"
     },
     "comment-or-space-middle": {
-      "match": "(?:\\s|(?:\\\\\\*\\*(?:[^\\*\\n\\r]|(?:\\*+[^\\*\\\\\\n\\r]))*?\\*\\*+\\\\))+",
+      "match": "(?:\\s|(?:\\\\\\*\\*(?:[^\\*\\n\\r]|(?:\\*+[^\\*\\\\\\n\\r]))*?\\*\\*+?\\\\))+?",
       "name": "comment.block"
     },
     "comment-or-space-end": {
@@ -131,10 +141,7 @@
         "2": {
           "patterns": [
             {
-              "include": "#keyword"
-            },
-            {
-              "include": "#operator"
+              "include": "#keyword-or-operator"
             }
           ]
         }
@@ -189,10 +196,7 @@
         "4": {
           "patterns": [
             {
-              "include": "#keyword"
-            },
-            {
-              "include": "#operator"
+              "include": "#keyword-or-operator"
             }
           ]
         },
@@ -476,10 +480,7 @@
         "4": {
           "patterns": [
             {
-              "include": "#keyword"
-            },
-            {
-              "include": "#operator"
+              "include": "#keyword-or-operator"
             }
           ]
         },
@@ -507,10 +508,7 @@
         "4": {
           "patterns": [
             {
-              "include": "#keyword"
-            },
-            {
-              "include": "#operator"
+              "include": "#keyword-or-operator"
             }
           ]
         },
@@ -610,10 +608,7 @@
         "4": {
           "patterns": [
             {
-              "include": "#keyword"
-            },
-            {
-              "include": "#operator"
+              "include": "#keyword-or-operator"
             }
           ]
         },
@@ -715,10 +710,7 @@
         "4": {
           "patterns": [
             {
-              "include": "#keyword"
-            },
-            {
-              "include": "#operator"
+              "include": "#keyword-or-operator"
             }
           ]
         },
@@ -749,23 +741,44 @@
         }
       ]
     },
-    "number": {
-      "match": "[0-9]+?",
+    "unicode": {
+      "match": "{UNI_[0-9A-F]{3,}}",
       "name": "constant.numeric"
     },
-    "symbol-or-variable": {
-      "match": "({UNI_[0-9A-F]{3,}})|({[A-Z0-9_]+})|(identity|(?:\\b[0-9]*[A-Z]+[A-Z0-9]*[A-Z0-9]*\\b)|(?:\\b(?:[A-Z]+_*)+(?:[A-Z0-9]+_*)*[A-Z0-9]+\\b)|(?:\\b(?:[A-Z0-9]+_*)+[A-Z]+\\b)|(?:\\b[0-9]+_*[A-Z]+[A-Z0-9_]*_*[0-9]+\\b))",
-      "captures": {
-        "1": {
-          "name": "constant.numeric"
+    "symbol": {
+      "match": "identity|{(?:NULL|NBSP|WJ|ZWSP|ZWNJ|UNDERSCORE|ASTERISK|COMMA|LPAREN|RPAREN|LBRACKET|RBRACKET)}",
+      "name": "keyword.symbol"
+    },
+    "variable": {
+      "match": "{(?:(?!(?:NULL|NBSP|WJ|ZWSP|ZWNJ|UNDERSCORE|ASTERISK|COMMA|LPAREN|RPAREN|LBRACKET|RBRACKET)(?:$|}))[A-Z0-9_]*)}",
+      "name": "variable"
+    },
+    "fragment": {
+      "patterns": [
+        {
+          "include": "#comment-block"
         },
-        "2": {
-          "name": "variable"
+        {
+          "include": "#unicode"
         },
-        "3": {
-          "name": "keyword.symbol"
+        {
+          "include": "#symbol"
+        },
+        {
+          "include": "#variable"
         }
-      }
+      ]
+    },
+    "simple-equivalence-expression": {
+      "patterns": [
+        {
+          "include": "#fragment"
+        },
+        {
+          "match": "\\,",
+          "name": "entity.name.function"
+        }
+      ]
     },
     "equivalence-expression": {
       "match": "(\\()([^\\(\\)]*?)(\\))",
@@ -776,14 +789,7 @@
         "2": {
           "patterns": [
             {
-              "include": "#comment-block"
-            },
-            {
-              "include": "#symbol-or-variable"
-            },
-            {
-              "match": "\\,",
-              "name": "entity.name.function"
+              "include": "#simple-equivalence-expression"
             }
           ]
         },
@@ -792,13 +798,10 @@
         }
       }
     },
-    "single-linkable-expression": {
+    "simple-linkable-expression": {
       "patterns": [
         {
-          "include": "#comment-block"
-        },
-        {
-          "include": "#symbol-or-variable"
+          "include": "#fragment"
         },
         {
           "include": "#equivalence-expression"
@@ -818,7 +821,7 @@
         "2": {
           "patterns": [
             {
-              "include": "#single-linkable-expression"
+              "include": "#simple-linkable-expression"
             }
           ]
         },
@@ -827,151 +830,28 @@
         }
       }
     },
-    "left-sheaf": {
+    "rule-and-variable-statement": {
       "patterns": [
         {
-          "include": "#single-linkable-expression"
+          "include": "#comment-block"
+        },
+        {
+          "include": "#simple-linkable-expression"
         },
         {
           "include": "#linkable-expression"
         },
         {
-          "match": "_",
-          "name": "keyword.symbol"
-        }
-      ]
-    },
-    "right-sheaf": {
-      "patterns": [
-        {
-          "include": "#single-linkable-expression"
+          "include": "#simple-equivalence-expression"
         },
         {
-          "include": "#linkable-expression"
+          "include": "#equivalence-expression"
+        },
+        {
+          "match": "-->|===|<=>",
+          "name": "keyword.operator.assignment"
         }
       ]
-    },
-    "simple-rule-statement": {
-      "match": "(.+)(-->)(.+)",
-      "captures": {
-        "1": {
-          "patterns": [
-            {
-              "include": "#comment-block"
-            },
-            {
-              "include": "#left-sheaf"
-            }
-          ]
-        },
-        "2": {
-          "name": "keyword.operator.assignment"
-        },
-        "3": {
-          "patterns": [
-            {
-              "include": "#comment-block"
-            },
-            {
-              "include": "#right-sheaf"
-            }
-          ]
-        }
-      }
-    },
-    "cross-rule-statement": {
-      "match": "(.+)(-->)(.+)(-->)(.+)",
-      "captures": {
-        "1": {
-          "patterns": [
-            {
-              "include": "#comment-block"
-            },
-            {
-              "include": "#left-sheaf"
-            }
-          ]
-        },
-        "2": {
-          "name": "keyword.operator.assignment"
-        },
-        "3": {
-          "patterns": [
-            {
-              "include": "#comment-block"
-            },
-            {
-              "include": "#symbol-or-variable"
-            },
-            {
-              "include": "#number"
-            },
-            {
-              "match": "\\,",
-              "name": "keyword.operator.assignment"
-            }
-          ]
-        },
-        "4": {
-          "name": "keyword.operator.assignment"
-        },
-        "5": {
-          "patterns": [
-            {
-              "include": "#comment-block"
-            },
-            {
-              "include": "#right-sheaf"
-            }
-          ]
-        }
-      }
-    },
-    "rules-statement": {
-      "match": "(.+?-->.+?-->.+)|(.+?-->.+)",
-      "captures": {
-        "1": {
-          "patterns": [
-            {
-              "include": "#cross-rule-statement"
-            }
-          ]
-        },
-        "2": {
-          "patterns": [
-            {
-              "include": "#simple-rule-statement"
-            }
-          ]
-        }
-      }
-    },
-    "variable-statement": {
-      "match": "({[A-Z0-9_]+})((?:\\s|(?:\\\\\\*\\*(?:[^\\*\\n\\r]|(?:\\*+[^\\*\\\\\\n\\r]))*?\\*\\*+?\\\\))+?)(===|<=>)(.+)",
-      "captures": {
-        "1": {
-          "name": "variable"
-        },
-        "2": {
-          "name": "comment"
-        },
-        "3": {
-          "name": "keyword.operator.assignment"
-        },
-        "4": {
-          "patterns": [
-            {
-              "include": "#comment-block"
-            },
-            {
-              "include": "#single-linkable-expression"
-            },
-            {
-              "include": "#linkable-expression"
-            }
-          ]
-        }
-      }
     },
     "processor-patterns": {
       "patterns": [
@@ -982,10 +862,7 @@
           "include": "#processor-if-block"
         },
         {
-          "include": "#rules-statement"
-        },
-        {
-          "include": "#variable-statement"
+          "include": "#rule-and-variable-statement"
         },
         {
           "include": "#processor-macro-block"
@@ -1073,10 +950,7 @@
         "7": {
           "patterns": [
             {
-              "include": "#comment-block"
-            },
-            {
-              "include": "#symbol-or-variable"
+              "include": "#fragment"
             }
           ]
         }
