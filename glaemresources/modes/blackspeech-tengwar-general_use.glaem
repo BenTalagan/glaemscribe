@@ -27,7 +27,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 \beg changelog
   \entry 0.0.1 "First version"
   \entry 0.0.2 "Ported to virtual chars."
-  \entry 0.0.3 "Merging with blackspeech Annatar".
+  \entry 0.0.3 "Merging with blackspeech Annatar."
   \entry 0.0.4 "Adding double tehtar handling."
   \entry 0.0.5 "Fixing ORE/ROMEN, refactoring."
   \entry 0.0.6 "Added support for the FreeMonoTengwar font"
