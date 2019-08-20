@@ -1,0 +1,47 @@
+{
+    "name": "glaemscribe",
+    "displayName": "Glaemscribe",
+    "description": "Glaemscribe GlaeML and Charset syntax highlighting for TextMate.",
+    "version": "1.0.0",
+    "engines": {
+        "vscode": "^1.36.0"
+    },
+    "categories": [
+        "Programming Languages"
+    ],
+    "contributes": {
+        "languages": [{
+            "id": "glaem",
+            "aliases": ["Glaemscribe Mode", "glaem"],
+            "extensions": [".glaem"],
+            "configuration": "./language-configuration.json"
+        },
+        {
+            "id": "cst",
+            "aliases": ["Glaemscribe Charset", "cst"],
+            "extensions": [".cst"],
+            "configuration": "./language-configuration.json"
+        },
+        {
+            "id": "glaeml",
+            "aliases": ["GlaeML", "glaeml"],
+            "extensions": [".glaeml"],
+            "configuration": "./language-configuration.json"
+        }],
+        "grammars": [{
+            "language": "glaem",
+            "scopeName": "source.glaem",
+            "path": "./syntaxes/glaem.tmlanguage.json"
+        },
+        {
+            "language": "cst",
+            "scopeName": "source.cst",
+            "path": "./syntaxes/cst.tmlanguage.json"
+        },
+        {
+            "language": "glaeml",
+            "scopeName": "source.glaeml",
+            "path": "./syntaxes/glaeml.tmlanguage.json"
+        }]
+    }
+}
