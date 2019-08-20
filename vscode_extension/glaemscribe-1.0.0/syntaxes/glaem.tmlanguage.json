@@ -2,7 +2,7 @@
   "fileTypes": [
     "glaem"
   ],
-  "name": "GlaeML",
+  "name": "Glaemscribe Mode",
   "repository": {
     "keyword": {
       "match": "[a-zA-Z0-9_]",

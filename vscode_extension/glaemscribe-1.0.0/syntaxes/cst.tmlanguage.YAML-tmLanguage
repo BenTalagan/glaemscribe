@@ -1,6 +1,6 @@
 fileTypes:
     - cst
-name: 'GlaeML Charset'
+name: 'Glaemscribe Charset'
 repository:
     string:
         begin: '"'

@@ -12,14 +12,20 @@
     "contributes": {
         "languages": [{
             "id": "glaem",
-            "aliases": ["GlaeML", "glaem"],
+            "aliases": ["Glaemscribe Mode", "glaem"],
             "extensions": [".glaem"],
             "configuration": "./language-configuration.json"
         },
         {
             "id": "cst",
-            "aliases": ["GlaeML Charset", "cst"],
+            "aliases": ["Glaemscribe Charset", "cst"],
             "extensions": [".cst"],
+            "configuration": "./language-configuration.json"
+        },
+        {
+            "id": "glaeml",
+            "aliases": ["GlaeML", "glaeml"],
+            "extensions": [".glaeml"],
             "configuration": "./language-configuration.json"
         }],
         "grammars": [{
@@ -31,6 +37,11 @@
             "language": "cst",
             "scopeName": "source.cst",
             "path": "./syntaxes/cst.tmlanguage.json"
+        },
+        {
+            "language": "glaeml",
+            "scopeName": "source.glaeml",
+            "path": "./syntaxes/glaeml.tmlanguage.json"
         }]
     }
 }
