@@ -1,0 +1,200 @@
+fileTypes:
+    - cst
+name: 'GlaeML Charset'
+repository:
+    string:
+        begin: '"'
+        end: '"'
+        captures:
+            '0':
+                name: comment
+    symbol:
+        match: '[A-Z0-9_]'
+        name: variable
+    comment-block:
+        begin: '\\\*\*'
+        end: '\*\*\\'
+        name: comment.block
+    info-statement:
+        match: '(\\(?:(?!(?:beg|end|entry|char|class|reversed|default)\b)[a-zA-Z_])*)((?:\s|(?:\\\*\*(?:[^\*\n\r]|(?:\*+[^\*\\\n\r]))*?\*\*+\\))+)([^\s]+|(?:\"[^\"]*?\"))((?:\s*?$)|(?:\s*?\\\*\*(?:[^\*]|(?:\*+[^\*\\]))*?\*\*+\\)*?\s*?$)'
+        captures:
+            '1':
+                name: entity.name.section
+            '2':
+                name: comment
+            '3':
+                name: string
+            '4':
+                name: comment
+    changelog-entry-statement:
+        match: '(\\entry)((?:\s|(?:\\\*\*(?:[^\*\n\r]|(?:\*+[^\*\\\n\r]))*?\*\*+\\))+)(\"[^\"]*?\")((?:\s|(?:\\\*\*(?:[^\*\n\r]|(?:\*+[^\*\\\n\r]))*?\*\*+\\))+)(\"[^\"]*?\")((?:\s*?$)|(?:\s*?\\\*\*(?:[^\*]|(?:\*+[^\*\\]))*?\*\*+\\)*?\s*?$)'
+        captures:
+            '1':
+                name: entity.name.section
+            '2':
+                name: comment
+            '3':
+                name: string
+            '4':
+                name: comment
+            '5':
+                name: string
+            '6':
+                name: comment
+    changelog-block:
+        begin: '(\\beg)((?:\s|(?:\\\*\*(?:[^\*\n\r]|(?:\*+[^\*\\\n\r]))*?\*\*+\\))+)(changelog)((?:\s*?$)|(?:\s*?\\\*\*(?:[^\*]|(?:\*+[^\*\\]))*?\*\*+\\)*?\s*?$)'
+        end: '(\\end)((?:\s*?$)|(?:\s*?\\\*\*(?:[^\*]|(?:\*+[^\*\\]))*?\*\*+\\)*?\s*?$)'
+        beginCaptures:
+            '1':
+                name: entity.name.type.module
+            '2':
+                name: comment
+            '3':
+                name: entity.name.section
+            '4':
+                name: comment
+        endCaptures:
+            '1':
+                name: entity.name.type.module
+            '2':
+                name: comment
+        patterns:
+            -
+                include: '#changelog-entry-statement'
+            -
+                include: '#comment-block'
+    char-statement:
+        match: '(\\char)((?:\s|(?:\\\*\*(?:[^\*\n\r]|(?:\*+[^\*\\\n\r]))*?\*\*+\\))+)(\b[a-fA-F0-9]+\b)((?:\s|(?:\\\*\*(?:[^\*\n\r]|(?:\*+[^\*\\\n\r]))*?\*\*+\\))+)(?:(?:(\?)((?:\s*?$)|(?:\s*?\\\*\*(?:[^\*]|(?:\*+[^\*\\]))*?\*\*+\\)*?\s*?$))|([^\?]+))'
+        captures:
+            '1':
+                name: entity.name.section
+            '2':
+                name: comment
+            '3':
+                name: constant.numeric
+            '4':
+                name: comment
+            '5':
+                name: keyword.symbol
+            '6':
+                name: comment
+            '7':
+                patterns:
+                    -
+                        include: '#comment-block'
+                    -
+                        include: '#symbol'
+    class-statement:
+        match: '(\\class)((?:\s|(?:\\\*\*(?:[^\*\n\r]|(?:\*+[^\*\\\n\r]))*?\*\*+\\))+)(\b[A-Z0-9_]+\b)((?:\s|(?:\\\*\*(?:[^\*\n\r]|(?:\*+[^\*\\\n\r]))*?\*\*+\\))+)(?:(?:(\b[A-Z0-9_]+\b)((?:\s*?$)|(?:\s*?\\\*\*(?:[^\*]|(?:\*+[^\*\\]))*?\*\*+\\)*?\s*?$))|(.+))'
+        captures:
+            '1':
+                name: entity.name.section
+            '2':
+                name: comment
+            '3':
+                name: keyword.symbol
+            '4':
+                name: comment
+            '6':
+                name: comment
+            '7':
+                patterns:
+                    -
+                        include: '#comment-block'
+                    -
+                        match: '[A-Z0-9_]'
+    reversed-statement:
+        match: '(\\reversed)((?:\s*?$)|(?:\s*?\\\*\*(?:[^\*]|(?:\*+[^\*\\]))*?\*\*+\\)*?\s*?$)'
+        captures:
+            '1':
+                name: entity.name.section
+            '2':
+                name: comment
+    default-statement:
+        match: '(\\default)((?:\s|(?:\\\*\*(?:[^\*\n\r]|(?:\*+[^\*\\\n\r]))*?\*\*+\\))+)(\b[A-Z0-9_]+\b)((?:\s*?$)|(?:\s*?\\\*\*(?:[^\*]|(?:\*+[^\*\\]))*?\*\*+\\)*?\s*?$)'
+        captures:
+            '1':
+                name: entity.name.section
+            '2':
+                name: comment
+            '3':
+                name: keyword
+            '4':
+                name: comment
+    virtual-block:
+        begin: '(\\beg)((?:\s|(?:\\\*\*(?:[^\*\n\r]|(?:\*+[^\*\\\n\r]))*?\*\*+\\))+)(virtual)((?:\s|(?:\\\*\*(?:[^\*\n\r]|(?:\*+[^\*\\\n\r]))*?\*\*+\\))+)(?:(?:(\b[A-Z0-9_]+\b)((?:\s*?$)|(?:\s*?\\\*\*(?:[^\*]|(?:\*+[^\*\\]))*?\*\*+\\)*?\s*?$))|(.+))'
+        end: '(\\end)((?:\s*?$)|(?:\s*?\\\*\*(?:[^\*]|(?:\*+[^\*\\]))*?\*\*+\\)*?\s*?$)'
+        beginCaptures:
+            '1':
+                name: entity.name.type.module
+            '2':
+                name: comment
+            '3':
+                name: entity.name.section
+            '4':
+                name: comment
+            '5':
+                name: variable
+            '6':
+                name: comment
+            '7':
+                patterns:
+                    -
+                        include: '#comment-block'
+                    -
+                        include: '#symbol'
+        endCaptures:
+            '1':
+                name: entity.name.type.module
+            '2':
+                name: comment
+        patterns:
+            -
+                include: '#comment-block'
+            -
+                include: '#class-statement'
+            -
+                include: '#reversed-statement'
+            -
+                include: '#default-statement'
+    seq-block:
+        begin: '(\\beg)((?:\s|(?:\\\*\*(?:[^\*\n\r]|(?:\*+[^\*\\\n\r]))*?\*\*+\\))+)(seq)((?:\s|(?:\\\*\*(?:[^\*\n\r]|(?:\*+[^\*\\\n\r]))*?\*\*+\\))+)(\b[A-Z0-9_]+\b)((?:\s*?$)|(?:\s*?\\\*\*(?:[^\*]|(?:\*+[^\*\\]))*?\*\*+\\)*?\s*?$)'
+        end: '(\\end)((?:\s*?$)|(?:\s*?\\\*\*(?:[^\*]|(?:\*+[^\*\\]))*?\*\*+\\)*?\s*?$)'
+        beginCaptures:
+            '1':
+                name: entity.name.type.module
+            '2':
+                name: comment
+            '3':
+                name: entity.name.section
+            '4':
+                name: comment
+            '5':
+                name: keyword.symbol
+            '6':
+                name: comment
+        endCaptures:
+            '1':
+                name: entity.name.type.module
+            '2':
+                name: comment
+        patterns:
+            -
+                include: '#comment-block'
+            -
+                match: '[A-Z0-9_]'
+patterns:
+    -
+        include: '#comment-block'
+    -
+        include: '#info-statement'
+    -
+        include: '#changelog-block'
+    -
+        include: '#char-statement'
+    -
+        include: '#virtual-block'
+    -
+        include: '#seq-block'
+scopeName: source.cst
+uuid: FE33F084-B7B0-11E9-A2A3-2A2AE2DBCCE4
