@@ -22,11 +22,16 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 **\
 
+\beg changelog 
+  \entry "0.0.1" "Initial version"
+  \entry "0.0.2" "Corrected 億 to 10^8, added support for セィ and ゼィ. Thanks to Roman Rausch for this feedback!"
+\end
+
 \language "Japanese"
 \writing  "Tengwar"
 \mode			"Japanese Tengwar - G*"
 \authors	"Talagan (Benjamin Babut)"
-\version	"0.0.1"
+\version	"0.0.2"
  
 \world      primary
 \invention  experimental 
@@ -531,14 +536,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     \deploy serie {SERIE}  {TENGWA} {_PALATAL_}  {__SV__} {__LV__} {NULL}
   
     \** si **\
-		{SERIE}     === [(スィ,si)] 
+		{SERIE}     === [(スィ,セィ,si)] 
 		{TENGWA}    === SILME_NUQUERNA
     {__SV__} === [{_I_}]
     {__LV__} === [{_II_}]
     \deploy serie {SERIE}  {TENGWA} {_CANCELLER_}  {__SV__} {__LV__} {NULL}
 	
     \** zi **\
-		{SERIE}   === [(ズィ,zi)] 
+		{SERIE}   === [(ズィ,ゼィ,zi)] 
 		{TENGWA}  === ESSE_NUQUERNA
     {__SV__}  === [{_I_}]
     {__LV__}  === [{_II_}]
@@ -749,7 +754,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     百 --> NUM_2 CIRC_TEHTA_INF
     千 --> NUM_3 CIRC_TEHTA_INF
     万 --> NUM_4 CIRC_TEHTA_INF
-    億 --> NUM_9 CIRC_TEHTA_INF
+    億 --> NUM_8 CIRC_TEHTA_INF
     0 --> NUM_0
     1 --> NUM_1
     2 --> NUM_2

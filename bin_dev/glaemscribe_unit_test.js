@@ -39,7 +39,7 @@ if(!Glaemscribe.TTS.is_engine_loaded())
 // === UNIT TEST TOOL ====
 // =======================
 
-function unit_test_directory(directory) {
+function unit_test_directory(directory, error_context) {
 
   console.log("Testing now test base + directory");
 
@@ -56,12 +56,14 @@ function unit_test_directory(directory) {
     if(!mode)
     {
       console.log("[    ] " + full_name + " : this mode is not loaded.");
+      error_context.wcount += 1;
       continue;
     }
   
     if(mode.errors.length > 0)
     {
       console.log("[    ] " + full_name + " : his mode has some errors.");
+      error_context.ecount += 1;
       continue;
     }
     
@@ -102,7 +104,11 @@ function unit_test_directory(directory) {
       true_teng = Fs.readFileSync(directory + "/expecteds/" + full_name + "/" + bfname,'utf-8');
     
       if(true_teng.trim() == "")
+      {
         console.log("[    ] " + prefix + "Expected file is empty!!");
+        error_context.ecount += 1;
+        continue;
+      }
 
       true_teng = true_teng.split("\n").map(function(l) { return l.trim(); }).join("\n").trim();
       source    = source.split("\n").map(function(l) { return l.trim(); }).join("\n").trim();
@@ -114,6 +120,7 @@ function unit_test_directory(directory) {
       if(!success)
       {
         console.log("[****] " + tinfo[1]);
+        error_context.ecount += 1;
         continue;
       }
       
@@ -123,6 +130,7 @@ function unit_test_directory(directory) {
       {
       
         console.log("[****] " + prefix);
+        error_context.ecount += 1;
     
         var teng_lines      = teng.split("\n");
         var true_teng_lines = true_teng.split("\n");
@@ -189,6 +197,8 @@ for(var mode_name in Glaemscribe.resource_manager.loaded_modes)
 var error_context = {ecount: 0, wcount: 0}
 unit_test_directory(__dirname + "/../unit_tests/glaemscrafu",error_context)
 unit_test_directory(__dirname + "/../unit_tests/technical",error_context)
+
+console.log("\n" + error_context.ecount + " errors, " + error_context.wcount + " warnings.\n");
 
 // unit_test_directory(__dirname + "/../unit_tests/old")
 // console.log(Glaemscribe.resource_manager.loaded_modes['quenya'].finalize({"implicit_a" : "false"}).options['implicit_a_unutixe'].is_visible())
