@@ -47,21 +47,6 @@
 					<key>name</key>
 					<string>comment</string>
 				</dict>
-				<key>10</key>
-				<dict>
-					<key>name</key>
-					<string>string</string>
-				</dict>
-				<key>11</key>
-				<dict>
-					<key>name</key>
-					<string>string</string>
-				</dict>
-				<key>12</key>
-				<dict>
-					<key>name</key>
-					<string>string</string>
-				</dict>
 				<key>2</key>
 				<dict>
 					<key>name</key>
@@ -77,34 +62,9 @@
 					<key>name</key>
 					<string>string</string>
 				</dict>
-				<key>5</key>
-				<dict>
-					<key>name</key>
-					<string>string</string>
-				</dict>
-				<key>6</key>
-				<dict>
-					<key>name</key>
-					<string>string</string>
-				</dict>
-				<key>7</key>
-				<dict>
-					<key>name</key>
-					<string>string</string>
-				</dict>
-				<key>8</key>
-				<dict>
-					<key>name</key>
-					<string>string</string>
-				</dict>
-				<key>9</key>
-				<dict>
-					<key>name</key>
-					<string>string</string>
-				</dict>
 			</dict>
 			<key>match</key>
-			<string>\s*(\\\*\*.*?\*\*\\)*(\\[a-z0-9_]+)(\s+([^\s"]+|"[^"]+"))?(\s+([^\s"]+|"[^"]+"))?(\s+([^\s"]+|"[^"]+"))?</string>
+			<string>\s*(\\\*\*.*?\*\*\\)*(\\[a-z0-9_]+)(\s+(.*))?</string>
 		</dict>
 		<key>multiline-element-begin-block</key>
 		<dict>
@@ -114,21 +74,6 @@
 				<dict>
 					<key>name</key>
 					<string>comment</string>
-				</dict>
-				<key>10</key>
-				<dict>
-					<key>name</key>
-					<string>string</string>
-				</dict>
-				<key>11</key>
-				<dict>
-					<key>name</key>
-					<string>string</string>
-				</dict>
-				<key>12</key>
-				<dict>
-					<key>name</key>
-					<string>string</string>
 				</dict>
 				<key>2</key>
 				<dict>
@@ -150,29 +95,9 @@
 					<key>name</key>
 					<string>string</string>
 				</dict>
-				<key>6</key>
-				<dict>
-					<key>name</key>
-					<string>string</string>
-				</dict>
-				<key>7</key>
-				<dict>
-					<key>name</key>
-					<string>string</string>
-				</dict>
-				<key>8</key>
-				<dict>
-					<key>name</key>
-					<string>string</string>
-				</dict>
-				<key>9</key>
-				<dict>
-					<key>name</key>
-					<string>string</string>
-				</dict>
 			</dict>
 			<key>match</key>
-			<string>\s*(\\\*\*.*?\*\*\\)*(\\beg)\s+([a-z0-9_]+)(\s+([^\s"]+|"[^"]+"))?(\s+([^\s"]+|"[^"]+"))?(\s+([^\s"]+|"[^"]+"))?</string>
+			<string>\s*(\\\*\*.*?\*\*\\)*(\\beg)\s+([a-z0-9_]+)(\s+(.*))?</string>
 		</dict>
 		<key>multiline-element-end-block</key>
 		<dict>

@@ -12,17 +12,9 @@
           "1": { "name": "comment" },
           "2": { "name": "variable" },
           "3": { "name": "string" },
-          "4": { "name": "string" },
-          "5": { "name": "string" },
-          "6": { "name": "string" },
-          "7": { "name": "string" },
-          "8": { "name": "string" },
-          "9": { "name": "string" },
-          "10": { "name": "string" },
-          "11": { "name": "string" },
-          "12": { "name": "string" }
+          "4": { "name": "string" }
         },
-        "match": "\\s*(\\\\\\*\\*.*?\\*\\*\\\\)*(\\\\[a-z0-9_]+)(\\s+([^\\s\"]+|\"[^\"]+\"))?(\\s+([^\\s\"]+|\"[^\"]+\"))?(\\s+([^\\s\"]+|\"[^\"]+\"))?"
+        "match": "\\s*(\\\\\\*\\*.*?\\*\\*\\\\)*(\\\\[a-z0-9_]+)(\\s+(.*))?"
       },
       "multiline-element-begin-block": {
         "captures": {
@@ -36,16 +28,9 @@
             "name": "variable"
           },
           "4": { "name": "string" },
-          "5": { "name": "string" },
-          "6": { "name": "string" },
-          "7": { "name": "string" },
-          "8": { "name": "string" },
-          "9": { "name": "string" },
-          "10": { "name": "string" },
-          "11": { "name": "string" },
-          "12": { "name": "string" }
+          "5": { "name": "string" }
         },
-        "match": "\\s*(\\\\\\*\\*.*?\\*\\*\\\\)*(\\\\beg)\\s+([a-z0-9_]+)(\\s+([^\\s\"]+|\"[^\"]+\"))?(\\s+([^\\s\"]+|\"[^\"]+\"))?(\\s+([^\\s\"]+|\"[^\"]+\"))?"
+        "match": "\\s*(\\\\\\*\\*.*?\\*\\*\\\\)*(\\\\beg)\\s+([a-z0-9_]+)(\\s+(.*))?"
       },
       "multiline-element-end-block": {
         "captures": {
