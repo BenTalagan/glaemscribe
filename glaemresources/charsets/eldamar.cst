@@ -1,0 +1,210 @@
+\**
+
+Glǽmscribe (also written Glaemscribe) is a software dedicated to
+the transcription of texts between writing systems, and more 
+specifically dedicated to the transcription of J.R.R. Tolkien's 
+invented languages to some of his devised writing systems.
+
+Copyright (C) 2015 Benjamin Babut (Talagan).
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU Affero General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Affero General Public License for more details.
+
+You should have received a copy of the GNU Affero General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+**\
+
+\version 0.0.1
+
+\beg changelog
+  \entry "0.0.1" "Copy pasted from FreeMono charset."
+\end
+
+\char 20 SPACE
+\char a0 NBSP
+
+\** PUSTAR, take them in unicode not in personnal use (deprecation) **\
+\char 2e31 PUNCT_DOT
+\char   3a PUNCT_DDOT
+\char 205D PUNCT_TDOT PUSTA_3
+\char 2058 PUSTA_4
+\char 10FB PUSTA_4_HALFED
+\char 2E2C PUSTA_4_SQUARED
+\char 2E2D PUSTA_5
+
+\char e000  TW_11 TINCO     
+\char e001  TW_12 PARMA
+\char e002  TW_13 CALMA
+\char e003  TW_14 QUESSE
+
+\char e004  TW_21 ANDO  
+\char e005  TW_22 UMBAR
+\char e006  TW_23 ANGA  
+\char e007  TW_24 UNGWE
+      
+\char e008  TW_31 SULE THULE
+\char e009  TW_32 FORMEN
+\char e00A  TW_33 AHA  
+\char e00B  TW_34 HWESTA
+
+\char e00C  TW_41 ANTO
+\char e00D  TW_42 AMPA
+\char e00E  TW_43 ANCA
+\char e00F  TW_44 UNQUE
+
+\char e010  TW_51 NUMEN 
+\char e011  TW_52 MALTA
+\char e012  TW_53 NOLDO
+\char e013  TW_54 NWALME
+
+\char e014  TW_61 ORE
+\char e015  TW_62 VALA
+\char e016  TW_63 ANNA
+\char e017  TW_64 VILYA
+
+\char e018  TW_EXT_11 TINCO_EXT SULE_EXT THULE_EXT
+\char e019  TW_EXT_12 PARMA_EXT FORMEN_EXT 
+\char e01A  TW_EXT_13 CALMA_EXT AHA_EXT
+\char e01B  TW_EXT_14 QUESSE_EXT HWESTA_EXT
+        
+\char e01C  TW_EXT_21 ANDO_EXT ANTO_EXT 
+\char e01D  TW_EXT_22 UMBAR_EXT AMPA_EXT
+\char e01E  TW_EXT_23 ANGA_EXT ANCA_EXT
+\char e01F  TW_EXT_24 UNGWE_EXT UNQUE_EXT
+
+\char e020  TW_71 ROMEN
+\char e021  TW_72 ARDA
+\char e022  TW_73 LAMBE
+\char e023  TW_74 ALDA 
+
+\char e024  TW_81 SILME 
+\** Unfortunately, monotengwar is missing silme nuquerna used for y in beleriand **\
+\char e025  TW_82 SILME_NUQUERNA SILME_NUQUERNA_ALT
+\char e026  TW_83 ESSE
+\char e027  TW_84 ESSE_NUQUERNA
+
+\char e028  TW_91 HYARMEN 
+\char e029  TW_92 HWESTA_SINDARINWA 
+\char e02A  TW_93 YANTA
+\char e02B  TW_94 URE
+
+\char e02C  ARA
+\char e02D  HALLA
+\char e02E  TELCO
+\char e02F  ?      
+
+\char e030  REVERSED_OSSE
+\char e031  BOMBADIL_W 
+\char e032  OSSE
+\char e033  ?
+
+\char e034  LIGATING_SHORT_CARRIER
+\char e035  ?
+\char e036  ANNA_OPEN
+\char e037  CHRISTOPHER_QU
+
+\char e038  ?
+\char e039  BOMBADIL_HW
+\char e03A  TW_MH MALTA_W_HOOK 
+\char e03B  TW_MH_BELERIANDIC VALA_W_HOOK 
+
+\char e03C  TW_HW_LOWDHAM HARP_SHAPED
+\char e03D  VAIA WAIA VAIYA
+\char e03E  ?
+\char e03F  ?      
+
+\char e040  A_TEHTA
+\char e041  A_TEHTA_INF
+\char e042  I_TEHTA_DOUBLE Y_TEHTA
+\char e043  I_TEHTA_DOUBLE_INF PALATAL_SIGN Y_TEHTA_INF 
+
+\char e044  I_TEHTA
+\char e045  I_TEHTA_INF NO_VOWEL_DOT UNUTIXE
+\char e046  E_TEHTA
+\char e047  E_TEHTA_INF
+
+\char e048  E_TEHTA_DOUBLE
+\char e049  E_TEHTA_DOUBLE_INF GEMINATE_DOUBLE
+\char e04A  O_TEHTA
+\char e04B  O_TEHTA_INF
+
+\char e04C  U_TEHTA
+\char e04D  U_TEHTA_INF
+\char e04E  O_TEHTA_DOUBLE
+\char e04F  U_TEHTA_DOUBLE
+
+\char e050  NASALIZE_SIGN NASALIZE_SIGN_TILD      
+\char e051  GEMINATE_SIGN GEMINATE_SIGN_TILD
+\char e052  WA_TEHTA SEV_TEHTA
+\char e053  TEHTA_BREVE A_TEHTA_CIRCUM_REVERSED
+
+\char e054  E_TEHTA_GRAVE
+\char e055  A_TEHTA_CIRCUM  
+\char e056  A_TEHTA_REVERSED A_TEHTA_DOUBLE
+\char e057  THINNAS  THINF_STROKE
+
+\** THE TWO FOLLOWING ONES ARE HIGHLY DISCUSSABLE, MAYBE WE SHOULD ADD A VIRTUAL CHAR FOR THESE **\
+\char e058  SARINCE_ENDING_LONG SARINCE_FLOURISHED
+\char e059  SARINCE COMBINING_SARINCE SHOOK_RIGHT_L SHOOK_LEFT_L 
+\char e05A  ?
+\char e05B  ?
+
+\char e065  PUNCT_EXCLAM
+\char e066  PUNCT_INTERR
+\char e067  ELVISH_PAREN PUNCT_PAREN_L PUNCT_PAREN_R PUNCT_PAREN_L_ALT PUNCT_PAREN_R_ALT BOOKMARK_SIGN
+\char e068  PUNCT_TILD
+ 
+\char e069  PUNCT_DTILD RING_MARK_L RING_MARK_R
+
+\char e06A  DQUOT_OPEN
+\char e06B  DQUOT_CLOSE
+\char e06C  THORIN_EXCLAMATION
+
+\char e070 NUM_0 
+\char e071 NUM_1 
+\char e072 NUM_2 
+\char e073 NUM_3 
+\char e074 NUM_4 
+\char e075 NUM_5 
+\char e076 NUM_6 
+\char e077 NUM_7 
+\char e078 NUM_8 
+\char e079 NUM_9 
+\char e07A NUM_10
+\char e07B NUM_11
+\char e07C NUM_12
+
+\char e07D CIRC_TEHTA_INF
+
+\** Ligatured results are mapped here **\
+\**
+\char 10037 AHA_TINCO
+\char 10038 HWESTA_TINCO
+\char 10039 ANCA_CLOSED SILME_AHA
+**\
+
+\char 204A OLD_ENGLISH_AND
+
+\char 200d ZWJ
+
+\** Ligatured sequences used as one entity in modes **\
+\beg seq AHA_TINCO
+  AHA ZWJ TINCO
+\end
+
+\beg seq HWESTA_TINCO
+  HWESTA ZWJ TINCO
+\end
+
+\beg seq ANCA_CLOSED SILME_AHA
+  SILME ZWJ AHA
+\end
+
