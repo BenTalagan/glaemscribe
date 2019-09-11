@@ -723,6 +723,12 @@ GlaemscribeEditor.prototype.serializeCurrentCharset = function()
       });
       content += "\\end\n\n"
     }
+    else if(c.is_sequence()) {
+      content += "\\beg seq " + c.names.join(" ") + "\n";
+      content += "  " + c.sequence.join(" ") + "\n";
+      content += "\\end\n\n"
+      
+    }
     else  
       content += "\\** " + c.str + " **\\ \\char " + parseInt(c.code).toString(16) + " " + c.names.join(" ") + "\n";
   }  
@@ -1034,7 +1040,7 @@ GlaemscribeEditor.prototype.genericRefreshTranscription = function(entry_selecto
       if(success)
       {
         editor.refreshFont(transcribed_selector, false);
-        transcribed_selector.html(ret);
+        transcribed_selector.html(ret.replace(/\n/g,"<br/>"));
         
         if(debug_preprocessor_selector) 
           debug_preprocessor_selector.html(dbg_ctx.preprocessor_output);
