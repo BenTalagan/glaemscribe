@@ -199,6 +199,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 \char e07D CIRC_TEHTA_INF
 
+\** Ligatured results are mapped here **\
+\**
+\char 10037 AHA_TINCO
+\char 10038 HWESTA_TINCO
+\char 10039 ANCA_CLOSED SILME_AHA
+**\
+
 \char 204A OLD_ENGLISH_AND
 
 \char 200d ZWJ
