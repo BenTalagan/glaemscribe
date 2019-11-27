@@ -14,6 +14,9 @@ print    = console.log;
 // Use the following trick to load the javascript that we would use normally in a web browser
 function include(path) { var code = Fs.readFileSync(path, 'utf-8'); Vm.runInThisContext(code, path); }
 
+global.require    = require;
+global.__dirname  = __dirname;
+
 // Load separately the espeakng library
 include(__dirname + "/../espeakng.for.glaemscribe.nowasm.sync.js")
 include(__dirname + "/../glaemscribe_tts.js")

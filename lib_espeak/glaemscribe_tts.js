@@ -41,7 +41,7 @@ Glaemscribe.TTS = function() {
 }
 
 Glaemscribe.TTS.ipa_configurations = {
-  'en': {
+  'ent': {
     special_token_ncn: '', // no space / sign / no space
     special_token_ncs: '', // no space / sign / space
     special_token_scn: '', // space / sign / no space
@@ -58,7 +58,7 @@ Glaemscribe.TTS.ipa_configurations = {
     // This is because apostrophes shouldn't trigger a pause in the prononciation (e.g. genitives) 
     clauseunaffecting_punctuation: "·“”«»-[](){}<>≤≥$|\"" 
   },  
-  'fr': {
+  'frt': {
     special_token_ncn: '', // no space / sign / no space
     special_token_ncs: '', // no space / sign / space
     special_token_scn: '', // space / sign / no space
@@ -82,12 +82,9 @@ Glaemscribe.TTS.ipa_configurations = {
   }
 }
 
-Glaemscribe.TTS.ipa_configurations['en-us']              = Glaemscribe.TTS.ipa_configurations['en'];
-Glaemscribe.TTS.ipa_configurations['en-gb']              = Glaemscribe.TTS.ipa_configurations['en'];
-Glaemscribe.TTS.ipa_configurations['en-tengwar-zlegacy'] = Glaemscribe.TTS.ipa_configurations['en'];
-Glaemscribe.TTS.ipa_configurations['en-tengwar']         = Glaemscribe.TTS.ipa_configurations['en'];
-Glaemscribe.TTS.ipa_configurations['en-tengwar-gb']      = Glaemscribe.TTS.ipa_configurations['en'];
-Glaemscribe.TTS.ipa_configurations['en-tengwar-us']      = Glaemscribe.TTS.ipa_configurations['en'];
+Glaemscribe.TTS.ipa_configurations['ent']         = Glaemscribe.TTS.ipa_configurations['ent'];
+Glaemscribe.TTS.ipa_configurations['ent-gb']      = Glaemscribe.TTS.ipa_configurations['ent'];
+Glaemscribe.TTS.ipa_configurations['ent-us']      = Glaemscribe.TTS.ipa_configurations['ent'];
 
 
 Glaemscribe.TTS.voice_list = function(voice) {
@@ -96,6 +93,10 @@ Glaemscribe.TTS.voice_list = function(voice) {
 
 // Static helper. To be used in pure js (not ruby).
 Glaemscribe.TTS.option_name_to_voice = function(oname) {
+  
+  if(!oname)
+    return null;
+  
   return oname.toLowerCase().replace(/^espeak_voice_/,'').replace(/_/g,'-');
 }
 
@@ -273,7 +274,7 @@ Glaemscribe.TTS.prototype.synthesize_ipa = function(text, args, onended) {
   var client = this;
   
   args            = args || {}
-  var voice       = args.voice  || 'en'
+  var voice       = args.voice  || 'ent'
   
   var ts = new Date();
   var tp = ts;
@@ -302,7 +303,7 @@ Glaemscribe.TTS.prototype.synthesize_ipa = function(text, args, onended) {
   }
   
   args = args || {}
-  client.proxy.set_voice(args.voice  || 'en');
+  client.proxy.set_voice(args.voice  || 'ent');
 
   var ts = new Date();
   var ret = {};
@@ -329,12 +330,12 @@ Glaemscribe.TTS.prototype.synthesize_wav = function(text, args, onended) {
   var client = this;
   
   args            = args || {}
-  var voice       = args.voice  || 'en'
+  var voice       = args.voice  || 'ent'
 
   args = args || {}
   client.proxy.set_rate(args.rate    || 120);
   client.proxy.set_pitch(args.pitch  || 5);
-  client.proxy.set_voice(args.voice  || 'en');
+  client.proxy.set_voice(args.voice  || 'ent');
   
   if(args.has_raw_mode) {
     var pre_raw_res    = this.escape_raw_mode(text,true);

@@ -149,7 +149,7 @@ Glaemscribe.Mode.prototype.strict_transcribe = function(content, charset, debug_
 
       debug_context.tts_output += content;
     } catch(e) {
-      return [false, "TTS pre-transcription failed : #{e}."];
+      return [false, "TTS pre-transcription failed : " + e];
     }
   }
 
