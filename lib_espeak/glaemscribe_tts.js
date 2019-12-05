@@ -41,7 +41,7 @@ Glaemscribe.TTS = function() {
 }
 
 Glaemscribe.TTS.ipa_configurations = {
-  'ent': {
+  'en-tengwar': {
     special_token_ncn: '', // no space / sign / no space
     special_token_ncs: '', // no space / sign / space
     special_token_scn: '', // space / sign / no space
@@ -82,9 +82,10 @@ Glaemscribe.TTS.ipa_configurations = {
   }
 }
 
-Glaemscribe.TTS.ipa_configurations['ent']         = Glaemscribe.TTS.ipa_configurations['ent'];
-Glaemscribe.TTS.ipa_configurations['ent-gb']      = Glaemscribe.TTS.ipa_configurations['ent'];
-Glaemscribe.TTS.ipa_configurations['ent-us']      = Glaemscribe.TTS.ipa_configurations['ent'];
+Glaemscribe.TTS.ipa_configurations['en-tengwar']         = Glaemscribe.TTS.ipa_configurations['en-tengwar'];
+Glaemscribe.TTS.ipa_configurations['en-tengwar-rp']      = Glaemscribe.TTS.ipa_configurations['en-tengwar'];
+Glaemscribe.TTS.ipa_configurations['en-tengwar-gb']      = Glaemscribe.TTS.ipa_configurations['en-tengwar'];
+Glaemscribe.TTS.ipa_configurations['en-tengwar-us']      = Glaemscribe.TTS.ipa_configurations['en-tengwar'];
 
 
 Glaemscribe.TTS.voice_list = function(voice) {
@@ -131,6 +132,9 @@ Glaemscribe.TTS.prototype.pre_ipa = function(voice,text) {
   
   var client = this;
   var config = Glaemscribe.TTS.ipa_configurations[voice];
+  
+  if(!config)
+    throw "Trying to use unsupported voice '" + voice + "'!";
   
   // Normalize all tabs by spaces
   text = text.replace(/\t/g," ");
@@ -274,7 +278,7 @@ Glaemscribe.TTS.prototype.synthesize_ipa = function(text, args, onended) {
   var client = this;
   
   args            = args || {}
-  var voice       = args.voice  || 'ent'
+  var voice       = args.voice  || 'en-tengwar'
   
   var ts = new Date();
   var tp = ts;
@@ -303,7 +307,7 @@ Glaemscribe.TTS.prototype.synthesize_ipa = function(text, args, onended) {
   }
   
   args = args || {}
-  client.proxy.set_voice(args.voice  || 'ent');
+  client.proxy.set_voice(args.voice  || 'en-tengwar');
 
   var ts = new Date();
   var ret = {};
@@ -330,12 +334,12 @@ Glaemscribe.TTS.prototype.synthesize_wav = function(text, args, onended) {
   var client = this;
   
   args            = args || {}
-  var voice       = args.voice  || 'ent'
+  var voice       = args.voice  || 'en-tengwar'
 
   args = args || {}
   client.proxy.set_rate(args.rate    || 120);
   client.proxy.set_pitch(args.pitch  || 5);
-  client.proxy.set_voice(args.voice  || 'ent');
+  client.proxy.set_voice(args.voice  || 'en-tengwar');
   
   if(args.has_raw_mode) {
     var pre_raw_res    = this.escape_raw_mode(text,true);

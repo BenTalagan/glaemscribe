@@ -17,7 +17,7 @@
     for(var i=0;i<1000;i++)
       r = r + hi;
 
-    client.synthesize_ipa(r,{voice:'ent'},function(ipa) {
+    client.synthesize_ipa(r,{voice:'en-tengwar'},function(ipa) {
       document.write(JSON.stringify(ipa))
     });
     

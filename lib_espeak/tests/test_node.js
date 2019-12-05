@@ -23,19 +23,19 @@ include(__dirname + "/../glaemscribe_tts.js")
 
 client = new Glaemscribe.TTS();
 
-client.synthesize_wav("fold. '",{voice:'en'},function(wav) {
+client.synthesize_wav("fold. '",{voice:'en-tengwar'},function(wav) {
   console.log(wav)
 });
 
-client.synthesize_ipa("This has been folded. And it's cool .",{voice:'en'},function(ipa) {
+client.synthesize_ipa("This has been folded. And it's cool .",{voice:'en-tengwar'},function(ipa) {
   console.log(ipa)
 });
 
-client.synthesize_ipa("Hi.",{voice:'en'},function(ipa) {
+client.synthesize_ipa("Hi.",{voice:'en-tengwar'},function(ipa) {
   console.log(ipa)
 });
 
-client.synthesize_ipa("Hi?",{voice:'en'},function(ipa) {
+client.synthesize_ipa("Hi?",{voice:'en-tengwar'},function(ipa) {
   console.log(ipa)
 });
 
@@ -44,6 +44,6 @@ var r = ""
 for(var i=0;i<1000;i++)
   r = r + hi;
 
-client.synthesize_ipa(r,{voice:'en'},function(ipa) {
+client.synthesize_ipa(r,{voice:'en-tengwar'},function(ipa) {
   console.log(ipa)
 });
