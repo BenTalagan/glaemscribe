@@ -28,6 +28,7 @@ Glaemscribe.ModeDebugContext = function()
   this.processor_pathes     = [];
   this.processor_output     = [];
   this.postprocessor_output = "";
+  this.tts_output = "";
   
   return this;
 }
@@ -194,9 +195,7 @@ Glaemscribe.Mode.prototype.transcribe = function(content, charset) {
 
   var ret = "";
   var res = true;
-  
-  debug_context.tts_output = "";
- 
+   
   if(raw_mode != null)
   {
     var chunks = content.split(/({{[\s\S]*?}})/);
