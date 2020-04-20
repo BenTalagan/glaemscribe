@@ -22,6 +22,23 @@
 
 module Glaemscribe
   module API
+    
+    class ModeDebugContext
+      attr_accessor :preprocessor_output, 
+        :processor_pathes, 
+        :processor_output, 
+        :postprocessor_output,
+        :tts_output
+        
+      def initialize
+        @preprocessor_output  = ""
+        @processor_pathes     = []
+        @processor_output     = []
+        @postprocessor_output = ""
+        @tts_output = ""
+      end
+    end
+    
     class Mode
       
       attr_accessor :errors
@@ -45,8 +62,6 @@ module Glaemscribe
       attr_reader   :current_tts_voice
       
       attr_reader   :latest_option_values
-         
-      
          
       def initialize(name)
         @name               = name
@@ -141,13 +156,14 @@ module Glaemscribe
         @raw_mode = loaded_raw_mode.deep_clone
       end
       
-      def strict_transcribe(content, charset = nil)
+      def strict_transcribe(content, charset, debug_context)
         charset = default_charset if !charset
         return false, "*** No charset usable for transcription. Failed!" if !charset
   
         if has_tts
           begin
             content = TTS.ipa(content, @current_tts_voice, (raw_mode != nil) )['ipa']
+            debug_context.tts_output += content
           rescue StandardError => e
             return false, "TTS pre-transcription failed : #{e}."
           end
@@ -160,9 +176,16 @@ module Glaemscribe
             l[-1] = "" 
             restore_lf = true
           end
+          
           l = @pre_processor.apply(l)
-          l = @processor.apply(l)
+          debug_context.preprocessor_output += l + "\n"
+ 
+          l = @processor.apply(l, debug_context)
+          debug_context.processor_output += l
+
           l = @post_processor.apply(l, charset)
+          debug_context.postprocessor_output += l + "\n"
+
           l += "\n" if restore_lf
           l
         }.join
@@ -170,32 +193,34 @@ module Glaemscribe
       end
       
       def transcribe(content, charset = nil)
+        debug_context = ModeDebugContext.new
         if raw_mode
           chunks = content.split(/({{.*?}})/m)
           ret = ''
           res = true
           chunks.each{ |c|
             if c =~ /{{(.*?)}}/m
-              succ, r = raw_mode.strict_transcribe($1,charset)
+              succ, r = raw_mode.strict_transcribe($1, charset, debug_context)
       
               if !succ
-                return false, r # Propagate error
+                return false, r, debug_context # Propagate error
               end
       
               ret += r
             else
-              succ, r = strict_transcribe(c,charset)
+              succ, r = strict_transcribe(c,charset,debug_context)
 
               if !succ
-                return false, r # Propagate error 
+                return false, r, debug_context # Propagate error 
               end
       
               ret += r
             end
           }
-          return res,ret
+          return res, ret, debug_context
         else
-          strict_transcribe(content,charset)
+          succ, r = strict_transcribe(content, charset, debug_context)
+          return succ, r, debug_context
         end
       end
       

@@ -73,7 +73,7 @@ module Glaemscribe
         }        
       end
       
-      def apply(l)
+      def apply(l, debug_context)
         ret = []
         current_group     = nil
         accumulated_word  = ""
@@ -81,14 +81,14 @@ module Glaemscribe
         l.split("").each{ |c|
           case c
           when " ", "\t" 
-            ret += transcribe_word(accumulated_word)
+            ret += transcribe_word(accumulated_word, debug_context)
             ret += ["*SPACE"]
             
             accumulated_word = ""
           when "\r"
             # Ignore
           when "\n"
-            ret += transcribe_word(accumulated_word)
+            ret += transcribe_word(accumulated_word, debug_context)
             ret += ["*LF"]
             
             accumulated_word = ""
@@ -97,24 +97,27 @@ module Glaemscribe
             if c_group == current_group
               accumulated_word += c
             else
-              ret += transcribe_word(accumulated_word)
+              ret += transcribe_word(accumulated_word, debug_context)
               current_group    = c_group
               accumulated_word = c
             end
           end            
         }
         # Just in case
-        ret += transcribe_word(accumulated_word)
+        ret += transcribe_word(accumulated_word, debug_context)
         ret
       end
       
-      def transcribe_word(word)
+      def transcribe_word(word, debug_context)
         res = []
         word = WORD_BOUNDARY_TREE + word + WORD_BOUNDARY_TREE
         while word.length != 0
-          r, len = @transcription_tree.transcribe(word)       
-          word = word[len..-1]
-          res += r
+          tokens, len = @transcription_tree.transcribe(word)       
+          word        = word[len..-1]
+          eaten       = word[0..len-1]
+          res         += tokens
+          
+          debug_context.processor_pathes << [eaten, tokens, tokens]
         end
         # Return token list
         res
