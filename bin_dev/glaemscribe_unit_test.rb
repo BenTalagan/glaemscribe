@@ -45,29 +45,30 @@ def dump_html_error(prefix, charset, source_line, true_line, teng_line)
     $error_file.puts "<!doctype HTML>"
     $error_file.puts "<html>"
     $error_file.puts "<head>"
-    $error_file.puts "<link type='text/css' rel='stylesheet' href='../fonts/webs/sarati-eldamar-rtlb-glaemscrafu.css'>"
-    $error_file.puts "<link type='text/css' rel='stylesheet' href='../fonts/webs/tengwar-annatar-glaemscrafu.css'>"
-    $error_file.puts "<link type='text/css' rel='stylesheet' href='../fonts/webs/tengwar-annatar-glaemscrafu-bold.css'>"
-    $error_file.puts "<link type='text/css' rel='stylesheet' href='../fonts/webs/tengwar-annatar-glaemscrafu-italic.css'>"
-    $error_file.puts "<link type='text/css' rel='stylesheet' href='../fonts/webs/tengwar-sindarin-glaemscrafu.css'>"
-    $error_file.puts "<link type='text/css' rel='stylesheet' href='../fonts/webs/tengwar-eldamar-glaemscrafu.css'>"
-    $error_file.puts "<link type='text/css' rel='stylesheet' href='../fonts/webs/tengwar-parmaite-glaemscrafu.css'>"
-    $error_file.puts "<link type='text/css' rel='stylesheet' href='../fonts/webs/tengwar-elfica-glaemscrafu.css'>"
+    $error_file.puts "<meta charset='UTF-8'>"
+    $error_file.puts "<link type='text/css' rel='stylesheet' href='../fonts/build/webs/sarati-eldamar-rtlb-glaemscrafu.css'>"
+    $error_file.puts "<link type='text/css' rel='stylesheet' href='../fonts/build/webs/legacy/tengwar-annatar-glaemscrafu.css'>"
+    $error_file.puts "<link type='text/css' rel='stylesheet' href='../fonts/build/webs/legacy/tengwar-annatar-glaemscrafu-bold.css'>"
+    $error_file.puts "<link type='text/css' rel='stylesheet' href='../fonts/build/webs/legacy/tengwar-annatar-glaemscrafu-italic.css'>"
+    $error_file.puts "<link type='text/css' rel='stylesheet' href='../fonts/build/webs/legacy/tengwar-sindarin-glaemscrafu.css'>"
+    $error_file.puts "<link type='text/css' rel='stylesheet' href='../fonts/build/webs/legacy/tengwar-eldamar-glaemscrafu.css'>"
+    $error_file.puts "<link type='text/css' rel='stylesheet' href='../fonts/build/webs/legacy/tengwar-parmaite-glaemscrafu.css'>"
+    $error_file.puts "<link type='text/css' rel='stylesheet' href='../fonts/build/webs/legacy/tengwar-elfica-glaemscrafu.css'>"
     $error_file.puts "</head>"
     $error_file.puts "<body>"    
   end
   
   font_name = case charset.name
   when 'tengwar_ds_sindarin'
-    'Tengwar Sindarin Glaemscrafu'
+    'TengwarSindarinGlaemscrafu'
   when 'tengwar_ds_annatar', 'tengwar_ds_annatar_italic', 'tengwar_ds_annatar_bold'
-    'Tengwar Annatar Glaemscrafu'
+    'TengwarAnnatarGlaemscrafu'
   when 'tengwar_ds_eldamar'
-    'Tengwar Eldamar Glaemscrafu'
+    'TengwarEldamarGlaemscrafu'
   when 'tengwar_ds_parmaite'
-    'Tengwar Parmaite Glaemscrafu'
+    'TengwarParmaiteGlaemscrafu'
   when 'tengwar_ds_elfica'
-    'Tengwar Elfica Glaemscrafu'
+    'TengwarElficaGlaemscrafu'
   else 
     'UNRESOLVED_FONT'
   end
@@ -182,7 +183,7 @@ def unit_test_directory(directory, error_context = {ecount: 0, wcount: 0})
     
       source             = source.lines.map{|l| l.strip }.join("\n").strip
       true_teng          = true_teng.lines.map{|l| l.strip }.join("\n").strip
-      success, teng      = mode.transcribe(source, charset)
+      success, teng, dbg = mode.transcribe(source, charset)
    
       if !success
         puts "[****]" + teng
@@ -291,7 +292,7 @@ def dump_test_directory(directory, dump_directory)
     
       File.open( dump_directory + "/expecteds/" + full_name + "/" + bfname,"wb:utf-8") { |fw|    
         source             = source.lines.map{|l| l.strip }.join("\n").strip
-        success, teng      = mode.transcribe(source, charset)
+        success, teng,dbg  = mode.transcribe(source, charset)
         teng = teng.lines.map{|l| l.strip }.join("\n").strip
         fw << teng 
       }
