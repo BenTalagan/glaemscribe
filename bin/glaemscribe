@@ -289,9 +289,9 @@ end
 
 command :info do |c|
   
-  c.syntax      = 'glaemscribe info'
+  c.syntax      = 'glaemscribe info modename'
   c.summary     = "Displays information about an embedded mode"
-  c.description = "Displays information about the embedded mode 'modename'."
+  c.description = "Displays information about the embedded mode #{HighLine.default_instance.color "modename", :bold}. \nUse #{HighLine.default_instance.color "glaemscribe list" , :bold} to get a list of available modes."
     
   c.action do |args, options|
     
