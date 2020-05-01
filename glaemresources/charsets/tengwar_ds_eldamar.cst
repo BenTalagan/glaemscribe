@@ -24,7 +24,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 \** Charset specially customized for Tengwar Eldamar (Glaemscrafu patched version) **\ 
 
-\version 0.1.0
+\version 0.1.1
 
 \beg changelog
   \entry "0.0.5" "Added VALA_W_HOOK, VAIYA. Moved A_TEHTA_INV_L due to soft hyphen bug."
@@ -33,6 +33,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   \entry "0.0.8" "Added NBSP"
   \entry "0.0.9" "Moved back some chars to latin blocks to avoid word-wrapping problems"
   \entry "0.1.0" "Added ELVISH_PAREN tokien, reworked sarince token names."
+  \entry "0.1.1" "Reworked sarince for left-oriented carriers"
 \end
 
 \**   **\ \char 20 SPACE              
@@ -530,6 +531,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 \end
 
 \beg virtual SARINCE
-  \class SHOOK_LEFT_L CALMA QUESSE ANGA UNGWE TW_EXT_13 TW_EXT_14 TW_EXT_23 TW_EXT_24 HWESTA_SINDARINWA
-  \class SHOOK_RIGHT_L TELCO ARA HALLA TINCO PARMA ANDO UMBAR SULE FORMEN AHA HWESTA ANTO AMPA ANCA UNQUE NUMEN MALTA NOLDO NWALME ORE VALA ANNA VILYA TW_EXT_11 TW_EXT_12 TW_EXT_21 TW_EXT_22 ROMEN ARDA LAMBE ALDA SILME SILME_NUQUERNA SILME_NUQUERNA_ALT ESSE ESSE_NUQUERNA HYARMEN YANTA URE OSSE VAIA MALTA_W_HOOK VALA_W_HOOK SHOOK_BEAUTIFUL ANCA_CLOSED HARP_SHAPED AHA_TINCO HWESTA_TINCO NUM_0 NUM_1 NUM_2 NUM_3 NUM_4 NUM_5 NUM_6 NUM_7 NUM_8 NUM_9 NUM_10 NUM_11
+  \class SHOOK_LEFT_L CALMA QUESSE ANGA UNGWE TW_EXT_13 TW_EXT_14 TW_EXT_23 TW_EXT_24 HWESTA_SINDARINWA VALA_W_HOOK AHA HWESTA ANCA UNQUE NOLDO NWALME ANNA VILYA OSSE ANCA_CLOSED SILME
+  \class SHOOK_RIGHT_L TELCO ARA HALLA TINCO PARMA ANDO UMBAR SULE FORMEN ANTO AMPA NUMEN MALTA ORE VALA TW_EXT_11 TW_EXT_12 TW_EXT_21 TW_EXT_22 ROMEN ARDA LAMBE ALDA SILME_NUQUERNA SILME_NUQUERNA_ALT ESSE ESSE_NUQUERNA HYARMEN YANTA URE  VAIA MALTA_W_HOOK SHOOK_BEAUTIFUL  HARP_SHAPED AHA_TINCO HWESTA_TINCO NUM_0 NUM_1 NUM_2 NUM_3 NUM_4 NUM_5 NUM_6 NUM_7 NUM_8 NUM_9 NUM_10 NUM_11
 \end
