@@ -138,7 +138,7 @@ module Glaemscribe
                 var_value     = apply_vars(term.line, var_value_ex, true)      
                 
                 if !var_value
-                  @mode.errors << Glaeml::Error.new(term.line, "Thus, variable {#{var_name}} could not be declared.")
+                  @mode.errors << Glaeml::Error.new(term.line, "Thus, variable {#{arg_name}} could not be declared.")
                 end              
               end
             
