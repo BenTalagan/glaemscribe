@@ -12,9 +12,9 @@ Since 1.2.0, they have been transformed to a new generation of transitional form
 
 So the aim was, at first, to have a first *port* of these legacy fonts. Still, part of their mechanisms are still legacy (they still contain the multiple versions of tehtar, for example) because the OpenType features to have correct diacritic placement, ligatures, stacking and so on are difficult and long to implement and to design. Thus, all these legacy variants have been mapped in far blocks of the Private Use Area of the Unicode. That chosen *hacky* and *transitional* mapping can be consulted here :
 
-[**Transitional Mapping**](http://htmlpreview.github.io/?https://github.com/BenTalagan/glaemscribe/blob/master/fonts/doc/glaemscribe_transitional_unicode_fonts_mapping)
+[**Transitional Mapping**](http://htmlpreview.github.io/?https://raw.githubusercontent.com/BenTalagan/glaemscribe/master/fonts/doc/glaemscribe_transitional_unicode_fonts_mapping.html)
 
-See also the [**comparison chart for tengwar fonts**](http://htmlpreview.github.io/?https://github.com/BenTalagan/glaemscribe/blob/master/fonts/doc/glaemscribe_tengwar_fonts.html) for an overview of all features and changes.
+See also the [**comparison chart for tengwar fonts**](http://htmlpreview.github.io/?https://raw.githubusercontent.com/BenTalagan/glaemscribe/master/fonts/doc/glaemscribe_tengwar_fonts.html) for an overview of all features and changes.
 
 To summarize, Glǽmscribe relies at the moment on three families of fonts :
 
