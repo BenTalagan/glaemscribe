@@ -306,11 +306,14 @@ puts "Launching unit tests on the whole sample knowledge base to test if all mod
 # Load all modes
 Glaemscribe::API::ResourceManager::load_modes
 
+error_context = {ecount: 0, wcount: 0}
+
 # Print problems if modes have errors
 Glaemscribe::API::ResourceManager::loaded_modes.each{ |name,mode|  
   if(mode.errors.any?)
     mode.errors.each{ |e|
       puts "** #{mode.name}:#{e.line}: #{e.text}"
+      error_context[:ecount] += 1
     }
     next
   end
@@ -321,7 +324,6 @@ if ARGV[0] == "--dump"
   dump_test_directory(SCRIPT_PATH + "/../unit_tests/technical", SCRIPT_PATH + "/../unit_tests_dumped/technical" )
 else
   delete_html_error_file
-  error_context = {ecount: 0, wcount: 0}
   unit_test_directory(SCRIPT_PATH + "/../unit_tests/glaemscrafu",error_context)
   unit_test_directory(SCRIPT_PATH + "/../unit_tests/technical",error_context)
   puts"\n#{error_context[:ecount]} errors, #{error_context[:wcount]} warnings.\n\n"
