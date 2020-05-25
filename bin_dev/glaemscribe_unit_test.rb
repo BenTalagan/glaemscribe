@@ -322,6 +322,7 @@ Glaemscribe::API::ResourceManager::loaded_modes.each{ |name,mode|
 if ARGV[0] == "--dump" 
   dump_test_directory(SCRIPT_PATH + "/../unit_tests/glaemscrafu", SCRIPT_PATH + "/../unit_tests_dumped/glaemscrafu" )
   dump_test_directory(SCRIPT_PATH + "/../unit_tests/technical", SCRIPT_PATH + "/../unit_tests_dumped/technical" )
+  puts "Unit tests have been dumped, you can replace manually the old ones if you want."
 else
   delete_html_error_file
   unit_test_directory(SCRIPT_PATH + "/../unit_tests/glaemscrafu",error_context)
