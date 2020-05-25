@@ -130,6 +130,7 @@ Glaemscribe.Mode.prototype.get_raw_mode = function() {
   return mode.raw_mode;
 }
 
+// Transcribe, but with raw tengwar evacuated
 Glaemscribe.Mode.prototype.strict_transcribe = function(content, charset, debug_context) {
   
   var mode = this;
@@ -182,7 +183,7 @@ Glaemscribe.Mode.prototype.strict_transcribe = function(content, charset, debug_
     
     ret += l;
   }
-
+  
   return [true, ret, debug_context];  
 }
 

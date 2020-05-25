@@ -5,7 +5,7 @@ the transcription of texts between writing systems, and more
 specifically dedicated to the transcription of J.R.R. Tolkien's
 invented languages to some of his devised writing systems.
 
-Copyright (C) 2015 Benjamin Babut (Talagan).
+Copyright (C) 2015-2020 Benjamin Babut (Talagan).
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU Affero General Public License as published by
@@ -181,8 +181,9 @@ Glaemscribe.TTS.prototype.ipa_instrument_punct = function(voice, text) {
       accum += config['punct_token'];
       kept_signs.push(text[i]);
     }
-    else if(cup[text[i]] != null) // Clause non affecting sign
+    else if(cup[text[i]] != null || (text[i] == "'" && text[i+1] != "s")) 
     {
+      // Clause non affecting sign : dirty hack for single quote apostrophes ...
       // Same thing but the difference is that we REMOVE the sign before calculating the IPA.
       // We will restore it after IPA calculation.
       accum += " " + config['punct_token'] + " " ;
@@ -399,6 +400,88 @@ Glaemscribe.TTS.prototype.synthesize_wav = function(text, args, onended) {
   });
 
   return ret;
+}
+
+Glaemscribe.TTS.TokenType = {};
+Glaemscribe.TTS.TokenType.WORD      = 'WORD';
+Glaemscribe.TTS.TokenType.NON_WORD  = 'NON_WORD';
+Glaemscribe.TTS.TokenType.NUM       = 'NUM';
+Glaemscribe.TTS.TokenType.SPACE     = 'SPACE';
+Glaemscribe.TTS.TokenType.PUNCT     = 'PUNCT';
+
+Glaemscribe.TTS.prototype.orthographic_disambiguator_en = function(text) {
+    
+  var client = this;
+
+  var uwmatcher = /(\p{L}+)/u;
+  var spl       = text.split(uwmatcher);
+  
+  var tokens = spl.map(function(s) {
+    var t       = {};
+    var is_word = s.match(uwmatcher)
+    
+    t.type    = (is_word)?(Glaemscribe.TTS.TokenType.WORD):(Glaemscribe.TTS.TokenType.NON_WORD);
+    t.content = s; 
+    return t;
+  }); 
+  
+  var tokens2 = [];
+
+  // Handle apostrophe
+  for(var i=0;i<tokens.length;i++) {
+    if( i == 0 || i == tokens.length-1 || tokens[i].type == Glaemscribe.TTS.TokenType.WORD ) {
+      tokens2.push(tokens[i]);      
+      continue;
+    }
+    
+    if(tokens[i].content == "'" && 
+      tokens[i-1].type == Glaemscribe.TTS.TokenType.WORD && 
+      tokens[i+1].type == Glaemscribe.TTS.TokenType.WORD ) 
+    {
+      tokens2.pop();
+      var tok     = {};
+      tok.type    = Glaemscribe.TTS.TokenType.WORD;
+      tok.content = tokens[i-1].content + tokens[i].content + tokens[i+1].content;
+      tokens2.push(tok);
+      i += 1;
+    }
+    else {
+      tokens2.push(tokens[i]);
+    }
+  }
+  tokens = tokens2;
+  
+  // Numerize tokens
+  var i = 0;
+  tokens.forEach(function(t) {
+    t.num = i;
+    i += 1;
+  });
+  
+  // Remove non-speechable tokens
+  var stokens = tokens.filter(function(t) {
+    return (t.type == Glaemscribe.TTS.TokenType.WORD);
+  });
+  
+  // Join speachable tokens
+  var r = stokens.map(function(t) { return t.content}).join('  ');
+  
+  var args  = {};
+  var voice = args.voice  || 'en-tengwar';
+  
+  client.proxy.set_voice(voice);
+  client.proxy.synthesize(r, false, true, true, function(result) {
+    r = result.pho;
+  });
+  r = r.split('').map(function(t) { return t.trim() });
+
+  var j = 0;
+  r.forEach(function(w) {
+    tokens[stokens[j].num].ipa = r[j];
+    j += 1;
+  });
+  
+  return tokens;
 }
 
 Glaemscribe.TTS.is_engine_loaded = function() {
