@@ -48,28 +48,28 @@ Glaemscribe.CharsetParser.prototype.parse_raw = function(charset_name, raw)
     charset.add_char(char.line, code, names)
   }  
   
-  doc.root_node.gpath("seq").glaem_each(function(_,seq_elemnt) {
+  glaemEach(doc.root_node.gpath("seq"), function(_,seq_elemnt) {
     var names       = seq_elemnt.args;
     var child_node  = seq_elemnt.children[0];   
     var seq         = (child_node && child_node.is_text())?(child_node.args[0]):("")
     charset.add_sequence_char(seq_elemnt.line,names,seq);
   });
   
-  doc.root_node.gpath("virtual").glaem_each(function(_,virtual_element) { 
+  glaemEach(doc.root_node.gpath("virtual"), function(_,virtual_element) {
     var names     = virtual_element.args;
     var classes   = [];
     var reversed  = false;
     var deflt     = null;
-    virtual_element.gpath("class").glaem_each(function(_,class_element) {
+    glaemEach(virtual_element.gpath("class"), function(_,class_element) {
       var vc        = new Glaemscribe.VirtualChar.VirtualClass();
       vc.target     = class_element.args[0];
       vc.triggers   = class_element.args.slice(1);   
       classes.push(vc);
     });
-    virtual_element.gpath("reversed").glaem_each(function(_,reversed_element) {
+    glaemEach(virtual_element.gpath("reversed"), function(_,reversed_element) {
       reversed = true;
     });
-    virtual_element.gpath("default").glaem_each(function(_,default_element) {
+    glaemEach(virtual_element.gpath("default"), function(_,default_element) {
       deflt = default_element.args[0];
     });
     charset.add_virtual_char(virtual_element.line,classes,names,reversed,deflt);

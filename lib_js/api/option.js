@@ -35,7 +35,7 @@ Glaemscribe.Option = function(mode, name, default_value_name, values, line, visi
   this.line               = line;
   
   option.value_to_names     = {};
-  option.values.glaem_each(function(vname,v) {
+  glaemEach(option.values, function(vname,v) {
     option.value_to_names[v] = vname;
   });
   

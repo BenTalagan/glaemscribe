@@ -39,15 +39,15 @@ Glaemscribe.TranscriptionProcessor.prototype.finalize = function(options) {
   processor.transcription_tree.add_subpath(Glaemscribe.WORD_BOUNDARY_TREE,  [""]);
   processor.transcription_tree.add_subpath(Glaemscribe.WORD_BREAKER,        [""]);
   
-  this.rule_groups.glaem_each(function(gname,rg) {
+  glaemEach(this.rule_groups, function(gname,rg) {
     rg.finalize(options);
   });
   
   // Build the input charsets
   processor.in_charset = {}
   
-  this.rule_groups.glaem_each(function(gname, rg) {
-    rg.in_charset.glaem_each(function(char, group) {
+  glaemEach(this.rule_groups, function(gname, rg) {
+    glaemEach(rg.in_charset, function(char, group) {
       
       var group_for_char  = processor.in_charset[char];
            
@@ -59,7 +59,7 @@ Glaemscribe.TranscriptionProcessor.prototype.finalize = function(options) {
     })
   });
   
-  this.rule_groups.glaem_each(function(gname, rg) {
+  glaemEach(this.rule_groups, function(gname, rg) {
     for(var r=0;r<rg.rules.length;r++)
     {
       var rule = rg.rules[r];

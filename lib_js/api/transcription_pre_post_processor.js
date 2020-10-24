@@ -53,7 +53,7 @@ Glaemscribe.PrePostProcessorOperator.prototype.finalize_glaeml_element = functio
   for(var i=0;i<ge.args.length;i++)
     ge.args[i] = op.eval_arg(ge.args[i], trans_options);
 
-  ge.children.glaem_each(function(idx, child) {
+  glaemEach(ge.children, function(idx, child) {
     op.finalize_glaeml_element(child, trans_options);
   });
   return ge;
@@ -98,7 +98,7 @@ Glaemscribe.TranscriptionPrePostProcessor.prototype.finalize = function(options)
   this.operators = []
   this.descend_if_tree(this.root_code_block, options);
   
-  this.operators.glaem_each(function(op_num, op) {
+  glaemEach(this.operators, function(op_num, op) {
     op.finalize(options);
   });
 }

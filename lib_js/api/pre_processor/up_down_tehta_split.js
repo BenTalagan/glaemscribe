@@ -62,7 +62,7 @@ Glaemscribe.UpDownTehtaSplitPreProcessorOperator.prototype.finalize = function(t
     this.consonant_map[c] = c;
   }
 
-  var all_letters = vowel_list.concat(consonant_list).join("").split("").sort().unique();
+  var all_letters = uniqueArray(vowel_list.concat(consonant_list).join("").split("").sort());
 
   for(var li=0;li<all_letters.length;li++)
   {
@@ -93,10 +93,11 @@ Glaemscribe.UpDownTehtaSplitPreProcessorOperator.prototype.apply_to_word = funct
       var r   = ret[0];
       var len = ret[1];   
       
-      if(r instanceof Array && r.equals([Glaemscribe.UNKNOWN_CHAR_OUTPUT]))
+      if (Array.isArray(r) && arrayEquals(r, [Glaemscribe.UNKNOWN_CHAR_OUTPUT])) {
         res.push(w[0]); 
-      else
+      } else {
         res.push(r); 
+      }
     
       w = w.substring(len);
     }

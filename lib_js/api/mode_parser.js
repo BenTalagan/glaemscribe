@@ -49,7 +49,7 @@ Glaemscribe.ModeParser.prototype.validate_presence_of_children = function(parent
   }
   if(arg_count)
   {
-    res.glaem_each(function(c,child_node) {
+    glaemEach(res, function(c,child_node) {
       parser.validate_presence_of_args(child_node, arg_count)
     });
   }
@@ -66,32 +66,32 @@ Glaemscribe.ModeParser.prototype.verify_mode_glaeml = function(doc)
   parser.validate_presence_of_children(doc.root_node, "authors",  1, 1);
   parser.validate_presence_of_children(doc.root_node, "version",  1, 1);
  
-  doc.root_node.gpath("charset").glaem_each(function (ce, charset_element) {
-    parser.validate_presence_of_args(charset_element, 2);        
+  glaemEach(doc.root_node.gpath("charset"), function (ce, charset_element) {
+    parser.validate_presence_of_args(charset_element, 2);
   });
  
-  doc.root_node.gpath("options.option").glaem_each(function (oe, option_element) {
+  glaemEach(doc.root_node.gpath("options.option"), function (oe, option_element) {
     parser.validate_presence_of_args(option_element, 2);
-    option_element.gpath("value").glaem_each(function (ve, value_element) {
+    glaemEach(option_element.gpath("value"), function (ve, value_element) {
       parser.validate_presence_of_args(value_element, 2);
     });
   });
   
-  doc.root_node.gpath("outspace").glaem_each(function (oe, outspace_element) {
-    parser.validate_presence_of_args(outspace_element, 1);        
+  glaemEach(doc.root_node.gpath("outspace"), function (oe, outspace_element) {
+    parser.validate_presence_of_args(outspace_element, 1);
   });
-  
-  doc.root_node.gpath("processor.rules").glaem_each(function (re, rules_element) {
-    parser.validate_presence_of_args(rules_element, 1);      
-    parser.validate_presence_of_children(rules_element,"if",null,1);  
-    parser.validate_presence_of_children(rules_element,"elsif",null,1);      
-  });  
 
-  doc.root_node.gpath("preprocessor.if").glaem_each(function (re, rules_element) { parser.validate_presence_of_args(rules_element,  1) }); 
-  doc.root_node.gpath("preprocessor.elsif").glaem_each(function (re, rules_element) { parser.validate_presence_of_args(rules_element,  1) });   
-  doc.root_node.gpath("postprocessor.if").glaem_each(function (re, rules_element) { parser.validate_presence_of_args(rules_element,  1) });  
-  doc.root_node.gpath("postprocessor.elsif").glaem_each(function (re, rules_element) { parser.validate_presence_of_args(rules_element,  1) }); 
-}   
+  glaemEach(doc.root_node.gpath("processor.rules"), function (re, rules_element) {
+    parser.validate_presence_of_args(rules_element, 1);
+    parser.validate_presence_of_children(rules_element,"if",null,1);
+    parser.validate_presence_of_children(rules_element,"elsif",null,1);
+  });
+
+  glaemEach(doc.root_node.gpath("preprocessor.if"), function (re, rules_element) { parser.validate_presence_of_args(rules_element,  1) });
+  glaemEach(doc.root_node.gpath("preprocessor.elsif"), function (re, rules_element) { parser.validate_presence_of_args(rules_element,  1) });
+  glaemEach(doc.root_node.gpath("postprocessor.if"), function (re, rules_element) { parser.validate_presence_of_args(rules_element,  1) });
+  glaemEach(doc.root_node.gpath("postprocessor.elsif"), function (re, rules_element) { parser.validate_presence_of_args(rules_element,  1) });
+}
 
 Glaemscribe.ModeParser.prototype.create_if_cond_for_if_term = function(line, if_term, cond)
 {
@@ -196,7 +196,7 @@ Glaemscribe.ModeParser.prototype.traverse_if_tree = function(context, text_proce
 
         var macro_args = child.args.slice(0);
         var macro_name = macro_args.shift();
-        macro_args.glaem_each( function(_,arg) {      
+        glaemEach(macro_args,  function(_,arg) {
           if(!arg.match(/[0-9A-Z_]+/)) {
             mode.errors.push(new Glaemscribe.Glaeml.Error(child.line, "Macro argument name " + arg + " has wrong format."));
             return;
@@ -342,21 +342,21 @@ Glaemscribe.ModeParser.prototype.parse_raw = function(mode_name, raw, mode_optio
   mode.world       = (doc.root_node.gpath('world')[0] || {args:[]}).args[0]
   mode.raw_mode_name = (doc.root_node.gpath('raw_mode')[0] || {args:[]}).args[0]    
   
-  doc.root_node.gpath('options.option').glaem_each(function(_,option_element) {
+  glaemEach(doc.root_node.gpath('options.option'), function(_,option_element) {
 
     var values          = {};
     var visibility      = null;
     var is_radio        = false;
     
-    option_element.gpath('value').glaem_each(function(_, value_element) {   
+    glaemEach(option_element.gpath('value'), function(_, value_element) {
       var value_name                = value_element.args[0];
       values[value_name]            = parseInt(value_element.args[1]);    
     });
-    option_element.gpath('visible_when').glaem_each(function(_, visible_element) {   
+    glaemEach(option_element.gpath('visible_when'), function(_, visible_element) {
       visibility = visible_element.args[0];
     });    
-    option_element.gpath('radio').glaem_each(function(_,__) { is_radio = true });    
-      
+    glaemEach(option_element.gpath('radio'), function(_,__) { is_radio = true });
+
     var option_name_at          = option_element.args[0];
     var option_default_val_at   = option_element.args[1];
     // TODO: check syntax of the option name
@@ -483,7 +483,7 @@ Glaemscribe.ModeParser.prototype.parse_raw = function(mode_name, raw, mode_optio
     // TTS::load_engine
     mode.has_tts = true;
     
-    espeak_option.values.glaem_each(function(vname,_) {
+    glaemEach(espeak_option.values, function(vname,_) {
       var voice = Glaemscribe.TTS.option_name_to_voice(vname);
       // Even if the TTS engine may not be loaded, the wrapper is. 
       // As such, we can check if voices are correct here.

@@ -39,7 +39,7 @@ Glaemscribe.ResolveVirtualsPostProcessorOperator.prototype.finalize = function(t
 
 Glaemscribe.ResolveVirtualsPostProcessorOperator.prototype.reset_trigger_states = function(charset) {
   var op = this;
-  charset.virtual_chars.glaem_each(function(idx,vc) {
+  glaemEach(charset.virtual_chars, function(idx,vc) {
     vc.object_reference                   = idx; // We cannot objects as references in hashes in js. Attribute a reference.
     op.last_triggers[vc.object_reference] = null; // Clear the state
   });
@@ -67,7 +67,7 @@ Glaemscribe.ResolveVirtualsPostProcessorOperator.prototype.apply_loop = function
   }
 
   // Update states of virtual classes
-  charset.virtual_chars.glaem_each(function(_,vc) {
+  glaemEach(charset.virtual_chars, function(_,vc) {
     var rc = vc.n2c(token);
     if(rc != null)
       op.last_triggers[vc.object_reference] = rc;
@@ -77,7 +77,7 @@ Glaemscribe.ResolveVirtualsPostProcessorOperator.prototype.apply_loop = function
 
 Glaemscribe.ResolveVirtualsPostProcessorOperator.prototype.apply_sequences = function(charset,tokens) {
   var ret = [];
-  tokens.glaem_each(function(_, token) {
+  glaemEach(tokens, function(_, token) {
     var c = charset.n2c(token);
     if(c && c.is_sequence())
       Array.prototype.push.apply(ret,c.sequence);
@@ -96,12 +96,12 @@ Glaemscribe.ResolveVirtualsPostProcessorOperator.prototype.apply = function(toke
   var new_tokens = tokens.slice(0);
   
   op.reset_trigger_states(charset);
-  tokens.glaem_each(function(idx,token) {
+  glaemEach(tokens, function(idx,token) {
     op.apply_loop(charset,tokens,new_tokens,false,token,idx);
   });
   
   op.reset_trigger_states(charset);
-  tokens.glaem_each_reversed(function(idx,token) {
+  glaemEachReversed(tokens, function(idx,token) {
     op.apply_loop(charset,tokens,new_tokens,true,token,idx);    
   });
   return new_tokens;

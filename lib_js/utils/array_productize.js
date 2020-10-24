@@ -1,16 +1,11 @@
-Object.defineProperty(Array.prototype, "productize", {
-  enumerable: false,
-  value: function(other_array) {
-    var array = this;
-    var res   = new Array(array.length * other_array.length);
-  
-    for(var i=0;i<array.length;i++)
-    {
-      for(var j=0;j<other_array.length;j++)
-      {
-        res[i*other_array.length+j] = [array[i],other_array[j]];
-      }
-    }
-    return res;
-  }
-});
+function productizeArray(array1, array2) {
+	var result = new Array(array1.length * array2.length);
+
+	for (var i = 0; i < array1.length; i++) {
+		for (var j = 0; j < array2.length; j++) {
+			result[i * array2.length + j] = [array1[i], array2[j]];
+		}
+	}
+
+	return result;
+}
