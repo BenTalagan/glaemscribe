@@ -43,7 +43,7 @@ Changelog
 
 | Version | Date | Comment |
 |---------|------|---------|
-| 1.2.1 | Unreleased | [Japanese] Corrected 億 to 10^8, added support for セィ and ゼィ. Thanks to Roman Rausch for this feedback! |
+| 1.2.1 | Unreleased | [Japanese] Corrected 億 to 10^8, added support for セィ and ゼィ. Thanks to Roman Rausch for this feedback!<br> Refactored JS array functions to prevent interactions with other libraries. Thanks to Troy Alford for the fix! |
 | 1.2.0 | 08/04/2019 | Added support for hybrid unicode 'GlaemUnicode' fonts (see the font directory for details).<br>Added support for the Free Tengwar Font project fonts (experimental).<br>Added support for {UNI_XXX} unicode entry variables in rule source member.<br>Added "sequence" type for virtual chars.<br>Added "pointer" (dynamic) variable type using the '<=>' syntax.<br>Added macro/deploy directives for declaring and using macros and avoid code repetition.<br>Cross rules can now use a variable as cross schema.<br>[Khuzdul] : Added missing long o.<br>[Sindarin][All Modes] Reworked and uniformised phonology disambiguation (median dot, hyphen, ng, ngw).<br>[Japanese] Added japanese tengwar mode.<br>Bug fixes. |
 | 1.1.14 | 12/17/2017 | Minor bug fix on 1.1.13 |
 | 1.1.13 | 12/17/2017 | [Quenya] Adding support for palatalized geminates (requested exotic feature) |
@@ -107,6 +107,7 @@ Acknowledgments and thanks
 * Many thanks to **_J. Mach Wust_** and **Roman Rausch** for their clever thoughts and advice on the Tengwar & Sarati modes and fonts.
 * Many thanks to **Johan Winge** and **Enrique Mombello** for their incredible work on tengwar fonts ; this project would not have been possible without them
 * Many thanks to **Laicasaane** for his very precise remarks on the charsets and modes, and the Visual Studio syntax highlighting plugin.
+* Many thanks to **Troy Alford** for his [**_react integration_**](https://github.com/TroyAlford/react-glaemscribe), fixes and comments on the js src.
 * Many thanks to **Dmitry Kourmyshov** for his very clever remarks and glances at the elvish modes.
 * Many thanks to **Leonard Wickmark** for his suggestions during his integration of **_Glǽmscribe_**'s engine into the [**_elfdict_**](http://elfict.com) project!.
 * **_Glǽmscribe_** would never have come to be without the ceaseless and continuously renewed work of the great family of Internet Tolkienists, both on technologies (with several generations of transcribers and typefaces) and on knowledge shared and gathered on websites and forums. Neither would it exist without the devoted labour of all those that make the publication of Tolkien's linguistic works possible. A very big thank you to them all!
