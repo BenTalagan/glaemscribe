@@ -129,122 +129,75 @@ Function.prototype.inheritsFrom = function( parentClassOrObject ){
 /*
   Adding utils/array_productize.js 
 */
-Object.defineProperty(Array.prototype, "productize", {
-  enumerable: false,
-  value: function(other_array) {
-    var array = this;
-    var res   = new Array(array.length * other_array.length);
-  
-    for(var i=0;i<array.length;i++)
-    {
-      for(var j=0;j<other_array.length;j++)
-      {
-        res[i*other_array.length+j] = [array[i],other_array[j]];
-      }
-    }
-    return res;
-  }
-});
+function productizeArray(array1, array2) {
+	var result = new Array(array1.length * array2.length);
+
+	for (var i = 0; i < array1.length; i++) {
+		for (var j = 0; j < array2.length; j++) {
+			result[i * array2.length + j] = [array1[i], array2[j]];
+		}
+	}
+
+	return result;
+}
+
 
 /*
   Adding utils/array_equals.js 
 */
-Object.defineProperty(Array.prototype, "equals", {
-  enumerable: false,
-  value:  function (array) {
-    if (!array)
-      return false;
+function arrayEquals(array1, array2) {
+	if (!array2) {
+		return false;
+	}
 
-    if (this.length != array.length)
-      return false;
+	if (array1.length != array2.length) {
+		return false;
+	}
 
-    for (var i = 0, l=this.length; i < l; i++) {
-      if (this[i] instanceof Array && array[i] instanceof Array) {
-        if (!this[i].equals(array[i]))
-          return false;       
-      }           
-      else if (this[i] != array[i]) { 
-        return false;   
-      }           
-    }       
-    return true;
-  }   
-});
+	for (var i = 0, l=array1.length; i < l; i++) {
+		if (Array.isArray(array1[i]) && Array.isArray(array2[i])) {
+			if (!arrayEquals(array1[i], array2[i])) {
+				return false;
+			}
+		} else if (array1[i] != array2[i]) {
+			return false;
+		}
+	}
+
+	return true;
+}
+
 
 /*
   Adding utils/array_unique.js 
 */
-Object.defineProperty(Array.prototype, "unique", {
-  enumerable: false,
-  value:  function () {
-
-    var uf = function(value, index, self) { 
-      return self.indexOf(value) === index;
-    }
-
-    return this.filter(uf);
-  }   
-});
+function uniqueArray(array) {
+  return array.filter(function(value, index, self) {
+    return self.indexOf(value) === index;
+  });
+}
 
 
 /*
   Adding utils/glaem_object.js 
 */
-Object.defineProperty(Object.prototype, "glaem_each", {
-  enumerable: false,
-  value:  function (callback) {
-    
-    for(var o in this)
-    {
-      if(!this.hasOwnProperty(o))
-        continue;
-      var res = callback(o,this[o]);
-      if(res == false)
-        break;
-    }
-  }   
-});
+function glaemEach(object, callback) {
+  for(var o in object) {
+    if(!object.hasOwnProperty(o)) continue;
+    if (!callback(o,object[o])) break;
+  }
+}
 
-Object.defineProperty(Object.prototype, "glaem_each_reversed", {
-  enumerable: false,
-  value:  function (callback) {
-    if(!this instanceof Array)
-      return this.glaem_each(callback);
-      
-    for(var o = this.length-1;o>=0;o--)
-    {
-      if(!this.hasOwnProperty(o))
-        continue;
-      var res = callback(o,this[o]);
-      if(res == false)
-        break;
-    }
-  }   
-});
+function glaemEachReversed(object, callback) {
+  if(!Array.isArray(object)) {
+    return glaemEach(object, callback);
+  }
 
-Object.defineProperty(Object.prototype, "glaem_merge", {
-  enumerable: false,
-  value:  function (other_object) {
-    
-    var ret = {};
-    for(var o in this)
-    {
-      if(!this.hasOwnProperty(o))
-        continue;      
-      ret[o] = this[o];
-    }    
-    
-    for(var o in other_object)
-    {
-      if(!other_object.hasOwnProperty(o))
-        continue;
-      ret[o] = other_object[o];
-    }
-    
-    return ret;
-  }   
-});
-
+  for(var o = object.length - 1; o >= 0; o--) {
+    if(!object.hasOwnProperty(o)) continue;
+    if(!callback(o,object[o])) break;
+  }
+}
 
 
 /*
@@ -435,11 +388,11 @@ Glaemscribe.VirtualChar.prototype.finalize = function()
   var vc = this;
   
   vc.lookup_table = {};
-  vc.classes.glaem_each(function(_, vclass) {
+  glaemEach(vc.classes, function(_, vclass) {
     var result_char   = vclass.target;
     var trigger_chars = vclass.triggers;
     
-    trigger_chars.glaem_each(function(_,trigger_char) {
+    glaemEach(trigger_chars, function(_,trigger_char) {
       var found = vc.lookup_table[trigger_char];
       if(found != null)
       {
@@ -460,7 +413,7 @@ Glaemscribe.VirtualChar.prototype.finalize = function()
           vc.charset.errors.push(new Glaemscribe.Glaeml.Error(vc.line, "Trigger char " + trigger_char + " points to another virtual char " + result_char + ". This is not supported!"));          
         }
         else {
-          tc.names.glaem_each(function(_,trigger_char_name) {
+          glaemEach(tc.names, function(_,trigger_char_name) {
             vc.lookup_table[trigger_char_name] = rc;
           });
         }
@@ -512,7 +465,7 @@ Glaemscribe.SequenceChar.prototype.finalize = function()
   {
     sq.charset.errors.push(new Glaemscribe.Glaeml.Error(sq.line, "Sequence for sequence char is empty."));
   }
-  sq.sequence.glaem_each(function(_,symbol) {
+  glaemEach(sq.sequence, function(_,symbol) {
     if(!sq.charset.n2c(symbol))
       sq.charset.errors.push(new Glaemscribe.Glaeml.Error(sq.line, "Sequence char " + symbol + "cannot be found in the charset."));     
   });
@@ -603,14 +556,14 @@ Glaemscribe.Charset.prototype.finalize = function()
     }
   }
   
-  charset.chars.glaem_each(function(_,c) {
+  glaemEach(charset.chars, function(_,c) {
     if(c.is_virtual()) {
       c.finalize();
       charset.virtual_chars.push(c);
     }
   });
   
-  charset.chars.glaem_each(function(_,c) {
+  glaemEach(charset.chars, function(_,c) {
      if(c.is_sequence()) {
        c.finalize();
      }
@@ -654,28 +607,28 @@ Glaemscribe.CharsetParser.prototype.parse_raw = function(charset_name, raw)
     charset.add_char(char.line, code, names)
   }  
   
-  doc.root_node.gpath("seq").glaem_each(function(_,seq_elemnt) {
+  glaemEach(doc.root_node.gpath("seq"), function(_,seq_elemnt) {
     var names       = seq_elemnt.args;
     var child_node  = seq_elemnt.children[0];   
     var seq         = (child_node && child_node.is_text())?(child_node.args[0]):("")
     charset.add_sequence_char(seq_elemnt.line,names,seq);
   });
   
-  doc.root_node.gpath("virtual").glaem_each(function(_,virtual_element) { 
+  glaemEach(doc.root_node.gpath("virtual"), function(_,virtual_element) {
     var names     = virtual_element.args;
     var classes   = [];
     var reversed  = false;
     var deflt     = null;
-    virtual_element.gpath("class").glaem_each(function(_,class_element) {
+    glaemEach(virtual_element.gpath("class"), function(_,class_element) {
       var vc        = new Glaemscribe.VirtualChar.VirtualClass();
       vc.target     = class_element.args[0];
       vc.triggers   = class_element.args.slice(1);   
       classes.push(vc);
     });
-    virtual_element.gpath("reversed").glaem_each(function(_,reversed_element) {
+    glaemEach(virtual_element.gpath("reversed"), function(_,reversed_element) {
       reversed = true;
     });
-    virtual_element.gpath("default").glaem_each(function(_,default_element) {
+    glaemEach(virtual_element.gpath("default"), function(_,default_element) {
       deflt = default_element.args[0];
     });
     charset.add_virtual_char(virtual_element.line,classes,names,reversed,deflt);
@@ -726,7 +679,7 @@ Glaemscribe.Glaeml.Node.prototype.clone = function() {
     // Clone the array of args
     new_element.args = this.args.slice(0); 
     // Clone the children
-    this.children.glaem_each(function(child_index, child) {
+    glaemEach(this.children, function(child_index, child) {
         new_element.children.push(child.clone());
     });
     return new_element;
@@ -1166,9 +1119,8 @@ Glaemscribe.Fragment = function(sheaf, expression) {
   // Calculate all combinations
   var res = fragment.equivalences[0];
  
-  for(var i=0;i<fragment.equivalences.length-1;i++)
-  {
-    var prod = res.productize(fragment.equivalences[i+1]);
+  for (var i = 0; i < fragment.equivalences.length - 1; i++) {
+    var prod = productizeArray(res, fragment.equivalences[i+1]);
     res = prod.map(function(elt) {
   
       var x = elt[0];
@@ -1254,12 +1206,12 @@ Glaemscribe.Mode.prototype.finalize = function(options) {
   var trans_options = {};
   
   // Build default options
-  mode.options.glaem_each(function(oname, o) {
+  glaemEach(mode.options, function(oname, o) {
     trans_options[oname] = o.default_value_name;
   });
   
   // Push user options
-  options.glaem_each(function(oname, valname) {
+  glaemEach(options, function(oname, valname) {
     // Check if option exists
     var opt = mode.options[oname];
     if(!opt)
@@ -1274,16 +1226,16 @@ Glaemscribe.Mode.prototype.finalize = function(options) {
   var trans_options_converted = {};
  
   // Do a conversion to values space
-  trans_options.glaem_each(function(oname,valname) {
+  glaemEach(trans_options, function(oname,valname) {
     trans_options_converted[oname] = mode.options[oname].value_for_value_name(valname);
   });
 
   // Add the option defined constants to the whole list for evaluation purposes
-  mode.options.glaem_each(function(oname, o) {
+  glaemEach(mode.options, function(oname, o) {
     // For enums, add the values as constants for the evaluator
     if(o.type == Glaemscribe.Option.Type.ENUM )
     {
-      o.values.glaem_each(function(name,val) {
+      glaemEach(o.values, function(name,val) {
         trans_options_converted[name] = val
       });
     }
@@ -1340,7 +1292,7 @@ Glaemscribe.Mode.prototype.strict_transcribe = function(content, charset, debug_
 
       debug_context.tts_output += content;
     } catch(e) {
-      return [false, "TTS pre-transcription failed : #{e}."];
+      return [false, "TTS pre-transcription failed : " + e];
     }
   }
 
@@ -1392,7 +1344,7 @@ Glaemscribe.Mode.prototype.transcribe = function(content, charset) {
   {
     var chunks = content.split(/({{[\s\S]*?}})/);
        
-    chunks.glaem_each(function(_,c) {
+    glaemEach(chunks, function(_,c) {
       var rmatch = null;
       
       var to_transcribe = c;
@@ -1449,7 +1401,7 @@ Glaemscribe.Option = function(mode, name, default_value_name, values, line, visi
   this.line               = line;
   
   option.value_to_names     = {};
-  option.values.glaem_each(function(vname,v) {
+  glaemEach(option.values, function(vname,v) {
     option.value_to_names[v] = vname;
   });
   
@@ -1566,7 +1518,7 @@ Glaemscribe.ModeParser.prototype.validate_presence_of_children = function(parent
   }
   if(arg_count)
   {
-    res.glaem_each(function(c,child_node) {
+    glaemEach(res, function(c,child_node) {
       parser.validate_presence_of_args(child_node, arg_count)
     });
   }
@@ -1583,32 +1535,32 @@ Glaemscribe.ModeParser.prototype.verify_mode_glaeml = function(doc)
   parser.validate_presence_of_children(doc.root_node, "authors",  1, 1);
   parser.validate_presence_of_children(doc.root_node, "version",  1, 1);
  
-  doc.root_node.gpath("charset").glaem_each(function (ce, charset_element) {
-    parser.validate_presence_of_args(charset_element, 2);        
+  glaemEach(doc.root_node.gpath("charset"), function (ce, charset_element) {
+    parser.validate_presence_of_args(charset_element, 2);
   });
  
-  doc.root_node.gpath("options.option").glaem_each(function (oe, option_element) {
+  glaemEach(doc.root_node.gpath("options.option"), function (oe, option_element) {
     parser.validate_presence_of_args(option_element, 2);
-    option_element.gpath("value").glaem_each(function (ve, value_element) {
+    glaemEach(option_element.gpath("value"), function (ve, value_element) {
       parser.validate_presence_of_args(value_element, 2);
     });
   });
   
-  doc.root_node.gpath("outspace").glaem_each(function (oe, outspace_element) {
-    parser.validate_presence_of_args(outspace_element, 1);        
+  glaemEach(doc.root_node.gpath("outspace"), function (oe, outspace_element) {
+    parser.validate_presence_of_args(outspace_element, 1);
   });
-  
-  doc.root_node.gpath("processor.rules").glaem_each(function (re, rules_element) {
-    parser.validate_presence_of_args(rules_element, 1);      
-    parser.validate_presence_of_children(rules_element,"if",null,1);  
-    parser.validate_presence_of_children(rules_element,"elsif",null,1);      
-  });  
 
-  doc.root_node.gpath("preprocessor.if").glaem_each(function (re, rules_element) { parser.validate_presence_of_args(rules_element,  1) }); 
-  doc.root_node.gpath("preprocessor.elsif").glaem_each(function (re, rules_element) { parser.validate_presence_of_args(rules_element,  1) });   
-  doc.root_node.gpath("postprocessor.if").glaem_each(function (re, rules_element) { parser.validate_presence_of_args(rules_element,  1) });  
-  doc.root_node.gpath("postprocessor.elsif").glaem_each(function (re, rules_element) { parser.validate_presence_of_args(rules_element,  1) }); 
-}   
+  glaemEach(doc.root_node.gpath("processor.rules"), function (re, rules_element) {
+    parser.validate_presence_of_args(rules_element, 1);
+    parser.validate_presence_of_children(rules_element,"if",null,1);
+    parser.validate_presence_of_children(rules_element,"elsif",null,1);
+  });
+
+  glaemEach(doc.root_node.gpath("preprocessor.if"), function (re, rules_element) { parser.validate_presence_of_args(rules_element,  1) });
+  glaemEach(doc.root_node.gpath("preprocessor.elsif"), function (re, rules_element) { parser.validate_presence_of_args(rules_element,  1) });
+  glaemEach(doc.root_node.gpath("postprocessor.if"), function (re, rules_element) { parser.validate_presence_of_args(rules_element,  1) });
+  glaemEach(doc.root_node.gpath("postprocessor.elsif"), function (re, rules_element) { parser.validate_presence_of_args(rules_element,  1) });
+}
 
 Glaemscribe.ModeParser.prototype.create_if_cond_for_if_term = function(line, if_term, cond)
 {
@@ -1713,7 +1665,7 @@ Glaemscribe.ModeParser.prototype.traverse_if_tree = function(context, text_proce
 
         var macro_args = child.args.slice(0);
         var macro_name = macro_args.shift();
-        macro_args.glaem_each( function(_,arg) {      
+        glaemEach(macro_args,  function(_,arg) {
           if(!arg.match(/[0-9A-Z_]+/)) {
             mode.errors.push(new Glaemscribe.Glaeml.Error(child.line, "Macro argument name " + arg + " has wrong format."));
             return;
@@ -1859,21 +1811,21 @@ Glaemscribe.ModeParser.prototype.parse_raw = function(mode_name, raw, mode_optio
   mode.world       = (doc.root_node.gpath('world')[0] || {args:[]}).args[0]
   mode.raw_mode_name = (doc.root_node.gpath('raw_mode')[0] || {args:[]}).args[0]    
   
-  doc.root_node.gpath('options.option').glaem_each(function(_,option_element) {
+  glaemEach(doc.root_node.gpath('options.option'), function(_,option_element) {
 
     var values          = {};
     var visibility      = null;
     var is_radio        = false;
     
-    option_element.gpath('value').glaem_each(function(_, value_element) {   
+    glaemEach(option_element.gpath('value'), function(_, value_element) {
       var value_name                = value_element.args[0];
       values[value_name]            = parseInt(value_element.args[1]);    
     });
-    option_element.gpath('visible_when').glaem_each(function(_, visible_element) {   
+    glaemEach(option_element.gpath('visible_when'), function(_, visible_element) {
       visibility = visible_element.args[0];
     });    
-    option_element.gpath('radio').glaem_each(function(_,__) { is_radio = true });    
-      
+    glaemEach(option_element.gpath('radio'), function(_,__) { is_radio = true });
+
     var option_name_at          = option_element.args[0];
     var option_default_val_at   = option_element.args[1];
     // TODO: check syntax of the option name
@@ -2000,7 +1952,7 @@ Glaemscribe.ModeParser.prototype.parse_raw = function(mode_name, raw, mode_optio
     // TTS::load_engine
     mode.has_tts = true;
     
-    espeak_option.values.glaem_each(function(vname,_) {
+    glaemEach(espeak_option.values, function(vname,_) {
       var voice = Glaemscribe.TTS.option_name_to_voice(vname);
       // Even if the TTS engine may not be loaded, the wrapper is. 
       // As such, we can check if voices are correct here.
@@ -2235,8 +2187,7 @@ Glaemscribe.RuleGroup.prototype.descend_if_tree = function(code_block,options)
     
       // First, test if variable is pushable
       var arg_values = []
-      term.macro.arg_names.glaem_each(function(i,arg_name) {
-      
+      glaemEach(term.macro.arg_names, function(i,arg_name) {
         var var_value = null;
         
         if(rule_group.vars[arg_name]) {
@@ -2256,7 +2207,7 @@ Glaemscribe.RuleGroup.prototype.descend_if_tree = function(code_block,options)
       });
     
       // We push local vars after the whole loop to avoid interferences between them when evaluating them
-      arg_values.glaem_each(function(_,v) {
+      glaemEach(arg_values, function(_,v) {
         if(v.val != null)
           rule_group.add_var(v.name,v.val,false)
       });
@@ -2264,7 +2215,7 @@ Glaemscribe.RuleGroup.prototype.descend_if_tree = function(code_block,options)
       rule_group.descend_if_tree(term.macro.root_code_block, options)
     
       // Remove the local vars from the scope (only if they were leggit)
-      arg_values.glaem_each(function(_,v) {
+      glaemEach(arg_values, function(_,v) {
         if(v.val != null)
           rule_group.vars[v.name] = null;
       });
@@ -2552,7 +2503,7 @@ Glaemscribe.SheafChainIterator = function (sheaf_chain, cross_schema)
   // Make a list of linkable sheaves
   var iterable_idxs   = [];
   var prototype_array = [];
-  sheaf_chain.sheaves.glaem_each(function(i,sheaf) {
+  glaemEach(sheaf_chain.sheaves, function(i,sheaf) {
     if(sheaf.linkable)
     {
       iterable_idxs.push(i);
@@ -2587,8 +2538,7 @@ Glaemscribe.SheafChainIterator = function (sheaf_chain, cross_schema)
     
     var sorted = cross_schema.slice(0).sort(); // clone and sort
     
-    if(!it_identity_array.equals(sorted))
-    {
+    if (!arrayEquals(it_identity_array, sorted)) {
       sci.errors.push("Cross rule schema should be a permutation of the identity (it should contain 1,2,..,n numbers once and only once).");
       return;
     }
@@ -2596,7 +2546,7 @@ Glaemscribe.SheafChainIterator = function (sheaf_chain, cross_schema)
     var prototype_array_permutted = prototype_array.slice(0);
     
     // Now calculate the cross array
-    cross_schema.glaem_each(function(from,to) {
+    glaemEach(cross_schema, function(from,to) {
       var to_permut = iterable_idxs[from];
       var permut    = iterable_idxs[to];
       sci.cross_array[to_permut] = permut;
@@ -2633,8 +2583,8 @@ Glaemscribe.SheafChainIterator.prototype.combinations = function()
   var res = resolved[0]; 
   for(var i=0;i<resolved.length-1;i++)
   {
-    var prod  = res.productize(resolved[i+1]);
-    res       = prod.map(function(elt) {
+    var prod  = productizeArray(res, resolved[i+1]);
+    res = prod.map(function(elt) {
       var e1 = elt[0];
       var e2 = elt[1];
       return e1.concat(e2);
@@ -3203,7 +3153,7 @@ Glaemscribe.PrePostProcessorOperator.prototype.finalize_glaeml_element = functio
   for(var i=0;i<ge.args.length;i++)
     ge.args[i] = op.eval_arg(ge.args[i], trans_options);
 
-  ge.children.glaem_each(function(idx, child) {
+  glaemEach(ge.children, function(idx, child) {
     op.finalize_glaeml_element(child, trans_options);
   });
   return ge;
@@ -3248,7 +3198,7 @@ Glaemscribe.TranscriptionPrePostProcessor.prototype.finalize = function(options)
   this.operators = []
   this.descend_if_tree(this.root_code_block, options);
   
-  this.operators.glaem_each(function(op_num, op) {
+  glaemEach(this.operators, function(op_num, op) {
     op.finalize(options);
   });
 }
@@ -3384,15 +3334,15 @@ Glaemscribe.TranscriptionProcessor.prototype.finalize = function(options) {
   processor.transcription_tree.add_subpath(Glaemscribe.WORD_BOUNDARY_TREE,  [""]);
   processor.transcription_tree.add_subpath(Glaemscribe.WORD_BREAKER,        [""]);
   
-  this.rule_groups.glaem_each(function(gname,rg) {
+  glaemEach(this.rule_groups, function(gname,rg) {
     rg.finalize(options);
   });
   
   // Build the input charsets
   processor.in_charset = {}
   
-  this.rule_groups.glaem_each(function(gname, rg) {
-    rg.in_charset.glaem_each(function(char, group) {
+  glaemEach(this.rule_groups, function(gname, rg) {
+    glaemEach(rg.in_charset, function(char, group) {
       
       var group_for_char  = processor.in_charset[char];
            
@@ -3404,7 +3354,7 @@ Glaemscribe.TranscriptionProcessor.prototype.finalize = function(options) {
     })
   });
   
-  this.rule_groups.glaem_each(function(gname, rg) {
+  glaemEach(this.rule_groups, function(gname, rg) {
     for(var r=0;r<rg.rules.length;r++)
     {
       var rule = rg.rules[r];
@@ -3637,7 +3587,7 @@ Glaemscribe.UpDownTehtaSplitPreProcessorOperator.prototype.finalize = function(t
     this.consonant_map[c] = c;
   }
 
-  var all_letters = vowel_list.concat(consonant_list).join("").split("").sort().unique();
+  var all_letters = uniqueArray(vowel_list.concat(consonant_list).join("").split("").sort());
 
   for(var li=0;li<all_letters.length;li++)
   {
@@ -3668,10 +3618,11 @@ Glaemscribe.UpDownTehtaSplitPreProcessorOperator.prototype.apply_to_word = funct
       var r   = ret[0];
       var len = ret[1];   
       
-      if(r instanceof Array && r.equals([Glaemscribe.UNKNOWN_CHAR_OUTPUT]))
+      if (Array.isArray(r) && arrayEquals(r, [Glaemscribe.UNKNOWN_CHAR_OUTPUT])) {
         res.push(w[0]); 
-      else
+      } else {
         res.push(r); 
+      }
     
       w = w.substring(len);
     }
@@ -3825,7 +3776,7 @@ Glaemscribe.ResolveVirtualsPostProcessorOperator.prototype.finalize = function(t
 
 Glaemscribe.ResolveVirtualsPostProcessorOperator.prototype.reset_trigger_states = function(charset) {
   var op = this;
-  charset.virtual_chars.glaem_each(function(idx,vc) {
+  glaemEach(charset.virtual_chars, function(idx,vc) {
     vc.object_reference                   = idx; // We cannot objects as references in hashes in js. Attribute a reference.
     op.last_triggers[vc.object_reference] = null; // Clear the state
   });
@@ -3853,7 +3804,7 @@ Glaemscribe.ResolveVirtualsPostProcessorOperator.prototype.apply_loop = function
   }
 
   // Update states of virtual classes
-  charset.virtual_chars.glaem_each(function(_,vc) {
+  glaemEach(charset.virtual_chars, function(_,vc) {
     var rc = vc.n2c(token);
     if(rc != null)
       op.last_triggers[vc.object_reference] = rc;
@@ -3863,7 +3814,7 @@ Glaemscribe.ResolveVirtualsPostProcessorOperator.prototype.apply_loop = function
 
 Glaemscribe.ResolveVirtualsPostProcessorOperator.prototype.apply_sequences = function(charset,tokens) {
   var ret = [];
-  tokens.glaem_each(function(_, token) {
+  glaemEach(tokens, function(_, token) {
     var c = charset.n2c(token);
     if(c && c.is_sequence())
       Array.prototype.push.apply(ret,c.sequence);
@@ -3882,12 +3833,12 @@ Glaemscribe.ResolveVirtualsPostProcessorOperator.prototype.apply = function(toke
   var new_tokens = tokens.slice(0);
   
   op.reset_trigger_states(charset);
-  tokens.glaem_each(function(idx,token) {
+  glaemEach(tokens, function(idx,token) {
     op.apply_loop(charset,tokens,new_tokens,false,token,idx);
   });
   
   op.reset_trigger_states(charset);
-  tokens.glaem_each_reversed(function(idx,token) {
+  glaemEachReversed(tokens, function(idx,token) {
     op.apply_loop(charset,tokens,new_tokens,true,token,idx);    
   });
   return new_tokens;
@@ -4174,7 +4125,7 @@ Glaemscribe.TTS = function() {
 }
 
 Glaemscribe.TTS.ipa_configurations = {
-  'en': {
+  'en-tengwar': {
     special_token_ncn: '', // no space / sign / no space
     special_token_ncs: '', // no space / sign / space
     special_token_scn: '', // space / sign / no space
@@ -4191,7 +4142,7 @@ Glaemscribe.TTS.ipa_configurations = {
     // This is because apostrophes shouldn't trigger a pause in the prononciation (e.g. genitives) 
     clauseunaffecting_punctuation: "·“”«»-[](){}<>≤≥$|\"" 
   },  
-  'fr': {
+  'frt': {
     special_token_ncn: '', // no space / sign / no space
     special_token_ncs: '', // no space / sign / space
     special_token_scn: '', // space / sign / no space
@@ -4215,12 +4166,10 @@ Glaemscribe.TTS.ipa_configurations = {
   }
 }
 
-Glaemscribe.TTS.ipa_configurations['en-us']              = Glaemscribe.TTS.ipa_configurations['en'];
-Glaemscribe.TTS.ipa_configurations['en-gb']              = Glaemscribe.TTS.ipa_configurations['en'];
-Glaemscribe.TTS.ipa_configurations['en-tengwar-zlegacy'] = Glaemscribe.TTS.ipa_configurations['en'];
-Glaemscribe.TTS.ipa_configurations['en-tengwar']         = Glaemscribe.TTS.ipa_configurations['en'];
-Glaemscribe.TTS.ipa_configurations['en-tengwar-gb']      = Glaemscribe.TTS.ipa_configurations['en'];
-Glaemscribe.TTS.ipa_configurations['en-tengwar-us']      = Glaemscribe.TTS.ipa_configurations['en'];
+Glaemscribe.TTS.ipa_configurations['en-tengwar']         = Glaemscribe.TTS.ipa_configurations['en-tengwar'];
+Glaemscribe.TTS.ipa_configurations['en-tengwar-rp']      = Glaemscribe.TTS.ipa_configurations['en-tengwar'];
+Glaemscribe.TTS.ipa_configurations['en-tengwar-gb']      = Glaemscribe.TTS.ipa_configurations['en-tengwar'];
+Glaemscribe.TTS.ipa_configurations['en-tengwar-us']      = Glaemscribe.TTS.ipa_configurations['en-tengwar'];
 
 
 Glaemscribe.TTS.voice_list = function(voice) {
@@ -4229,6 +4178,10 @@ Glaemscribe.TTS.voice_list = function(voice) {
 
 // Static helper. To be used in pure js (not ruby).
 Glaemscribe.TTS.option_name_to_voice = function(oname) {
+  
+  if(!oname)
+    return null;
+  
   return oname.toLowerCase().replace(/^espeak_voice_/,'').replace(/_/g,'-');
 }
 
@@ -4263,6 +4216,9 @@ Glaemscribe.TTS.prototype.pre_ipa = function(voice,text) {
   
   var client = this;
   var config = Glaemscribe.TTS.ipa_configurations[voice];
+  
+  if(!config)
+    throw "Trying to use unsupported voice '" + voice + "'!";
   
   // Normalize all tabs by spaces
   text = text.replace(/\t/g," ");
@@ -4406,7 +4362,7 @@ Glaemscribe.TTS.prototype.synthesize_ipa = function(text, args, onended) {
   var client = this;
   
   args            = args || {}
-  var voice       = args.voice  || 'en'
+  var voice       = args.voice  || 'en-tengwar'
   
   var ts = new Date();
   var tp = ts;
@@ -4435,7 +4391,7 @@ Glaemscribe.TTS.prototype.synthesize_ipa = function(text, args, onended) {
   }
   
   args = args || {}
-  client.proxy.set_voice(args.voice  || 'en');
+  client.proxy.set_voice(args.voice  || 'en-tengwar');
 
   var ts = new Date();
   var ret = {};
@@ -4462,12 +4418,12 @@ Glaemscribe.TTS.prototype.synthesize_wav = function(text, args, onended) {
   var client = this;
   
   args            = args || {}
-  var voice       = args.voice  || 'en'
+  var voice       = args.voice  || 'en-tengwar'
 
   args = args || {}
   client.proxy.set_rate(args.rate    || 120);
   client.proxy.set_pitch(args.pitch  || 5);
-  client.proxy.set_voice(args.voice  || 'en');
+  client.proxy.set_voice(args.voice  || 'en-tengwar');
   
   if(args.has_raw_mode) {
     var pre_raw_res    = this.escape_raw_mode(text,true);
