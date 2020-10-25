@@ -718,7 +718,7 @@ GlaemscribeEditor.prototype.serializeCurrentCharset = function()
       if(c.default)
         content += "  \\default " + c.default + "\n";
       
-      c.classes.glaem_each(function(_, vc) {
+      glaemEach(c.classes, function(_, vc) {
         content += "\\class " + vc.target + "\t\t" + vc.triggers.join(" ") + "\n";
       });
       content += "\\end\n\n"
@@ -955,7 +955,7 @@ GlaemscribeEditor.prototype.refreshOptionsGUI = function()
   }
   else
   {
-    editor.mode.options.glaem_each(function(key, opt) {
+    glaemEach(editor.mode.options, function(key, opt) {
      
       var cdiv    = $("<div/>");
       var control = null;
@@ -976,7 +976,7 @@ GlaemscribeEditor.prototype.refreshOptionsGUI = function()
       else
       {       
         var res = "<select class='mode_option enum' name='" + opt.name + "'>";
-        opt.values.glaem_each(function(val_name, val) {
+        glaemEach(opt.values, function(val_name, val) {
            
           var default_selected = (opt.default_value_name == val_name)?("selected"):("");
           var selected         = default_selected;
@@ -1063,7 +1063,7 @@ GlaemscribeEditor.prototype.genericRefreshTranscription = function(entry_selecto
         {
           debug_processor_pathes_selector.html("");
                  
-          dbg_ctx.processor_pathes.glaem_each(function(path_index,path) {
+          glaemEach(dbg_ctx.processor_pathes, function(path_index,path) {
               
             if(path[0] == '_')
               return true;
@@ -1109,7 +1109,7 @@ GlaemscribeEditor.prototype.genericRefreshTranscription = function(entry_selecto
     else
     {
       var str = "";
-      editor.mode.errors.glaem_each(function(e,error) {
+      glaemEach(editor.mode.errors, function(e,error) {
         str += error.line + ": " + error.text + "<br>";
       });
       
@@ -1225,7 +1225,7 @@ GlaemscribeEditor.prototype.charEditorAskedOn = function(char_row, char_num)
       $(".virtual_char_names_edit").val(char.names.join(" "));
       $(".virtual_char_default_edit").val(char.default);
       $(".virtual_char_reversed_edit").prop("checked",char.reversed);
-      char.classes.glaem_each(function(c,vclass) {
+      glaemEach(char.classes, function(c,vclass) {
         var row = $(".class_edit[data-num='" + c +"']");
         row.find(".class_target").val(vclass.target);
         row.find(".class_triggers").val(vclass.triggers.join(" "));

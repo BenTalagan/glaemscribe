@@ -80,7 +80,7 @@ GlaemDebugTree.prototype.processor_tree_node_to_debug_tree_node = function(tree_
   ret['path']         = tree_node.path;
   ret['children']     = null;
   
-  tree_node.siblings.glaem_each(function(key,sibling) {
+  glaemEach(tree_node.siblings,function(key,sibling) {
     
     if(!ret['children'])
       ret['children'] = [];
