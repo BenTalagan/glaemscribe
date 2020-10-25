@@ -182,21 +182,25 @@ function uniqueArray(array) {
   Adding utils/glaem_object.js 
 */
 function glaemEach(object, callback) {
-  for(var o in object) {
-    if(!object.hasOwnProperty(o)) continue;
-    if (!callback(o,object[o])) break;
-  }
+	for(var o in object) {
+		if(!object.hasOwnProperty(o)) continue;
+
+		var res = callback(o, object[o])
+		if (res == false) break;
+	}
 }
 
 function glaemEachReversed(object, callback) {
-  if(!Array.isArray(object)) {
-    return glaemEach(object, callback);
-  }
+	if(!Array.isArray(object)) {
+		return glaemEach(object, callback);
+	}
 
-  for(var o = object.length - 1; o >= 0; o--) {
-    if(!object.hasOwnProperty(o)) continue;
-    if(!callback(o,object[o])) break;
-  }
+	for(var o = object.length - 1; o >= 0; o--) {
+		if(!object.hasOwnProperty(o)) continue;
+
+		var res = callback(o, object[o])
+		if (res == false) break;
+	}
 }
 
 
@@ -3914,7 +3918,7 @@ Glaemscribe.resource_manager.register_post_processor_class("resolve_virtuals", G
     function isnt (x, y) { return !is(x, y) };
     var defaultCK = {
         descriptors:true,
-        extensibility:true, 
+        extensibility:true,
         enumerator:getOwnPropertyNames
     };
     function equals (x, y, ck) {
@@ -4024,7 +4028,7 @@ Glaemscribe.resource_manager.register_post_processor_class("resolve_virtuals", G
                         if (ck.descriptors) {
                             var desc = getOwnPropertyDescriptor(src, k);
                             if (ck.filter && !ck.filter(desc, k, src)) return;
-                            if (deep && 'value' in desc) 
+                            if (deep && 'value' in desc)
                                 desc.value = _clone(src[k]);
                             defineProperty(dst, k, desc);
                         } else {
@@ -4078,6 +4082,7 @@ Glaemscribe.resource_manager.register_post_processor_class("resolve_virtuals", G
         // equals: equals
     }));
 })(this);
+
 
 /*
   Adding ../lib_espeak/glaemscribe_tts.js 
