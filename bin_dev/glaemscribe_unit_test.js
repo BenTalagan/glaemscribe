@@ -12,6 +12,10 @@ var Glob     = require("Glob") // npm install
 var Path     = require("path")
 var Util     = require("util")
 
+
+global.require    = require;
+global.__dirname  = __dirname;
+
 // Use the following trick to load the javascript that we would use normally in a web browser
 function include(path) { var code = Fs.readFileSync(path, 'utf-8'); Vm.runInThisContext(code, path); }
 include(__dirname + "/../build/web/glaemscribe/js/glaemscribe.js")
