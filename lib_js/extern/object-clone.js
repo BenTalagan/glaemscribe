@@ -61,7 +61,7 @@
     function isnt (x, y) { return !is(x, y) };
     var defaultCK = {
         descriptors:true,
-        extensibility:true, 
+        extensibility:true,
         enumerator:getOwnPropertyNames
     };
     function equals (x, y, ck) {
@@ -171,7 +171,7 @@
                         if (ck.descriptors) {
                             var desc = getOwnPropertyDescriptor(src, k);
                             if (ck.filter && !ck.filter(desc, k, src)) return;
-                            if (deep && 'value' in desc) 
+                            if (deep && 'value' in desc)
                                 desc.value = _clone(src[k]);
                             defineProperty(dst, k, desc);
                         } else {
