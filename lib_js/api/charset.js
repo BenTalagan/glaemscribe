@@ -83,11 +83,11 @@ Glaemscribe.VirtualChar.prototype.finalize = function()
   var vc = this;
   
   vc.lookup_table = {};
-  vc.classes.glaem_each(function(_, vclass) {
+  glaemEach(vc.classes, function(_, vclass) {
     var result_char   = vclass.target;
     var trigger_chars = vclass.triggers;
     
-    trigger_chars.glaem_each(function(_,trigger_char) {
+    glaemEach(trigger_chars, function(_,trigger_char) {
       var found = vc.lookup_table[trigger_char];
       if(found != null)
       {
@@ -108,7 +108,7 @@ Glaemscribe.VirtualChar.prototype.finalize = function()
           vc.charset.errors.push(new Glaemscribe.Glaeml.Error(vc.line, "Trigger char " + trigger_char + " points to another virtual char " + result_char + ". This is not supported!"));          
         }
         else {
-          tc.names.glaem_each(function(_,trigger_char_name) {
+          glaemEach(tc.names, function(_,trigger_char_name) {
             vc.lookup_table[trigger_char_name] = rc;
           });
         }
@@ -160,7 +160,7 @@ Glaemscribe.SequenceChar.prototype.finalize = function()
   {
     sq.charset.errors.push(new Glaemscribe.Glaeml.Error(sq.line, "Sequence for sequence char is empty."));
   }
-  sq.sequence.glaem_each(function(_,symbol) {
+  glaemEach(sq.sequence, function(_,symbol) {
     if(!sq.charset.n2c(symbol))
       sq.charset.errors.push(new Glaemscribe.Glaeml.Error(sq.line, "Sequence char " + symbol + "cannot be found in the charset."));     
   });
@@ -251,14 +251,14 @@ Glaemscribe.Charset.prototype.finalize = function()
     }
   }
   
-  charset.chars.glaem_each(function(_,c) {
+  glaemEach(charset.chars, function(_,c) {
     if(c.is_virtual()) {
       c.finalize();
       charset.virtual_chars.push(c);
     }
   });
   
-  charset.chars.glaem_each(function(_,c) {
+  glaemEach(charset.chars, function(_,c) {
      if(c.is_sequence()) {
        c.finalize();
      }

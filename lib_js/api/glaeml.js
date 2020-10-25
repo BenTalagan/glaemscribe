@@ -50,7 +50,7 @@ Glaemscribe.Glaeml.Node.prototype.clone = function() {
     // Clone the array of args
     new_element.args = this.args.slice(0); 
     // Clone the children
-    this.children.glaem_each(function(child_index, child) {
+    glaemEach(this.children, function(child_index, child) {
         new_element.children.push(child.clone());
     });
     return new_element;

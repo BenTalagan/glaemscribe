@@ -63,12 +63,12 @@ Glaemscribe.Mode.prototype.finalize = function(options) {
   var trans_options = {};
   
   // Build default options
-  mode.options.glaem_each(function(oname, o) {
+  glaemEach(mode.options, function(oname, o) {
     trans_options[oname] = o.default_value_name;
   });
   
   // Push user options
-  options.glaem_each(function(oname, valname) {
+  glaemEach(options, function(oname, valname) {
     // Check if option exists
     var opt = mode.options[oname];
     if(!opt)
@@ -83,16 +83,16 @@ Glaemscribe.Mode.prototype.finalize = function(options) {
   var trans_options_converted = {};
  
   // Do a conversion to values space
-  trans_options.glaem_each(function(oname,valname) {
+  glaemEach(trans_options, function(oname,valname) {
     trans_options_converted[oname] = mode.options[oname].value_for_value_name(valname);
   });
 
   // Add the option defined constants to the whole list for evaluation purposes
-  mode.options.glaem_each(function(oname, o) {
+  glaemEach(mode.options, function(oname, o) {
     // For enums, add the values as constants for the evaluator
     if(o.type == Glaemscribe.Option.Type.ENUM )
     {
-      o.values.glaem_each(function(name,val) {
+      glaemEach(o.values, function(name,val) {
         trans_options_converted[name] = val
       });
     }
@@ -201,7 +201,7 @@ Glaemscribe.Mode.prototype.transcribe = function(content, charset) {
   {
     var chunks = content.split(/({{[\s\S]*?}})/);
        
-    chunks.glaem_each(function(_,c) {
+    glaemEach(chunks, function(_,c) {
       var rmatch = null;
       
       var to_transcribe = c;

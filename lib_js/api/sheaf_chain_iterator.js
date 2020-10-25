@@ -43,7 +43,7 @@ Glaemscribe.SheafChainIterator = function (sheaf_chain, cross_schema)
   // Make a list of linkable sheaves
   var iterable_idxs   = [];
   var prototype_array = [];
-  sheaf_chain.sheaves.glaem_each(function(i,sheaf) {
+  glaemEach(sheaf_chain.sheaves, function(i,sheaf) {
     if(sheaf.linkable)
     {
       iterable_idxs.push(i);
@@ -78,8 +78,7 @@ Glaemscribe.SheafChainIterator = function (sheaf_chain, cross_schema)
     
     var sorted = cross_schema.slice(0).sort(); // clone and sort
     
-    if(!it_identity_array.equals(sorted))
-    {
+    if (!arrayEquals(it_identity_array, sorted)) {
       sci.errors.push("Cross rule schema should be a permutation of the identity (it should contain 1,2,..,n numbers once and only once).");
       return;
     }
@@ -87,7 +86,7 @@ Glaemscribe.SheafChainIterator = function (sheaf_chain, cross_schema)
     var prototype_array_permutted = prototype_array.slice(0);
     
     // Now calculate the cross array
-    cross_schema.glaem_each(function(from,to) {
+    glaemEach(cross_schema, function(from,to) {
       var to_permut = iterable_idxs[from];
       var permut    = iterable_idxs[to];
       sci.cross_array[to_permut] = permut;
@@ -124,8 +123,8 @@ Glaemscribe.SheafChainIterator.prototype.combinations = function()
   var res = resolved[0]; 
   for(var i=0;i<resolved.length-1;i++)
   {
-    var prod  = res.productize(resolved[i+1]);
-    res       = prod.map(function(elt) {
+    var prod  = productizeArray(res, resolved[i+1]);
+    res = prod.map(function(elt) {
       var e1 = elt[0];
       var e2 = elt[1];
       return e1.concat(e2);

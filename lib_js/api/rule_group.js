@@ -155,8 +155,7 @@ Glaemscribe.RuleGroup.prototype.descend_if_tree = function(code_block,options)
     
       // First, test if variable is pushable
       var arg_values = []
-      term.macro.arg_names.glaem_each(function(i,arg_name) {
-      
+      glaemEach(term.macro.arg_names, function(i,arg_name) {
         var var_value = null;
         
         if(rule_group.vars[arg_name]) {
@@ -176,7 +175,7 @@ Glaemscribe.RuleGroup.prototype.descend_if_tree = function(code_block,options)
       });
     
       // We push local vars after the whole loop to avoid interferences between them when evaluating them
-      arg_values.glaem_each(function(_,v) {
+      glaemEach(arg_values, function(_,v) {
         if(v.val != null)
           rule_group.add_var(v.name,v.val,false)
       });
@@ -184,7 +183,7 @@ Glaemscribe.RuleGroup.prototype.descend_if_tree = function(code_block,options)
       rule_group.descend_if_tree(term.macro.root_code_block, options)
     
       // Remove the local vars from the scope (only if they were leggit)
-      arg_values.glaem_each(function(_,v) {
+      glaemEach(arg_values, function(_,v) {
         if(v.val != null)
           rule_group.vars[v.name] = null;
       });

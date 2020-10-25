@@ -89,9 +89,8 @@ Glaemscribe.Fragment = function(sheaf, expression) {
   // Calculate all combinations
   var res = fragment.equivalences[0];
  
-  for(var i=0;i<fragment.equivalences.length-1;i++)
-  {
-    var prod = res.productize(fragment.equivalences[i+1]);
+  for (var i = 0; i < fragment.equivalences.length - 1; i++) {
+    var prod = productizeArray(res, fragment.equivalences[i+1]);
     res = prod.map(function(elt) {
   
       var x = elt[0];
