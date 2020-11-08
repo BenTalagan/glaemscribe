@@ -1,0 +1,1 @@
+espeak-NG is released under the GPL V3 license and is compliant with Glaemscribe own license.
