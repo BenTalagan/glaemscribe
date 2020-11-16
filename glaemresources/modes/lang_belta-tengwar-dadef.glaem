@@ -1,0 +1,208 @@
+\**
+
+Glǽmscribe (also written Glaemscribe) is a software dedicated to
+the transcription of texts between writing systems, and more
+specifically dedicated to the transcription of J.R.R. Tolkien's
+invented languages to some of his devised writing systems.
+
+Copyright (C) 2015 Benjamin Babut (Talagan).
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU Affero General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Affero General Public License for more details.
+
+You should have received a copy of the GNU Affero General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+**\
+
+\beg changelog
+  \entry "0.0.1" "Ported from Westron"
+  \entry "0.0.2" "Simplified"
+  \entry "0.0.3" "Yaterash poetic forms"
+  \entry "0.0.4" "English numeric defaults, use lsd for nasal, poetic finals"
+  \entry "0.0.5" "Bikang option: beacon final hints"
+\end
+\version  "0.0.5"
+
+\** Lang Belta mode for glaemscribe **\
+\language "Lang Belta"
+\writing  Tengwar
+\mode     "Lang Belta (The Expanse) Tengwar - G*"
+\authors  "Da Def, based on Talagan's Westron"
+
+\world     other_world
+\invention experimental
+
+\raw_mode "raw-tengwar"
+
+\charset  tengwar_ds_sindarin false
+\charset  tengwar_ds_parmaite false
+\charset  tengwar_ds_eldamar  false
+\charset  tengwar_ds_annatar  false
+\charset  tengwar_ds_elfica   false
+
+\charset  tengwar_guni_sindarin false
+\charset  tengwar_guni_parmaite false
+\charset  tengwar_guni_eldamar  false
+\charset  tengwar_guni_annatar  true
+\charset  tengwar_guni_elfica   false
+
+\charset  tengwar_freemono    false
+\charset  tengwar_telcontar   false
+
+\beg      options
+  \option wit_yaterash false
+  \beg option bikang true 
+    \visible_when "wit_yaterash == true"
+  \end
+  \option implicit_a false
+  \option reverse_numbers false
+  \beg option numbers_base BASE_10
+    \value    BASE_10 10
+    \value    BASE_12 12
+  \end
+\end
+
+\beg      preprocessor
+  \** Work exclusively downcase **\
+  \downcase
+
+  \** Preprocess numbers **\
+  \elvish_numbers "\\eval numbers_base" "\\eval reverse_numbers"
+\end
+
+\beg      processor
+  \beg    rules literal
+
+    \if implicit_a
+        {_A_} === {NULL}
+        {_X_} === NO_VOWEL_DOT
+    \else
+        {_A_} === A_TEHTA
+        {_X_} === {NULL}
+    \endif
+
+    {PENNAR}  === a     * e       * i       * ow               * o       * u
+    {TEHTAR}  === {_A_} * E_TEHTA * I_TEHTA * A_TEHTA_REVERSED * O_TEHTA * U_TEHTA
+
+    {L1_S}    === t     * p     * ch    * k
+    {L1_T}    === TINCO * PARMA * CALMA * QUESSE
+    {L2_S}    === d    * b     * dzh  * g
+    {L2_T}    === ANDO * UMBAR * ANGA * UNGWE
+    {L3_S}    === f      * sh  * x
+    {L3_T}    === FORMEN * AHA * HWESTA
+    {L4_S}    === v
+    {L4_T}    === AMPA
+    {L5_S}    === n     * m     * ny     * ng
+    {L5_T}    === NUMEN * MALTA * NOLDO  * NWALME
+    {L6_S}    === w    * y
+    {L6_T}    === VALA * ANNA
+    {IR_S}    === r     * l     * s              * z
+    {IR_T}    === ROMEN * LAMBE * SILME_NUQUERNA * ESSE_NUQUERNA
+
+    {TAPTAR}  === {L1_S} * {L2_S} * {L3_S} * {L4_S} * {L5_S} * {L6_S} * {IR_S}
+    {TENGWAR} === {L1_T} * {L2_T} * {L3_T} * {L4_T} * {L5_T} * {L6_T} * {IR_T}
+
+    [{TAPTAR}]         --> [{TENGWAR}]{_X_}
+    [{TAPTAR}]{PENNAR} --> [{TENGWAR}]{TEHTAR}
+    [{PENNAR}]         --> TELCO [{TEHTAR}]   \** Replace isolated short vowels **\
+
+    \** For now, sãsa is a hapax **\
+    sã                --> SILME_NUQUERNA NASALIZE_SIGN A_TEHTA
+
+    \if wit_yaterash
+      tn[{PENNAR}]           -->              NUMEN THINNAS  [{TEHTAR}]
+      l[{TAPTAR}][{PENNAR}]  --> [{TENGWAR}]  PALATAL_SIGN   [{TEHTAR}]
+      m[{TAPTAR}][{PENNAR}]  --> [{TENGWAR}]  CIRC_TEHTA_INF [{TEHTAR}]
+      {TAPTARN}  === t     * d    * s              * sh  * y  \** avoid ng **\
+      {TENGWARN} === TINCO * ANDO * SILME_NUQUERNA * AHA * ANNA
+      n[{TAPTARN}][{PENNAR}] --> [{TENGWARN}] CIRC_TEHTA_INF [{TEHTAR}]
+      \if bikang
+        (m,t)_    --> O_TEHTA_INF
+        (ng)_     --> E_TEHTA_DOUBLE_INF
+        (f,k,p)_  --> U_TEHTA_INF
+        (l,x,sh)_ --> E_TEHTA_INF
+      \else
+        (t,k,p,f,x,sh,m,ng,l)_ --> GEMINATE_SIGN_TILD
+      \endif
+    \endif
+  \end
+
+  \beg rules punctutation
+    . --> PUNCT_DDOT
+    .. --> PUNCT_DOT PUNCT_DDOT PUNCT_DOT
+    …  --> PUNCT_TILD
+    ... --> PUNCT_TILD
+    .... --> PUNCT_TILD
+    ..... --> PUNCT_TILD
+    ...... --> PUNCT_TILD
+    ....... --> PUNCT_TILD
+
+    , --> PUNCT_DOT
+    : --> PUNCT_DOT
+    ; --> PUNCT_DOT
+    ! --> PUNCT_EXCLAM
+    ? --> PUNCT_INTERR
+    · --> PUNCT_DOT
+
+    \** Apostrophe **\
+
+    ' --> {NULL}
+    ’ --> {NULL}
+
+    \** NBSP **\
+    {NBSP} --> NBSP
+
+    \** Quotes **\
+
+    “ --> DQUOT_OPEN
+    ” --> DQUOT_CLOSE
+    « --> DQUOT_OPEN
+    » --> DQUOT_CLOSE
+
+    - --> PUNCT_DOT
+    – --> PUNCT_TILD
+    — --> PUNCT_DTILD
+
+    [ --> PUNCT_PAREN_L
+    ] --> PUNCT_PAREN_R
+    ( --> PUNCT_PAREN_L
+    ) --> PUNCT_PAREN_R
+    { --> PUNCT_PAREN_L
+    } --> PUNCT_PAREN_R
+    < --> PUNCT_PAREN_L
+    > --> PUNCT_PAREN_R
+
+    \** Not universal between fonts ... **\
+    $ --> ELVISH_PAREN
+    ≤ --> RING_MARK_L \** Ring inscription left beautiful stuff **\
+    ≥ --> RING_MARK_R \** Ring inscription right beautiful stuff **\
+  \end
+
+  \beg rules numbers
+    0 --> NUM_0
+    1 --> NUM_1
+    2 --> NUM_2
+    3 --> NUM_3
+    4 --> NUM_4
+    5 --> NUM_5
+    6 --> NUM_6
+    7 --> NUM_7
+    8 --> NUM_8
+    9 --> NUM_9
+    A --> NUM_10
+    B --> NUM_11
+  \end
+
+\end
+
+\beg postprocessor
+  \resolve_virtuals
+\end
