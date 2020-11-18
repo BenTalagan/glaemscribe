@@ -59,9 +59,15 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 \beg      options
   \option wit_yaterash false
+  
   \beg option bikang true 
     \visible_when "wit_yaterash == true"
   \end
+  
+  \beg option lowng false
+  	\visible_when "wit_yaterash == true"
+  \end
+  
   \option implicit_a false
   \option reverse_numbers false
   \beg option numbers_base BASE_10
@@ -118,12 +124,22 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     sã                --> SILME_NUQUERNA NASALIZE_SIGN A_TEHTA
 
     \if wit_yaterash
-      tn[{PENNAR}]           -->              NUMEN THINNAS  [{TEHTAR}]
-      l[{TAPTAR}][{PENNAR}]  --> [{TENGWAR}]  PALATAL_SIGN   [{TEHTAR}]
-      m[{TAPTAR}][{PENNAR}]  --> [{TENGWAR}]  CIRC_TEHTA_INF [{TEHTAR}]
-      {TAPTARN}  === t     * d    * s              * sh  * y  \** avoid ng **\
-      {TENGWARN} === TINCO * ANDO * SILME_NUQUERNA * AHA * ANNA
-      n[{TAPTARN}][{PENNAR}] --> [{TENGWARN}] CIRC_TEHTA_INF [{TEHTAR}]
+
+      \if lowng
+      	tn[{PENNAR}] --> TW_MH [{TEHTAR}]
+      	lt[{PENNAR}] --> ALDA  [{TEHTAR}]
+      	{TAPTARN}  === nt        * nd        * mp        * mb        * nsh     * ns
+      	{TENGWARN} === TINCO_EXT * ANDO_EXT  * PARMA_EXT * UMBAR_EXT * AHA_EXT * TW_HW_LOWDHAM
+      	[{TAPTARN}][{PENNAR}] --> [{TENGWARN}][{TEHTAR}]
+      \else
+      	tn[{PENNAR}]           -->              NUMEN THINNAS  [{TEHTAR}]
+      	l[{TAPTAR}][{PENNAR}]  --> [{TENGWAR}]  PALATAL_SIGN   [{TEHTAR}]
+      	m[{TAPTAR}][{PENNAR}]  --> [{TENGWAR}]  CIRC_TEHTA_INF [{TEHTAR}]
+      	{TAPTARN}  === t     * d    * s              * sh  \** avoid ng **\
+      	{TENGWARN} === TINCO * ANDO * SILME_NUQUERNA * AHA \** and ny   **\
+      	n[{TAPTARN}][{PENNAR}] --> [{TENGWARN}] CIRC_TEHTA_INF [{TEHTAR}]
+      \endif
+
       \if bikang
         (m,t)_    --> O_TEHTA_INF
         (ng)_     --> E_TEHTA_DOUBLE_INF
@@ -132,7 +148,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
       \else
         (t,k,p,f,x,sh,m,ng,l)_ --> GEMINATE_SIGN_TILD
       \endif
+      
     \endif
+    
   \end
 
   \beg rules punctutation
