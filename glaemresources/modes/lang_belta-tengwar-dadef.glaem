@@ -68,6 +68,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   	\visible_when "wit_yaterash == true"
   \end
   
+  \beg option kuwendi false
+  	\visible_when "wit_yaterash == true && lowng == false"
+  \end
+  
   \option implicit_a false
   \option reverse_numbers false
   \beg option numbers_base BASE_10
@@ -94,9 +98,18 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         {_A_} === A_TEHTA
         {_X_} === {NULL}
     \endif
-
+      
     {PENNAR}  === a     * e       * i       * ow               * o       * u
     {TEHTAR}  === {_A_} * E_TEHTA * I_TEHTA * A_TEHTA_REVERSED * O_TEHTA * U_TEHTA
+    
+    \** For now, shãsa is a hapax **\
+    {PENNAR}  === {PENNAR} * ã  
+    {TEHTAR}  === {TEHTAR} * E_TEHTA_GRAVE
+
+    \** tentative 
+    {PENNAR}  === {PENNAR} * ẽ               * ĩ               * õw       * õ               * ũ
+    {TEHTAR}  === {TEHTAR} * E_TEHTA_DOUBLE  * I_TEHTA_DOUBLE * WA_TEHTA * O_TEHTA_DOUBLE  * U_TEHTA_DOUBLE
+    **\
 
     {L1_S}    === t     * p     * ch    * k
     {L1_T}    === TINCO * PARMA * CALMA * QUESSE
@@ -120,24 +133,31 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     [{TAPTAR}]{PENNAR} --> [{TENGWAR}]{TEHTAR}
     [{PENNAR}]         --> TELCO [{TEHTAR}]   \** Replace isolated short vowels **\
 
-    \** For now, sãsa is a hapax **\
-    sã                --> SILME_NUQUERNA NASALIZE_SIGN A_TEHTA
-
     \if wit_yaterash
-
+      
       \if lowng
+        {TAPTARN}  === nt        * nd        * mp        * mb        * nsh     * ns
+    	  {TENGWARN} === TINCO_EXT * ANDO_EXT  * PARMA_EXT * UMBAR_EXT * AHA_EXT * TW_HW_LOWDHAM
+
       	tn[{PENNAR}] --> TW_MH [{TEHTAR}]
       	lt[{PENNAR}] --> ALDA  [{TEHTAR}]
-      	{TAPTARN}  === nt        * nd        * mp        * mb        * nsh     * ns
-      	{TENGWARN} === TINCO_EXT * ANDO_EXT  * PARMA_EXT * UMBAR_EXT * AHA_EXT * TW_HW_LOWDHAM
-      	[{TAPTARN}][{PENNAR}] --> [{TENGWARN}][{TEHTAR}]
+      	
+        [{TAPTARN}][{PENNAR}] --> [{TENGWARN}][{TEHTAR}]
       \else
+        {TAPTARN}  === t     * d    * s              * sh  \** avoid ng **\
+      	{TENGWARN} === TINCO * ANDO * SILME_NUQUERNA * AHA \** and ny   **\
+      	
       	tn[{PENNAR}]           -->              NUMEN THINNAS  [{TEHTAR}]
       	l[{TAPTAR}][{PENNAR}]  --> [{TENGWAR}]  PALATAL_SIGN   [{TEHTAR}]
-      	m[{TAPTAR}][{PENNAR}]  --> [{TENGWAR}]  CIRC_TEHTA_INF [{TEHTAR}]
-      	{TAPTARN}  === t     * d    * s              * sh  \** avoid ng **\
-      	{TENGWARN} === TINCO * ANDO * SILME_NUQUERNA * AHA \** and ny   **\
-      	n[{TAPTARN}][{PENNAR}] --> [{TENGWARN}] CIRC_TEHTA_INF [{TEHTAR}]
+      	
+        \if kuwendi
+          {NASAL} === NASALIZE_SIGN
+        \else
+          {NASAL} === CIRC_TEHTA_INF
+        \endif
+      
+        m[{TAPTAR}][{PENNAR}]  --> [{TENGWAR}]  {NASAL} [{TEHTAR}]
+        n[{TAPTARN}][{PENNAR}] --> [{TENGWARN}] {NASAL} [{TEHTAR}]
       \endif
 
       \if bikang
