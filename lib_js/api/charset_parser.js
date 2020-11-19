@@ -64,6 +64,13 @@ Glaemscribe.CharsetParser.prototype.parse_raw = function(charset_name, raw)
       var vc        = new Glaemscribe.VirtualChar.VirtualClass();
       vc.target     = class_element.args[0];
       vc.triggers   = class_element.args.slice(1);   
+
+      // Allow triggers to be defined inside the body of the class element
+      var child_node      = class_element.children[0]; 
+      var inner_triggers  = (child_node && child_node.is_text())?(child_node.args[0]):("");
+      inner_triggers      = inner_triggers.split(/\s/).filter(function(e) { return e !== '' });
+      vc.triggers         = vc.triggers.concat(inner_triggers);
+
       classes.push(vc);
     });
     glaemEach(virtual_element.gpath("reversed"), function(_,reversed_element) {
