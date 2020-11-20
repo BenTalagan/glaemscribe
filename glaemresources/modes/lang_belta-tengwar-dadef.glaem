@@ -28,8 +28,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   \entry "0.0.3" "Yaterash poetic forms"
   \entry "0.0.4" "English numeric defaults, use lsd for nasal, poetic finals"
   \entry "0.0.5" "Bikang option: beacon final hints"
+  \entry "0.0.6" "Lowng & kuwendi options"
+  \entry "0.1.0" "clean up pass"
 \end
-\version  "0.0.5"
+\version  "0.1.0"
 
 \** Lang Belta mode for glaemscribe **\
 \language "Lang Belta"
@@ -84,6 +86,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   \** Work exclusively downcase **\
   \downcase
 
+  \** protect NOLDO and NWALME **\
+  \rxsubstitute "(ny)" "ɲ"
+  \rxsubstitute "(ng)" "ŋ"
+
   \** Preprocess numbers **\
   \elvish_numbers "\\eval numbers_base" "\\eval reverse_numbers"
 \end
@@ -107,66 +113,62 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     {TEHTAR}  === {TEHTAR} * E_TEHTA_GRAVE
 
     \** tentative 
-    {PENNAR}  === {PENNAR} * ẽ               * ĩ               * õw       * õ               * ũ
+    {PENNAR}  === {PENNAR} * ẽ               * ĩ              * õw       * õ               * ũ
     {TEHTAR}  === {TEHTAR} * E_TEHTA_DOUBLE  * I_TEHTA_DOUBLE * WA_TEHTA * O_TEHTA_DOUBLE  * U_TEHTA_DOUBLE
     **\
 
-    {L1_S}    === t     * p     * ch    * k
-    {L1_T}    === TINCO * PARMA * CALMA * QUESSE
-    {L2_S}    === d    * b     * dzh  * g
-    {L2_T}    === ANDO * UMBAR * ANGA * UNGWE
-    {L3_S}    === f      * sh  * x
-    {L3_T}    === FORMEN * AHA * HWESTA
-    {L4_S}    === v
-    {L4_T}    === AMPA
-    {L5_S}    === n     * m     * ny     * ng
-    {L5_T}    === NUMEN * MALTA * NOLDO  * NWALME
-    {L6_S}    === w    * y
-    {L6_T}    === VALA * ANNA
+    {L1_S}    === t     * p      * ch    * k
+    {L1_T}    === TINCO * PARMA  * CALMA * QUESSE
+    {L2_S}    === d     * b      * dzh   * g
+    {L2_T}    === ANDO  * UMBAR  * ANGA  * UNGWE
+    {L3_S}    ===         f      * sh    * x
+    {L3_T}    ===         FORMEN * AHA   * HWESTA
+    {L4_S}    ===         v
+    {L4_T}    ===         AMPA
+    {L5_S}    === n     * m      * ɲ     * ŋ
+    {L5_T}    === NUMEN * MALTA  * NOLDO * NWALME
+    {L6_S}    ===         w      * y
+    {L6_T}    ===         VALA   * ANNA
     {IR_S}    === r     * l     * s              * z
     {IR_T}    === ROMEN * LAMBE * SILME_NUQUERNA * ESSE_NUQUERNA
 
     {TAPTAR}  === {L1_S} * {L2_S} * {L3_S} * {L4_S} * {L5_S} * {L6_S} * {IR_S}
     {TENGWAR} === {L1_T} * {L2_T} * {L3_T} * {L4_T} * {L5_T} * {L6_T} * {IR_T}
 
-    [{TAPTAR}]         --> [{TENGWAR}]{_X_}
-    [{TAPTAR}]{PENNAR} --> [{TENGWAR}]{TEHTAR}
-    [{PENNAR}]         --> TELCO [{TEHTAR}]   \** Replace isolated short vowels **\
+    [{TAPTAR}]           --> [{TENGWAR}] {_X_}
+    [{TAPTAR}][{PENNAR}] --> [{TENGWAR}][{TEHTAR}]
+              [{PENNAR}] -->   TELCO    [{TEHTAR}]
 
     \if wit_yaterash
       
       \if lowng
         {TAPTARN}  === nt        * nd        * mp        * mb        * nsh     * ns
-    	  {TENGWARN} === TINCO_EXT * ANDO_EXT  * PARMA_EXT * UMBAR_EXT * AHA_EXT * TW_HW_LOWDHAM
+        {TENGWARN} === TINCO_EXT * ANDO_EXT  * PARMA_EXT * UMBAR_EXT * AHA_EXT * TW_HW_LOWDHAM
 
       	tn[{PENNAR}] --> TW_MH [{TEHTAR}]
       	lt[{PENNAR}] --> ALDA  [{TEHTAR}]
       	
         [{TAPTARN}][{PENNAR}] --> [{TENGWARN}][{TEHTAR}]
       \else
-        {TAPTARN}  === t     * d    * s              * sh  \** avoid ng **\
-      	{TENGWARN} === TINCO * ANDO * SILME_NUQUERNA * AHA \** and ny   **\
-      	
-      	tn[{PENNAR}]           -->              NUMEN THINNAS  [{TEHTAR}]
-      	l[{TAPTAR}][{PENNAR}]  --> [{TENGWAR}]  PALATAL_SIGN   [{TEHTAR}]
+      	tn[{PENNAR}]              -->             NUMEN THINNAS  [{TEHTAR}]
+      	l[{TAPTAR}][{PENNAR}]     --> [{TENGWAR}] PALATAL_SIGN   [{TEHTAR}]
       	
         \if kuwendi
-          {NASAL} === NASALIZE_SIGN
+          {NASAL} === NASALIZE_SIGN_TILD
         \else
           {NASAL} === CIRC_TEHTA_INF
         \endif
       
-        m[{TAPTAR}][{PENNAR}]  --> [{TENGWAR}]  {NASAL} [{TEHTAR}]
-        n[{TAPTARN}][{PENNAR}] --> [{TENGWARN}] {NASAL} [{TEHTAR}]
+        (m,n)[{TAPTAR}][{PENNAR}] --> [{TENGWAR}] {NASAL}        [{TEHTAR}]
       \endif
 
       \if bikang
         (m,t)_    --> O_TEHTA_INF
-        (ng)_     --> E_TEHTA_DOUBLE_INF
+        (ŋ)_      --> E_TEHTA_DOUBLE_INF
         (f,k,p)_  --> U_TEHTA_INF
         (l,x,sh)_ --> E_TEHTA_INF
       \else
-        (t,k,p,f,x,sh,m,ng,l)_ --> GEMINATE_SIGN_TILD
+        (t,k,p,f,x,sh,m,ŋ,l)_ --> GEMINATE_SIGN_TILD
       \endif
       
     \endif
