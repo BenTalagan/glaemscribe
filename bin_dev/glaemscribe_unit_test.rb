@@ -124,7 +124,7 @@ def unit_test_directory(directory, error_context = {ecount: 0, wcount: 0})
   
   puts "Testing now test base : #{directory}"
   
-  Dir.glob(directory + "/sources/*/" ) { |dirent|
+  Dir.glob(directory + "/sources/*/" ).sort.each { |dirent|
     
     full_name    = File.basename(dirent)    
     mode_name    = full_name.split(".")[0]

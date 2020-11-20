@@ -34,7 +34,9 @@ function dump(char, similars) {
       var cname             = DIACRITIC_TABLE[slave_name]['classes'][i];
       
       var list = res[master_class_name] || [];
-      ret += "  \\class " + cname + " " + list.join(" ") + "\n";
+      ret += "  \\beg class " + cname + "\n    " 
+      ret += list.join("\n    ") 
+      ret += "\n  \\end\n";
     }
     
     ret += "\\end\n\n";  

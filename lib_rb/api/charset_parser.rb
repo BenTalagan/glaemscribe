@@ -64,7 +64,13 @@ module Glaemscribe
           virtual_element.gpath("class").each { |class_element|
             vc =  Charset::VirtualChar::VirtualClass.new
             vc.target    = class_element.args[0]
-            vc.triggers  = class_element.args[1..-1].map{|cname| cname.strip }.reject{ |cname| cname.empty? }     
+            vc.triggers  = class_element.args[1..-1].map{|cname| cname.strip }.reject{ |cname| cname.empty? }
+            
+            # Allow triggers to be defined inside the body of the class element
+            text_lines      = class_element.children.select { |c| c.text? }.map{ |c| c.args.first}
+            inner_triggers  = text_lines.join(" ").split(/\s/).select{ |e| e != '' }
+            vc.triggers    += inner_triggers
+
             classes << vc
           }
           virtual_element.gpath("reversed").each { |reversed_element| 
