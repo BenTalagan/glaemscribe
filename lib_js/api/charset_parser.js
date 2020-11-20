@@ -66,9 +66,11 @@ Glaemscribe.CharsetParser.prototype.parse_raw = function(charset_name, raw)
       vc.triggers   = class_element.args.slice(1);   
 
       // Allow triggers to be defined inside the body of the class element
-      var child_node      = class_element.children[0]; 
-      var inner_triggers  = (child_node && child_node.is_text())?(child_node.args[0]):("");
-      inner_triggers      = inner_triggers.split(/\s/).filter(function(e) { return e !== '' });
+      var text_lines  = class_element.children.
+        filter(function(c) { return c.is_text(); }).
+        map(function(c) { return c.args[0]; });
+
+      var inner_triggers  = text_lines.join(" ").split(/\s/).filter(function(e) { return e !== '' });
       vc.triggers         = vc.triggers.concat(inner_triggers);
 
       classes.push(vc);

@@ -66,9 +66,10 @@ module Glaemscribe
             vc.target    = class_element.args[0]
             vc.triggers  = class_element.args[1..-1].map{|cname| cname.strip }.reject{ |cname| cname.empty? }
             
-            child_node      = class_element.children.first
-            inner_triggers  = (child_node && child_node.text?)?(child_node.args.first):("")
-            inner_triggers  = inner_triggers.split(/\s/).select{ |e| e != '' }
+            # Allow triggers to be defined inside the body of the class element
+            text_lines      = class_element.children.select { |c| c.text? }.map{ |c| c.args.first}
+            inner_triggers  = text_lines.join(" ").split(/\s/).select{ |e| e != '' }
+            vc.triggers    += inner_triggers
 
             classes << vc
           }
