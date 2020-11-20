@@ -46,6 +46,15 @@ function dump(char, similars) {
   return ret;
 }
 
+function copyToClipboard(text) {
+    var dummy = document.createElement("textarea");
+    document.body.appendChild(dummy);
+    dummy.value = text;
+    dummy.select();
+    document.execCommand("copy");
+    document.body.removeChild(dummy);
+}
+
 $(document).ready(function() {
   $(".dumper").each(function(button) {
     $(this).click(function() {
@@ -57,7 +66,7 @@ $(document).ready(function() {
         ret += dump(first, serie);
         
       });
-      
+      copyToClipboard(ret);
       $(".dump_zone").text(ret);
       
     })
