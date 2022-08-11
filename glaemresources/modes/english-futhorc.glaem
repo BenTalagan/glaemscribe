@@ -1,0 +1,98 @@
+\**
+
+Glǽmscribe (also written Glaemscribe) is a software dedicated to
+the transcription of texts between writing systems, and more 
+specifically dedicated to the transcription of J.R.R. Tolkien's 
+invented languages to some of his devised writing systems.
+
+Copyright (C) 2015 Benjamin Babut (Talagan).
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU Affero General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Affero General Public License for more details.
+
+You should have received a copy of the GNU Affero General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+**\
+
+\beg changelog
+  \entry "0.0.1" "Initial version, adapted from old_english-futhorc.glaem"
+\end
+
+\language "English"
+\writing  "Runes"
+\mode     "English Futhorc based on the Hobbit"
+\version  "0.0.1"
+\authors  "J.R.R. Tolkien impl. David Fraser"
+
+\world      primary_related_to_arda
+\invention  jrrt
+
+\charset  unicode_runes true
+
+\beg      preprocessor
+  \downcase
+\end
+
+\beg      processor
+    
+  \beg    rules litteral
+    \** These rules generally follow https://ring-lord.tripod.com/runes/dwafrune.htm **\
+    f       --> FEOH \** Tjere are variants with round and straight strokes; only the former is in the Unicode Runic range **\
+    (u,v)   --> URUZ \** There are variants with round and straight strokes; only the former is in the Unicode Runic range **\
+    th      --> THORN
+    oo      --> OS
+    o       --> OS
+    r       --> RAIDO
+    c       --> CEN
+    g       --> GEBO
+    w       --> WYNN
+    h       --> HAEGL
+    n       --> NAUDIZ
+    (i,j)   --> ISAZ
+    p       --> PERTHO \** This is the second variant; the variant that looks more like a K is not in the Unicode Runic range **\
+    x       --> ALGIZ
+    z       --> CALC
+    s       --> RUNIC_LETTER_SH
+    t       --> TIWAZ
+    \** st  --> STAN Thror's map uses separate S T anyway, and Tolkien's styling of this letter is different **\
+    b       --> BERKANAN
+    e       --> EHWAZ
+    m       --> MANNAZ
+    l       --> LAUKAZ
+    ng      --> ING
+    ee      --> OTHALAN
+    d       --> DAEG \** Tolkien also uses an alternative with lines above and below, forming a box with a cross around it; this is not in the Unicode Runic range **\
+    a       --> AESC
+    +a      --> AC \** One of two alternatives in the chart; the other is not in Unicode Runic **\
+    \** y       --> CIRTH_49 matches this letter correctly, but this is a problem, as no font has both CIRTH and RUNIC unicode block **\
+    y       --> YR \** This is the closest thing in unicode Runic to Tolkien's CIRTH_49 **\
+    ea      --> EAR
+    k       --> RUNIC_LETTER_FRANKS_CASKET_AC \** This is not an exact match but the closest in the Unicode Runic range **\
+    \** combinations **\
+    qu      --> CEN WYNN
+  \end
+  
+  \beg    rules  punctuation
+    , --> RUNIC_SINGLE_PUNCTUATION
+    ; --> RUNIC_SINGLE_PUNCTUATION
+    : --> RUNIC_MULTIPLE_PUNCTUATION
+    . --> RUNIC_MULTIPLE_PUNCTUATION
+    ! --> RUNIC_MULTIPLE_PUNCTUATION
+    ? --> RUNIC_CROSS_PUNCTUATION 
+    “ --> {NULL}
+    ” --> {NULL}
+    « --> {NULL}
+    » --> {NULL}
+    - --> {NULL}
+    ' --> {NULL}
+    " --> {NULL}
+  \end
+\end
