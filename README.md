@@ -40,7 +40,7 @@ If you're interested in developing a mode for Glǽmscribe, please read [**_the m
 Installation and integration
 ----------------------------
 
-Here is [**_the installation and integration documentation_**](http://bentalagan.github.com/glaemscribe), for advanced users.
+Here is [**_the installation and integration documentation_**](http://bentalagan.github.io/glaemscribe), for advanced users.
 
 Changelog
 ---------
