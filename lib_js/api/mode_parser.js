@@ -293,7 +293,7 @@ Glaemscribe.ModeParser.prototype.parse_pre_post_processor = function(processor_e
     }
     else
     {         
-      term.operators.push(new operator_class(element.clone()));     
+      term.operators.push(new operator_class(mode, element.clone()));
     }     
   }  
   

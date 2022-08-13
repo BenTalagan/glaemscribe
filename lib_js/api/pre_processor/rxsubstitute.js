@@ -23,9 +23,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 // Inherit from PrePostProcessorOperator
-Glaemscribe.RxSubstitutePreProcessorOperator = function(glaeml_element)  
+Glaemscribe.RxSubstitutePreProcessorOperator = function(mode, glaeml_element)
 {
-  Glaemscribe.PreProcessorOperator.call(this, glaeml_element); //super
+  Glaemscribe.PreProcessorOperator.call(this, mode, glaeml_element); //super
   return this;
 } 
 Glaemscribe.RxSubstitutePreProcessorOperator.inheritsFrom( Glaemscribe.PreProcessorOperator );  

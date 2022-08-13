@@ -23,9 +23,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 
-Glaemscribe.ResolveVirtualsPostProcessorOperator = function(args)  
+Glaemscribe.ResolveVirtualsPostProcessorOperator = function(mode, glaeml_element)
 {
-  Glaemscribe.PostProcessorOperator.call(this,args); //super
+  Glaemscribe.PostProcessorOperator.call(this, mode, glaeml_element); //super
   return this;
 } 
 Glaemscribe.ResolveVirtualsPostProcessorOperator.inheritsFrom( Glaemscribe.PostProcessorOperator );  

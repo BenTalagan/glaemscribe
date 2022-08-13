@@ -22,9 +22,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 */
 
-Glaemscribe.DowncasePreProcessorOperator = function(args)  
+Glaemscribe.DowncasePreProcessorOperator = function(mode, glaeml_element)
 {
-  Glaemscribe.PreProcessorOperator.call(this,args); //super
+  Glaemscribe.PreProcessorOperator.call(this, mode, glaeml_element); //super
   return this;
 } 
 Glaemscribe.DowncasePreProcessorOperator.inheritsFrom( Glaemscribe.PreProcessorOperator );  

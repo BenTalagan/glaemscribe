@@ -22,7 +22,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 */
 
-Glaemscribe.ElvishNumbersPreProcessorOperator = function(args)  {  Glaemscribe.PreProcessorOperator.call(this,args); return this; } 
+Glaemscribe.ElvishNumbersPreProcessorOperator = function(mode, glaeml_element)
+{
+  Glaemscribe.PreProcessorOperator.call(this, mode, glaeml_element);
+  return this;
+}
 Glaemscribe.ElvishNumbersPreProcessorOperator.inheritsFrom( Glaemscribe.PreProcessorOperator );  
 Glaemscribe.ElvishNumbersPreProcessorOperator.prototype.apply = function(str)
 {

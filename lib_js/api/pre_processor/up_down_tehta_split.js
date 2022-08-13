@@ -23,9 +23,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 // Inherit from PrePostProcessorOperator
-Glaemscribe.UpDownTehtaSplitPreProcessorOperator = function(args)  
+Glaemscribe.UpDownTehtaSplitPreProcessorOperator = function(mode, glaeml_element)
 {
-  Glaemscribe.PreProcessorOperator.call(this,args); //super 
+  Glaemscribe.PreProcessorOperator.call(this, mode, glaeml_element); //super
   return this;
 } 
 Glaemscribe.UpDownTehtaSplitPreProcessorOperator.inheritsFrom( Glaemscribe.PreProcessorOperator );  
