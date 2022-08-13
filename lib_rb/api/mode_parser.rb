@@ -83,7 +83,11 @@ module Glaemscribe
         doc.root_node.gpath("preprocessor.if").each{ |e| validate_presence_of_args(e,  1) }    
         doc.root_node.gpath("preprocessor.elsif").each{ |e| validate_presence_of_args(e,  1) }    
         doc.root_node.gpath("postprocessor.if").each{ |e| validate_presence_of_args(e,  1) }    
-        doc.root_node.gpath("postprocessor.elsif").each{ |e| validate_presence_of_args(e,  1) }    
+        doc.root_node.gpath("postprocessor.elsif").each{ |e| validate_presence_of_args(e,  1) }  
+        
+        doc.root_node.children.each { |c|
+          @mode.errors << Glaeml::Error.new(c.line, "'if' conditions are not allowed in that scope.") if c.name == 'if'
+        }  
       end
       
       def create_if_cond_for_if_term(line, if_term, cond)      
@@ -391,8 +395,7 @@ module Glaemscribe
           }
           traverse_if_tree(processor_context, text_procedure, element_procedure )
         }
-                                                              
-        
+
         espeak_option = @mode.options['espeak_voice']
         if espeak_option
           # Singleton lazy load the TTS engine

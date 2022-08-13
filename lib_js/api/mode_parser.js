@@ -91,6 +91,11 @@ Glaemscribe.ModeParser.prototype.verify_mode_glaeml = function(doc)
   glaemEach(doc.root_node.gpath("preprocessor.elsif"), function (re, rules_element) { parser.validate_presence_of_args(rules_element,  1) });
   glaemEach(doc.root_node.gpath("postprocessor.if"), function (re, rules_element) { parser.validate_presence_of_args(rules_element,  1) });
   glaemEach(doc.root_node.gpath("postprocessor.elsif"), function (re, rules_element) { parser.validate_presence_of_args(rules_element,  1) });
+
+  glaemEach(doc.root_node.children, function(_, c) {
+    if(c.name === 'if')
+      parser.mode.errors.push(Glaemscribe.Glaeml.Error(c.line, "'if' conditions are not allowed in that scope."));
+  });
 }
 
 Glaemscribe.ModeParser.prototype.create_if_cond_for_if_term = function(line, if_term, cond)
