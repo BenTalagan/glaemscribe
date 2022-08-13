@@ -164,39 +164,39 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 \char d9 ?
 \char da ?
 \char db ?
-\char dc ?
-\char dd ?
-\char de ?
-\char df ?
-\char e0 ?
-\char e1 ?
-\char e2 ?
-\char e3 ?
-\char e4 ?
-\char e5 ?
-\char e6 ?
-\char e7 ?
+\char dc EXT_CIRTH_1_REV
+\char dd EXT_CIRTH_2_REV
+\char de EXT_CIRTH_3_REV
+\char df EXT_CIRTH_4_REV
+\char e0 EXT_CIRTH_8_REV
+\char e1 EXT_CIRTH_9_REV
+\char e2 EXT_CIRTH_10_REV
+\char e3 EXT_CIRTH_11_REV
+\char e4 EXT_CIRTH_12_REV
+\char e5 EXT_CIRTH_12_DOUBLE_REV
+\char e6 EXT_CIRTH_12_DOUBLE
+\char e7 EXT_CIRTH_23_REV
 \char e8 ?
-\char e9 ?
-\char ea ?
+\char e9 EXT_CIRTH_28_MIRROR
+\char ea EXT_CIRTH_38_ALT_REV
 \char eb ?
 \char ec ?
 \char ed ?
 \char ee ?
 \char ef ?
-\char f0 ?
+\char f0 EXT_CIRTH_50_REV
 \char f1 ?
 \char f2 ?
-\char f3 ?
-\char f4 ?
+\char f3 EXT_CIRTH_52_REV
+\char f4 EXT_CIRTH_60_REV
 \char f5 ?
-\char f6 ?
-\char f7 ?
-\char f8 ?
+\char f6 EXT_CIRTH_4_DOTTED
+\char f7 EXT_CIRTH_38_DOTTED
+\char f8 EXT_CIRTH_42_DOTTED
 \char f9 ?
-\char fa ?
-\char fb ?
-\char fc ?
+\char fa EXT_CIRTH_43_DOTTED
+\char fb EXT_CIRTH_48_DOTTED
+\char fc EXT_CIRTH_50_REV_DOTTED
 \char fd ?
 \char fe ?
 \char ff ?
@@ -284,6 +284,29 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     CIRTH_EREB_5
     CIRTH_EREB_6
     CIRTH_EREB_7
+    EXT_CIRTH_10_REV
+    EXT_CIRTH_11_REV
+    EXT_CIRTH_12_DOUBLE
+    EXT_CIRTH_12_DOUBLE_REV
+    EXT_CIRTH_12_REV
+    EXT_CIRTH_1_REV
+    EXT_CIRTH_23_REV
+    EXT_CIRTH_28_MIRROR
+    EXT_CIRTH_2_REV
+    EXT_CIRTH_38_ALT_REV
+    EXT_CIRTH_38_DOTTED
+    EXT_CIRTH_3_REV
+    EXT_CIRTH_42_DOTTED
+    EXT_CIRTH_43_DOTTED
+    EXT_CIRTH_48_DOTTED
+    EXT_CIRTH_4_DOTTED
+    EXT_CIRTH_4_REV
+    EXT_CIRTH_50_REV
+    EXT_CIRTH_50_REV_DOTTED
+    EXT_CIRTH_52_REV
+    EXT_CIRTH_60_REV
+    EXT_CIRTH_8_REV
+    EXT_CIRTH_9_REV
   \end
   \beg class TEHTA_CIRCUM_XL
     CIRTH_27
@@ -369,6 +392,29 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     CIRTH_EREB_5
     CIRTH_EREB_6
     CIRTH_EREB_7
+    EXT_CIRTH_10_REV
+    EXT_CIRTH_11_REV
+    EXT_CIRTH_12_DOUBLE
+    EXT_CIRTH_12_DOUBLE_REV
+    EXT_CIRTH_12_REV
+    EXT_CIRTH_1_REV
+    EXT_CIRTH_23_REV
+    EXT_CIRTH_28_MIRROR
+    EXT_CIRTH_2_REV
+    EXT_CIRTH_38_ALT_REV
+    EXT_CIRTH_38_DOTTED
+    EXT_CIRTH_3_REV
+    EXT_CIRTH_42_DOTTED
+    EXT_CIRTH_43_DOTTED
+    EXT_CIRTH_48_DOTTED
+    EXT_CIRTH_4_DOTTED
+    EXT_CIRTH_4_REV
+    EXT_CIRTH_50_REV
+    EXT_CIRTH_50_REV_DOTTED
+    EXT_CIRTH_52_REV
+    EXT_CIRTH_60_REV
+    EXT_CIRTH_8_REV
+    EXT_CIRTH_9_REV
   \end
   \beg class TEHTA_UNDERLINE_XL
     CIRTH_27
@@ -392,6 +438,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     CIRTH_31
     CIRTH_32
     CIRTH_55
+    EXT_CIRTH_3_REV
+    EXT_CIRTH_4_DOTTED
+    EXT_CIRTH_4_REV
   \end
   \beg class TEHTA_SUB_DOT_L
     CIRTH_1
@@ -454,6 +503,26 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     CIRTH_EREB_5
     CIRTH_EREB_6
     CIRTH_EREB_7
+    EXT_CIRTH_10_REV
+    EXT_CIRTH_11_REV
+    EXT_CIRTH_12_DOUBLE
+    EXT_CIRTH_12_DOUBLE_REV
+    EXT_CIRTH_12_REV
+    EXT_CIRTH_1_REV
+    EXT_CIRTH_23_REV
+    EXT_CIRTH_28_MIRROR
+    EXT_CIRTH_2_REV
+    EXT_CIRTH_38_ALT_REV
+    EXT_CIRTH_38_DOTTED
+    EXT_CIRTH_42_DOTTED
+    EXT_CIRTH_43_DOTTED
+    EXT_CIRTH_48_DOTTED
+    EXT_CIRTH_50_REV
+    EXT_CIRTH_50_REV_DOTTED
+    EXT_CIRTH_52_REV
+    EXT_CIRTH_60_REV
+    EXT_CIRTH_8_REV
+    EXT_CIRTH_9_REV
   \end
   \beg class TEHTA_SUB_DOT_XL
     CIRTH_27
