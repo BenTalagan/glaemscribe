@@ -164,6 +164,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 \char d9 ?
 \char da ?
 \char db ?
+
+\** 
+  The EXT_ chars below are present in the Erebor fonts, but I cannot 
+  identify their origin. So they should probably be used with care in modes 
+**\
+
 \char dc EXT_CIRTH_1_REV
 \char dd EXT_CIRTH_2_REV
 \char de EXT_CIRTH_3_REV
