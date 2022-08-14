@@ -50,8 +50,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     \value MAN 1
   \end
   \option use_oo_alt false
-  \option use_o_diaresis_alt false
-  \option use_n_53 false
+	\option use_o_diaresis_alt false
+	\option use_n_53 false
+	\option use_k_for_c false
+	\option use_j_for_soft_g false
 \end
 
 \beg      preprocessor
@@ -65,6 +67,26 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   \** but not for "ö" because we actually use this to differentiate 52 **\
   \substitute "ü" "u"
   \substitute "ÿ" "y"
+	
+	\** English letters that aren't in Tolkien's tables but need a sensible representation **\
+	\substitute "qu" "kw"
+	\substitute "q" "k"
+	\substitute "x" "ks"
+	\if use_k_for_c
+	  \substitute "c" "k"
+	\else
+	  \** See https://en.wikipedia.org/wiki/Hard_and_soft_C#General_overview **\
+	  \substitute "ck" "k"
+	  \rxsubstitute "cc([eiy])" "ks\\1" \** accident **\
+	  \rxsubstitute "c([eiy])" "s\\1"
+	  \rxsubstitute "\\bct" "t" \** Remove silent c before t at the start of the word **\
+	  \substitute "c" "k"
+	\endif
+  \substitute "ç" "s"
+	\if use_j_for_soft_g
+	  \** See https://en.wikipedia.org/wiki/Hard_and_soft_G#English **\
+	  \rxsubstitute "g([eiy])" "j\\1"
+	\endif
   
   \** Dis-ambiguate long vowels **\
   \rxsubstitute "(ā|â|aa)" "â"
@@ -107,11 +129,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
       gh  --> CIRTH_21
     \endif
     kh  --> CIRTH_20
-    \if use_n_53
-      n   --> CIRTH_53
-    \else
+		\if use_n_53
+		  n   --> CIRTH_53
+		\else
       n   --> CIRTH_22
-    \endif
+		\endif
     kw  --> CIRTH_23
     gw  --> CIRTH_24
     khw --> CIRTH_25
@@ -123,13 +145,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     s   --> CIRTH_35
     ŋ   --> CIRTH_36  \** This is a pure velar nasal ŋ **\
     ng  --> CIRTH_37  \** This represents ŋ followed by g which is common in English too **\
-    \if "use_ou_variant == DAEG"
+		\if "use_ou_variant == DAEG"
       ou  --> CIRTH_38
       ow  --> CIRTH_38
-    \elsif "use_ou_variant == MAN"
+		\elsif "use_ou_variant == MAN"
       ou  --> CIRTH_38_ALT
       ow  --> CIRTH_38_ALT
-    \endif
+		\endif
     i   --> CIRTH_39
     î   --> CIRTH_39 CIRTH_39
     y   --> CIRTH_40
@@ -143,16 +165,16 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     a   --> CIRTH_48
     â   --> CIRTH_49
     o   --> CIRTH_50
-    \if use_oo_alt
-      ô   --> CIRTH_51_ALT
-    \else
+		\if use_oo_alt
+		  ô   --> CIRTH_51_ALT
+		\else
       ô   --> CIRTH_51
-    \endif
+		\endif
     \if use_o_diaresis_alt
-      ö   --> CIRTH_52_ALT
-    \else
+		  ö   --> CIRTH_52_ALT
+		\else
       ö   --> CIRTH_52
-    \endif
+		\endif
     h   --> CIRTH_54
     ə   --> CIRTH_55 \** This is a silent-e or schwa ə sound which occurs in English unstressed syllables **\
     ʌ   --> CIRTH_56 \** This is the equivalent of a schwa for a stressed syllabel **\
@@ -171,7 +193,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     au  --> CIRTH_EREB_5
     aw  --> CIRTH_EREB_5
     ea  --> CIRTH_EREB_6
-    oa  --> CIRTH_EREB_7
+    oa  --> CIRTH_EREB_7		
+
     \** Not yet implemented:
     over circumflex doubles the length of the consonant sound
     single under-bar doubles the length of the vowel sound
