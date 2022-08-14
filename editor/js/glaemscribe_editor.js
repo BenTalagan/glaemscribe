@@ -1036,11 +1036,19 @@ GlaemscribeEditor.prototype.genericRefreshTranscription = function(entry_selecto
       var success   = tinfo[0];
       var ret       = tinfo[1];
       var dbg_ctx   = tinfo[2];
+      ret  = ret
+         .replace(/&/g, "&amp;")
+         .replace(/</g, "&lt;")
+         .replace(/>/g, "&gt;")
+         .replace(/"/g, "&quot;")
+         .replace(/'/g, "&#039;")
+         .replace(/\n/g,"<br/>");
      
       if(success)
-      {
+      {        
         editor.refreshFont(transcribed_selector, false);
-        transcribed_selector.html(ret.replace(/\n/g,"<br/>"));
+        
+        transcribed_selector.html(ret);
         
         if(debug_preprocessor_selector) 
           debug_preprocessor_selector.html(dbg_ctx.preprocessor_output);
