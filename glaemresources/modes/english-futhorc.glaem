@@ -52,7 +52,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     
   \beg    rules litteral
     \** These rules generally follow https://ring-lord.tripod.com/runes/dwafrune.htm **\
-    f       --> FEOH \** Tjere are variants with round and straight strokes; only the former is in the Unicode Runic range **\
+    f       --> FEOH \** There are variants with round and straight strokes; only the former is in the Unicode Runic range **\
     (u,v)   --> URUZ \** There are variants with round and straight strokes; only the former is in the Unicode Runic range **\
     th      --> THORN
     oo      --> OS
