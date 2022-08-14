@@ -1,0 +1,786 @@
+\**
+
+Glǽmscribe (also written Glaemscribe) is a software dedicated to
+the transcription of texts between writing systems, and more
+specifically dedicated to the transcription of J.R.R. Tolkien's
+invented languages to some of his devised writing systems.
+
+Copyright (C) 2015 Benjamin Babut (Talagan).
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU Affero General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Affero General Public License for more details.
+
+You should have received a copy of the GNU Affero General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+**\
+
+\beg changelog
+  \entry "0.0.1" "First version."
+\end
+
+\language "English"
+\writing  "Tengwar"
+\mode     "English Tengwar - General Use"
+\version  "0.0.1"
+\authors  "J.R.R. Tolkien, impl. Talagan (Benjamin Babut), advis. Corchalad (Bertrand Bellet)"
+
+\world      primary_related_to_arda
+\invention  jrrt
+
+\raw_mode "raw-tengwar"
+
+\charset  tengwar_ds_sindarin false
+\charset  tengwar_ds_parmaite false
+\charset  tengwar_ds_eldamar  false
+\charset  tengwar_ds_annatar  true
+\charset  tengwar_ds_elfica   false
+
+\charset  tengwar_guni_sindarin false
+\charset  tengwar_guni_parmaite false
+\charset  tengwar_guni_eldamar  false
+\charset  tengwar_guni_annatar  false
+\charset  tengwar_guni_elfica   false
+
+\charset  tengwar_freemono    false
+\charset  tengwar_telcontar   false
+
+\beg options
+
+  \** ENGLISH accent/dialect/variant. It also controls espeak behaviour. **\
+  \beg option espeak_voice ESPEAK_VOICE_EN_TENGWAR
+    \value ESPEAK_VOICE_EN_TENGWAR          0
+    \value ESPEAK_VOICE_EN_TENGWAR_GB       1
+    \value ESPEAK_VOICE_EN_TENGWAR_RP       2
+    \value ESPEAK_VOICE_EN_TENGWAR_US       3
+  \end
+
+  \** 'the' word **\
+  \beg option english_the ENGLISH_THE_EXTENDED_TENGWAR
+    \value ENGLISH_THE_EXTENDED_TENGWAR 0
+    \value ENGLISH_THE_SEPARATE 1
+  \end
+
+  \** 'of' word **\
+  \beg option english_of ENGLISH_OF_EXTENDED_TENGWAR
+    \value ENGLISH_OF_EXTENDED_TENGWAR 0
+    \value ENGLISH_OF_SEPARATE 1
+  \end
+
+  \** 'to' word (the word 'to' may have its vowel reduced to a schwa) **\
+  \beg option schwa_of_to SCHWA_OF_TO_U
+    \value SCHWA_OF_TO_U 0
+    \value SCHWA_OF_TO_SCHWA 1
+  \end
+
+  \** 'wh' in old accents/US. Sometimes called 'wine/whine' merger. **\
+  \beg option ancient_voiceless_labiovelar_fricative_wh WH_VLVF_HWESTA_SINDARINWA
+    \value WH_VLVF_HWESTA_SINDARINWA 0
+    \value WH_VLVF_WHINE_MERGER 1
+  \end
+
+  \** SARINCE option when consonants are oriented left **\
+  \beg option s_consonants_l SCONSL_SARINCE_ALWAYS
+    \value SCONSL_SARINCE_NEVER  0
+    \value SCONSL_SARINCE_ALWAYS 1
+  \end
+
+  \** SARINCE option when consonants are oriented right **\
+  \beg option s_consonants_r SCONSR_SARINCE_END_OF_WORD
+    \value SCONSR_SARINCE_NEVER  0
+    \value SCONSR_SARINCE_ALWAYS 1
+    \value SCONSR_SARINCE_END_OF_WORD 2
+  \end
+
+  \** Re-establishment of linking r in non-rhotic accent, ex : 'better life' vs 'betteR answer' **\
+  \beg option linking_r LINKING_R_SHOW
+    \value LINKING_R_HIDE 0
+    \value LINKING_R_SHOW 1
+    \visible_when "espeak_voice == ESPEAK_VOICE_EN_TENGWAR_RP || espeak_voice == ESPEAK_VOICE_EN_TENGWAR_GB"
+  \end
+
+  \** Intrusive r, like in vanillaR ice **\
+  \beg option intrusive_r INTRUSIVE_R_SHOW
+    \value INTRUSIVE_R_HIDE 0
+    \value INTRUSIVE_R_SHOW 1
+    \visible_when "espeak_voice != ESPEAK_VOICE_EN_TENGWAR_US"
+  \end
+
+  \** This option is disabled, it cannot cover all cases : ink, incoming, mankind, etc **\
+  \beg option velar_linking_n VELAR_LINKING_N_VELAR
+    \visible_when false
+    \value VELAR_LINKING_N_NOT_VELAR 0
+    \value VELAR_LINKING_N_VELAR 1
+  \end
+
+  \** Long a like in 'palm' **\
+  \beg option long_back_a LONG_BACK_A_IMPLICIT_CARRIER
+    \radio
+    \value LONG_BACK_A_IMPLICIT_CARRIER 0
+    \value LONG_BACK_A_WITH_CARRIER 1
+  \end
+
+  \** DISABLED : it's always long **\
+  \beg option long_front_e LONG_FRONT_E_DOUBLE_TEHTA
+    \visible_when false
+    \radio
+    \value LONG_FRONT_E_DOUBLE_TEHTA 0
+    \value LONG_FRONT_E_WITH_CARRIER 1
+  \end
+
+  \** DISABLED : it's always long **\
+  \beg option long_back_e LONG_BACK_E_DOUBLE_TEHTA
+    \visible_when false
+    \radio
+    \value LONG_BACK_E_DOUBLE_TEHTA 0
+    \value LONG_BACK_E_WITH_CARRIER 1
+  \end
+
+  \** Long i like in 'fleece' **\
+  \beg option long_i LONG_I_DOUBLE_TEHTA
+    \radio
+    \value LONG_I_DOUBLE_TEHTA 0
+    \value LONG_I_WITH_CARRIER 1
+    \value LONG_I_AS_DIPHTONG  2
+  \end
+
+  \** long o like in 'thought' **\
+  \beg option long_o LONG_O_DOUBLE_TEHTA
+    \radio
+    \value LONG_O_DOUBLE_TEHTA 0
+    \value LONG_O_WITH_CARRIER 1
+  \end
+  
+  \** long u like in 'goose' **\
+  \beg option long_u LONG_U_DOUBLE_TEHTA
+    \radio
+    \value LONG_U_DOUBLE_TEHTA 0
+    \value LONG_U_WITH_CARRIER 1
+    \value LONG_U_AS_DIPHTONG  2
+  \end
+
+  \** 'cure', 'cute' diphthong **\
+  \beg option ju_diphthong JU_DIPHTHONG_SEPARATE
+    \radio
+    \value JU_DIPHTHONG_SEPARATE 0
+    \value JU_DIPHTHONG_LIKE_IW  1
+  \end
+
+  \** Horse / Hoarse vowel distinction (only JRRT/US accents) **\
+  \beg option horse_hoarse_merger HORSE_HOARSE_MERGE
+    \visible_when "espeak_voice == ESPEAK_VOICE_EN_TENGWAR || espeak_voice == ESPEAK_VOICE_EN_TENGWAR_US"
+    \value HORSE_HOARSE_MERGE 0
+    \value HORSE_HOARSE_SEPARATE 1
+  \end
+
+  \** Remove unuseful, natural schwa marks **\
+  \beg option implicit_schwa IMPLICIT_SCHWA_NO
+    \value IMPLICIT_SCHWA_NO  0
+    \value IMPLICIT_SCHWA_YES 1
+  \end
+
+  \** when implicit schwa is on, how to mark non-reducible schwas **\
+  \beg option implicit_schwa_non_reducible IMPLICIT_SCHWA_NON_REDUCIBLE_UNUTIXE_IF_POSSIBLE
+    \value IMPLICIT_SCHWA_NON_REDUCIBLE_UNUTIXE_IF_POSSIBLE 0
+    \value IMPLICIT_SCHWA_NON_REDUCIBLE_ALWAYS_TELCO        1
+    \visible_when "implicit_schwa == IMPLICIT_SCHWA_YES"
+  \end
+
+  \** Schwi, in US/JRRT **\
+  \beg option schwi SCHWI_LIKE_I
+    \radio
+    \value SCHWI_LIKE_I     0
+    \value SCHWI_LIKE_SCHWA 1
+    \visible_when "espeak_voice == ESPEAK_VOICE_EN_TENGWAR || espeak_voice == ESPEAK_VOICE_EN_TENGWAR_US"
+  \end
+
+  \** 'strut' vowel special case **\
+  \beg option open_mid_back_unrounded OMBU_LIKE_SCHWA
+    \radio
+    \value OMBU_THINNAS    0
+    \value OMBU_GRAVE      1
+    \value OMBU_LIKE_SCHWA 2
+  \end
+
+  \** Common elvish / tengwar option **\
+  \beg option reverse_o_u_tehtar U_UP_O_DOWN
+    \value O_UP_U_DOWN 1
+    \value U_UP_O_DOWN 2
+  \end
+
+  \** Common elvish / tengwar option **\
+  \beg option consonant_modification_style CONSONANT_MODIFICATION_STYLE_WAVE
+    \value CONSONANT_MODIFICATION_STYLE_WAVE 0
+    \value CONSONANT_MODIFICATION_STYLE_BAR 1
+  \end
+
+  \** Use english standard by default **\
+  \option reverse_numbers false
+  \beg option numbers_base BASE_10
+    \value    BASE_10 10
+    \value    BASE_12 12
+  \end
+
+  \option auto_spacing true
+
+\end
+
+\beg  preprocessor
+  \downcase
+
+  \** Remove phonetics accentuation marks **\
+  \rxsubstitute "[ˈˌ]" ""
+
+  \** foreign words nasal a, split to "an" (ex: croissant) **\
+  \rxsubstitute "ɑ̃" "ɑn"
+
+  \** Non rhotic schwa simplification **\
+  \rxsubstitute "ɐ" "ə"
+
+  \if "linking_r == LINKING_R_HIDE"
+    \rxsubstitute "ɹ‿" ""
+  \else
+    \rxsubstitute "ɹ‿" "ɹ"
+  \endif
+
+  \if "intrusive_r == INTRUSIVE_R_HIDE"
+    \rxsubstitute "ɹ̩‿" ""
+  \else
+    \rxsubstitute "ɹ̩‿" "ɹ"
+  \endif
+
+  \if "schwa_of_to == SCHWA_OF_TO_U"
+    \substitute "ʊ̟" "ʊ"
+  \else
+    \substitute "ʊ̟" "ə"
+  \endif
+
+  \if "velar_linking_n == VELAR_LINKING_N_NOT_VELAR"
+    \rxsubstitute "n‿" "n"
+  \else
+    \rxsubstitute "n‿" "ŋ"
+  \endif
+
+  \** IMPORTANT NOTE : in all following regexps **\
+  \** (^|[^a-zA-Zæǽɑɒɐəɚɛɜɪᵻʊʌɔðŋɡɣɹɾʃʍʒʔθː̟̩̃]) stands for 'word boundary' **\
+
+  \** 'the' variations **\
+  \** that the **\
+  \rxsubstitute "(^|[^a-zA-Zæǽɑɒɐəɚɛɜɪᵻʊʌɔðŋɡɣɹɾʃʍʒʔθː̟̩̃])(ð[aæ]t)(ð[əɪ])($|[^a-zA-Zæǽɑɒɐəɚɛɜɪᵻʊʌɔðŋɡɣɹɾʃʍʒʔθː̟̩̃])" "\\1\\2 \\3\\4"
+
+  \** of the **\
+  \if "english_the == ENGLISH_THE_EXTENDED_TENGWAR && english_of == ENGLISH_OF_EXTENDED_TENGWAR"
+    \rxsubstitute "(^|[^a-zA-Zæǽɑɒɐəɚɛɜɪᵻʊʌɔðŋɡɣɹɾʃʍʒʔθː̟̩̃])([ɒʌ]v)ð([əɪ])($|[^a-zA-Zæǽɑɒɐəɚɛɜɪᵻʊʌɔðŋɡɣɹɾʃʍʒʔθː̟̩̃])" "\\1OFTH\\3\\4"
+  \else
+    \rxsubstitute "(^|[^a-zA-Zæǽɑɒɐəɚɛɜɪᵻʊʌɔðŋɡɣɹɾʃʍʒʔθː̟̩̃])([ɒʌ]v)(ð[əɪ])($|[^a-zA-Zæǽɑɒɐəɚɛɜɪᵻʊʌɔðŋɡɣɹɾʃʍʒʔθː̟̩̃])" "\\1\\2 \\3\\4"
+  \endif
+
+  \** for the **\
+  \rxsubstitute "(^|[^a-zA-Zæǽɑɒɐəɚɛɜɪᵻʊʌɔðŋɡɣɹɾʃʍʒʔθː̟̩̃])(f[ɚə])(ð[əɪ])($|[^a-zA-Zæǽɑɒɐəɚɛɜɪᵻʊʌɔðŋɡɣɹɾʃʍʒʔθː̟̩̃])" "\\1\\2 \\3\\4"
+  \** with the **\
+  \rxsubstitute "(^|[^a-zA-Zæǽɑɒɐəɚɛɜɪᵻʊʌɔðŋɡɣɹɾʃʍʒʔθː̟̩̃])(wɪð)(ð[əɪ])($|[^a-zA-Zæǽɑɒɐəɚɛɜɪᵻʊʌɔðŋɡɣɹɾʃʍʒʔθː̟̩̃])" "\\1\\2 \\3\\4"
+  \** in the **\
+  \rxsubstitute "(^|[^a-zA-Zæǽɑɒɐəɚɛɜɪᵻʊʌɔðŋɡɣɹɾʃʍʒʔθː̟̩̃])(ɪn)(ð[əɪ])($|[^a-zA-Zæǽɑɒɐəɚɛɜɪᵻʊʌɔðŋɡɣɹɾʃʍʒʔθː̟̩̃])" "\\1\\2 \\3\\4"
+  \** on the **\
+  \rxsubstitute "(^|[^a-zA-Zæǽɑɒɐəɚɛɜɪᵻʊʌɔðŋɡɣɹɾʃʍʒʔθː̟̩̃])([ɒɔ]n)(ð[əɪ])($|[^a-zA-Zæǽɑɒɐəɚɛɜɪᵻʊʌɔðŋɡɣɹɾʃʍʒʔθː̟̩̃])" "\\1\\2 \\3\\4"
+  \** from the **\
+  \rxsubstitute "(^|[^a-zA-Zæǽɑɒɐəɚɛɜɪᵻʊʌɔðŋɡɣɹɾʃʍʒʔθː̟̩̃])(fɹʌm)(ð[əɪ])($|[^a-zA-Zæǽɑɒɐəɚɛɜɪᵻʊʌɔðŋɡɣɹɾʃʍʒʔθː̟̩̃])" "\\1\\2 \\3\\4"
+  \** was the **\
+  \rxsubstitute "(^|[^a-zA-Zæǽɑɒɐəɚɛɜɪᵻʊʌɔðŋɡɣɹɾʃʍʒʔθː̟̩̃])(wʌz)(ð[əɪ])($|[^a-zA-Zæǽɑɒɐəɚɛɜɪᵻʊʌɔðŋɡɣɹɾʃʍʒʔθː̟̩̃])" "\\1\\2 \\3\\4"
+
+  \if "horse_hoarse_merger == HORSE_HOARSE_SEPARATE"
+    \** Re-establish former diphtong **\
+    \substitute "oːɹ" "oʊɹ"
+  \endif
+
+  \** If treated as diphthong, change long i to i + schwi **\
+  \if "long_i == LONG_I_AS_DIPHTONG"
+    \substitute "iː" "iɪ"
+  \endif
+
+  \** Experimental, don't affect ju: at beginning of words/after consonnant **\
+  \if "ju_diphthong == JU_DIPHTHONG_LIKE_IW"
+    \rxsubstitute "(juː|jʊ)" "iw"
+  \endif
+
+  \if "long_u == LONG_U_AS_DIPHTONG"
+    \substitute "uː" "uʊ"
+  \endif
+
+  \** ! Beware of the order of the following rules **\
+	\** ! Rhotic schwa : remove 1 level of length when superfluous and always add explicit mark **\
+  \rxsubstitute "[ɜɚ]ː?" "ɜɹ"
+
+	\** ! Potentially remove superfluous added rhotic marks **\
+  \rxsubstitute "ɹ+" "ɹ"
+  \** ! Disambiguate ɹ + vowel : ORE/ROMEN **\
+  \rxsubstitute "ɹ([ɑæaeɛʌɐəɜɚiɪᵻoɒɔuʊʘ])" "r\\1"
+
+	\if "implicit_schwa == IMPLICIT_SCHWA_YES"
+    \** All schwas at beginning of words cannot reduce **\
+    \** or after vowels (== not consonant) **\
+		\** beware of ɪ as it can appear as consonant (lawyer) **\
+		\** same for ʊ for sour **\
+    \** Mark non reducing schwa as ʘ **\
+    \rxsubstitute "(^|[^bcdfghjklmnpqrstvwxyzðŋɡɣɹɾʃʍʒʔθɪʊ])([əɐɜɚ])" "\\1ʘ"
+		\rxsubstitute "([əɐɜɚ])r" "ʘr"
+
+    \if "schwi == SCHWI_LIKE_SCHWA"
+      \** Don't forget to mark schwis too **\
+      \rxsubstitute "(^|[^bcdfghjklmnpqrstvwxyzðŋɡɣɹɾʃʍʒʔθɪʊ])([ᵻ])" "\\1ʘ"
+			\rxsubstitute "ᵻr" "ʘr"
+    \endif
+
+    \if "open_mid_back_unrounded == OMBU_LIKE_SCHWA"
+      \** Don't forget to mark the ombus too **\
+      \rxsubstitute "(^|[^bcdfghjklmnpqrstvwxyzðŋɡɣɹɾʃʍʒʔθɪʊ])([ʌ])" "\\1ʘ"
+			\rxsubstitute "ʌr" "ʘr"
+    \endif
+  \endif
+
+  \elvish_numbers "\\eval numbers_base" "\\eval reverse_numbers"
+
+  \if "auto_spacing == true"
+    \rxsubstitute "([^\\s])([.,;:!?])" "\\1 \\2"
+    \rxsubstitute "([.,;:!?])([^\\s])" "\\1 \\2"
+  \endif
+\end
+
+
+\beg  processor
+
+  \beg rules litteral
+
+    \if "consonant_modification_style == CONSONANT_MODIFICATION_STYLE_WAVE"
+      {GEMINATE} === GEMINATE_SIGN_TILD
+      {NASAL}    === NASALIZE_SIGN_TILD
+    \else
+      {GEMINATE} === GEMINATE_SIGN
+      {NASAL}    === NASALIZE_SIGN
+    \endif
+
+    \** sa-rinci for left-oriented tengwar **\
+    \if "s_consonants_l == SCONSL_SARINCE_ALWAYS"
+      {LWS}   === [{NULL} * (s,z)]
+      {_LWS_} === [{NULL} * SARINCE]
+      {__LWSX__} === 2,1,3
+    \else
+      {LWS}   === {NULL}
+      {_LWS_} === {NULL}
+      {__LWSX__} === 2,1
+    \endif
+
+    \** sa-rinci for right-oriented tengwar **\
+    \if "s_consonants_r == SCONSR_SARINCE_ALWAYS"
+      {RWS}   === [{NULL} * (s,z)]
+      {_RWS_} === [{NULL} * SARINCE]
+      {__RWSX__} === 2,1,3
+    \elsif "s_consonants_r == SCONSR_SARINCE_END_OF_WORD"
+      {RWS}   === [{NULL} * (s_,z_)]
+      {_RWS_} === [{NULL} * SARINCE]
+      {__RWSX__} === 2,1,3
+    \else
+      {RWS}   === {NULL}
+      {_RWS_} === {NULL}
+      {__RWSX__} === 2,1
+    \endif
+
+    \if "reverse_o_u_tehtar == U_UP_O_DOWN"
+      {O_LOOP}        === O_TEHTA
+      {O_LOOP_DOUBLE} === O_TEHTA_DOUBLE
+      {U_LOOP}        === U_TEHTA
+      {U_LOOP_DOUBLE} === U_TEHTA_DOUBLE
+    \else
+      {O_LOOP}        === U_TEHTA
+      {O_LOOP_DOUBLE} === U_TEHTA_DOUBLE
+      {U_LOOP}        === O_TEHTA
+      {U_LOOP_DOUBLE} === O_TEHTA_DOUBLE
+    \endif
+
+    \** schwas : ɐ,ə **\
+    \** rothic shwa : ɚ **\
+    \** schwi : ᵻ **\
+    \** schwu : ʌ **\
+
+    {IGROUP}               === i,ɪ
+    {UGROUP}               === u,ʊ
+    {EBGROUP}              === ə,ɐ     \** REDUCIBLE **\
+
+    {SCHWA_NON_REDUCIBLE}  === ʘ       \** NON REDUCIBLE **\
+		{ESCHWA}               === (ə,ʘ)   \** REDUCIBLE & NON REDUCIBLE E SCHWA **\
+
+    \if "schwi == SCHWI_LIKE_I"
+      {IGROUP} === {IGROUP},ᵻ
+    \else
+      {EBGROUP} === {EBGROUP},ᵻ
+    \endif
+
+    {W_OMBU_GROUP}    === {NULL}
+    {_W_OMBU_GROUP_}  === {NULL}
+    \if "open_mid_back_unrounded == OMBU_GRAVE"
+      {W_OMBU_GROUP}   === * (ʌ)
+      {_W_OMBU_GROUP_} === * E_TEHTA_GRAVE
+    \elsif "open_mid_back_unrounded == OMBU_THINNAS"
+      {W_OMBU_GROUP}   === * (ʌ)
+      {_W_OMBU_GROUP_} === * THINNAS
+    \else
+      {EBGROUP} === {EBGROUP},ʌ
+    \endif
+
+    {A_FRONT}             === (æ,a)
+    {A_BACK}              === (ɑ)
+    {E_FRONT}             === (e,ɛ)
+    {E_BACK}              === ({EBGROUP})
+    {E_BACK_RHOTIC}       === (ɚ,ɜ)       \** Rhotic schwas are treated independently **\
+    {I}                   === ({IGROUP})
+    {O}                   === (o,ɒ,ɔ)     \** force, mock, lord **\
+    {U}                   === ({UGROUP})
+
+
+    {AA_FRONT}        === {A_FRONT}ː    \** long front a probably does not exist **\
+    {AA_BACK}         === {A_BACK}ː
+    {EE_FRONT}        === {E_FRONT}ː
+    {EE_BACK}         === {E_BACK}ː     \** long back e probably does not exist when not rhotic **\
+    {EE_BACK_RHOTIC}  === {E_BACK_RHOTIC}ː
+    {II}              === {I}ː
+    {OO}              === {O}ː
+    {UU}              === {U}ː
+
+    {W_SCHWA_NON_REDUCIBLE}    === {NULL}
+    {_W_SCHWA_NON_REDUCIBLE_}  === {NULL}
+
+    \if "implicit_schwa == IMPLICIT_SCHWA_YES"
+      {_IMPLICIT_SCHWA_} === {NULL}
+      \if "implicit_schwa_non_reducible == IMPLICIT_SCHWA_NON_REDUCIBLE_UNUTIXE_IF_POSSIBLE"
+        {W_SCHWA_NON_REDUCIBLE}   === * {SCHWA_NON_REDUCIBLE}
+        {_W_SCHWA_NON_REDUCIBLE_} === * UNUTIXE
+      \endif
+    \else
+      {_IMPLICIT_SCHWA_} === UNUTIXE
+    \endif
+
+    \** GB DIPHTONGS **\
+    \** +dˈeɪ +skˈaɪ +bˈɔɪ +bˈiə +bˈeə +tˈʊə +ɡˌəʊ +kˈaʊ **\
+    \** US DIPHTONGS **\
+    \** =dˈeɪ =skˈaɪ =bˈɔɪ -bˈɪɹ -bˈɛɹ -tˈʊɹ +ɡˌoʊ =kˈaʊ **\
+
+    \** U Diphthongs **\
+    {AW} === aʊ        \** cow **\
+    {OW} === oʊ        \** US most / mˈoʊst **\
+    {EW} === {ESCHWA}ʊ \** GB go **\
+    {UW} === uʊ        \** goose if pronconced with labializing accent **\
+
+    \** I Diphtongues :  eɪ (day) / aɪ (sky) / ɔɪ (boy)  **\
+    {AJ} === aɪ \** nine / nˈaɪn **\
+    {EJ} === eɪ \** game / ɡˈeɪm **\
+    {OJ} === ɔɪ \** boy **\
+    {IJ} === iɪ \** fleece if prononced with palatalising accent **\
+
+    \** ə diphthongs : iə (GB : beer) / eə (GB: bear) / ʊə (US: tour) **\
+    {IER} === i{ESCHWA} \** GB Beer **\
+    {EAR} === e{ESCHWA} \** GB Bear **\
+    {UER} === ʊ{ESCHWA} \** GB Tour **\
+
+    {VOWELS}        === {A_BACK}  * {A_FRONT}             * {E_FRONT}     * {E_BACK}           * {E_BACK_RHOTIC}    * {IER}            * {EAR}           * {UER}             * {I}         * {O}           * {U}       {W_SCHWA_NON_REDUCIBLE}    {W_OMBU_GROUP}
+    {TEHTAR}        === A_TEHTA   * A_TEHTA_REVERSED      * E_TEHTA       * {_IMPLICIT_SCHWA_} * {_IMPLICIT_SCHWA_} * UNUTIXE I_TEHTA  * UNUTIXE E_TEHTA * UNUTIXE {U_LOOP}  * I_TEHTA     * {O_LOOP}      * {U_LOOP}  {_W_SCHWA_NON_REDUCIBLE_}  {_W_OMBU_GROUP_}
+
+    {LVOWELS}       === {AA_BACK} * {AA_FRONT}            * {EE_FRONT}    * {EE_BACK}          * {EE_BACK_RHOTIC}   * {II}        * {OO}          * {UU}
+
+    {DIPHTHONGS_R}   === {AW}         * {OW}          * {EW}          * {UW}          * {AJ}         * {EJ}         * {OJ}           * {IJ}
+    {_DIPHTHONGS_R_} === VALA A_TEHTA * VALA {O_LOOP} * VALA UNUTIXE  * VALA {U_LOOP} * ANNA A_TEHTA * ANNA E_TEHTA * ANNA {O_LOOP}  * ANNA I_TEHTA
+
+    {DIPHTHONGS}    === {DIPHTHONGS_R}
+    {_DIPHTHONGS_}  === {_DIPHTHONGS_R_}
+
+    {WLONG}     === {NULL} \** long vowels that can be used as tehtar **\
+    {_WLONG_}   === {NULL} \** tehtar of long vowels that can be used as tehtar **\
+
+    \** LV : Initialization step 1 **\
+    {_LONG_A_BACK_}             === ARA A_TEHTA
+    {_LONG_A_FRONT_}            === ARA A_TEHTA_REVERSED  \** Should not be possible in English **\
+    {_LONG_E_FRONT_}            === ARA E_TEHTA
+    {_LONG_E_BACK_}             === ARA UNUTIXE \** PROBLEM (solved) : ara and unutixe don't work together. But this case will not appear : long back e is not possible when not rhotic. **\
+    {_LONG_E_BACK_RHOTIC_}      === ARA UNUTIXE \** PROBLEM (solved) : ara and unutixe don't work together. But this case will not appear : simplified by prepro **\
+    {_LONG_I_}                  === ARA I_TEHTA
+    {_LONG_O_}                  === ARA {O_LOOP}
+    {_LONG_U_}                  === ARA {U_LOOP}
+
+    \** LV : Initialization step 2 **\
+    {_LONE_LONG_A_BACK_}        === {_LONG_A_BACK_}
+    {_LONE_LONG_A_FRONT_}       === {_LONG_A_FRONT_}
+    {_LONE_LONG_E_FRONT_}       === {_LONG_E_FRONT_}
+    {_LONE_LONG_E_BACK_}        === {_LONG_E_BACK_}
+    {_LONE_LONG_E_BACK_RHOTIC_} === {_LONG_E_BACK_RHOTIC_}
+    {_LONE_LONG_I_}             === {_LONG_I_}
+    {_LONE_LONG_O_}             === {_LONG_O_}
+    {_LONE_LONG_U_}             === {_LONG_U_}
+
+    \if "long_back_a == LONG_BACK_A_IMPLICIT_CARRIER"
+      \** Remove carrier and use A_TEHTA as if it was a double tehta **\
+      {_LONG_A_BACK_}         === A_TEHTA
+      {_LONE_LONG_E_FRONT_}   === TELCO {_LONG_A_BACK_}
+      {WLONG}                 === {WLONG}   * {AA_BACK}
+      {_WLONG_}               === {_WLONG_} * {_LONG_A_BACK_}
+    \endif
+
+    \if "long_front_e == LONG_FRONT_E_DOUBLE_TEHTA"
+      \** Does not exist in standard accents **\
+      {_LONG_E_FRONT_}        === E_TEHTA_DOUBLE
+      {_LONE_LONG_E_FRONT_}   === TELCO {_LONG_E_FRONT_}
+      {WLONG}                 === {WLONG}   * {EE_FRONT}
+      {_WLONG_}               === {_WLONG_} * {_LONG_E_FRONT_}
+    \endif
+
+    \if "long_back_e == LONG_BACK_E_DOUBLE_TEHTA"
+      \** This case should not be possible when not rhotic. **\
+      {_LONG_E_BACK_}         === I_TEHTA_DOUBLE_INF
+      {_LONE_LONG_E_BACK_}    === TELCO {_LONG_E_BACK_}
+      {WLONG}                 === {WLONG}   * {EE_BACK}
+      {_WLONG_}               === {_WLONG_} * {_LONG_E_BACK_}
+    \endif
+
+    \if "long_i == LONG_I_DOUBLE_TEHTA"
+      {_LONG_I_}              === I_TEHTA_DOUBLE
+      {_LONE_LONG_I_}         === TELCO {_LONG_I_}
+      {WLONG}                 === {WLONG}   * {II}
+      {_WLONG_}               === {_WLONG_} * {_LONG_I_}
+    \endif
+
+    \if "long_o == LONG_O_DOUBLE_TEHTA"
+      {_LONG_O_}              === {O_LOOP_DOUBLE}
+      {_LONE_LONG_O_}         === TELCO {_LONG_O_}
+      {WLONG}                 === {WLONG}   * {OO}
+      {_WLONG_}               === {_WLONG_} * {_LONG_O_}
+    \endif
+
+    \if "long_u == LONG_U_DOUBLE_TEHTA"
+      {_LONG_U_}              === {U_LOOP_DOUBLE}
+      {_LONE_LONG_U_}         === TELCO {_LONG_U_}
+      {WLONG}                 === {WLONG}   * {UU}
+      {_WLONG_}               === {_WLONG_} * {_LONG_U_}
+    \endif
+
+    \** Define a variable for the images of all long vowels **\
+    {_LONE_LONG_VOWELS_} === {_LONE_LONG_A_BACK_} * {_LONE_LONG_A_FRONT_} * {_LONE_LONG_E_FRONT_} * {_LONE_LONG_E_BACK_} * {_LONE_LONG_E_BACK_RHOTIC_} * {_LONE_LONG_I_} * {_LONE_LONG_O_} * {_LONE_LONG_U_}
+
+    {V_D}           === [ {VOWELS} {WLONG}  ]
+    {V_D_WN}        === [ {VOWELS} {WLONG} * {NULL} ]
+
+    {_V_D_}         === [ {TEHTAR} {_WLONG_} ]
+    {_V_D_WN_}      === [ {TEHTAR} {_WLONG_} * {NULL} ]
+
+    \** Vowel rules **\
+    [{VOWELS}]              -->   TELCO [{TEHTAR}]  \** Replace isolated short vowels **\
+    [{DIPHTHONGS_R}]{RWS}   -->   [{_DIPHTHONGS_R_}]{_RWS_}  \** Replace diphthongs **\
+
+    \if "implicit_schwa_non_reducible == IMPLICIT_SCHWA_NON_REDUCIBLE_ALWAYS_TELCO"
+      ʘ --> TELCO
+    \endif
+
+    \** LONE LONG VOWELS **\
+    [{LVOWELS}]     --> [{_LONE_LONG_VOWELS_}]
+
+    {_WH_} === HWESTA_SINDARINWA
+    \if "ancient_voiceless_labiovelar_fricative_wh == WH_VLVF_WHINE_MERGER"
+      {_WH_} === VALA
+    \endif
+
+    \beg macro serie_l ARG_SL _ARG_SL_
+      {V_D_WN}[{ARG_SL}]{LWS}  --> {__LWSX__}  --> [{_ARG_SL_}]{_V_D_WN_}{_LWS_}
+    \end
+    \beg macro serie_ln ARG_SLN _ARG_SLN_
+      {V_D_WN}[{ARG_SLN}]{LWS} --> {__LWSX__}  --> [{_ARG_SLN_}]{NASAL}{_V_D_WN_}{_LWS_}
+    \end
+    \beg macro serie_r ARG_SR _ARG_SR_
+      {V_D_WN}[{ARG_SR}]{RWS}  --> {__RWSX__}  --> [{_ARG_SR_}]{_V_D_WN_}{_RWS_}
+    \end
+    \beg macro serie_rn ARG_SRN _ARG_SRN_
+      {V_D_WN}[{ARG_SRN}]{RWS} --> {__RWSX__}  --> [{_ARG_SRN_}]{NASAL}{_V_D_WN_}{_RWS_}
+    \end
+
+    \beg macro serie ARG_L ARG_R ARG_LN ARG_RN _ARG_L_ _ARG_R_
+      \deploy serie_l  {ARG_L}  {_ARG_L_}
+      \deploy serie_ln {ARG_LN} {_ARG_L_}
+      \deploy serie_r  {ARG_R}  {_ARG_R_}
+      \deploy serie_rn {ARG_RN} {_ARG_R_}
+    \end
+
+    \** ----------------------------------------------------------- **\
+    {L1R}          === (t,ɾ,ʔ)  * p
+    {L1L}          === tʃ       * k
+    {L1R_NASAL}    === n(t,ɾ,ʔ) * mp
+    {L1L_NASAL}    === ntʃ      * ŋk
+    {_L1R_}        === TINCO    * PARMA
+    {_L1L_}        === CALMA    * QUESSE
+
+    \deploy serie {L1L} {L1R} {L1L_NASAL} {L1R_NASAL} {_L1L_} {_L1R_}
+
+    \** ----------------------------------------------------------- **\
+    {L2R}           === d     * b
+    {L2L}           === dʒ    * ɡ
+    {L2R_NASAL}     === nd    * mb
+    {L2L_NASAL}     === ndʒ   * ŋɡ
+    {_L2R_}         === ANDO  * UMBAR
+    {_L2L_}         === ANGA  * UNGWE
+
+    \deploy serie {L2L} {L2R} {L2L_NASAL} {L2R_NASAL} {_L2L_} {_L2R_}
+
+    \** ----------------------------------------------------------- **\
+    {L3R}           === θ       * f      * ʃ       * x
+    {L3R_NASAL}     === nθ      * mf     * nʃ      * ŋx
+    {_L3R_}         === SULE    * FORMEN * AHA     * HWESTA
+
+    \deploy serie_r  {L3R}        {_L3R_}
+    \deploy serie_rn {L3R_NASAL}  {_L3R_}
+
+    \** ----------------------------------------------------------- **\
+    {L4R}           === ð     * v     * ʒ     * ɣ
+    {L4R_NASAL}     === nð    * mv    * nʒ    * ŋɣ
+    {_L4R_}         === ANTO  * AMPA  * ANCA  * UNQUE
+
+    \deploy serie_r  {L4R}        {_L4R_}
+    \deploy serie_rn {L4R_NASAL}  {_L4R_}
+
+    \** ----------------------------------------------------------- **\
+    {L5R}           === (n,n̩)    * m      * n(j,J)   * ŋ
+    {_L5R_}         === NUMEN    * MALTA  * NOLDO    * NWALME
+
+    \** no nasals for this serie **\
+    \deploy serie_r  {L5R}  {_L5R_}
+
+    \** ----------------------------------------------------------- **\
+    {L6R}           === w
+    {L6R_NASAL}     === nw
+    {_L6R_}         === VALA
+
+    {L6R_NN}        === (j,J)
+    {_L6R_NN_}      === ANNA     \** ORE for rhoticized schwas **\
+
+    \deploy serie_r  {L6R}        {_L6R_}
+    \deploy serie_rn {L6R_NASAL}  {_L6R_}
+    \deploy serie_r  {L6R_NN}     {_L6R_NN_}
+
+    \** ----------------------------------------------------------- **\
+    {L7R}           === r     * ɹ      * l
+    {_L7R_}         === ROMEN * ORE    * LAMBE     \** ARDA / ALDA **\
+
+    \deploy serie_r  {L7R}  {_L7R_}
+
+    \** ----------------------------------------------------------- **\
+    {L8}           === s * z
+    {L8_NASAL}     === ns * nz
+    {_L8_}         === SILME_NUQUERNA * ESSE_NUQUERNA
+
+    {V_D_WN}[{L8}] --> 2,1 --> [{_L8_}]{_V_D_WN_}
+    \if "s_consonants_r == SCONSR_SARINCE_NEVER"
+      \** Avoid clash between n and s **\
+      {V_D_WN}[{L8_NASAL}]  --> 2,1 --> [{_L8_}]{NASAL}{_V_D_WN_}
+    \endif
+
+    \** Single s/z : overload **\
+    s   --> SILME
+    z   --> ESSE
+
+    ns  --> SILME_NUQUERNA {NASAL} \** Explicitly redefined for clarity (already defined in the nasal rule above) **\
+    nz  --> ESSE_NUQUERNA {NASAL}  \** Explicitly redefined for clarity (already defined in the nasal rule above) **\
+
+    \** ----------------------------------------------------------- **\
+    {L9}    === h       * ʍ
+    {_L9_}  === HYARMEN * {_WH_} \** YANTA / URE **\
+
+    {V_D_WN}[{L9}]  --> 2,1 --> [{_L9_}]{_V_D_WN_}
+
+    \** -- SPECIAL TOKENS **\
+
+    \if "english_the == ENGLISH_THE_EXTENDED_TENGWAR"
+      _ð{ESCHWA}_   --> TW_EXT_21
+      _ðɪ_         --> TW_EXT_21 I_TEHTA
+    \endif
+
+    \if "english_of == ENGLISH_OF_EXTENDED_TENGWAR"
+      _(ɒ,ʌ)v_ --> TW_EXT_22
+    \endif
+
+    \if "english_the == ENGLISH_THE_EXTENDED_TENGWAR && english_of == ENGLISH_OF_EXTENDED_TENGWAR"
+      _OFTH{ESCHWA}_ --> TW_EXT_22 {GEMINATE}
+      _OFTHɪ_        --> TW_EXT_22 {GEMINATE} I_TEHTA
+    \endif
+  \end
+
+  \beg rules punctuation
+    . --> PUNCT_DDOT
+    .. --> PUNCT_DOT PUNCT_DDOT PUNCT_DOT
+    ... --> PUNCT_TILD
+    …   --> PUNCT_TILD
+    .... --> PUNCT_TILD
+    ..... --> PUNCT_TILD
+    ...... --> PUNCT_TILD
+    ....... --> PUNCT_TILD
+
+    , --> PUNCT_DOT
+    : --> PUNCT_DOT
+    ; --> PUNCT_DOT
+    ! --> PUNCT_EXCLAM
+    ? --> PUNCT_INTERR
+    · --> {NULL}
+
+    - --> {NULL}
+    – --> PUNCT_TILD
+    — --> PUNCT_TILD
+
+    \** Apostrophe **\
+
+    ' --> {NULL}
+    ’ --> {NULL}
+
+    \** NBSP **\
+    {NBSP} --> NBSP
+
+    \** Quotes **\
+
+    “ --> DQUOT_OPEN
+    ” --> DQUOT_CLOSE
+    « --> DQUOT_OPEN
+    » --> DQUOT_CLOSE
+
+    [ --> PUNCT_PAREN_L
+    ] --> PUNCT_PAREN_R
+    ( --> PUNCT_PAREN_L
+    ) --> PUNCT_PAREN_R
+    { --> PUNCT_PAREN_L
+    } --> PUNCT_PAREN_R
+    < --> PUNCT_PAREN_L
+    > --> PUNCT_PAREN_R
+
+    \** Not universal between fonts ... **\
+    $ --> BOOKMARK_SIGN
+    ≤ --> RING_MARK_L \** Ring inscription left beautiful stuff **\
+    ≥ --> RING_MARK_R \** Ring inscription right beautiful stuff **\
+  \end
+
+  \beg rules numbers
+    0 --> NUM_0
+    1 --> NUM_1
+    2 --> NUM_2
+    3 --> NUM_3
+    4 --> NUM_4
+    5 --> NUM_5
+    6 --> NUM_6
+    7 --> NUM_7
+    8 --> NUM_8
+    9 --> NUM_9
+    A --> NUM_10
+    B --> NUM_11
+  \end
+\end
+
+\beg  postprocessor
+  \resolve_virtuals
+\end

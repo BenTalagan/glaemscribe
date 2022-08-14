@@ -400,16 +400,22 @@ module Glaemscribe
         if espeak_option
           # Singleton lazy load the TTS engine
           # If the mode relies on espeak
-          TTS::load_engine
           @mode.has_tts = true
           
-          # Check if all voices are supported
-          espeak_option.values.keys.each { |vname|
-            voice = TTS::option_name_to_voice(vname)
-            if !(TTS::voice_list.include? voice)
-              @mode.errors << Glaeml::Error.new(espeak_option.line, "Option has unhandled voice #{voice}.")   
-            end
-          }
+          begin
+            TTS::load_engine
+            
+            # Check if all voices are supported
+            espeak_option.values.keys.each { |vname|
+              voice = TTS::option_name_to_voice(vname)
+              if !(TTS::voice_list.include? voice)
+                @mode.errors << Glaeml::Error.new(espeak_option.line, "Option has unhandled voice #{voice}.")   
+              end
+            }
+          rescue
+            @mode.errors << Glaeml::Error.new(espeak_option.line, "Failed to load TTS engine.")  
+          end
+
         end
         
         @mode.finalize(mode_options) if !@mode.errors.any?
