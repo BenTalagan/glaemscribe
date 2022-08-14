@@ -164,15 +164,15 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     a   --> CIRTH_48
     o   --> CIRTH_50
 		\if use_underbar_for_double_vowels
-		  â   --> CIRTH_49 TEHTA_UNDERLINE_L
-			ê   --> CIRTH_47 TEHTA_UNDERLINE_L
-		  î   --> CIRTH_39 TEHTA_UNDERLINE_XS
+		  â   --> CIRTH_49 TEHTA_UNDERLINE
+			ê   --> CIRTH_47 TEHTA_UNDERLINE
+		  î   --> CIRTH_39 TEHTA_UNDERLINE
   		\if use_oo_alt
-	  	  ô   --> CIRTH_51_ALT TEHTA_UNDERLINE_XL
+	  	  ô   --> CIRTH_51_ALT TEHTA_UNDERLINE
 		  \else
-        ô   --> CIRTH_51 TEHTA_UNDERLINE_XL
+        ô   --> CIRTH_51 TEHTA_UNDERLINE
   		\endif
-			û   --> CIRTH_42 TEHTA_UNDERLINE_XL
+			û   --> CIRTH_42 TEHTA_UNDERLINE
 		\else
 		  â   --> CIRTH_49
 			ê   --> CIRTH_47
@@ -190,30 +190,30 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
       ö   --> CIRTH_52
 		\endif
 		\if use_circumflex_for_double_consonants
-		  pp  --> CIRTH_1 TEHTA_CIRCUM_L
-		  bb  --> CIRTH_2 TEHTA_CIRCUM_L
-      ff  --> CIRTH_3 TEHTA_CIRCUM_L
-      vv  --> CIRTH_4 TEHTA_CIRCUM_L
-      mm  --> CIRTH_6 TEHTA_CIRCUM_L
-      tt  --> CIRTH_8 TEHTA_CIRCUM_L
-      dd  --> CIRTH_9 TEHTA_CIRCUM_L
-      rr  --> CIRTH_12 TEHTA_CIRCUM_L
-      jj  --> CIRTH_14 TEHTA_CIRCUM_L
-      kk  --> CIRTH_18 TEHTA_CIRCUM_L
+		  pp  --> CIRTH_1 TEHTA_CIRCUM
+		  bb  --> CIRTH_2 TEHTA_CIRCUM
+      ff  --> CIRTH_3 TEHTA_CIRCUM
+      vv  --> CIRTH_4 TEHTA_CIRCUM
+      mm  --> CIRTH_6 TEHTA_CIRCUM
+      tt  --> CIRTH_8 TEHTA_CIRCUM
+      dd  --> CIRTH_9 TEHTA_CIRCUM
+      rr  --> CIRTH_12 TEHTA_CIRCUM
+      jj  --> CIRTH_14 TEHTA_CIRCUM
+      kk  --> CIRTH_18 TEHTA_CIRCUM
       \if use_g_29
-        gg  --> CIRTH_29 TEHTA_CIRCUM_L
+        gg  --> CIRTH_29 TEHTA_CIRCUM
       \else
-        gg  --> CIRTH_19 TEHTA_CIRCUM_L
+        gg  --> CIRTH_19 TEHTA_CIRCUM
       \endif
   		\if use_n_53
-  		  nn  --> CIRTH_53 TEHTA_CIRCUM_L
+  		  nn  --> CIRTH_53 TEHTA_CIRCUM
   		\else
-        nn  --> CIRTH_22 TEHTA_CIRCUM_L
+        nn  --> CIRTH_22 TEHTA_CIRCUM
   		\endif
-      ll  --> CIRTH_31 TEHTA_CIRCUM_L
-      ss  --> CIRTH_35 TEHTA_CIRCUM_L
-      zz  --> CIRTH_43 TEHTA_CIRCUM_L
-      ww  --> CIRTH_44 TEHTA_CIRCUM_L \** though in English ww usually occurs after o, which will render the vowel sound and not use this **\
+      ll  --> CIRTH_31 TEHTA_CIRCUM
+      ss  --> CIRTH_35 TEHTA_CIRCUM
+      zz  --> CIRTH_43 TEHTA_CIRCUM
+      ww  --> CIRTH_44 TEHTA_CIRCUM \** though in English ww usually occurs after o, which will render the vowel sound and not use this **\
 		\endif
     h   --> CIRTH_54
     ə   --> CIRTH_55 \** This is a silent-e or schwa ə sound which occurs in English unstressed syllables **\
@@ -286,12 +286,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   \end
 
   \beg    rules numeric
-    1 --> CIRTH_39 TEHTA_SUB_DOT_XS
-    2 --> CIRTH_50 TEHTA_SUB_DOT_L
-    3 --> CIRTH_52 TEHTA_SUB_DOT_L
-    4 --> CIRTH_NUMERAL_4 TEHTA_SUB_DOT_XL
-    5 --> CIRTH_22 TEHTA_SUB_DOT_L
-    6 --> CIRTH_39 TEHTA_SUB_DOT_XS CIRTH_39 TEHTA_SUB_DOT_XS CIRTH_39 TEHTA_SUB_DOT_XS CIRTH_39 TEHTA_SUB_DOT_XS CIRTH_39 TEHTA_SUB_DOT_XS CIRTH_39 TEHTA_SUB_DOT_XS 
+    1 --> CIRTH_39 TEHTA_SUB_DOT
+    2 --> CIRTH_50 TEHTA_SUB_DOT
+    3 --> CIRTH_52 TEHTA_SUB_DOT
+    4 --> CIRTH_NUMERAL_4 TEHTA_SUB_DOT
+    5 --> CIRTH_22 TEHTA_SUB_DOT
+    6 --> CIRTH_39 TEHTA_SUB_DOT CIRTH_39 TEHTA_SUB_DOT CIRTH_39 TEHTA_SUB_DOT CIRTH_39 TEHTA_SUB_DOT CIRTH_39 TEHTA_SUB_DOT CIRTH_39 TEHTA_SUB_DOT 
   \end
 
 \end
@@ -303,4 +303,5 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     \** We redefine the output space to have something beautiful, especially with erebor1 and erebor2 **\ 
     \outspace CIRTH_SPACE_BIG
   \endif
+	\resolve_virtuals
 \end
