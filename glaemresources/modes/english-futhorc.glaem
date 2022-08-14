@@ -55,20 +55,20 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     g       --> GEBO
     w       --> WYNN
     h       --> HAEGL
-    n       --> NAUDIZ
-    (i,j)   --> ISAZ
-    p       --> PERTHO \** This is the second variant; the variant that looks more like a K is not in the Unicode Runic range **\
-    x       --> ALGIZ
+    n       --> NAUD
+    (i,j)   --> IS
+    p       --> PEORTH \** This is the second variant; the variant that looks more like a K is not in the Unicode Runic range **\
+    x       --> EOLHX
     z       --> CALC
     s       --> RUNIC_LETTER_SH
-    t       --> TIWAZ
+    t       --> TIR
     \** st  --> STAN Thror's map uses separate S T anyway, and Tolkien's styling of this letter is different **\
-    b       --> BERKANAN
-    e       --> EHWAZ
-    m       --> MANNAZ
-    l       --> LAUKAZ
+    b       --> BEORC
+    e       --> EH
+    m       --> MAN
+    l       --> LAGU
     ng      --> ING
-    ee      --> OTHALAN
+    ee      --> ETHEL
     d       --> DAEG \** Tolkien also uses an alternative with lines above and below, forming a box with a cross around it; this is not in the Unicode Runic range **\
     a       --> AESC
     +a      --> AC \** One of two alternatives in the chart; the other is not in Unicode Runic **\
