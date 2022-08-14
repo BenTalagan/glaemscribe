@@ -43,6 +43,17 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 \charset  cirth_ds true
 
+\beg      options
+  \option use_g_29 false
+  \beg option use_ou_variant DAEG
+    \value DAEG 0
+    \value MAN 1
+  \end
+  \option use_oo_alt false
+  \option use_o_diaresis_alt false
+  \option use_n_53 false
+\end
+
 \beg      preprocessor
   \** Work exclusively downcase **\
   \downcase
@@ -51,7 +62,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   \substitute "ä" "a"
   \substitute "ë" "e"
   \substitute "ï" "i"
-  \substitute "ö" "o"
+  \** but not for "ö" because we actually use this to differentiate 52 **\
   \substitute "ü" "u"
   \substitute "ÿ" "y"
   
@@ -88,10 +99,19 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     zh  --> CIRTH_16
     ks  --> CIRTH_17
     k   --> CIRTH_18
-    g   --> CIRTH_19
+    \if use_g_29
+      g   --> CIRTH_29
+      gh  --> CIRTH_30
+    \else
+      g   --> CIRTH_19
+      gh  --> CIRTH_21
+    \endif
     kh  --> CIRTH_20
-    gh  --> CIRTH_21
-    n   --> CIRTH_22
+    \if use_n_53
+      n   --> CIRTH_53
+    \else
+      n   --> CIRTH_22
+    \endif
     kw  --> CIRTH_23
     gw  --> CIRTH_24
     khw --> CIRTH_25
@@ -103,8 +123,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     s   --> CIRTH_35
     ŋ   --> CIRTH_36  \** This is a pure velar nasal ŋ **\
     ng  --> CIRTH_37  \** This represents ŋ followed by g which is common in English too **\
-    ou  --> CIRTH_38
-    ow  --> CIRTH_38
+    \if "use_ou_variant == DAEG"
+      ou  --> CIRTH_38
+      ow  --> CIRTH_38
+    \elsif "use_ou_variant == MAN"
+      ou  --> CIRTH_38_ALT
+      ow  --> CIRTH_38_ALT
+    \endif
     i   --> CIRTH_39
     î   --> CIRTH_39 CIRTH_39
     y   --> CIRTH_40
@@ -118,11 +143,22 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     a   --> CIRTH_48
     â   --> CIRTH_49
     o   --> CIRTH_50
-    ô   --> CIRTH_51
-    ö   --> CIRTH_52
+    \if use_oo_alt
+      ô   --> CIRTH_51_ALT
+    \else
+      ô   --> CIRTH_51
+    \endif
+    \if use_o_diaresis_alt
+      ö   --> CIRTH_52_ALT
+    \else
+      ö   --> CIRTH_52
+    \endif
     h   --> CIRTH_54
     ə   --> CIRTH_55 \** This is a silent-e or schwa ə sound which occurs in English unstressed syllables **\
     ʌ   --> CIRTH_56 \** This is the equivalent of a schwa for a stressed syllabel **\
+    \** These are short forms of the above that may need to be selected deliberately **\
+    +ə   --> CIRTH_55_ALT
+    +ʌ   --> CIRTH_56_ALT
     ps  --> CIRTH_57
     ts  --> CIRTH_58
     +h  --> CIRTH_59
@@ -141,17 +177,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     single under-bar doubles the length of the vowel sound
     single under-dot used to indicate a symbol that is a number
     **\
-    \** These are alternative characters which can be selected by prefixing them with a + **\
-    +g   --> CIRTH_29
-    +gh  --> CIRTH_30
-    \** +h   --> CIRTH_34 **\
-    +ou  --> CIRTH_38_ALT
-    +ow  --> CIRTH_38_ALT
-    +ô   --> CIRTH_51_ALT
-    +ö   --> CIRTH_52_ALT
-    +n   --> CIRTH_53
-    +ə   --> CIRTH_55_ALT
-    +ʌ   --> CIRTH_56_ALT
     \** Rules for particular common words **\
     _the_ --> CIRTH_11 CIRTH_55
     _of_  --> CIRTH_50 CIRTH_4
