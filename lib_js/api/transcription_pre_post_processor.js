@@ -26,9 +26,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //      OPERATORS         //
 // ====================== //
 
-Glaemscribe.PrePostProcessorOperator = function(glaeml_element)
+Glaemscribe.PrePostProcessorOperator = function(mode, glaeml_element)
 {
+  this.mode           = mode;
   this.glaeml_element = glaeml_element;
+  
   return this;
 }
 Glaemscribe.PrePostProcessorOperator.prototype.apply = function(l)
@@ -66,17 +68,17 @@ Glaemscribe.PrePostProcessorOperator.prototype.finalize = function(trans_options
 }
 
 // Inherit from PrePostProcessorOperator
-Glaemscribe.PreProcessorOperator = function(raw_args)  
+Glaemscribe.PreProcessorOperator = function(mode, glaeml_element)
 {
-  Glaemscribe.PrePostProcessorOperator.call(this,raw_args);
+  Glaemscribe.PrePostProcessorOperator.call(this, mode, glaeml_element);
   return this;
-} 
+}
 Glaemscribe.PreProcessorOperator.inheritsFrom( Glaemscribe.PrePostProcessorOperator );  
 
 // Inherit from PrePostProcessorOperator
-Glaemscribe.PostProcessorOperator = function(raw_args)  
+Glaemscribe.PostProcessorOperator = function(mode, glaeml_element)
 {
-  Glaemscribe.PrePostProcessorOperator.call(this,raw_args);
+  Glaemscribe.PrePostProcessorOperator.call(this, mode, glaeml_element);
   return this;
 } 
 Glaemscribe.PostProcessorOperator.inheritsFrom( Glaemscribe.PrePostProcessorOperator );  
@@ -139,7 +141,7 @@ Glaemscribe.TranscriptionPrePostProcessor.prototype.descend_if_tree = function(c
 // Inherit from TranscriptionPrePostProcessor; a bit more verbose than in ruby ...
 Glaemscribe.TranscriptionPreProcessor = function(mode)  
 {
-  Glaemscribe.TranscriptionPrePostProcessor.call(this,mode);
+  Glaemscribe.TranscriptionPrePostProcessor.call(this, mode);
   return this;
 } 
 Glaemscribe.TranscriptionPreProcessor.inheritsFrom( Glaemscribe.TranscriptionPrePostProcessor ); 
@@ -161,7 +163,7 @@ Glaemscribe.TranscriptionPreProcessor.prototype.apply = function(l)
 // Inherit from TranscriptionPrePostProcessor; a bit more verbose than in ruby ...
 Glaemscribe.TranscriptionPostProcessor = function(mode)  
 {
-  Glaemscribe.TranscriptionPrePostProcessor.call(this,mode);
+  Glaemscribe.TranscriptionPrePostProcessor.call(this, mode);
   return this;
 } 
 Glaemscribe.TranscriptionPostProcessor.inheritsFrom( Glaemscribe.TranscriptionPrePostProcessor ); 
@@ -169,17 +171,18 @@ Glaemscribe.TranscriptionPostProcessor.inheritsFrom( Glaemscribe.TranscriptionPr
 Glaemscribe.TranscriptionPostProcessor.prototype.apply = function(tokens, out_charset)
 {
   var out_space_str     = " ";
-  if(this.out_space != null)
-  {
-    out_space_str       = this.out_space.map(function(token) { return out_charset.n2c(token).output() }).join("");
-  }
-  
+
   for(var i=0;i<this.operators.length;i++)
   {
     var operator  = this.operators[i];
     tokens        = operator.apply(tokens, out_charset);
   }
-  
+
+  if(this.out_space != null)
+  {
+    out_space_str       = this.out_space.map(function(token) { return out_charset.n2c(token).output() }).join("");
+  }
+
   // Convert output
   var ret = "";
   for(var t=0;t<tokens.length;t++)

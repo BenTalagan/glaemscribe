@@ -67,6 +67,8 @@ module Glaemscribe
     require API_PATH + "pre_processor/substitute.rb"
     require API_PATH + "pre_processor/rxsubstitute.rb"
     require API_PATH + "pre_processor/up_down_tehta_split.rb"
+    
+    require API_PATH + "post_processor/outspace.rb"
     require API_PATH + "post_processor/reverse.rb"
     require API_PATH + "post_processor/resolve_virtuals.rb"
     

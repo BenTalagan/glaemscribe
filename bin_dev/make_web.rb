@@ -51,6 +51,7 @@ JS_FILES = [
   "api/pre_processor/elvish_numbers.js",
   "api/post_processor/reverse.js",
   "api/post_processor/resolve_virtuals.js",
+  "api/post_processor/outspace.js",
   "extern/object-clone.js",
   "../lib_espeak/glaemscribe_tts.js"
 ]

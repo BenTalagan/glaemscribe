@@ -1573,6 +1573,11 @@ Glaemscribe.ModeParser.prototype.verify_mode_glaeml = function(doc)
   glaemEach(doc.root_node.gpath("preprocessor.elsif"), function (re, rules_element) { parser.validate_presence_of_args(rules_element,  1) });
   glaemEach(doc.root_node.gpath("postprocessor.if"), function (re, rules_element) { parser.validate_presence_of_args(rules_element,  1) });
   glaemEach(doc.root_node.gpath("postprocessor.elsif"), function (re, rules_element) { parser.validate_presence_of_args(rules_element,  1) });
+
+  glaemEach(doc.root_node.children, function(_, c) {
+    if(c.name === 'if')
+      parser.mode.errors.push(Glaemscribe.Glaeml.Error(c.line, "'if' conditions are not allowed in that scope."));
+  });
 }
 
 Glaemscribe.ModeParser.prototype.create_if_cond_for_if_term = function(line, if_term, cond)
@@ -1775,7 +1780,7 @@ Glaemscribe.ModeParser.prototype.parse_pre_post_processor = function(processor_e
     }
     else
     {         
-      term.operators.push(new operator_class(element.clone()));     
+      term.operators.push(new operator_class(mode, element.clone()));
     }     
   }  
   
@@ -3139,9 +3144,11 @@ Glaemscribe.TranscriptionTreeNode.prototype.transcribe = function(string, chain)
 //      OPERATORS         //
 // ====================== //
 
-Glaemscribe.PrePostProcessorOperator = function(glaeml_element)
+Glaemscribe.PrePostProcessorOperator = function(mode, glaeml_element)
 {
+  this.mode           = mode;
   this.glaeml_element = glaeml_element;
+  
   return this;
 }
 Glaemscribe.PrePostProcessorOperator.prototype.apply = function(l)
@@ -3179,17 +3186,17 @@ Glaemscribe.PrePostProcessorOperator.prototype.finalize = function(trans_options
 }
 
 // Inherit from PrePostProcessorOperator
-Glaemscribe.PreProcessorOperator = function(raw_args)  
+Glaemscribe.PreProcessorOperator = function(mode, glaeml_element)
 {
-  Glaemscribe.PrePostProcessorOperator.call(this,raw_args);
+  Glaemscribe.PrePostProcessorOperator.call(this, mode, glaeml_element);
   return this;
-} 
+}
 Glaemscribe.PreProcessorOperator.inheritsFrom( Glaemscribe.PrePostProcessorOperator );  
 
 // Inherit from PrePostProcessorOperator
-Glaemscribe.PostProcessorOperator = function(raw_args)  
+Glaemscribe.PostProcessorOperator = function(mode, glaeml_element)
 {
-  Glaemscribe.PrePostProcessorOperator.call(this,raw_args);
+  Glaemscribe.PrePostProcessorOperator.call(this, mode, glaeml_element);
   return this;
 } 
 Glaemscribe.PostProcessorOperator.inheritsFrom( Glaemscribe.PrePostProcessorOperator );  
@@ -3252,7 +3259,7 @@ Glaemscribe.TranscriptionPrePostProcessor.prototype.descend_if_tree = function(c
 // Inherit from TranscriptionPrePostProcessor; a bit more verbose than in ruby ...
 Glaemscribe.TranscriptionPreProcessor = function(mode)  
 {
-  Glaemscribe.TranscriptionPrePostProcessor.call(this,mode);
+  Glaemscribe.TranscriptionPrePostProcessor.call(this, mode);
   return this;
 } 
 Glaemscribe.TranscriptionPreProcessor.inheritsFrom( Glaemscribe.TranscriptionPrePostProcessor ); 
@@ -3274,7 +3281,7 @@ Glaemscribe.TranscriptionPreProcessor.prototype.apply = function(l)
 // Inherit from TranscriptionPrePostProcessor; a bit more verbose than in ruby ...
 Glaemscribe.TranscriptionPostProcessor = function(mode)  
 {
-  Glaemscribe.TranscriptionPrePostProcessor.call(this,mode);
+  Glaemscribe.TranscriptionPrePostProcessor.call(this, mode);
   return this;
 } 
 Glaemscribe.TranscriptionPostProcessor.inheritsFrom( Glaemscribe.TranscriptionPrePostProcessor ); 
@@ -3282,17 +3289,18 @@ Glaemscribe.TranscriptionPostProcessor.inheritsFrom( Glaemscribe.TranscriptionPr
 Glaemscribe.TranscriptionPostProcessor.prototype.apply = function(tokens, out_charset)
 {
   var out_space_str     = " ";
-  if(this.out_space != null)
-  {
-    out_space_str       = this.out_space.map(function(token) { return out_charset.n2c(token).output() }).join("");
-  }
-  
+
   for(var i=0;i<this.operators.length;i++)
   {
     var operator  = this.operators[i];
     tokens        = operator.apply(tokens, out_charset);
   }
-  
+
+  if(this.out_space != null)
+  {
+    out_space_str       = this.out_space.map(function(token) { return out_charset.n2c(token).output() }).join("");
+  }
+
   // Convert output
   var ret = "";
   for(var t=0;t<tokens.length;t++)
@@ -3467,9 +3475,9 @@ Glaemscribe.TranscriptionProcessor.prototype.transcribe_word = function(word, de
 */
 
 
-Glaemscribe.DowncasePreProcessorOperator = function(args)  
+Glaemscribe.DowncasePreProcessorOperator = function(mode, glaeml_element)
 {
-  Glaemscribe.PreProcessorOperator.call(this,args); //super
+  Glaemscribe.PreProcessorOperator.call(this, mode, glaeml_element); //super
   return this;
 } 
 Glaemscribe.DowncasePreProcessorOperator.inheritsFrom( Glaemscribe.PreProcessorOperator );  
@@ -3488,9 +3496,9 @@ Glaemscribe.resource_manager.register_pre_processor_class("downcase", Glaemscrib
 
 
 // Inherit from PrePostProcessorOperator
-Glaemscribe.RxSubstitutePreProcessorOperator = function(glaeml_element)  
+Glaemscribe.RxSubstitutePreProcessorOperator = function(mode, glaeml_element)
 {
-  Glaemscribe.PreProcessorOperator.call(this, glaeml_element); //super
+  Glaemscribe.PreProcessorOperator.call(this, mode, glaeml_element); //super
   return this;
 } 
 Glaemscribe.RxSubstitutePreProcessorOperator.inheritsFrom( Glaemscribe.PreProcessorOperator );  
@@ -3520,9 +3528,9 @@ Glaemscribe.resource_manager.register_pre_processor_class("rxsubstitute", Glaems
 
 
 // Inherit from PrePostProcessorOperator
-Glaemscribe.SubstitutePreProcessorOperator = function(args)  
+Glaemscribe.SubstitutePreProcessorOperator = function(mode, glaeml_element)
 {
-  Glaemscribe.PreProcessorOperator.call(this,args); //super
+  Glaemscribe.PreProcessorOperator.call(this, mode, glaeml_element); //super
   return this;
 } 
 Glaemscribe.SubstitutePreProcessorOperator.inheritsFrom( Glaemscribe.PreProcessorOperator );  
@@ -3561,9 +3569,9 @@ Glaemscribe.resource_manager.register_pre_processor_class("substitute", Glaemscr
 
 
 // Inherit from PrePostProcessorOperator
-Glaemscribe.UpDownTehtaSplitPreProcessorOperator = function(args)  
+Glaemscribe.UpDownTehtaSplitPreProcessorOperator = function(mode, glaeml_element)
 {
-  Glaemscribe.PreProcessorOperator.call(this,args); //super 
+  Glaemscribe.PreProcessorOperator.call(this, mode, glaeml_element); //super
   return this;
 } 
 Glaemscribe.UpDownTehtaSplitPreProcessorOperator.inheritsFrom( Glaemscribe.PreProcessorOperator );  
@@ -3712,7 +3720,11 @@ Glaemscribe.resource_manager.register_pre_processor_class("up_down_tehta_split",
 */
 
 
-Glaemscribe.ElvishNumbersPreProcessorOperator = function(args)  {  Glaemscribe.PreProcessorOperator.call(this,args); return this; } 
+Glaemscribe.ElvishNumbersPreProcessorOperator = function(mode, glaeml_element)
+{
+  Glaemscribe.PreProcessorOperator.call(this, mode, glaeml_element);
+  return this;
+}
 Glaemscribe.ElvishNumbersPreProcessorOperator.inheritsFrom( Glaemscribe.PreProcessorOperator );  
 Glaemscribe.ElvishNumbersPreProcessorOperator.prototype.apply = function(str)
 {
@@ -3752,9 +3764,9 @@ Glaemscribe.resource_manager.register_pre_processor_class("elvish_numbers", Glae
 */
 
 
-Glaemscribe.ReversePostProcessorOperator = function(args)  
+Glaemscribe.ReversePostProcessorOperator = function(mode, glaeml_element)
 {
-  Glaemscribe.PostProcessorOperator.call(this,args); //super
+  Glaemscribe.PostProcessorOperator.call(this, mode, glaeml_element); //super
   return this;
 } 
 Glaemscribe.ReversePostProcessorOperator.inheritsFrom( Glaemscribe.PostProcessorOperator );  
@@ -3773,9 +3785,9 @@ Glaemscribe.resource_manager.register_post_processor_class("reverse", Glaemscrib
 
 
 
-Glaemscribe.ResolveVirtualsPostProcessorOperator = function(args)  
+Glaemscribe.ResolveVirtualsPostProcessorOperator = function(mode, glaeml_element)
 {
-  Glaemscribe.PostProcessorOperator.call(this,args); //super
+  Glaemscribe.PostProcessorOperator.call(this, mode, glaeml_element); //super
   return this;
 } 
 Glaemscribe.ResolveVirtualsPostProcessorOperator.inheritsFrom( Glaemscribe.PostProcessorOperator );  
@@ -3859,6 +3871,36 @@ Glaemscribe.ResolveVirtualsPostProcessorOperator.prototype.apply = function(toke
 
 Glaemscribe.resource_manager.register_post_processor_class("resolve_virtuals", Glaemscribe.ResolveVirtualsPostProcessorOperator);    
 
+
+
+/*
+  Adding api/post_processor/outspace.js 
+*/
+
+
+/*
+  A post processor operator to replace the out_space on the fly.
+  This has the same effect as the \outspace parameter
+  But can be included in the postprocessor and benefit from the if/then logic
+*/
+
+Glaemscribe.OutspacePostProcessorOperator = function(mode, glaeml_element)
+{
+  Glaemscribe.PostProcessorOperator.call(this, mode, glaeml_element); //super
+  
+  this.out_space  = stringListToCleanArray(glaeml_element.args[0], /\s/);
+  
+  return this;
+} 
+Glaemscribe.OutspacePostProcessorOperator.inheritsFrom( Glaemscribe.PostProcessorOperator );  
+
+Glaemscribe.OutspacePostProcessorOperator.prototype.apply = function(tokens, charset)
+{
+  this.mode.post_processor.out_space = this.out_space;
+  return tokens;
+}  
+
+Glaemscribe.resource_manager.register_post_processor_class("outspace", Glaemscribe.OutspacePostProcessorOperator);    
 
 
 /*
