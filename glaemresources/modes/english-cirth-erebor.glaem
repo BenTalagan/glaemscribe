@@ -45,6 +45,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 \beg      options
 	\option use_underbar_for_double_vowels false
+	\option use_circumflex_for_double_consonants false
   \option use_g_29 false
   \beg option use_ou_variant DAEG
     \value DAEG 0
@@ -77,7 +78,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	  \substitute "c" "k"
 	\else
 	  \** See https://en.wikipedia.org/wiki/Hard_and_soft_C#General_overview **\
-	  \substitute "ck" "k"
 	  \rxsubstitute "cc([eiy])" "ks\\1" \** accident **\
 	  \rxsubstitute "c([eiy])" "s\\1"
 	  \rxsubstitute "\\bct" "t" \** Remove silent c before t at the start of the word **\
@@ -188,6 +188,32 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 		  ö   --> CIRTH_52_ALT
 		\else
       ö   --> CIRTH_52
+		\endif
+		\if use_circumflex_for_double_consonants
+		  pp  --> CIRTH_1 TEHTA_CIRCUM_L
+		  bb  --> CIRTH_2 TEHTA_CIRCUM_L
+      ff  --> CIRTH_3 TEHTA_CIRCUM_L
+      vv  --> CIRTH_4 TEHTA_CIRCUM_L
+      mm  --> CIRTH_6 TEHTA_CIRCUM_L
+      tt  --> CIRTH_8 TEHTA_CIRCUM_L
+      dd  --> CIRTH_9 TEHTA_CIRCUM_L
+      rr  --> CIRTH_12 TEHTA_CIRCUM_L
+      jj  --> CIRTH_14 TEHTA_CIRCUM_L
+      kk  --> CIRTH_18 TEHTA_CIRCUM_L
+      \if use_g_29
+        gg  --> CIRTH_29 TEHTA_CIRCUM_L
+      \else
+        gg  --> CIRTH_19 TEHTA_CIRCUM_L
+      \endif
+  		\if use_n_53
+  		  nn  --> CIRTH_53 TEHTA_CIRCUM_L
+  		\else
+        nn  --> CIRTH_22 TEHTA_CIRCUM_L
+  		\endif
+      ll  --> CIRTH_31 TEHTA_CIRCUM_L
+      ss  --> CIRTH_35 TEHTA_CIRCUM_L
+      zz  --> CIRTH_43 TEHTA_CIRCUM_L
+      ww  --> CIRTH_44 TEHTA_CIRCUM_L \** though in English ww usually occurs after o, which will render the vowel sound and not use this **\
 		\endif
     h   --> CIRTH_54
     ə   --> CIRTH_55 \** This is a silent-e or schwa ə sound which occurs in English unstressed syllables **\
