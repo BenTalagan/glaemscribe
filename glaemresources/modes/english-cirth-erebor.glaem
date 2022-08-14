@@ -235,9 +235,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     ea  --> CIRTH_EREB_6
     oa  --> CIRTH_EREB_7		
 
-    \** Not yet implemented:
-    over circumflex doubles the length of the consonant sound
-    **\
     \** Rules for particular common words **\
     _the_ --> CIRTH_11 CIRTH_55
     _of_  --> CIRTH_50 CIRTH_4
