@@ -44,6 +44,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 \charset  cirth_ds true
 
 \beg      options
+	\option use_underbar_for_double_vowels false
   \option use_g_29 false
   \beg option use_ou_variant DAEG
     \value DAEG 0
@@ -153,22 +154,35 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
       ow  --> CIRTH_38_ALT
 		\endif
     i   --> CIRTH_39
-    î   --> CIRTH_39 CIRTH_39
     y   --> CIRTH_40
     hy  --> CIRTH_41
-    (u,û) --> CIRTH_42
+    u   --> CIRTH_42
     z   --> CIRTH_43
     w   --> CIRTH_44
     ü   --> CIRTH_45
     e   --> CIRTH_46
-    ê   --> CIRTH_47
     a   --> CIRTH_48
-    â   --> CIRTH_49
     o   --> CIRTH_50
-		\if use_oo_alt
-		  ô   --> CIRTH_51_ALT
+		\if use_underbar_for_double_vowels
+		  â   --> CIRTH_49 TEHTA_UNDERLINE_L
+			ê   --> CIRTH_47 TEHTA_UNDERLINE_L
+		  î   --> CIRTH_39 TEHTA_UNDERLINE_XS
+  		\if use_oo_alt
+	  	  ô   --> CIRTH_51_ALT TEHTA_UNDERLINE_XL
+		  \else
+        ô   --> CIRTH_51 TEHTA_UNDERLINE_XL
+  		\endif
+			û   --> CIRTH_42 TEHTA_UNDERLINE_XL
 		\else
-      ô   --> CIRTH_51
+		  â   --> CIRTH_49
+			ê   --> CIRTH_47
+      î   --> CIRTH_39 CIRTH_39
+  		\if use_oo_alt
+	  	  ô   --> CIRTH_51_ALT
+		  \else
+        ô   --> CIRTH_51
+  		\endif
+			û   --> CIRTH_42
 		\endif
     \if use_o_diaresis_alt
 		  ö   --> CIRTH_52_ALT
@@ -197,8 +211,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
     \** Not yet implemented:
     over circumflex doubles the length of the consonant sound
-    single under-bar doubles the length of the vowel sound
-    single under-dot used to indicate a symbol that is a number
     **\
     \** Rules for particular common words **\
     _the_ --> CIRTH_11 CIRTH_55
