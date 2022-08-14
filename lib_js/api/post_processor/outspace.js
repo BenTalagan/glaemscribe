@@ -22,16 +22,26 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 */
 
-Glaemscribe.ReversePostProcessorOperator = function(mode, glaeml_element)
+/*
+  A post processor operator to replace the out_space on the fly.
+  This has the same effect as the \outspace parameter
+  But can be included in the postprocessor and benefit from the if/then logic
+*/
+
+Glaemscribe.OutspacePostProcessorOperator = function(mode, glaeml_element)
 {
   Glaemscribe.PostProcessorOperator.call(this, mode, glaeml_element); //super
+  
+  this.out_space  = stringListToCleanArray(glaeml_element.args[0], /\s/);
+  
   return this;
 } 
-Glaemscribe.ReversePostProcessorOperator.inheritsFrom( Glaemscribe.PostProcessorOperator );  
+Glaemscribe.OutspacePostProcessorOperator.inheritsFrom( Glaemscribe.PostProcessorOperator );  
 
-Glaemscribe.ReversePostProcessorOperator.prototype.apply = function(tokens, charset)
+Glaemscribe.OutspacePostProcessorOperator.prototype.apply = function(tokens, charset)
 {
-  return tokens.reverse();
+  this.mode.post_processor.out_space = this.out_space;
+  return tokens;
 }  
 
-Glaemscribe.resource_manager.register_post_processor_class("reverse", Glaemscribe.ReversePostProcessorOperator);    
+Glaemscribe.resource_manager.register_post_processor_class("outspace", Glaemscribe.OutspacePostProcessorOperator);    

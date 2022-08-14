@@ -27,7 +27,8 @@ module Glaemscribe
       attr_reader :glaeml_element
       attr_reader :finalized_glaeml_element
       
-      def initialize(glaeml_element)
+      def initialize(mode, glaeml_element)
+        @mode           = mode
         @glaeml_element = glaeml_element
       end
       
@@ -121,15 +122,15 @@ module Glaemscribe
       attr_accessor :out_space
           
       def apply(tokens, out_charset)
-        
-        out_space_str     = " "
-        out_space_str     = @out_space.map{ |token| out_charset[token].str }.join("") if @out_space
          
         # Apply filters
         @operators.each{ |operator|
           tokens = operator.apply(tokens,out_charset)
         } 
-        
+
+        out_space_str     = " "
+        out_space_str     = @out_space.map{ |token| out_charset[token].str }.join("") if @out_space
+
         # Convert output
         ret = ""
         tokens.each{ |token|
