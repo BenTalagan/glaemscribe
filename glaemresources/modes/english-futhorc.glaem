@@ -37,6 +37,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 \charset  unicode_runes true
 
+\beg options
+  \option use_aesc                        true
+  \** Thror's map uses separate S T anyway, and Tolkien's styling of this letter is different, so this is retained as an option but off by default **\
+  \option use_stan                        false
+\end
+
+
 \beg      preprocessor
   \downcase
 \end
@@ -49,7 +56,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     (u,v)   --> URUZ \** There are variants with round and straight strokes; only the former is in the Unicode Runic range **\
     th      --> THORN
     oo      --> OS
-    o       --> OS
+    o       --> OSfuvthooorcgwhnjipxzstbemlngeeda+ayeakquab
     r       --> RAIDO
     c       --> CEN
     g       --> GEBO
@@ -62,7 +69,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     z       --> CALC
     s       --> RUNIC_LETTER_SH
     t       --> TIR
-    \** st  --> STAN Thror's map uses separate S T anyway, and Tolkien's styling of this letter is different **\
+    \if use_stan
+      st  --> STAN 
+    \endif
     b       --> BEORC
     e       --> EH
     m       --> MAN
@@ -70,14 +79,21 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     ng      --> ING
     ee      --> ETHEL
     d       --> DAEG \** Tolkien also uses an alternative with lines above and below, forming a box with a cross around it; this is not in the Unicode Runic range **\
-    a       --> AESC
-    +a      --> AC \** One of two alternatives in the chart; the other is not in Unicode Runic **\
+    \if use_aesc
+      a       --> AESC
+      +a      --> AC \** One of two alternatives in the chart; the other is not in Unicode Runic **\
+    \else
+      a       --> AC \** One of two alternatives in the chart; the other is not in Unicode Runic **\
+      +a      --> AESC
+    \endif
     \** y       --> CIRTH_49 matches this letter correctly, but this is a problem, as no font has both CIRTH and RUNIC unicode block **\
     y       --> YR \** This is the closest thing in unicode Runic to Tolkien's CIRTH_49 **\
     ea      --> EAR
     k       --> RUNIC_LETTER_FRANKS_CASKET_AC \** This is not an exact match but the closest in the Unicode Runic range **\
     \** combinations **\
     qu      --> CEN WYNN
+    \** in order to complete English orthography... however note that this mode is mostly direct transcription of letters... **\
+    q       --> CEN WYNN \** Assume a q is pronounced cw, even if not followed by a u **\
   \end
   
   \beg    rules  punctuation
