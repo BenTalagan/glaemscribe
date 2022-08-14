@@ -46,6 +46,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 \beg      options
 	\option use_underbar_for_double_vowels false
 	\option use_circumflex_for_double_consonants false
+	\option use_underdot_for_numeric false
   \option use_g_29 false
   \beg option use_ou_variant DAEG
     \value DAEG 0
@@ -286,12 +287,21 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   \end
 
   \beg    rules numeric
-    1 --> CIRTH_39 TEHTA_SUB_DOT
-    2 --> CIRTH_50 TEHTA_SUB_DOT
-    3 --> CIRTH_52 TEHTA_SUB_DOT
-    4 --> CIRTH_NUMERAL_4 TEHTA_SUB_DOT
-    5 --> CIRTH_22 TEHTA_SUB_DOT
-    6 --> CIRTH_39 TEHTA_SUB_DOT CIRTH_39 TEHTA_SUB_DOT CIRTH_39 TEHTA_SUB_DOT CIRTH_39 TEHTA_SUB_DOT CIRTH_39 TEHTA_SUB_DOT CIRTH_39 TEHTA_SUB_DOT 
+	  \if use_underdot_for_numeric
+      1 --> CIRTH_39 TEHTA_SUB_DOT
+      2 --> CIRTH_50 TEHTA_SUB_DOT
+      3 --> CIRTH_52 TEHTA_SUB_DOT
+      4 --> CIRTH_NUMERAL_4 TEHTA_SUB_DOT
+      5 --> CIRTH_22 TEHTA_SUB_DOT
+      6 --> CIRTH_39 CIRTH_39 CIRTH_39 CIRTH_39 TEHTA_SUB_DOT_S CIRTH_39 CIRTH_39
+		\else
+		  1 --> CIRTH_39
+      2 --> CIRTH_50
+      3 --> CIRTH_52
+      4 --> CIRTH_NUMERAL_4
+      5 --> CIRTH_22
+      6 --> CIRTH_39 CIRTH_39 CIRTH_39 CIRTH_39 CIRTH_39 CIRTH_39 
+		\endif
   \end
 
 \end
