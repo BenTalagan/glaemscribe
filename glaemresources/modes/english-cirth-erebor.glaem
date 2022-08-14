@@ -251,13 +251,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   \end
 
   \beg    rules numeric
-    \** Not yet implemented: single under-dot used to indicate a symbol that is a number **\
-    1 --> CIRTH_39
-    2 --> CIRTH_50
-    3 --> CIRTH_52
-    4 --> CIRTH_NUMERAL_4
-    5 --> CIRTH_22
-    6 --> CIRTH_39 CIRTH_39 CIRTH_39 CIRTH_39 CIRTH_39 CIRTH_39
+    1 --> CIRTH_39 TEHTA_SUB_DOT_XS
+    2 --> CIRTH_50 TEHTA_SUB_DOT_L
+    3 --> CIRTH_52 TEHTA_SUB_DOT_L
+    4 --> CIRTH_NUMERAL_4 TEHTA_SUB_DOT_XL
+    5 --> CIRTH_22 TEHTA_SUB_DOT_L
+    6 --> CIRTH_39 TEHTA_SUB_DOT_XS CIRTH_39 TEHTA_SUB_DOT_XS CIRTH_39 TEHTA_SUB_DOT_XS CIRTH_39 TEHTA_SUB_DOT_XS CIRTH_39 TEHTA_SUB_DOT_XS CIRTH_39 TEHTA_SUB_DOT_XS 
   \end
 
 \end
