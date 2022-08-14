@@ -43,13 +43,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 \charset  cirth_ds true
 
-\if dots_for_spaces
-  \outspace CIRTH_PUNCT_MID_DOT
-\else
-  \** We redefine the output space to have something beautiful, especially with erebor1 and erebor2 **\ 
-  \outspace CIRTH_SPACE_BIG
-\endif
-
 \beg      preprocessor
   \** Work exclusively downcase **\
   \downcase
@@ -219,4 +212,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     6 --> CIRTH_39 CIRTH_39 CIRTH_39 CIRTH_39 CIRTH_39 CIRTH_39
   \end
 
+\end
+
+\beg      postprocessor
+  \if dots_for_spaces
+    \outspace CIRTH_PUNCT_MID_DOT
+  \else
+    \** We redefine the output space to have something beautiful, especially with erebor1 and erebor2 **\ 
+    \outspace CIRTH_SPACE_BIG
+  \endif
 \end
