@@ -64,6 +64,19 @@ function debugit(text) {
 debugit(boro)
 debugit("test you've done bad things with liz's bag, at the age of5")
 debugit("asshole ashes michael marching king ingame bayou accurate page celt cell herein hope edinburgh baghorn fkd")
+debugit("answer. what")
+
+console.log("----")
+console.log(client.synthesize_ipa("answer.        what"))
+console.log(client.synthesize_ipa("I've read that book"))
+console.log(client.synthesize_ipa("Don't do this"))
+console.log(client.synthesize_ipa("Hello 'hello' "))
+console.log(client.synthesize_ipa("Hello'hello' "))
+console.log(client.synthesize_ipa("Hello ' hello' "))
+console.log(client.synthesize_ipa("Hey 0 1 2 3 45 6 my."))
+console.log(client.synthesize_ipa("Hey 1 my 2 name 3 is bond 4 obviously 355 not 2324. "))
+
+
 
 // sh -> (ʃ)
 // h -> (h)

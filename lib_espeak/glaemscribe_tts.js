@@ -49,8 +49,10 @@ Glaemscribe.TTS.ipa_configurations = {
     // Replace by special token AND KEEP when calculating ipa
     clauseaffecting_punctuation: "!.,;:!?–—",
     // Replace by special token but do not keep when calculating ipa
-    // '’ : apostrophes should stay in the original text !!! Don't break liz's bag !!
-    // This is because apostrophes shouldn't trigger a pause in the prononciation (e.g. genitives)
+    // For those signs : '’ : apostrophes should stay in the original text !!! Don't break liz's bag !!
+    // Apostrophes shouldn't trigger a pause in the prononciation (e.g. genitives, I've, don't etc)
+    // But apostrophe and single quote are the same thing.
+    // It's necessary to document that single quotes should then be avoided.
     clauseunaffecting_punctuation: "·“”«»-[](){}<>≤≥$|\""
   }
 }
@@ -143,23 +145,26 @@ Glaemscribe.TTS.prototype.escape_special_blocks = function(voice, entry, for_ipa
   var config  = Glaemscribe.TTS.ipa_configurations[voice];
 
   // TODO : make this configurable
-  var ipaexpr = /(\s*)({{[\s\S]*?}}|\b[0-9]+\b)(\s*)/g; // Tonekize raw + numbers, we don't want them to be converted in IPA
-  var wavexpr = /(\s*)({{[\s\S]*?}})(\s*)/g;                      // Keep numbers
+  
+  // Tonekize raw_mode escaping + numbers, we don't want them to be converted in IPA
+  // Also, keep numbers in the writing, to prevent espeak from pronuncing them
+  var ipaexpr = /(\s*)({{[\s\S]*?}}|\b[0-9\s]+\b)(\s*)/g; 
+  var wavexpr = /(\s*)({{[\s\S]*?}})(\s*)/g;            
   var rawgexp = (for_ipa)?(ipaexpr):(wavexpr);
 
   var captured = [];
 
-  var ret = entry.replace(rawgexp, function(match,p1,p2,p3) {
-
+  var ret = entry.replace(rawgexp, function(match,p1,p2,p3) {    
     captured.push(match);
     if(!for_ipa)
-      return ' '; // For wav, just replace by empty space.
+      return ' '; // For wav, just replace by empty space and do not pronunce.
     else
-      return p1 + config['block_token'] + p3;
+      return p1 + config['block_token'] + p3; // For IPA, replace by dummy token.
   });
-
+  
   return [ret, captured];
 }
+
 
 Glaemscribe.TTS.prototype.ipa_instrument_punct = function(voice, text) {
 
@@ -181,10 +186,9 @@ Glaemscribe.TTS.prototype.ipa_instrument_punct = function(voice, text) {
       accum += config['punct_token'];
       kept_signs.push(text[i]);
     }
-    else if(cup[text[i]] != null || (text[i] == "'" && text[i+1] != "s")) 
-    {
-      // Clause non affecting sign : dirty hack for single quote apostrophes ...
-      // Same thing but the difference is that we REMOVE the sign before calculating the IPA.
+    else if(cup[text[i]] != null)
+    {    
+      // Same thing as below but the difference is that we REMOVE the sign before calculating the IPA.
       // We will restore it after IPA calculation.
       accum += " " + config['punct_token'] + " " ;
       kept_signs.push( 
@@ -210,7 +214,7 @@ Glaemscribe.TTS.prototype.ipa_instrument_punct = function(voice, text) {
       accum += text[i];
     }
   }
-
+  
   return [accum, kept_signs];
 }
 
@@ -263,7 +267,7 @@ Glaemscribe.TTS.prototype.post_ipa = function(voice, ipa, pre_ipa_res) {
 
   var client = this;
   var config = Glaemscribe.TTS.ipa_configurations[voice];
-  ipa = ipa.replace(/\n/g," ");
+  ipa = ipa.replace(/\n/g, " ");
 
   ipa = client.ipa_restore_tokens(ipa, config.punct_token, pre_ipa_res.punct_tokens);
   ipa = client.ipa_restore_tokens(ipa, config.block_token, pre_ipa_res.block_tokens);
@@ -286,6 +290,7 @@ Glaemscribe.TTS.prototype.pre_ipa = function(args, voice, text) {
 
   // Normalize all tabs by spaces
   text = text.replace(/\t/g," ");
+  
   // Small hack to prevent espeak from pronouncing last dot
   // since our tokenization may isolate it.
   text += "\n";
@@ -293,10 +298,16 @@ Glaemscribe.TTS.prototype.pre_ipa = function(args, voice, text) {
   // Instrument blocks first (they may contain punctuation)
   var bi            = client.ipa_instrument_blocks(voice,text);
   text              = bi[0];
-    
+  
   // Instrument punctuation, then
   var pi            = client.ipa_instrument_punct(voice,text);
   text              = pi[0];
+
+  // Small hack to always have a capital after a dot.
+  // And prevent espeak from transcribing/pronuncing "dot"
+  text = text.replace(/(\.\s+.)/g, function(match,p1) {
+    return p1.toUpperCase()
+  });
   
   return {
     text: text,
@@ -350,7 +361,6 @@ Glaemscribe.TTS.prototype.synthesize_ipa = function(text, args, onended) {
   var ts = new Date();
   var ret = {};
   client.proxy.synthesize(text, false, true, true, function(result) {
-
     // Post parse ipa
     result.ipa            = client.post_ipa(voice, result.pho, pipa);
 
@@ -402,6 +412,9 @@ Glaemscribe.TTS.prototype.synthesize_wav = function(text, args, onended) {
   return ret;
 }
 
+
+// Below is an expirement of a parsing tool for orthographic modes.
+// Not finished and probably not usable.
 Glaemscribe.TTS.TokenType = {};
 Glaemscribe.TTS.TokenType.WORD      = 'WORD';
 Glaemscribe.TTS.TokenType.NON_WORD  = 'NON_WORD';
