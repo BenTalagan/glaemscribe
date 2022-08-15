@@ -86,18 +86,18 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   \option implicit_schwa false
 
   \beg option non_implicit_schwa_method NON_IMPLICIT_SCHWA_DIFFERENCIATE_REDUCIBLE
-	  \value NON_IMPLICIT_SCHWA_DIFFERENCIATE_REDUCIBLE 0
-		\value NON_IMPLICIT_SCHWA_ALL_WITH_VERTICAL_BAR   1
-		\value NON_IMPLICIT_SCHWA_ALL_AS_ACCENTS          2
-		\visible_when "implicit_schwa == false"
-	\end
+    \value NON_IMPLICIT_SCHWA_DIFFERENCIATE_REDUCIBLE 0
+    \value NON_IMPLICIT_SCHWA_ALL_WITH_VERTICAL_BAR   1
+    \value NON_IMPLICIT_SCHWA_ALL_AS_ACCENTS          2
+    \visible_when "implicit_schwa == false"
+  \end
 
   \beg option non_reducible_schwa_remaining NON_REDUCIBLE_SCHWA_REMAINING_WITH_VERTICAL_BAR
-		\visible_when implicit_schwa
+    \visible_when implicit_schwa
     \value NON_REDUCIBLE_SCHWA_REMAINING_WITH_VERTICAL_BAR 0
-		\value NON_REDUCIBLE_SCHWA_REMAINING_WITH_VERTICAL_BAR_AS_ACCENTS 1
-	\end
-		
+    \value NON_REDUCIBLE_SCHWA_REMAINING_WITH_VERTICAL_BAR_AS_ACCENTS 1
+  \end
+
   \** Schwi, in US/JRRT **\
   \beg option schwi SCHWI_LIKE_I
     \radio
@@ -271,13 +271,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   \** or after vowels (== not consonant) **\
   \** beware of ɪ as it can appear as consonant (lawyer) **\
   \** same for ʊ for sour **\
-	\** Handling is not exactly the same as in the tengwar mode **\
-	\** Because letters are treated independently, not with a VC pattern **\
-	\** We thus need to add ending of words, that would be handled by telco otherwise **\
-	
+  \** Handling is not exactly the same as in the tengwar mode **\
+  \** Because letters are treated independently, not with a VC pattern **\
+  \** We thus need to add ending of words, that would be handled by telco otherwise **\
+
   \** Mark non reducing schwa as ʘ **\
   \rxsubstitute "(^|[^bcdfghjklmnpqrstvwxyzðŋɡɣɹɾʃʍʒʔθɪʊ])([əɐɜɚ])" "\\1ʘ"
-  \rxsubstitute "([əɐɜɚ])(r|$)" "ʘ\\2" 
+  \rxsubstitute "([əɐɜɚ])(r|$)" "ʘ\\2"
 
   \if "schwi == SCHWI_LIKE_SCHWA"
     \** Don't forget to mark schwis too **\
@@ -289,7 +289,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   \if "open_mid_back_unrounded == OMBU_LIKE_SCHWA"
     \rxsubstitute "(^|[^bcdfghjklmnpqrstvwxyzðŋɡɣɹɾʃʍʒʔθɪʊ])([ʌ])" "\\1ɤ̞"
     \rxsubstitute "ʌ(r|$)" "ɤ̞\\2"
-	\else
+  \else
     \rxsubstitute "(^|[^bcdfghjklmnpqrstvwxyzðŋɡɣɹɾʃʍʒʔθɪʊ])([ʌ])" "\\1ʘ"
     \rxsubstitute "ʌ(r|$)" "ʘ\\2"
   \endif
@@ -304,66 +304,66 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   \beg rules litteral
 
     {SCHWA_NON_REDUCIBLE}  === ʘ       \** NON REDUCIBLE **\
-		{SCHWU_NON_REDUCIBLE}  === ɤ̞       \** NON REDUCIBLE **\
-		
-		\** Very long logic here for schwa/schwu reducible/non reducible **\
-		\** Could be shorter ? **\ 
-		\if implicit_schwa
-			{_REDUCIBLE_SCHWA_} === {NULL}
-			{_REDUCIBLE_SCHWU_} === {NULL}
-			
-		  \if "non_reducible_schwa_remaining == NON_REDUCIBLE_SCHWA_REMAINING_WITH_VERTICAL_BAR"
-			  {_NON_REDUCIBLE_SCHWA_} === CIRTH_55
-				{_NON_REDUCIBLE_SCHWU_} === {_NON_REDUCIBLE_SCHWA_}
+    {SCHWU_NON_REDUCIBLE}  === ɤ̞       \** NON REDUCIBLE **\
 
-			  \if "open_mid_back_unrounded != OMBU_LIKE_SCHWA"
-					{_NON_REDUCIBLE_SCHWU_} === CIRTH_56
-				\endif
-			\else
-				{_NON_REDUCIBLE_SCHWA_} === CIRTH_55_ALT
-				{_NON_REDUCIBLE_SCHWU_} === {_NON_REDUCIBLE_SCHWA_}
-				
-				\if "open_mid_back_unrounded != OMBU_LIKE_SCHWA"
-					{_NON_REDUCIBLE_SCHWU_} === CIRTH_56_ALT
-				\endif
-			\endif
-		\else
-		  \if "non_implicit_schwa_method == NON_IMPLICIT_SCHWA_DIFFERENCIATE_REDUCIBLE"
-			  {_NON_REDUCIBLE_SCHWA_} === CIRTH_55
-				{_REDUCIBLE_SCHWA_}     === CIRTH_55_ALT
-				{_NON_REDUCIBLE_SCHWU_} === {_NON_REDUCIBLE_SCHWA_}
-				{_REDUCIBLE_SCHWU_}     === {_REDUCIBLE_SCHWA_}
-			  \if "open_mid_back_unrounded != OMBU_LIKE_SCHWA"
-					{_NON_REDUCIBLE_SCHWU_} === CIRTH_56
-					{_REDUCIBLE_SCHWU_}     === CIRTH_56_ALT
-				\endif
-			\elsif "non_implicit_schwa_method == NON_IMPLICIT_SCHWA_ALL_WITH_VERTICAL_BAR"
-			  {_NON_REDUCIBLE_SCHWA_} === CIRTH_55
-				{_REDUCIBLE_SCHWA_}     === CIRTH_55
-				{_NON_REDUCIBLE_SCHWU_} === {_NON_REDUCIBLE_SCHWA_}
-				{_REDUCIBLE_SCHWU_}     === {_REDUCIBLE_SCHWA_}
-				\if "open_mid_back_unrounded != OMBU_LIKE_SCHWA"
-					{_NON_REDUCIBLE_SCHWU_} === CIRTH_56
-					{_REDUCIBLE_SCHWU_}     === CIRTH_56
-				\endif
+    \** Very long logic here for schwa/schwu reducible/non reducible **\
+    \** Could be shorter ? **\
+    \if implicit_schwa
+      {_REDUCIBLE_SCHWA_} === {NULL}
+      {_REDUCIBLE_SCHWU_} === {NULL}
+
+      \if "non_reducible_schwa_remaining == NON_REDUCIBLE_SCHWA_REMAINING_WITH_VERTICAL_BAR"
+        {_NON_REDUCIBLE_SCHWA_} === CIRTH_55
+        {_NON_REDUCIBLE_SCHWU_} === {_NON_REDUCIBLE_SCHWA_}
+
+        \if "open_mid_back_unrounded != OMBU_LIKE_SCHWA"
+          {_NON_REDUCIBLE_SCHWU_} === CIRTH_56
+        \endif
       \else
-				{_NON_REDUCIBLE_SCHWA_} === CIRTH_55_ALT
-				{_REDUCIBLE_SCHWA_}     === CIRTH_55_ALT
-				{_NON_REDUCIBLE_SCHWU_} === {_NON_REDUCIBLE_SCHWA_}
-				{_REDUCIBLE_SCHWU_}     === {_REDUCIBLE_SCHWA_}
-				\if "open_mid_back_unrounded != OMBU_LIKE_SCHWA"
-					{_NON_REDUCIBLE_SCHWU_} === CIRTH_56_ALT
-					{_REDUCIBLE_SCHWU_}     === CIRTH_56_ALT
-				\endif
-			\endif
-		\endif
-		
-		
+        {_NON_REDUCIBLE_SCHWA_} === CIRTH_55_ALT
+        {_NON_REDUCIBLE_SCHWU_} === {_NON_REDUCIBLE_SCHWA_}
+
+        \if "open_mid_back_unrounded != OMBU_LIKE_SCHWA"
+          {_NON_REDUCIBLE_SCHWU_} === CIRTH_56_ALT
+        \endif
+      \endif
+    \else
+      \if "non_implicit_schwa_method == NON_IMPLICIT_SCHWA_DIFFERENCIATE_REDUCIBLE"
+        {_NON_REDUCIBLE_SCHWA_} === CIRTH_55
+        {_REDUCIBLE_SCHWA_}     === CIRTH_55_ALT
+        {_NON_REDUCIBLE_SCHWU_} === {_NON_REDUCIBLE_SCHWA_}
+        {_REDUCIBLE_SCHWU_}     === {_REDUCIBLE_SCHWA_}
+        \if "open_mid_back_unrounded != OMBU_LIKE_SCHWA"
+          {_NON_REDUCIBLE_SCHWU_} === CIRTH_56
+          {_REDUCIBLE_SCHWU_}     === CIRTH_56_ALT
+        \endif
+      \elsif "non_implicit_schwa_method == NON_IMPLICIT_SCHWA_ALL_WITH_VERTICAL_BAR"
+        {_NON_REDUCIBLE_SCHWA_} === CIRTH_55
+        {_REDUCIBLE_SCHWA_}     === CIRTH_55
+        {_NON_REDUCIBLE_SCHWU_} === {_NON_REDUCIBLE_SCHWA_}
+        {_REDUCIBLE_SCHWU_}     === {_REDUCIBLE_SCHWA_}
+        \if "open_mid_back_unrounded != OMBU_LIKE_SCHWA"
+          {_NON_REDUCIBLE_SCHWU_} === CIRTH_56
+          {_REDUCIBLE_SCHWU_}     === CIRTH_56
+        \endif
+      \else
+        {_NON_REDUCIBLE_SCHWA_} === CIRTH_55_ALT
+        {_REDUCIBLE_SCHWA_}     === CIRTH_55_ALT
+        {_NON_REDUCIBLE_SCHWU_} === {_NON_REDUCIBLE_SCHWA_}
+        {_REDUCIBLE_SCHWU_}     === {_REDUCIBLE_SCHWA_}
+        \if "open_mid_back_unrounded != OMBU_LIKE_SCHWA"
+          {_NON_REDUCIBLE_SCHWU_} === CIRTH_56_ALT
+          {_REDUCIBLE_SCHWU_}     === CIRTH_56_ALT
+        \endif
+      \endif
+    \endif
+
+
     {IGROUP}               === i,ɪ
     {UGROUP}               === u,ʊ
     {EBGROUP}              === ə,ɐ     \** REDUCIBLE **\
     {ESCHWA}               === (ə)     \** REDUCIBLE E SCHWA **\
-		{OMBU}                 === ʌ
+    {OMBU}                 === ʌ
 
     \if "schwi == SCHWI_LIKE_I"
       {IGROUP} === {IGROUP},ᵻ
@@ -431,13 +431,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     {_DIPHTHONGS_}  === {_DIPHTHONGS_R_}
 
     ʘ --> {_NON_REDUCIBLE_SCHWA_}
-		ɤ̞ --> {_NON_REDUCIBLE_SCHWU_}
-		
+    ɤ̞ --> {_NON_REDUCIBLE_SCHWU_}
+
     {VOWELS} --> {_VOWELS_}
     {LVOWELS} --> {_LVOWELS_}
     {DIPHTHONGS} --> {_DIPHTHONGS_}
 
-   
+
     {L1}   === (t,ɾ,ʔ) * p * tʃ * k
     {_L1_} === CIRTH_8 * CIRTH_1 * CIRTH_13 * CIRTH_18
     {L1}   --> {_L1_}
@@ -587,8 +587,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     ) --> CIRTH_PUNCT_DOUBLE_VBAR
     { --> CIRTH_PUNCT_DOUBLE_VBAR
     } --> CIRTH_PUNCT_DOUBLE_VBAR
-		⟨ --> CIRTH_PUNCT_DOUBLE_VBAR
-		⟩ --> CIRTH_PUNCT_DOUBLE_VBAR
+    ⟨ --> CIRTH_PUNCT_DOUBLE_VBAR
+    ⟩ --> CIRTH_PUNCT_DOUBLE_VBAR
     < --> CIRTH_PUNCT_DOUBLE_VBAR
     > --> CIRTH_PUNCT_DOUBLE_VBAR
 
