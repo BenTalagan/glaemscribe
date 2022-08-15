@@ -27,7 +27,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 \end
 
 \language "English"
-\writing  "Tengwar"
+\writing  "Cirth"
 \mode     "English Angerthas based on Angerthas Daeron"
 \version  "0.0.1"
 \authors  "Talagan (Benjamin Babut), based on J.R.R. Tolkien"
@@ -79,8 +79,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   \end
 
   \** ---------- Schwa options -------------- **\
-
-  \** TODO : REWORK THESE OPTIONS, THEY DONT INTERACT WELL **\
 
   \** Remove unuseful, natural schwa marks **\
   \option implicit_schwa false
@@ -422,10 +420,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     {LVOWELS}       === {AA_BACK} * {AA_FRONT}    * {EE_FRONT}    * {EE_BACK}               * {EE_BACK_RHOTIC}    * {II}               * {OO}     * {UU}
     {_LVOWELS_}     === CIRTH_49  * CIRTH_48      * CIRTH_47      * {_REDUCIBLE_SCHWA_}     * {_REDUCIBLE_SCHWA_} * CIRTH_39 CIRTH_39  * CIRTH_52 * CIRTH_45
 
-    \** TODO : DOCUMENT CIRTH_51 **\
-
-    {DIPHTHONGS_R}    === {AW}         * {OW}     * {EW}          * {UW}         * {AJ}  * {EJ}              * {OJ}              * {IJ}
-    {_DIPHTHONGS_R_}  === CIRTH_EREB_5 * CIRTH_38 * CIRTH_EREB_1  * CIRTH_45_ALT * CIRTH_EREB_4      * CIRTH_46 CIRTH_59 * CIRTH_50 CIRTH_59 * CIRTH_39 CIRTH_59
+    {DIPHTHONGS_R}    === {AW}         * {OW}     * {EW}          * {UW}         * {AJ}         * {EJ}              * {OJ}              * {IJ}
+    {_DIPHTHONGS_R_}  === CIRTH_EREB_5 * CIRTH_38 * CIRTH_EREB_1  * CIRTH_45_ALT * CIRTH_EREB_4 * CIRTH_46 CIRTH_59 * CIRTH_50 CIRTH_59 * CIRTH_39 CIRTH_59
 
     {DIPHTHONGS}    === {DIPHTHONGS_R}
     {_DIPHTHONGS_}  === {_DIPHTHONGS_R_}
@@ -500,12 +496,15 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     \endif
 
     {L6_NN}   === (j,J)
-    {_L6_NN_} === CIRTH_40 \** TODO : DOCUMENT ADD OPTION WITH alternative CIRTH_39 **\
+    {_L6_NN_} === CIRTH_40 \** TODO : DOCUMENT and ADD OPTION WITH alternative CIRTH_39 **\
     {L6_NN}   --> {_L6_NN_}
 
     \** ------------- **\
+
+    \** CIRTH_30 (rh in angerthas daeron) is not used and is a good choice for ɹ **\
+    \** since it is an alternate r and graphically reversed **\
     {L7}    === r        * ɹ        * l
-    {_L7_}  === CIRTH_29 * CIRTH_30 * CIRTH_31     \** TODO : DOCUMENT CIRTH_30 **\
+    {_L7_}  === CIRTH_29 * CIRTH_30 * CIRTH_31
     {L7}    --> {_L7_}
 
     \** ------------- **\
@@ -543,6 +542,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
       _ð{ESCHWA}_  --> CIRTH_EREB_3
       _ðɪ_         --> CIRTH_EREB_3 CIRTH_59 \** or CIRTH_39 **\
     \endif
+
+    \** TODO : handle 'and' word **\
   \end
 
   \beg rules punctuation
