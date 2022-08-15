@@ -320,6 +320,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 	\** ! Potentially remove superfluous added rhotic marks **\
   \rxsubstitute "ɹ+" "ɹ"
+
   \** ! Disambiguate ɹ + vowel : ORE/ROMEN **\
   \rxsubstitute "ɹ([ɑæaeɛʌɐəɜɚiɪᵻoɒɔuʊʘ])" "r\\1"
 
