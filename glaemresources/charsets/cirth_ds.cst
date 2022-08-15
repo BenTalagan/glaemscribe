@@ -124,7 +124,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 \char 7d CIRTH_PUNCT_FOUR_DOTS
 \char 7e ?
 \char 80 ?
-\char a0 ?
+\char a0 NBSP
 \char a4 ?
 \char a7 ?
 \char a9 ?
