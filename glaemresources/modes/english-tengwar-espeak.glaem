@@ -434,8 +434,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
       {EBGROUP} === {EBGROUP},ʌ
     \endif
 
-    {A_FRONT}             === (æ,a)
-    {A_BACK}              === (ɑ)
+    {A_FRONT}             === (æ,a)       \** Always short **\
+    {A_BACK}              === (ɑ)         \** Always long **\
     {E_FRONT}             === (e,ɛ)
     {E_BACK}              === ({EBGROUP})
     {E_BACK_RHOTIC}       === (ɚ,ɜ)       \** Rhotic schwas are treated independently **\
@@ -475,7 +475,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     {AW} === aʊ        \** cow **\
     {OW} === oʊ        \** US most / mˈoʊst **\
     {EW} === {ESCHWA}ʊ \** GB go **\
-    {UW} === uʊ        \** goose if pronconced with labializing accent **\
+    {UW} === uʊ        \** goose if pronconced with labializing accent ... we don't have this in our pronunciations **\
 
     \** I Diphtongues :  eɪ (day) / aɪ (sky) / ɔɪ (boy)  **\
     {AJ} === aɪ \** nine / nˈaɪn **\
