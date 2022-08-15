@@ -75,7 +75,7 @@ console.log(client.synthesize_ipa("Hello'hello' "))
 console.log(client.synthesize_ipa("Hello ' hello' "))
 console.log(client.synthesize_ipa("Hey 0 1 2 3 45 6 my."))
 console.log(client.synthesize_ipa("Hey 1 my 2 name 3 is bond 4 obviously 355 not 2324. "))
-
+console.log(client.synthesize_ipa("The lord of the rings, a book by J R R Tolkien."))
 
 
 // sh -> (ʃ)

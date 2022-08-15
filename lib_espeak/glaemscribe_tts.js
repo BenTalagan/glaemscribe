@@ -91,11 +91,11 @@ Glaemscribe.TTS.prototype.isSpace = function(a) {
 }
 
 Glaemscribe.TTS.prototype.read_cap_token = function(text, starti, cap_checker) {
-  
+
   var client = this
   var i   = starti;
-  var tok = "" 
-  
+  var tok = ""
+
   if(cap_checker[text[i]] == null)
     return null;
 
@@ -107,23 +107,23 @@ Glaemscribe.TTS.prototype.read_cap_token = function(text, starti, cap_checker) {
       break;
     }
   }
-  
+
   // Rewind trailing spaces
   var toklen = i - starti;
-  
+
   for(i = starti + toklen - 1; i>=starti ; i--) {
     if(client.isSpace(text[i]))
       toklen--;
     else
       break;
   }
-  
+
   return text.substring(starti,starti+toklen);
 };
 
 Glaemscribe.TTS.prototype.preceded_by_space = function(text,i) {
   var client = this;
-  
+
   if(i <= 0)
     return false;
   else
@@ -132,7 +132,7 @@ Glaemscribe.TTS.prototype.preceded_by_space = function(text,i) {
 
 Glaemscribe.TTS.prototype.succeeded_by_space = function(text,i) {
   var client = this;
-  
+
   if(i >= text.length-1)
     return false;
   else
@@ -145,23 +145,24 @@ Glaemscribe.TTS.prototype.escape_special_blocks = function(voice, entry, for_ipa
   var config  = Glaemscribe.TTS.ipa_configurations[voice];
 
   // TODO : make this configurable
-  
+
   // Tonekize raw_mode escaping + numbers, we don't want them to be converted in IPA
   // Also, keep numbers in the writing, to prevent espeak from pronuncing them
-  var ipaexpr = /(\s*)({{[\s\S]*?}}|\b[0-9\s]+\b)(\s*)/g; 
-  var wavexpr = /(\s*)({{[\s\S]*?}})(\s*)/g;            
+  var ipaexpr = /(\s*)({{[\s\S]*?}}|\b[0-9][0-9\s]*\b)(\s*)/g;
+  var wavexpr = /(\s*)({{[\s\S]*?}})(\s*)/g;
   var rawgexp = (for_ipa)?(ipaexpr):(wavexpr);
 
   var captured = [];
 
-  var ret = entry.replace(rawgexp, function(match,p1,p2,p3) {    
+  var ret = entry.replace(rawgexp, function(match,p1,p2,p3) {
     captured.push(match);
     if(!for_ipa)
       return ' '; // For wav, just replace by empty space and do not pronunce.
-    else
+    else {
       return p1 + config['block_token'] + p3; // For IPA, replace by dummy token.
+    }
   });
-  
+
   return [ret, captured];
 }
 
@@ -176,9 +177,9 @@ Glaemscribe.TTS.prototype.ipa_instrument_punct = function(voice, text) {
 
   var accum = "";
   var kept_signs = [];
-  
+
   var rescap = null;
-  	
+
 	for(var i=0;i<text.length;i++)
   {
     if(text[i] == "\n")
@@ -187,25 +188,25 @@ Glaemscribe.TTS.prototype.ipa_instrument_punct = function(voice, text) {
       kept_signs.push(text[i]);
     }
     else if(cup[text[i]] != null)
-    {    
+    {
       // Same thing as below but the difference is that we REMOVE the sign before calculating the IPA.
       // We will restore it after IPA calculation.
       accum += " " + config['punct_token'] + " " ;
-      kept_signs.push( 
-        ((client.preceded_by_space(text,i))?(" "):("")) + 
-        text[i] + 
-        ((client.succeeded_by_space(text,i))?(" "):("")) 
+      kept_signs.push(
+        ((client.preceded_by_space(text,i))?(" "):("")) +
+        text[i] +
+        ((client.succeeded_by_space(text,i))?(" "):(""))
       );
     }
     else if(rescap = client.read_cap_token(text,i,cap)) // Clause affecting sign
-    {      
+    {
       // Replace the sign by a special "word" / token AND keep the sign
       // Always insert spaces, but remember how they were placed
       accum += " " + config['punct_token'] + " " + text[i] + " ";
-      kept_signs.push( 
-        ((client.preceded_by_space(text, i))?(" "):("")) + 
-        rescap + 
-        ((client.succeeded_by_space(text, i + rescap.length - 1))?(" "):("")) 
+      kept_signs.push(
+        ((client.preceded_by_space(text, i))?(" "):("")) +
+        rescap +
+        ((client.succeeded_by_space(text, i + rescap.length - 1))?(" "):(""))
       );
       i += rescap.length - 1;
     }
@@ -214,7 +215,7 @@ Glaemscribe.TTS.prototype.ipa_instrument_punct = function(voice, text) {
       accum += text[i];
     }
   }
-  
+
   return [accum, kept_signs];
 }
 
@@ -225,11 +226,11 @@ Glaemscribe.TTS.prototype.wav_instrument_punct = function(voice, text) {
   var cap     =  client.make_char_checker(config['clauseaffecting_punctuation']);
   var accum   = "";
   var rescap  = null;
-  	
+
 	for(var i=0;i<text.length;i++)
   {
     if(rescap = client.read_cap_token(text,i,cap))
-    {      
+    {
       accum += text[i]; // Just keep the first sign, ignore the others
       i += rescap.length - 1;
     }
@@ -251,7 +252,7 @@ Glaemscribe.TTS.prototype.ipa_instrument_blocks = function(voice, text)
 }
 
 Glaemscribe.TTS.prototype.ipa_restore_tokens = function(text, token, kept_tokens) {
-  
+
   var rx = new RegExp("\\s*(" + token + ")\\s*","g");
 
   var nth = -1;
@@ -259,7 +260,7 @@ Glaemscribe.TTS.prototype.ipa_restore_tokens = function(text, token, kept_tokens
     nth += 1;
     return kept_tokens[nth];
   });
-  
+
   return text;
 }
 
@@ -290,7 +291,7 @@ Glaemscribe.TTS.prototype.pre_ipa = function(args, voice, text) {
 
   // Normalize all tabs by spaces
   text = text.replace(/\t/g," ");
-  
+
   // Small hack to prevent espeak from pronouncing last dot
   // since our tokenization may isolate it.
   text += "\n";
@@ -298,7 +299,7 @@ Glaemscribe.TTS.prototype.pre_ipa = function(args, voice, text) {
   // Instrument blocks first (they may contain punctuation)
   var bi            = client.ipa_instrument_blocks(voice,text);
   text              = bi[0];
-  
+
   // Instrument punctuation, then
   var pi            = client.ipa_instrument_punct(voice,text);
   text              = pi[0];
@@ -308,7 +309,7 @@ Glaemscribe.TTS.prototype.pre_ipa = function(args, voice, text) {
   text = text.replace(/(\.\s+.)/g, function(match,p1) {
     return p1.toUpperCase()
   });
-  
+
   return {
     text: text,
     block_tokens: bi[1],
@@ -322,16 +323,16 @@ Glaemscribe.TTS.prototype.pre_wav = function(args, voice, text) {
 
   if(!config)
     throw "Trying to use unsupported voice '" + voice + "'!";
-  
+
   // First, escape the special blocks. Just ignore them.
   if(args.has_raw_mode) {
     var pre_raw_res    = this.escape_special_blocks(voice, text, false);
     text               = pre_raw_res[0];
   }
-  
+
   // Now simplify the punctuation to avoid problems.
   text = this.wav_instrument_punct(voice, text);
-  
+
   return {
     text: text
   }
@@ -373,7 +374,7 @@ Glaemscribe.TTS.prototype.synthesize_ipa = function(text, args, onended) {
 
     ret = result;
   });
-  
+
   return ret;
 }
 
@@ -423,33 +424,33 @@ Glaemscribe.TTS.TokenType.SPACE     = 'SPACE';
 Glaemscribe.TTS.TokenType.PUNCT     = 'PUNCT';
 
 Glaemscribe.TTS.prototype.orthographic_disambiguator_en = function(text) {
-    
+
   var client = this;
 
   var uwmatcher = /(\p{L}+)/u;
   var spl       = text.split(uwmatcher);
-  
+
   var tokens = spl.map(function(s) {
     var t       = {};
     var is_word = s.match(uwmatcher)
-    
+
     t.type    = (is_word)?(Glaemscribe.TTS.TokenType.WORD):(Glaemscribe.TTS.TokenType.NON_WORD);
-    t.content = s; 
+    t.content = s;
     return t;
-  }); 
-  
+  });
+
   var tokens2 = [];
 
   // Handle apostrophe
   for(var i=0;i<tokens.length;i++) {
     if( i == 0 || i == tokens.length-1 || tokens[i].type == Glaemscribe.TTS.TokenType.WORD ) {
-      tokens2.push(tokens[i]);      
+      tokens2.push(tokens[i]);
       continue;
     }
-    
-    if(tokens[i].content == "'" && 
-      tokens[i-1].type == Glaemscribe.TTS.TokenType.WORD && 
-      tokens[i+1].type == Glaemscribe.TTS.TokenType.WORD ) 
+
+    if(tokens[i].content == "'" &&
+      tokens[i-1].type == Glaemscribe.TTS.TokenType.WORD &&
+      tokens[i+1].type == Glaemscribe.TTS.TokenType.WORD )
     {
       tokens2.pop();
       var tok     = {};
@@ -463,25 +464,25 @@ Glaemscribe.TTS.prototype.orthographic_disambiguator_en = function(text) {
     }
   }
   tokens = tokens2;
-  
+
   // Numerize tokens
   var i = 0;
   tokens.forEach(function(t) {
     t.num = i;
     i += 1;
   });
-  
+
   // Remove non-speechable tokens
   var stokens = tokens.filter(function(t) {
     return (t.type == Glaemscribe.TTS.TokenType.WORD);
   });
-  
+
   // Join speachable tokens
   var r = stokens.map(function(t) { return t.content}).join('  ');
-  
+
   var args  = {};
   var voice = args.voice  || 'en-tengwar';
-  
+
   client.proxy.set_voice(voice);
   client.proxy.synthesize(r, false, true, true, function(result) {
     r = result.pho;
@@ -493,7 +494,7 @@ Glaemscribe.TTS.prototype.orthographic_disambiguator_en = function(text) {
     tokens[stokens[j].num].ipa = r[j];
     j += 1;
   });
-  
+
   return tokens;
 }
 
