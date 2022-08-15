@@ -4210,7 +4210,7 @@ Glaemscribe.TTS.ipa_configurations = {
     // Apostrophes shouldn't trigger a pause in the prononciation (e.g. genitives, I've, don't etc)
     // But apostrophe and single quote are the same thing.
     // It's necessary to document that single quotes should then be avoided.
-    clauseunaffecting_punctuation: "·“”«»-[](){}<>≤≥$|\""
+    clauseunaffecting_punctuation: "·“”«»-[](){}⟨⟩<>≤≥$|\""
   }
 }
 
