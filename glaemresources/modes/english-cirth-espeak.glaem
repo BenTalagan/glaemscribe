@@ -35,7 +35,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 \world      primary_related_to_arda
 \invention  experimental
 
-\charset  cirth_ds  true
+\charset  cirth_ds true
+
+\outspace CIRTH_SPACE
 
 \beg options
 
@@ -52,7 +54,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   \** 'the' word **\
   \beg option english_the ENGLISH_THE_EXTENDED_CIRTH
     \value ENGLISH_THE_EXTENDED_CIRTH 0
-    \value ENGLISH_THE_SEPARATE 1
+    \value ENGLISH_THE_FULL_WRITING   1
+    \radio
+  \end
+
+  \** 'and' word may be represented by a special cirth **\
+  \beg option english_and ENGLISH_AND_EXTENDED_CIRTH
+    \value ENGLISH_AND_EXTENDED_CIRTH 0
+    \value ENGLISH_AND_FULL_WRITING   1
     \radio
   \end
 
@@ -61,6 +70,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     \value SCHWA_OF_TO_U 0
     \value SCHWA_OF_TO_SCHWA 1
   \end
+
 
   \** ---------- Vowel options ---------- **\
 
@@ -173,6 +183,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   \end
 
   \** ---------- Styling options ---------- **\
+
+  \beg option space_character USE_NON_BREAKING_SPACE_SMALL
+    \value USE_NORMAL_SPACE 0
+    \value USE_NON_BREAKING_SPACE_SMALL 1
+    \value USE_NON_BREAKING_SPACE_BIG 2
+    \value USE_MIDDLE_DOT 3
+  \end
 
   \option auto_spacing true
 
@@ -360,8 +377,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     {IGROUP}               === i,ɪ
     {UGROUP}               === u,ʊ
     {EBGROUP}              === ə,ɐ     \** REDUCIBLE **\
-    {ESCHWA}               === (ə)     \** REDUCIBLE E SCHWA **\
+    {ESCHWA}               === ə       \** REDUCIBLE E SCHWA **\
     {OMBU}                 === ʌ
+
+    {SCHWA_NON_REDUCIBLE}  === ʘ
+    {SCHWU_NON_REDUCIBLE}  === ɤ̞
+    {ALL_ESCHWA}           === (ə,ʘ)
 
     \if "schwi == SCHWI_LIKE_I"
       {IGROUP} === {IGROUP},ᵻ
@@ -395,7 +416,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     \** U Diphthongs **\
     {AW} === aʊ        \** cow **\
     {OW} === oʊ        \** US most / mˈoʊst **\
-    {EW} === {ESCHWA}ʊ \** GB go **\
+    {EW} === {ALL_ESCHWA}ʊ \** GB go **\
     {UW} === uʊ        \** goose if pronconced with labializing accent ... we do not have this in our pronunciations **\
 
     \** I Diphtongues :  eɪ (day) / aɪ (sky) / ɔɪ (boy)  **\
@@ -405,10 +426,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     {IJ} === iɪ \** fleece if prononced with palatalising accent **\
 
     \** ə diphthongs : iə (GB : beer) / eə (GB: bear) / ʊə (US: tour) **\
-    {IER} === i{ESCHWA} \** GB Beer **\
-    {EAR} === e{ESCHWA} \** GB Bear **\
-    {UER} === ʊ{ESCHWA} \** GB Tour **\
-
+    {IER} === i{ALL_ESCHWA} \** GB Beer **\
+    {EAR} === e{ALL_ESCHWA} \** GB Bear **\
+    {UER} === ʊ{ALL_ESCHWA} \** GB Tour **\
 
     {VOWELS}        === {A_BACK}  * {A_FRONT}     * {E_FRONT}     * {E_BACK}                * {E_BACK_RHOTIC}     * {IER}                            * {EAR}                             * {UER}                             * {I}         * {O}           * {U}      * {OMBU}              * {ESCHWA}
     {_VOWELS_}      === CIRTH_49  * CIRTH_48      * CIRTH_46      * {_REDUCIBLE_SCHWA_}     * {_REDUCIBLE_SCHWA_} * CIRTH_39 {_NON_REDUCIBLE_SCHWA_} * CIRTH_46 {_NON_REDUCIBLE_SCHWA_}  * CIRTH_42 {_NON_REDUCIBLE_SCHWA_}  * CIRTH_39    * CIRTH_50      * CIRTH_42 * {_REDUCIBLE_SCHWU_} * {_REDUCIBLE_SCHWA_}
@@ -426,13 +446,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     {DIPHTHONGS}    === {DIPHTHONGS_R}
     {_DIPHTHONGS_}  === {_DIPHTHONGS_R_}
 
-    ʘ --> {_NON_REDUCIBLE_SCHWA_}
-    ɤ̞ --> {_NON_REDUCIBLE_SCHWU_}
+    {SCHWA_NON_REDUCIBLE} --> {_NON_REDUCIBLE_SCHWA_}
+    {SCHWU_NON_REDUCIBLE} --> {_NON_REDUCIBLE_SCHWU_}
 
     {VOWELS} --> {_VOWELS_}
     {LVOWELS} --> {_LVOWELS_}
     {DIPHTHONGS} --> {_DIPHTHONGS_}
-
 
     {L1}   === (t,ɾ,ʔ) * p * tʃ * k
     {_L1_} === CIRTH_8 * CIRTH_1 * CIRTH_13 * CIRTH_18
@@ -539,11 +558,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     \** -- SPECIAL TOKENS **\
 
     \if "english_the == ENGLISH_THE_EXTENDED_CIRTH"
-      _ð{ESCHWA}_  --> CIRTH_EREB_3
-      _ðɪ_         --> CIRTH_EREB_3 CIRTH_59 \** or CIRTH_39 **\
+      _ð{ALL_ESCHWA}_  --> CIRTH_EREB_3
+      _ðɪ_             --> CIRTH_EREB_3 CIRTH_59 \** or CIRTH_39 (long vcrtical bar) **\
     \endif
 
-    \** TODO : handle 'and' word **\
+    \if "english_and == ENGLISH_AND_EXTENDED_CIRTH"
+      _{A_FRONT}nd_ --> CIRTH_60
+    \endif
+
   \end
 
   \beg rules punctuation
@@ -615,5 +637,15 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 \end
 
 \beg  postprocessor
+  \if "space_character == USE_NON_BREAKING_SPACE_SMALL"
+    \outspace CIRTH_SPACE
+  \elsif "space_character == USE_NON_BREAKING_SPACE_BIG"
+    \outspace CIRTH_SPACE_BIG
+  \elsif "space_character == USE_MIDDLE_DOT"
+    \outspace "CIRTH_SPACE CIRTH_PUNCT_MID_DOT CIRTH_SPACE"
+  \else
+    \outspace SPACE
+  \endif
+
   \resolve_virtuals
 \end
