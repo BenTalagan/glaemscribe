@@ -3315,7 +3315,13 @@ Glaemscribe.TranscriptionPostProcessor.prototype.apply = function(tokens, out_ch
 
   if(this.out_space != null)
   {
-    out_space_str       = this.out_space.map(function(token) { return out_charset.n2c(token).output() }).join("");
+    out_space_str       = this.out_space.map(function(token) { 
+      var toktrans      = out_charset.n2c(token);
+      if(!toktrans)
+        return Glaemscribe.UNKNOWN_CHAR_OUTPUT;
+      
+      return toktrans.output() 
+    }).join("");
   }
 
   // Convert output
