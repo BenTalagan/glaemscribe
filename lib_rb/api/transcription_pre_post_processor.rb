@@ -129,7 +129,9 @@ module Glaemscribe
         } 
 
         out_space_str     = " "
-        out_space_str     = @out_space.map{ |token| out_charset[token].str }.join("") if @out_space
+        out_space_str     = @out_space.map{ |token| 
+          out_charset[token]&.str || UNKNOWN_CHAR_OUTPUT
+        }.join("") if @out_space
 
         # Convert output
         ret = ""
