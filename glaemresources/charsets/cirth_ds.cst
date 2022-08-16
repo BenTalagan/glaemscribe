@@ -94,7 +94,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 \char 5f ?
 \char 60 CIRTH_SPACE_BIG
 \char 61 CIRTH_31
-\char 62 CIRTH_50
+\char 62 CIRTH_50 CIRTH_NUMERAL_2
 \char 63 CIRTH_48
 \char 64 CIRTH_33
 \char 65 CIRTH_18
@@ -104,8 +104,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 \char 69 CIRTH_23
 \char 6a CIRTH_37
 \char 6b CIRTH_38
-\char 6c CIRTH_39
-\char 6d CIRTH_52
+\char 6c CIRTH_39 CIRTH_NUMERAL_1
+\char 6d CIRTH_52 CIRTH_NUMERAL_3
 \char 6e CIRTH_51
 \char 6f CIRTH_24
 \char 70 CIRTH_25
@@ -113,7 +113,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 \char 72 CIRTH_19
 \char 73 CIRTH_32
 \char 74 CIRTH_20
-\char 75 CIRTH_22
+\char 75 CIRTH_22 CIRTH_NUMERAL_5
 \char 76 CIRTH_49
 \char 77 CIRTH_17
 \char 78 CIRTH_47
