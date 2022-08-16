@@ -174,7 +174,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   \end
 
   \** Horse / Hoarse vowel distinction (only JRRT/US accents) **\
-  \beg option horse_hoarse_merger HORSE_HOARSE_MERGE
+  \beg option horse_hoarse_merger HORSE_HOARSE_SEPARATE
     \visible_when "espeak_voice == ESPEAK_VOICE_EN_TENGWAR || espeak_voice == ESPEAK_VOICE_EN_TENGWAR_US"
     \value HORSE_HOARSE_MERGE 0
     \value HORSE_HOARSE_SEPARATE 1
