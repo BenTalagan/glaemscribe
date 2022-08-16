@@ -169,6 +169,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   \beg option english_nw ENGLISH_NW_TREAT_NORMALLY
     \value ENGLISH_NW_TREAT_NORMALLY     0
     \value ENGLISH_NW_USE_CIRTH_48      1
+    \radio
   \end
 
   \beg option cirth_for_s USE_CIRTH_34
