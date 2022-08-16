@@ -437,7 +437,7 @@ GlaemscribeEditor.prototype.installCallbacks = function()
   })          
   
   $("#about_button").click(function() {
-    alertify.alert("<div style='font-size:30px'>Glaemscribe Editor</div><br><div>Version 1.0.0</div><br>By Benjamin <i>Talagan</i> Babut © 2015<br><br>")
+    alertify.alert("<div style='font-size:30px'>Glaemscribe Editor</div><br><div>Version 1.1.0</div><br>By Benjamin <i>Talagan</i> Babut © 2015-2022<br><br>")
   })
   
   $("#doc_button").click(function() {
