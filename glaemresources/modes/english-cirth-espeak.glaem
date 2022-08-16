@@ -100,10 +100,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     \visible_when "implicit_schwa == false"
   \end
 
-  \beg option non_reducible_schwa_remaining NON_REDUCIBLE_SCHWA_REMAINING_WITH_VERTICAL_BAR
+  \beg option non_reducible_schwa_remaining NON_REDUCIBLE_SCHWA_REMAINING_AS_VERTICAL_BARS
     \visible_when implicit_schwa
-    \value NON_REDUCIBLE_SCHWA_REMAINING_WITH_VERTICAL_BAR 0
-    \value NON_REDUCIBLE_SCHWA_REMAINING_WITH_VERTICAL_BAR_AS_ACCENTS 1
+    \value NON_REDUCIBLE_SCHWA_REMAINING_AS_VERTICAL_BARS 0
+    \value NON_REDUCIBLE_SCHWA_REMAINING_AS_ACCENTS 1
   \end
 
   \** Schwi, in US/JRRT **\
@@ -327,7 +327,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
       {_REDUCIBLE_SCHWA_} === {NULL}
       {_REDUCIBLE_SCHWU_} === {NULL}
 
-      \if "non_reducible_schwa_remaining == NON_REDUCIBLE_SCHWA_REMAINING_WITH_VERTICAL_BAR"
+      \if "non_reducible_schwa_remaining == NON_REDUCIBLE_SCHWA_REMAINING_AS_VERTICAL_BARS"
         {_NON_REDUCIBLE_SCHWA_} === CIRTH_55
         {_NON_REDUCIBLE_SCHWU_} === {_NON_REDUCIBLE_SCHWA_}
 
