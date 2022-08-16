@@ -456,6 +456,25 @@ GlaemscribeEditor.prototype.installCallbacks = function()
   $(".editor_button.replace").click(function() {
     editor.codemirror.execCommand("replace")
   })
+  $(".editor_button.tidy").click(function() {
+    var val = editor.codemirror.getValue(); 
+    var lines = val.split("\n");
+    var cursor = editor.codemirror.getCursor();
+    
+    // Remove trailing spaces
+    for(var i=0;i<lines.length;i++) {
+      var l = lines[i];
+      l     = l.replace(/\s+$/, "");
+      lines[i] = l;
+    }
+    val = lines.join("\n");
+    val = val.replace(/\t/g, "  ")
+    
+    editor.codemirror.setValue(val);
+    editor.codemirror.focus();
+    editor.codemirror.setCursor(cursor)
+    
+  })
   
   var font_size = 1;
   $("#font_up_button").click(function() {
@@ -719,7 +738,7 @@ GlaemscribeEditor.prototype.serializeCurrentCharset = function()
         content += "  \\default " + c.default + "\n";
       
       glaemEach(c.classes, function(_, vc) {
-        content += "\\class " + vc.target + "\t\t" + vc.triggers.join(" ") + "\n";
+        content += "\\class " + vc.target + "    " + vc.triggers.join(" ") + "\n";
       });
       content += "\\end\n\n"
     }
@@ -1454,7 +1473,7 @@ GlaemscribeEditor.prototype.commit = function(session_name)
 
 ////////////////
 
-GlaemscribeEditor.aimode =  "\\language \"A Language\"\n\\writing  \"Tengwar\"\n\\mode\t\t\t\"Your mode name\"\n\\authors\t\"Your name\"\n\\version\t\"1.0.0 alpha\"\n\n\\charset  new_charset true\n\n\\beg preprocessor\n\t\\downcase\n\\end\n\n\\beg processor\n\t\\beg rules litteral\n\t\tai --> YANTA A_TEHTA_L\t\n\t\\end\n  \n  \\beg rules punctuation\n\t\t! --> PUNCT_EXCLAM\n\t\\end\n\\end\n" ;
+GlaemscribeEditor.aimode =  "\\language \"A Language\"\n\\writing  \"Tengwar\"\n\\mode     \"Your mode name\"\n\\authors  \"Your name\"\n\\version  \"1.0.0 alpha\"\n\n\\charset  new_charset true\n\n\\beg preprocessor\n  \\downcase\n\\end\n\n\\beg processor\n  \\beg rules litteral\n    ai --> YANTA A_TEHTA_L  \n  \\end\n  \n  \\beg rules punctuation\n    ! --> PUNCT_EXCLAM\n  \\end\n\\end\n" ;
 GlaemscribeEditor.aicharset =  "\\char 6c YANTA          \n \\char 45 A_TEHTA_L       \n \\char c1 PUNCT_EXCLAM"
 
 GlaemscribeEditor.prototype.newSession = function(with_alert)

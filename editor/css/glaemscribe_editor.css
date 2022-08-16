@@ -908,6 +908,10 @@ html, body, .glaemscribe { height:100%; width:100%; margin:0px; padding:0px; bac
   font-family: verdana;
   width: 47px;
 }
+.editor_button.tidy {
+  font-family: verdana;
+  width: 25px;  
+}
 .editor_button.find_next
 {
   width: 15px;
