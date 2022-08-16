@@ -1,0 +1,154 @@
+\**
+
+Glǽmscribe (also written Glaemscribe) is a software dedicated to
+the transcription of texts between writing systems, and more
+specifically dedicated to the transcription of J.R.R. Tolkien's
+invented languages to some of his devised writing systems.
+
+Copyright (C) 2015 Benjamin Babut (Talagan).
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU Affero General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Affero General Public License for more details.
+
+You should have received a copy of the GNU Affero General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+**\
+
+\** very limited mode, mainly used for writing some doc for glaemscribe. **\
+
+\beg changelog
+  \entry "0.0.1" "Initial version."
+\end
+
+\language "Raw Cirth"
+\writing  "Cirth"
+\mode     "Raw Cirth"
+\version  "0.0.1"
+\authors  "Talagan (Benjamin Babut)"
+
+\world      arda
+\invention  experimental
+
+\metamode true
+
+\charset  cirth_ds true
+
+\beg      preprocessor
+  \** Work exclusively downcase **\
+  \downcase
+\end
+
+\beg processor
+
+  \beg    rules litteral
+    _c1_ --> CIRTH_1
+    _c2_ --> CIRTH_2
+    _c3_ --> CIRTH_3
+    _c4_ --> CIRTH_4
+    _c5_ --> CIRTH_5
+    _c6_ --> CIRTH_6
+    _c7_ --> CIRTH_7
+    _c8_ --> CIRTH_8
+    _c9_ --> CIRTH_9
+    _c10_ --> CIRTH_10
+    _c11_ --> CIRTH_11
+    _c12_ --> CIRTH_12
+    _c13_ --> CIRTH_13
+    _c14_ --> CIRTH_14
+    _c15_ --> CIRTH_15
+    _c16_ --> CIRTH_16
+    _c17_ --> CIRTH_17
+    _c18_ --> CIRTH_18
+    _c19_ --> CIRTH_19
+    _c20_ --> CIRTH_20
+    _c21_ --> CIRTH_21
+    _c22_ --> CIRTH_22
+    _c23_ --> CIRTH_23
+    _c24_ --> CIRTH_24
+    _c25_ --> CIRTH_25
+    _c26_ --> CIRTH_26
+    _c27_ --> CIRTH_27
+    _c28_ --> CIRTH_28
+    _c29_ --> CIRTH_29
+    _c30_ --> CIRTH_30
+    _c31_ --> CIRTH_31
+    _c32_ --> CIRTH_32
+    _c33_ --> CIRTH_33
+    _c34_ --> CIRTH_34
+    _c35_ --> CIRTH_35
+    _c36_ --> CIRTH_36
+    _c37_ --> CIRTH_37
+    _c38_ --> CIRTH_38
+    _c39_ --> CIRTH_39
+    _c40_ --> CIRTH_40
+    _c41_ --> CIRTH_41
+    _c42_ --> CIRTH_42
+    _c43_ --> CIRTH_43
+    _c44_ --> CIRTH_44
+    _c45_ --> CIRTH_45
+    _c46_ --> CIRTH_46
+    _c47_ --> CIRTH_47
+    _c48_ --> CIRTH_48
+    _c49_ --> CIRTH_49
+    _c50_ --> CIRTH_50
+    _c51_ --> CIRTH_51
+    _c52_ --> CIRTH_52
+    _c53_ --> CIRTH_53
+    _c54_ --> CIRTH_54
+    _c55_ --> CIRTH_55
+    _c56_ --> CIRTH_56
+    _c57_ --> CIRTH_57
+    _c58_ --> CIRTH_58
+    _c59_ --> CIRTH_59
+    _c60_ --> CIRTH_60
+
+    _c38alt_ --> CIRTH_38_ALT
+    _c45alt_ --> CIRTH_45_ALT
+    _c51alt_ --> CIRTH_51_ALT
+    _c52alt_ --> CIRTH_52_ALT
+    _c55alt_ --> CIRTH_55_ALT
+    _c56alt_ --> CIRTH_56_ALT
+
+    _ce1_ --> CIRTH_EREB_1
+    _ce2_ --> CIRTH_EREB_2
+    _ce3_ --> CIRTH_EREB_3
+    _ce4_ --> CIRTH_EREB_4
+    _ce5_ --> CIRTH_EREB_5
+    _ce6_ --> CIRTH_EREB_6
+    _ce7_ --> CIRTH_EREB_7
+
+    _1_ --> CIRTH_NUMERAL_1
+    _2_ --> CIRTH_NUMERAL_2
+    _3_ --> CIRTH_NUMERAL_3
+    _4_ --> CIRTH_NUMERAL_4
+    _5_ --> CIRTH_NUMERAL_5
+
+    _{UNDERSCORE}_   --> TEHTA_UNDERLINE
+    _sdot_           --> TEHTA_SUB_DOT
+    _(^,circ)_       --> TEHTA_CIRCUM
+
+    {NBSP}           --> NBSP
+  \end
+
+  \beg rules punctuation
+    , --> CIRTH_PUNCT_DOT
+    . --> CIRTH_PUNCT_MID_DOT
+    (..,:) --> CIRTH_PUNCT_TWO_DOTS
+    ... --> CIRTH_PUNCT_THREE_DOTS
+    (....,::) --> CIRTH_PUNCT_FOUR_DOTS
+  \end
+
+\end
+
+\beg postprocessor
+  \resolve_virtuals
+\end
+

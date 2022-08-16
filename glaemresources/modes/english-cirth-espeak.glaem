@@ -37,6 +37,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 \charset  cirth_ds true
 
+\raw_mode "raw-cirth"
+
 \outspace CIRTH_SPACE
 
 \beg options
@@ -548,7 +550,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     \** Use same character as in sindarin **\
     {_WH_} === CIRTH_5
     \if "ancient_voiceless_labiovelar_fricative_wh == WH_VLVF_WHINE_MERGER"
-      {_WH_} === CIRTH_26
+      {_WH_} === CIRTH_44
     \endif
 
     {L9}    === h        * ʍ
