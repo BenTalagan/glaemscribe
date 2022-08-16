@@ -30,10 +30,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 \writing  "Cirth"
 \mode     "English Angerthas based on Angerthas Daeron"
 \version  "0.0.1"
-\authors  "Talagan (Benjamin Babut), based on J.R.R. Tolkien"
+\authors  "J.R.R. Tolkien, impl. Talagan (Benjamin Babut) with extrapolations"
 
 \world      primary_related_to_arda
-\invention  experimental
+\invention  jrrt
 
 \charset  cirth_ds true
 
