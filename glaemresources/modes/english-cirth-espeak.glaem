@@ -109,10 +109,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   \end
 
   \** Schwi, in US/JRRT **\
-  \beg option schwi SCHWI_LIKE_I
+  \beg option schwi SCHWI_SMALL_BAR
     \radio
-    \value SCHWI_LIKE_I     0
-    \value SCHWI_LIKE_SCHWA 1
+    \value SCHWI_SMALL_BAR  0
+    \value SCHWI_LIKE_I     1
+    \value SCHWI_LIKE_SCHWA 2
     \visible_when "espeak_voice == ESPEAK_VOICE_EN_TENGWAR || espeak_voice == ESPEAK_VOICE_EN_TENGWAR_US"
   \end
 
@@ -390,10 +391,17 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     {SCHWU_NON_REDUCIBLE}  === ɤ̞
     {ALL_ESCHWA}           === (ə,ʘ)
 
+    {W_INDEPENDENT_SCHWI}    === {NULL}
+    {_W_INDEPENDENT_SCHWI_}  === {NULL}
+
+
     \if "schwi == SCHWI_LIKE_I"
       {IGROUP} === {IGROUP},ᵻ
-    \else
+    \elsif "schwi == SCHWI_LIKE_SCHWA"
       {EBGROUP} === {EBGROUP},ᵻ
+    \else
+      {W_INDEPENDENT_SCHWI}    === * ᵻ
+      {_W_INDEPENDENT_SCHWI_}  === * CIRTH_59
     \endif
 
     {A_FRONT}             === (æ,a)  \** Always short **\
@@ -436,8 +444,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     {EAR} === e{ALL_ESCHWA} \** GB Bear **\
     {UER} === ʊ{ALL_ESCHWA} \** GB Tour **\
 
-    {VOWELS}        === {A_BACK}  * {A_FRONT}     * {E_FRONT}     * {E_BACK}                * {E_BACK_RHOTIC}     * {IER}                            * {EAR}                             * {UER}                             * {I}         * {O}           * {U}      * {OMBU}              * {ESCHWA}
-    {_VOWELS_}      === CIRTH_49  * CIRTH_48      * CIRTH_46      * {_REDUCIBLE_SCHWA_}     * {_REDUCIBLE_SCHWA_} * CIRTH_39 {_NON_REDUCIBLE_SCHWA_} * CIRTH_46 {_NON_REDUCIBLE_SCHWA_}  * CIRTH_42 {_NON_REDUCIBLE_SCHWA_}  * CIRTH_39    * CIRTH_50      * CIRTH_42 * {_REDUCIBLE_SCHWU_} * {_REDUCIBLE_SCHWA_}
+    {VOWELS}        === {A_BACK}  * {A_FRONT}     * {E_FRONT}     * {E_BACK}                * {E_BACK_RHOTIC}     * {IER}                            * {EAR}                             * {UER}                             * {I}         * {O}           * {U}      * {OMBU}              * {ESCHWA}            * {W_INDEPENDENT_SCHWI}
+    {_VOWELS_}      === CIRTH_49  * CIRTH_48      * CIRTH_46      * {_REDUCIBLE_SCHWA_}     * {_REDUCIBLE_SCHWA_} * CIRTH_39 {_NON_REDUCIBLE_SCHWA_} * CIRTH_46 {_NON_REDUCIBLE_SCHWA_}  * CIRTH_42 {_NON_REDUCIBLE_SCHWA_}  * CIRTH_39    * CIRTH_50      * CIRTH_42 * {_REDUCIBLE_SCHWU_} * {_REDUCIBLE_SCHWA_} * {_W_INDEPENDENT_SCHWI_}
 
     \** Since in english back /a/ (trap) is always short and front /a/ (calm) is always long **\
     \** we reuse the same cirth without risking a clash. **\
