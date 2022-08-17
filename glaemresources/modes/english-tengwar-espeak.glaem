@@ -202,7 +202,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   \end
 
   \** 'strut' vowel special case **\
-  \beg option open_mid_back_unrounded OMBU_LIKE_SCHWA
+  \beg option open_mid_back_unrounded OMBU_THINNAS
     \radio
     \value OMBU_THINNAS    0
     \value OMBU_GRAVE      1
