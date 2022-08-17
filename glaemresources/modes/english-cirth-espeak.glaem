@@ -235,7 +235,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   \endif
 
   \** IMPORTANT NOTE : in all following regexps **\
-  \** (^|[^a-zA-Zæǽɑɒɐəɚɛɜɪᵻʊʌɔðŋɡɣɹɾʃʍʒʔθː̟̩̃]) stands for 'word boundary' **\
+  \** since we cannot rely on \b because using IPA **\
+  \** [a-zA-Zæǽɑɒɐəɚɛɜɪᵻʊʌɔðŋɡɣɹɾʃʍʒʔθː̟̩̃] standa for "any possible letter" **\
+  \** (^|[^a-zA-Zæǽɑɒɐəɚɛɜɪᵻʊʌɔðŋɡɣɹɾʃʍʒʔθː̟̩̃]) ... stands for 'word beginning' **\
+  \** ... ($|[^a-zA-Zæǽɑɒɐəɚɛɜɪᵻʊʌɔðŋɡɣɹɾʃʍʒʔθː̟̩̃]) stands for 'word ending' **\
 
   \** 'the' variations **\
   \** that the **\
@@ -294,22 +297,22 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   \** We thus need to add ending of words, that would be handled by telco otherwise **\
 
   \** Mark non reducing schwa as ʘ **\
-  \rxsubstitute "(^|[^bcdfghjklmnpqrstvwxyzðŋɡɣɹɾʃʍʒʔθɪʊ])([əɐɜɚ])" "\\1ʘ"
-  \rxsubstitute "([əɐɜɚ])(r|$)" "ʘ\\2"
+  \rxsubstitute "(^|[^bcdfghjklmnpqrstvwxyzðŋɡɣɹɾʃʍʒʔθɪʊ])([əɐɜɚ])" "\\1ʘ" \** beginning of words **\
+  \rxsubstitute "([əɐɜɚ])([^a-zA-Zæǽɑɒɐəɚɛɜɪᵻʊʌɔðŋɡɣɹɾʃʍʒʔθː̟̩̃]|r|$)" "ʘ\\2" \** ending of words **\
 
   \if "schwi == SCHWI_LIKE_SCHWA"
     \** Don't forget to mark schwis too **\
-    \rxsubstitute "(^|[^bcdfghjklmnpqrstvwxyzðŋɡɣɹɾʃʍʒʔθɪʊ])([ᵻ])" "\\1ʘ"
-    \rxsubstitute "ᵻ(r|$)" "ʘ\\2"
+    \rxsubstitute "(^|[^bcdfghjklmnpqrstvwxyzðŋɡɣɹɾʃʍʒʔθɪʊ])([ᵻ])" "\\1ʘ"  \** beginning of words **\
+    \rxsubstitute "ᵻ([^a-zA-Zæǽɑɒɐəɚɛɜɪᵻʊʌɔðŋɡɣɹɾʃʍʒʔθː̟̩̃]|r|$)" "ʘ\\2"      \** ending of words **\
   \endif
 
   \** Don't forget to mark the ombus too **\
   \if "open_mid_back_unrounded == OMBU_LIKE_SCHWA"
-    \rxsubstitute "(^|[^bcdfghjklmnpqrstvwxyzðŋɡɣɹɾʃʍʒʔθɪʊ])([ʌ])" "\\1ɤ̞"
-    \rxsubstitute "ʌ(r|$)" "ɤ̞\\2"
+    \rxsubstitute "(^|[^bcdfghjklmnpqrstvwxyzðŋɡɣɹɾʃʍʒʔθɪʊ])([ʌ])" "\\1ɤ̞"  \** beginning of words **\
+    \rxsubstitute "ʌ([^a-zA-Zæǽɑɒɐəɚɛɜɪᵻʊʌɔðŋɡɣɹɾʃʍʒʔθː̟̩̃]|r|$)" "ɤ̞\\2"      \** ending of words **\
   \else
-    \rxsubstitute "(^|[^bcdfghjklmnpqrstvwxyzðŋɡɣɹɾʃʍʒʔθɪʊ])([ʌ])" "\\1ʘ"
-    \rxsubstitute "ʌ(r|$)" "ʘ\\2"
+    \rxsubstitute "(^|[^bcdfghjklmnpqrstvwxyzðŋɡɣɹɾʃʍʒʔθɪʊ])([ʌ])" "\\1ʘ"  \** beginning of words **\
+    \rxsubstitute "ʌ([^a-zA-Zæǽɑɒɐəɚɛɜɪᵻʊʌɔðŋɡɣɹɾʃʍʒʔθː̟̩̃]|r|$)" "ʘ\\2"      \** ending of words **\
   \endif
 
   \if "auto_spacing == true"
