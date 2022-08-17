@@ -1039,7 +1039,7 @@ GlaemscribeEditor.prototype.getOptionsFromGUI = function()
   return opt;
 }
 
-GlaemscribeEditor.prototype.genericRefreshTranscription = function(entry_selector, transcribed_selector, debug_preprocessor_selector, debug_processor_selector, debug_postprocessor_selector, debug_processor_pathes_selector, debug_should_apply_postprocessor)
+GlaemscribeEditor.prototype.genericRefreshTranscription = function(entry_selector, transcribed_selector, tts_output_selector, debug_preprocessor_selector, debug_processor_selector, debug_postprocessor_selector, debug_processor_pathes_selector, debug_should_apply_postprocessor)
 {
   var editor          = this;
   var failure         = false;
@@ -1068,6 +1068,11 @@ GlaemscribeEditor.prototype.genericRefreshTranscription = function(entry_selecto
         editor.refreshFont(transcribed_selector, false);
         
         transcribed_selector.html(ret);
+        
+        if(tts_output_selector) {
+          $(".tts_stuff").toggle(editor.mode.has_tts);
+          tts_output_selector.html(dbg_ctx.tts_output)
+        }
         
         if(debug_preprocessor_selector) 
           debug_preprocessor_selector.html(dbg_ctx.preprocessor_output);
@@ -1182,6 +1187,7 @@ GlaemscribeEditor.prototype.refreshDebuggerTranscription = function()
   var editor = this;
   editor.genericRefreshTranscription($(".debugger_entry"),
   $(".debugger_transcribed"),
+  $(".tts_output"),
   $(".preprocessor_output"),
   $(".processor_output"),
   $(".postprocessor_output"),

@@ -781,7 +781,7 @@ html, body, .glaemscribe { height:100%; width:100%; margin:0px; padding:0px; bac
   border: solid 1px rgba(255, 255, 255, 0.41);
 }
 
-.debugger_transcribed, .preprocessor_output, .postprocessor_output, .processor_followed_pathes {
+.debugger_transcribed, .preprocessor_output, .postprocessor_output, .processor_followed_pathes, .tts_output {
   margin: 0px 10px;
   padding: 5px;
   font-size: 16px;
