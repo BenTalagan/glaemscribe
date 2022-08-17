@@ -84,6 +84,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   \end
 
   \** long u like in 'goose' **\
+  \** We render it either as the long vowel given in the Angerthas table **\
+  \** Or (extrapolation) we use an optional Cirth_45_alt that could look like **\
+  \** a /u+w/ because if's visually a mix of u and w **\
   \beg option long_u LONG_U_AS_LONG_VOWEL
     \radio
     \value LONG_U_AS_LONG_VOWEL 0
@@ -452,7 +455,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     \** Long back e is probably not possible **\
 
     {LVOWELS}       === {AA_BACK} * {AA_FRONT}    * {EE_FRONT}    * {EE_BACK}               * {EE_BACK_RHOTIC}    * {II}               * {OO}     * {UU}
-    {_LVOWELS_}     === CIRTH_49  * CIRTH_48      * CIRTH_47      * {_REDUCIBLE_SCHWA_}     * {_REDUCIBLE_SCHWA_} * CIRTH_39 CIRTH_39  * CIRTH_52 * CIRTH_45
+    {_LVOWELS_}     === CIRTH_49  * CIRTH_48      * CIRTH_47      * {_REDUCIBLE_SCHWA_}     * {_REDUCIBLE_SCHWA_} * CIRTH_39 CIRTH_39  * CIRTH_52 * CIRTH_43
 
     {DIPHTHONGS_R}    === {AW}         * {OW}     * {EW}          * {UW}         * {AJ}         * {EJ}              * {OJ}              * {IJ}
     {_DIPHTHONGS_R_}  === CIRTH_EREB_5 * CIRTH_38 * CIRTH_EREB_1  * CIRTH_45_ALT * CIRTH_EREB_4 * CIRTH_46 CIRTH_59 * CIRTH_50 CIRTH_59 * CIRTH_39 CIRTH_59
