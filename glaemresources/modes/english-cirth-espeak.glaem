@@ -102,7 +102,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     \visible_when "implicit_schwa == false"
   \end
 
-  \beg option non_reducible_schwa_remaining NON_REDUCIBLE_SCHWA_REMAINING_AS_VERTICAL_BARS
+  \beg option non_reducible_schwa_remaining NON_REDUCIBLE_SCHWA_REMAINING_AS_ACCENTS
     \visible_when implicit_schwa
     \value NON_REDUCIBLE_SCHWA_REMAINING_AS_VERTICAL_BARS 0
     \value NON_REDUCIBLE_SCHWA_REMAINING_AS_ACCENTS 1
