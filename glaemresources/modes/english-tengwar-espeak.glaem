@@ -157,7 +157,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     \value LONG_O_DOUBLE_TEHTA 0
     \value LONG_O_WITH_CARRIER 1
   \end
-  
+
   \** long u like in 'goose' **\
   \beg option long_u LONG_U_DOUBLE_TEHTA
     \radio
@@ -178,6 +178,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     \visible_when "espeak_voice == ESPEAK_VOICE_EN_TENGWAR || espeak_voice == ESPEAK_VOICE_EN_TENGWAR_US"
     \value HORSE_HOARSE_MERGE 0
     \value HORSE_HOARSE_SEPARATE 1
+  \end
+
+  \** Cot / Coat vowel distinction, all accents **\
+  \beg option cot_coat_merger COT_COAT_SEPARATE
+    \value COT_COAT_MERGE 0
+    \value COT_COAT_SEPARATE 1
+    \visible_when "espeak_voice == ESPEAK_VOICE_EN_TENGWAR_US"
   \end
 
   \** Remove unuseful, natural schwa marks **\
@@ -295,10 +302,16 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   \** was the **\
   \rxsubstitute "(^|[^a-zA-Zæǽɑɒɐəɚɛɜɪᵻʊʌɔðŋɡɣɹɾʃʍʒʔθː̟̩̃])(wʌz)(ð[əɪ])($|[^a-zA-Zæǽɑɒɐəɚɛɜɪᵻʊʌɔðŋɡɣɹɾʃʍʒʔθː̟̩̃])" "\\1\\2 \\3\\4"
 
+  \** Beware of the order of COT/COAT merger and horse/hoarse merger **\
+  \if "cot_coat_merger == COT_COAT_MERGE && espeak_voice == ESPEAK_VOICE_EN_TENGWAR_US"
+     \substitute "oʊ" "ɑː"
+  \endif
+
   \if "horse_hoarse_merger == HORSE_HOARSE_SEPARATE"
     \** Re-establish former diphtong **\
     \substitute "oːɹ" "oʊɹ"
   \endif
+
 
   \** If treated as diphthong, change long i to i + schwi **\
   \if "long_i == LONG_I_AS_DIPHTONG"
@@ -315,34 +328,34 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   \endif
 
   \** ! Beware of the order of the following rules **\
-	\** ! Rhotic schwa : remove 1 level of length when superfluous and always add explicit mark **\
+  \** ! Rhotic schwa : remove 1 level of length when superfluous and always add explicit mark **\
   \rxsubstitute "[ɜɚ]ː?" "ɜɹ"
 
-	\** ! Potentially remove superfluous added rhotic marks **\
+  \** ! Potentially remove superfluous added rhotic marks **\
   \rxsubstitute "ɹ+" "ɹ"
 
   \** ! Disambiguate ɹ + vowel : ORE/ROMEN **\
   \rxsubstitute "ɹ([ɑæaeɛʌɐəɜɚiɪᵻoɒɔuʊʘ])" "r\\1"
 
-	\if "implicit_schwa == IMPLICIT_SCHWA_YES"
+  \if "implicit_schwa == IMPLICIT_SCHWA_YES"
     \** All schwas at beginning of words cannot reduce **\
     \** or after vowels (== not consonant) **\
-		\** beware of ɪ as it can appear as consonant (lawyer) **\
-		\** same for ʊ for sour **\
+    \** beware of ɪ as it can appear as consonant (lawyer) **\
+    \** same for ʊ for sour **\
     \** Mark non reducing schwa as ʘ **\
     \rxsubstitute "(^|[^bcdfghjklmnpqrstvwxyzðŋɡɣɹɾʃʍʒʔθɪʊ])([əɐɜɚ])" "\\1ʘ"
-		\rxsubstitute "([əɐɜɚ])r" "ʘr"
+    \rxsubstitute "([əɐɜɚ])r" "ʘr"
 
     \if "schwi == SCHWI_LIKE_SCHWA"
       \** Don't forget to mark schwis too **\
       \rxsubstitute "(^|[^bcdfghjklmnpqrstvwxyzðŋɡɣɹɾʃʍʒʔθɪʊ])([ᵻ])" "\\1ʘ"
-			\rxsubstitute "ᵻr" "ʘr"
+      \rxsubstitute "ᵻr" "ʘr"
     \endif
 
     \if "open_mid_back_unrounded == OMBU_LIKE_SCHWA"
       \** Don't forget to mark the ombus too **\
       \rxsubstitute "(^|[^bcdfghjklmnpqrstvwxyzðŋɡɣɹɾʃʍʒʔθɪʊ])([ʌ])" "\\1ʘ"
-			\rxsubstitute "ʌr" "ʘr"
+      \rxsubstitute "ʌr" "ʘr"
     \endif
   \endif
 
@@ -415,7 +428,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     {EBGROUP}              === ə,ɐ     \** REDUCIBLE **\
 
     {SCHWA_NON_REDUCIBLE}  === ʘ       \** NON REDUCIBLE **\
-		{ESCHWA}               === (ə,ʘ)   \** REDUCIBLE & NON REDUCIBLE E SCHWA **\
+    {ESCHWA}               === (ə,ʘ)   \** REDUCIBLE & NON REDUCIBLE E SCHWA **\
 
     \if "schwi == SCHWI_LIKE_I"
       {IGROUP} === {IGROUP},ᵻ
