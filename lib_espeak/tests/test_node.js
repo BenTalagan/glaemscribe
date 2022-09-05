@@ -23,22 +23,21 @@ include(__dirname + "/../glaemscribe_tts.js")
 
 client = new Glaemscribe.TTS();
 
-client.synthesize_wav("fold. '",{voice:'en-tengwar'},function(wav) {
-  console.log(wav)
-});
+//client.synthesize_wav("fold. '",{voice:'en-tengwar'},function(wav) { console.log(wav) });
 
-client.synthesize_ipa("This has been folded. And it's cool .",{voice:'en-tengwar'},function(ipa) {
-  console.log(ipa)
-});
+// Test that spaces are kept.
+client.synthesize_ipa("This has been folded. And it's cool .",{voice:'en-tengwar'},function(ipa) {  console.log(ipa)});
 
-client.synthesize_ipa("Hi.",{voice:'en-tengwar'},function(ipa) {
-  console.log(ipa)
-});
+client.synthesize_ipa("Hi.",{voice:'en-tengwar'},function(ipa) {  console.log(ipa) });
 
-client.synthesize_ipa("Hi?",{voice:'en-tengwar'},function(ipa) {
-  console.log(ipa)
-});
+client.synthesize_ipa("Hi?",{voice:'en-tengwar'},function(ipa) {  console.log(ipa) });
 
+client.synthesize_ipa("To be, or not to be. That is the question.",{voice:'en-tengwar'},function(ipa) {  console.log(ipa) });
+
+client.synthesize_ipa("He ought to.",{voice:'en-tengwar'},function(ipa) {  console.log(ipa) });
+
+
+/*
 var hi = "Hi, my name is toto! ";
 var r = ""
 for(var i=0;i<1000;i++)
@@ -47,3 +46,4 @@ for(var i=0;i<1000;i++)
 client.synthesize_ipa(r,{voice:'en-tengwar'},function(ipa) {
   console.log(ipa)
 });
+*/

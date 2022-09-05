@@ -189,7 +189,8 @@ Glaemscribe.TTS.prototype.ipa_instrument_punct = function(voice, text) {
     }
     else if(cup[text[i]] != null)
     {
-      // Same thing as below but the difference is that we REMOVE the sign before calculating the IPA.
+      // This sign does not affect clause analysis by espeak.
+      // Replace the sign by a special "word" / token AND REMOVE the sign
       // We will restore it after IPA calculation.
       accum += " " + config['punct_token'] + " " ;
       kept_signs.push(
@@ -198,11 +199,12 @@ Glaemscribe.TTS.prototype.ipa_instrument_punct = function(voice, text) {
         ((client.succeeded_by_space(text,i))?(" "):(""))
       );
     }
-    else if(rescap = client.read_cap_token(text,i,cap)) // Clause affecting sign
+    else if(rescap = client.read_cap_token(text,i,cap))
     {
+      // This punctuation sign affects clause analysis.
       // Replace the sign by a special "word" / token AND keep the sign
       // Always insert spaces, but remember how they were placed
-      accum += " " + config['punct_token'] + " " + text[i] + " ";
+      accum += " " + text[i] + " " + config['punct_token'] + " " ;
       kept_signs.push(
         ((client.preceded_by_space(text, i))?(" "):("")) +
         rescap +
