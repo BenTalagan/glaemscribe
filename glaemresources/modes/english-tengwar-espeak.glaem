@@ -113,16 +113,16 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     \visible_when "espeak_voice != ESPEAK_VOICE_EN_TENGWAR_US"
   \end
 
-	\beg option pre_consonant_n_with_same_articulation_point PRE_CONSONANT_N_WITH_SAME_ARTICULATION_POINT_TILD
-	  \value PRE_CONSONANT_N_WITH_SAME_ARTICULATION_POINT_SEPARATE 0
-	  \value PRE_CONSONANT_N_WITH_SAME_ARTICULATION_POINT_TILD 1
-	\end
+  \beg option pre_consonant_n_with_same_articulation_point PRE_CONSONANT_N_WITH_SAME_ARTICULATION_POINT_MARK
+    \value PRE_CONSONANT_N_WITH_SAME_ARTICULATION_POINT_SEPARATE 0
+    \value PRE_CONSONANT_N_WITH_SAME_ARTICULATION_POINT_MARK 1
+  \end
 
   \** **\
   \beg option pre_velar_assimilated_n PRE_VELAR_ASSIMILATED_N_SEPARATE
     \value PRE_VELAR_ASSIMILATED_N_SEPARATE 0
-    \value PRE_VELAR_ASSIMILATED_N_TILD 1
-		\visible_when "pre_consonant_n_with_same_articulation_point == PRE_CONSONANT_N_WITH_SAME_ARTICULATION_POINT_SEPARATE"
+    \value PRE_VELAR_ASSIMILATED_N_MARK 1
+    \visible_when "pre_consonant_n_with_same_articulation_point == PRE_CONSONANT_N_WITH_SAME_ARTICULATION_POINT_SEPARATE"
   \end
 
   \** Common elvish / tengwar option **\
@@ -274,15 +274,15 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     \substitute "ʊ̟" "ə"
   \endif
 
-  \if "pre_consonant_n_with_same_articulation_point == PRE_CONSONANT_N_WITH_SAME_ARTICULATION_POINT_TILD"
-	  \if "pre_velar_assimilated_n == PRE_VELAR_ASSIMILATED_N_SEPARATE"
-  		\rxsubstitute "n‿" "n"
-		\else
-		  \rxsubstitute "n‿" "ŋ"
-		\endif
-	\else
-	  \rxsubstitute "n‿" "n"
-	\endif
+  \if "pre_consonant_n_with_same_articulation_point == PRE_CONSONANT_N_WITH_SAME_ARTICULATION_POINT_MARK"
+    \if "pre_velar_assimilated_n == PRE_VELAR_ASSIMILATED_N_SEPARATE"
+      \rxsubstitute "n‿" "n"
+    \else
+      \rxsubstitute "n‿" "ŋ"
+    \endif
+  \else
+    \rxsubstitute "n‿" "n"
+  \endif
 
   \** IMPORTANT NOTE : in all following regexps **\
   \** (^|[^a-zA-Zæǽɑɒɐəɚɛɜɪᵻʊʌɔðŋɡɣɹɾʃʍʒʔθː̟̩̃]) stands for 'word boundary' **\
@@ -630,14 +630,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
     \** Nasal + Conditional macro **\
     \beg macro serie_lnc ARG_SLN_COND _ARG_SLN_COND_
-      \if "pre_consonant_n_with_same_articulation_point == PRE_CONSONANT_N_WITH_SAME_ARTICULATION_POINT_TILD"
+      \if "pre_consonant_n_with_same_articulation_point == PRE_CONSONANT_N_WITH_SAME_ARTICULATION_POINT_MARK"
         \deploy serie_ln {ARG_SLN_COND} {_ARG_SLN_COND_}
       \endif
     \end
 
     \** Nasal + Conditional macro **\
     \beg macro serie_rnc ARG_SRN_COND _ARG_SRN_COND_
-      \if "pre_consonant_n_with_same_articulation_point == PRE_CONSONANT_N_WITH_SAME_ARTICULATION_POINT_TILD"
+      \if "pre_consonant_n_with_same_articulation_point == PRE_CONSONANT_N_WITH_SAME_ARTICULATION_POINT_MARK"
         \deploy serie_rn {ARG_SRN_COND} {_ARG_SRN_COND_}
       \endif
     \end
@@ -716,7 +716,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     {_L8_}         === SILME_NUQUERNA * ESSE_NUQUERNA
 
     {V_D_WN}[{L8}] --> 2,1 --> [{_L8_}]{_V_D_WN_}
-    \if "s_consonants_r != SCONSR_SARINCE_ALWAYS && pre_consonant_n_with_same_articulation_point == PRE_CONSONANT_N_WITH_SAME_ARTICULATION_POINT_TILD"
+    \if "s_consonants_r != SCONSR_SARINCE_ALWAYS && pre_consonant_n_with_same_articulation_point == PRE_CONSONANT_N_WITH_SAME_ARTICULATION_POINT_MARK"
       \** Avoid clash between nasal sign and sa rince **\
       {V_D_WN}[{L8_NASAL}]  --> 2,1 --> [{_L8_}]{NASAL}{_V_D_WN_}
     \endif
