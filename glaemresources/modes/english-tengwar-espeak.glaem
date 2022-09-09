@@ -113,11 +113,22 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     \visible_when "espeak_voice != ESPEAK_VOICE_EN_TENGWAR_US"
   \end
 
-  \** This option is disabled, it cannot cover all cases : ink, incoming, mankind, etc **\
-  \beg option velar_linking_n VELAR_LINKING_N_VELAR
-    \visible_when false
-    \value VELAR_LINKING_N_NOT_VELAR 0
-    \value VELAR_LINKING_N_VELAR 1
+	\beg option pre_consonant_n_with_same_articulation_point PRE_CONSONANT_N_WITH_SAME_ARTICULATION_POINT_TILD
+	  \value PRE_CONSONANT_N_WITH_SAME_ARTICULATION_POINT_SEPARATE 0
+	  \value PRE_CONSONANT_N_WITH_SAME_ARTICULATION_POINT_TILD 1
+	\end
+
+  \** **\
+  \beg option pre_velar_assimilated_n PRE_VELAR_ASSIMILATED_N_SEPARATE
+    \value PRE_VELAR_ASSIMILATED_N_SEPARATE 0
+    \value PRE_VELAR_ASSIMILATED_N_TILD 1
+		\visible_when "pre_consonant_n_with_same_articulation_point == PRE_CONSONANT_N_WITH_SAME_ARTICULATION_POINT_SEPARATE"
+  \end
+
+  \** Common elvish / tengwar option **\
+  \beg option consonant_modification_style CONSONANT_MODIFICATION_STYLE_WAVE
+    \value CONSONANT_MODIFICATION_STYLE_WAVE 0
+    \value CONSONANT_MODIFICATION_STYLE_BAR 1
   \end
 
   \** Long a like in 'palm' **\
@@ -222,12 +233,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     \value U_UP_O_DOWN 2
   \end
 
-  \** Common elvish / tengwar option **\
-  \beg option consonant_modification_style CONSONANT_MODIFICATION_STYLE_WAVE
-    \value CONSONANT_MODIFICATION_STYLE_WAVE 0
-    \value CONSONANT_MODIFICATION_STYLE_BAR 1
-  \end
-
   \** Use english standard by default **\
   \option reverse_numbers false
   \beg option numbers_base BASE_10
@@ -269,11 +274,15 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     \substitute "ʊ̟" "ə"
   \endif
 
-  \if "velar_linking_n == VELAR_LINKING_N_NOT_VELAR"
-    \rxsubstitute "n‿" "n"
-  \else
-    \rxsubstitute "n‿" "ŋ"
-  \endif
+  \if "pre_consonant_n_with_same_articulation_point == PRE_CONSONANT_N_WITH_SAME_ARTICULATION_POINT_TILD"
+	  \if "pre_velar_assimilated_n == PRE_VELAR_ASSIMILATED_N_SEPARATE"
+  		\rxsubstitute "n‿" "n"
+		\else
+		  \rxsubstitute "n‿" "ŋ"
+		\endif
+	\else
+	  \rxsubstitute "n‿" "n"
+	\endif
 
   \** IMPORTANT NOTE : in all following regexps **\
   \** (^|[^a-zA-Zæǽɑɒɐəɚɛɜɪᵻʊʌɔðŋɡɣɹɾʃʍʒʔθː̟̩̃]) stands for 'word boundary' **\
@@ -619,48 +628,62 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
       {V_D_WN}[{ARG_SRN}]{RWS} --> {__RWSX__}  --> [{_ARG_SRN_}]{NASAL}{_V_D_WN_}{_RWS_}
     \end
 
+    \** Nasal + Conditional macro **\
+    \beg macro serie_lnc ARG_SLN_COND _ARG_SLN_COND_
+      \if "pre_consonant_n_with_same_articulation_point == PRE_CONSONANT_N_WITH_SAME_ARTICULATION_POINT_TILD"
+        \deploy serie_ln {ARG_SLN_COND} {_ARG_SLN_COND_}
+      \endif
+    \end
+
+    \** Nasal + Conditional macro **\
+    \beg macro serie_rnc ARG_SRN_COND _ARG_SRN_COND_
+      \if "pre_consonant_n_with_same_articulation_point == PRE_CONSONANT_N_WITH_SAME_ARTICULATION_POINT_TILD"
+        \deploy serie_rn {ARG_SRN_COND} {_ARG_SRN_COND_}
+      \endif
+    \end
+
     \beg macro serie ARG_L ARG_R ARG_LN ARG_RN _ARG_L_ _ARG_R_
-      \deploy serie_l  {ARG_L}  {_ARG_L_}
-      \deploy serie_ln {ARG_LN} {_ARG_L_}
-      \deploy serie_r  {ARG_R}  {_ARG_R_}
-      \deploy serie_rn {ARG_RN} {_ARG_R_}
+      \deploy serie_l   {ARG_L}  {_ARG_L_}
+      \deploy serie_r   {ARG_R}  {_ARG_R_}
+      \deploy serie_lnc {ARG_LN} {_ARG_L_}
+      \deploy serie_rnc {ARG_RN} {_ARG_R_}
     \end
 
     \** ----------------------------------------------------------- **\
-    {L1R}          === (t,ɾ,ʔ)  * p
-    {L1L}          === tʃ       * k
-    {L1R_NASAL}    === n(t,ɾ,ʔ) * mp
-    {L1L_NASAL}    === ntʃ      * ŋk
-    {_L1R_}        === TINCO    * PARMA
-    {_L1L_}        === CALMA    * QUESSE
+    {L1R}            === (t,ɾ,ʔ)  * p
+    {L1L}            === tʃ       * k
+    {L1R_NASAL}      === n(t,ɾ,ʔ) * mp
+    {L1L_NASAL}      === ntʃ      * ŋk
+    {_L1R_}          === TINCO    * PARMA
+    {_L1L_}          === CALMA    * QUESSE
 
-    \deploy serie {L1L} {L1R} {L1L_NASAL} {L1R_NASAL} {_L1L_} {_L1R_}
-
-    \** ----------------------------------------------------------- **\
-    {L2R}           === d     * b
-    {L2L}           === dʒ    * ɡ
-    {L2R_NASAL}     === nd    * mb
-    {L2L_NASAL}     === ndʒ   * ŋɡ
-    {_L2R_}         === ANDO  * UMBAR
-    {_L2L_}         === ANGA  * UNGWE
-
-    \deploy serie {L2L} {L2R} {L2L_NASAL} {L2R_NASAL} {_L2L_} {_L2R_}
+    \deploy serie    {L1L} {L1R} {L1L_NASAL} {L1R_NASAL} {_L1L_} {_L1R_}
 
     \** ----------------------------------------------------------- **\
-    {L3R}           === θ       * f      * ʃ       * x
-    {L3R_NASAL}     === nθ      * mf     * nʃ      * ŋx
-    {_L3R_}         === SULE    * FORMEN * AHA     * HWESTA
+    {L2R}            === d     * b
+    {L2L}            === dʒ    * (ɡ,g)
+    {L2R_NASAL}      === nd    * mb
+    {L2L_NASAL}      === ndʒ   * ŋ(ɡ,g)
+    {_L2R_}          === ANDO  * UMBAR
+    {_L2L_}          === ANGA  * UNGWE
 
-    \deploy serie_r  {L3R}        {_L3R_}
-    \deploy serie_rn {L3R_NASAL}  {_L3R_}
+    \deploy serie    {L2L} {L2R} {L2L_NASAL} {L2R_NASAL} {_L2L_} {_L2R_}
 
     \** ----------------------------------------------------------- **\
-    {L4R}           === ð     * v     * ʒ     * ɣ
-    {L4R_NASAL}     === nð    * mv    * nʒ    * ŋɣ
-    {_L4R_}         === ANTO  * AMPA  * ANCA  * UNQUE
+    {L3R}             === θ       * f      * ʃ       * x
+    {L3R_NASAL}       === nθ      * mf     * nʃ      * ŋx
+    {_L3R_}           === SULE    * FORMEN * AHA     * HWESTA
 
-    \deploy serie_r  {L4R}        {_L4R_}
-    \deploy serie_rn {L4R_NASAL}  {_L4R_}
+    \deploy serie_r   {L3R}          {_L3R_}
+    \deploy serie_rnc {L3R_NASAL}    {_L3R_}
+
+    \** ----------------------------------------------------------- **\
+    {L4R}             === ð     * v     * ʒ     * ɣ
+    {L4R_NASAL}       === nð    * mv    * nʒ    * ŋɣ
+    {_L4R_}           === ANTO  * AMPA  * ANCA  * UNQUE
+
+    \deploy serie_r   {L4R}          {_L4R_}
+    \deploy serie_rnc {L4R_NASAL}    {_L4R_}
 
     \** ----------------------------------------------------------- **\
     {L5R}           === (n,n̩)    * m      * n(j,J)   * ŋ
@@ -677,9 +700,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     {L6R_NN}        === (j,J)
     {_L6R_NN_}      === ANNA     \** ORE for rhoticized schwas **\
 
-    \deploy serie_r  {L6R}        {_L6R_}
-    \deploy serie_rn {L6R_NASAL}  {_L6R_}
-    \deploy serie_r  {L6R_NN}     {_L6R_NN_}
+    \deploy serie_r   {L6R}        {_L6R_}
+    \deploy serie_r   {L6R_NN}     {_L6R_NN_}
+    \deploy serie_rnc {L6R_NASAL}  {_L6R_}
 
     \** ----------------------------------------------------------- **\
     {L7R}           === r     * ɹ      * l
@@ -693,8 +716,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     {_L8_}         === SILME_NUQUERNA * ESSE_NUQUERNA
 
     {V_D_WN}[{L8}] --> 2,1 --> [{_L8_}]{_V_D_WN_}
-    \if "s_consonants_r == SCONSR_SARINCE_NEVER"
-      \** Avoid clash between n and s **\
+    \if "s_consonants_r != SCONSR_SARINCE_ALWAYS && pre_consonant_n_with_same_articulation_point == PRE_CONSONANT_N_WITH_SAME_ARTICULATION_POINT_TILD"
+      \** Avoid clash between nasal sign and sa rince **\
       {V_D_WN}[{L8_NASAL}]  --> 2,1 --> [{_L8_}]{NASAL}{_V_D_WN_}
     \endif
 
