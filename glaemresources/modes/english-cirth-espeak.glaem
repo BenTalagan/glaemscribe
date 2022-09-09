@@ -165,13 +165,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     \visible_when "espeak_voice != ESPEAK_VOICE_EN_TENGWAR_US"
   \end
 
-  \** This option is disabled, it cannot cover all cases : ink, incoming, mankind, etc **\
-  \beg option velar_linking_n VELAR_LINKING_N_VELAR
-    \visible_when false
-    \value VELAR_LINKING_N_NOT_VELAR 0
-    \value VELAR_LINKING_N_VELAR 1
-  \end
-
   \beg option english_nw ENGLISH_NW_TREAT_NORMALLY
     \value ENGLISH_NW_TREAT_NORMALLY     0
     \value ENGLISH_NW_USE_CIRTH_48      1
@@ -184,9 +177,16 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     \radio
   \end
 
-  \beg option nasal_consonants NASAL_CONSONANTS_USE_CIRCUMFLEX
-     \value NASAL_CONSONANTS_USE_CIRCUMFLEX 0
-     \value NASAL_CONSONANTS_SEPARATE       1
+  \beg option pre_consonant_n_with_same_articulation_point PRE_CONSONANT_N_WITH_SAME_ARTICULATION_POINT_MARK
+    \value PRE_CONSONANT_N_WITH_SAME_ARTICULATION_POINT_SEPARATE 0
+    \value PRE_CONSONANT_N_WITH_SAME_ARTICULATION_POINT_MARK 1
+  \end
+
+  \** **\
+  \beg option pre_velar_assimilated_n PRE_VELAR_ASSIMILATED_N_SEPARATE
+    \value PRE_VELAR_ASSIMILATED_N_SEPARATE 0
+    \value PRE_VELAR_ASSIMILATED_N_MARK 1
+    \visible_when "pre_consonant_n_with_same_articulation_point == PRE_CONSONANT_N_WITH_SAME_ARTICULATION_POINT_SEPARATE"
   \end
 
   \** ---------- Styling options ---------- **\
@@ -232,10 +232,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     \substitute "ʊ̟" "ə"
   \endif
 
-  \if "velar_linking_n == VELAR_LINKING_N_NOT_VELAR"
-    \rxsubstitute "n‿" "n"
+  \if "pre_consonant_n_with_same_articulation_point == PRE_CONSONANT_N_WITH_SAME_ARTICULATION_POINT_MARK"
+    \if "pre_velar_assimilated_n == PRE_VELAR_ASSIMILATED_N_SEPARATE"
+      \rxsubstitute "n‿" "n"
+    \else
+      \rxsubstitute "n‿" "ŋ"
+    \endif
   \else
-    \rxsubstitute "n‿" "ŋ"
+    \rxsubstitute "n‿" "n"
   \endif
 
   \** IMPORTANT NOTE : in all following regexps **\
@@ -474,8 +478,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     {_L1_} === CIRTH_8 * CIRTH_1 * CIRTH_13 * CIRTH_18
     {L1}   --> {_L1_}
 
-    \if "nasal_consonants == NASAL_CONSONANTS_USE_CIRCUMFLEX"
-      {L1_NASAL} === n(t,ɾ,ʔ) * mp * ntʃ      * ŋk
+    \if "pre_consonant_n_with_same_articulation_point == PRE_CONSONANT_N_WITH_SAME_ARTICULATION_POINT_MARK"
+      {L1_NASAL} === n(t,ɾ,ʔ) * mp * ntʃ * ŋk
       [{L1_NASAL}] --> [{_L1_}] TEHTA_CIRCUM
     \endif
 
@@ -484,7 +488,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     {L2}   === d * b * dʒ * ɡ
     {_L2_} === CIRTH_9 * CIRTH_2 * CIRTH_14 * CIRTH_19
     {L2}   --> {_L2_}
-    \if "nasal_consonants == NASAL_CONSONANTS_USE_CIRCUMFLEX"
+    \if "pre_consonant_n_with_same_articulation_point == PRE_CONSONANT_N_WITH_SAME_ARTICULATION_POINT_MARK"
       {L2_NASAL}   === nd    * mb * ndʒ   * ŋɡ
       [{L2_NASAL}] --> [{_L2_}] TEHTA_CIRCUM
     \endif
@@ -494,7 +498,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     {L3}   === θ        * f       * ʃ         * x
     {_L3_} === CIRTH_10 * CIRTH_3 * CIRTH_15  * CIRTH_20
     {L3}   --> {_L3_}
-    \if "nasal_consonants == NASAL_CONSONANTS_USE_CIRCUMFLEX"
+    \if "pre_consonant_n_with_same_articulation_point == PRE_CONSONANT_N_WITH_SAME_ARTICULATION_POINT_MARK"
       {L3_NASAL} === nθ      * mf     * nʃ      * ŋx
       [{L3_NASAL}] --> [{_L3_}] TEHTA_CIRCUM
     \endif
@@ -504,7 +508,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     {L4}     === ð        * v       * ʒ         * ɣ
     {_L4_}   === CIRTH_11 * CIRTH_4 * CIRTH_16  * CIRTH_21
     {L4}     --> {_L4_}
-    \if "nasal_consonants == NASAL_CONSONANTS_USE_CIRCUMFLEX"
+    \if "pre_consonant_n_with_same_articulation_point == PRE_CONSONANT_N_WITH_SAME_ARTICULATION_POINT_MARK"
       {L4_NASAL}   === nð    * mv    * nʒ    * ŋɣ
       [{L4_NASAL}] --> [{_L4_}] TEHTA_CIRCUM
     \endif
@@ -523,7 +527,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
     {L6_NASAL}   === nw
     \if "english_nw == ENGLISH_NW_TREAT_NORMALLY"
-      \if "nasal_consonants == NASAL_CONSONANTS_USE_CIRCUMFLEX"
+      \if "pre_consonant_n_with_same_articulation_point == PRE_CONSONANT_N_WITH_SAME_ARTICULATION_POINT_MARK"
         [{L6_NASAL}]  --> [{_L6_}] TEHTA_CIRCUM
       \endif
     \else
@@ -554,7 +558,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     {L8}   === s * z
     {_L8_} === {_S_} * CIRTH_36
     {L8}   --> {_L8_}
-    \if "nasal_consonants == NASAL_CONSONANTS_USE_CIRCUMFLEX"
+    \if "pre_consonant_n_with_same_articulation_point == PRE_CONSONANT_N_WITH_SAME_ARTICULATION_POINT_MARK"
       {L8_NASAL}   === ns * nz
       [{L8_NASAL}] --> [{_L8_}] TEHTA_CIRCUM
     \endif
