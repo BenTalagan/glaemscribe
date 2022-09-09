@@ -26,7 +26,7 @@ To summarize, Glǽmscribe relies at the moment on three families of fonts :
 
 The complete of list of changes made from the original versions of the fonts :
 
-**Tengwar Eldamar**, created and designed by **Måns Björkman**
+**Tengwar Eldamar**, created and designed by **Måns Björkman Berg**
 --------------------------------------------------------------
  
 * The regular and alternate fonts have been merged into a single file so as to simplify its use as a WebFont.
@@ -38,7 +38,7 @@ The complete of list of changes made from the original versions of the fonts :
 * Added missing non-breaking space (U+00A0)
 * Added four 'below' versions of e-tehta grave.
 
-**Tengwar Parmaite**, created and designed by **Måns Björkman**
+**Tengwar Parmaite**, created and designed by **Måns Björkman Berg**
 --------------------------------------------------------------
 
 * The regular and alternate fonts have been merged into a single file so as to simplify its use as a WebFont.
@@ -101,7 +101,7 @@ The complete of list of changes made from the original versions of the fonts :
 * Added four 'below' versions of e-tehta grave.
 
   
-**Sarati Eldamar**, created and designed by **Måns Björkman**
+**Sarati Eldamar**, created and designed by **Måns Björkman Berg**
 --------------------------------------------------------------
 
 * GPOS OpenType tables and anchors have been added to manage diacritics.

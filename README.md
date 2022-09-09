@@ -106,7 +106,7 @@ Contributions, acknowledgments and thanks
 -----------------------------------------
 
 * **_Glǽmscribe_** would never have been possible without the invaluable and unconditional help and wisdom of **_Bertrand Bellet_**.
-* Special thanks to **_Måns Björkman_** author of the outstanding website Amanyë Tenceli and its typefaces, a precious resource for **_Glǽmscribe_**'s development, and **_Didier Willis_** for having ignited the inspiration of this project.
+* Special thanks to **_Måns Björkman Berg_** author of the outstanding website Amanyë Tenceli and its typefaces, a precious resource for **_Glǽmscribe_**'s development, and **_Didier Willis_** for having ignited the inspiration of this project.
 * Many thanks to **_Paul Strack_** for all his suggestions and careful examinations on the Tengwar modes during his integration of **_Glǽmscribe_**'s engine into his [**_eldamo_**](http://eldamo.org) project!
 * Many thanks to **_J. Mach Wust_** and **Roman Rausch** for their clever thoughts and advice on the Tengwar & Sarati modes and fonts.
 * Many thanks to ***Dan Smith***, **Johan Winge** and **Enrique Mombello** for their incredible work on tengwar fonts ; this project would not have been possible without them
