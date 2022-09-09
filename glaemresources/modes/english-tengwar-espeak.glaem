@@ -122,7 +122,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   \beg option pre_velar_assimilated_n PRE_VELAR_ASSIMILATED_N_SEPARATE
     \value PRE_VELAR_ASSIMILATED_N_SEPARATE 0
     \value PRE_VELAR_ASSIMILATED_N_MARK 1
-    \visible_when "pre_consonant_n_with_same_articulation_point == PRE_CONSONANT_N_WITH_SAME_ARTICULATION_POINT_SEPARATE"
+    \visible_when "pre_consonant_n_with_same_articulation_point == PRE_CONSONANT_N_WITH_SAME_ARTICULATION_POINT_MARK"
   \end
 
   \** Common elvish / tengwar option **\
