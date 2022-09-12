@@ -119,11 +119,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   \end
 
   \** **\
-  \beg option pre_velar_assimilated_n PRE_VELAR_ASSIMILATED_N_SEPARATE
-    \value PRE_VELAR_ASSIMILATED_N_SEPARATE 0
-    \value PRE_VELAR_ASSIMILATED_N_MARK 1
-    \visible_when "pre_consonant_n_with_same_articulation_point == PRE_CONSONANT_N_WITH_SAME_ARTICULATION_POINT_MARK"
-  \end
+  \option assimilate_pre_velar_assimilable_n true
 
   \** Common elvish / tengwar option **\
   \beg option consonant_modification_style CONSONANT_MODIFICATION_STYLE_WAVE
@@ -274,12 +270,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     \substitute "ʊ̟" "ə"
   \endif
 
-  \if "pre_consonant_n_with_same_articulation_point == PRE_CONSONANT_N_WITH_SAME_ARTICULATION_POINT_MARK"
-    \if "pre_velar_assimilated_n == PRE_VELAR_ASSIMILATED_N_SEPARATE"
-      \rxsubstitute "n‿" "n"
-    \else
-      \rxsubstitute "n‿" "ŋ"
-    \endif
+  \if assimilate_pre_velar_assimilable_n
+    \rxsubstitute "n‿" "ŋ"
   \else
     \rxsubstitute "n‿" "n"
   \endif
