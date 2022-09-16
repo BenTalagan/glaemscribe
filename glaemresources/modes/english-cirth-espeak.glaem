@@ -152,16 +152,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   \end
 
   \** Re-establishment of linking r in non-rhotic accent, ex : 'better life' vs 'betteR answer' **\
-  \beg option linking_r LINKING_R_SHOW
-    \value LINKING_R_HIDE 0
-    \value LINKING_R_SHOW 1
+  \beg option linking_r true
     \visible_when "espeak_voice == ESPEAK_VOICE_EN_TENGWAR_RP || espeak_voice == ESPEAK_VOICE_EN_TENGWAR_GB"
   \end
 
   \** Intrusive r, like in vanillaR ice **\
-  \beg option intrusive_r INTRUSIVE_R_SHOW
-    \value INTRUSIVE_R_HIDE 0
-    \value INTRUSIVE_R_SHOW 1
+  \beg option intrusive_r true
     \visible_when "espeak_voice != ESPEAK_VOICE_EN_TENGWAR_US"
   \end
 
@@ -182,8 +178,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     \value PRE_CONSONANT_N_WITH_SAME_ARTICULATION_POINT_MARK 1
   \end
 
-  \** **\
-  \option assimilate_pre_velar_assimilable_n true
+  \beg option pre_velar_n PRE_VELAR_N_ASSIMILABLE
+    \value PRE_VELAR_N_NON_ASSIMILABLE 0
+    \value PRE_VELAR_N_ASSIMILABLE 1
+  \end
 
   \** ---------- Styling options ---------- **\
 
@@ -210,16 +208,16 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   \** Non rhotic schwa simplification **\
   \rxsubstitute "ɐ" "ə"
 
-  \if "linking_r == LINKING_R_HIDE"
-    \rxsubstitute "ɹ‿" ""
-  \else
+  \if linking_r
     \rxsubstitute "ɹ‿" "ɹ"
+  \else
+    \rxsubstitute "ɹ‿" ""
   \endif
 
-  \if "intrusive_r == INTRUSIVE_R_HIDE"
-    \rxsubstitute "ɹ̩‿" ""
-  \else
+  \if intrusive_r
     \rxsubstitute "ɹ̩‿" "ɹ"
+  \else
+    \rxsubstitute "ɹ̩‿" ""
   \endif
 
   \if "schwa_of_to == SCHWA_OF_TO_U"
@@ -228,7 +226,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     \substitute "ʊ̟" "ə"
   \endif
 
-  \if assimilate_pre_velar_assimilable_n
+  \if "pre_velar_n == PRE_VELAR_N_ASSIMILABLE"
     \rxsubstitute "n‿" "ŋ"
   \else
     \rxsubstitute "n‿" "n"
