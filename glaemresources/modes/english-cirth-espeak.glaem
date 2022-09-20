@@ -161,15 +161,15 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     \visible_when "espeak_voice != ESPEAK_VOICE_EN_TENGWAR_US"
   \end
 
-  \beg option english_nw ENGLISH_NW_TREAT_NORMALLY
-    \value ENGLISH_NW_TREAT_NORMALLY     0
-    \value ENGLISH_NW_USE_CIRTH_48      1
+  \beg option certh_for_y USE_CERTH_40
+    \value USE_CERTH_39 0
+    \value USE_CERTH_40 1
     \radio
   \end
 
-  \beg option cirth_for_s USE_CIRTH_34
-    \value USE_CIRTH_34 0
-    \value USE_CIRTH_35 1
+  \beg option certh_for_s USE_CERTH_34
+    \value USE_CERTH_34 0
+    \value USE_CERTH_35 1
     \radio
   \end
 
@@ -181,6 +181,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   \beg option pre_velar_n PRE_VELAR_N_ASSIMILABLE
     \value PRE_VELAR_N_NON_ASSIMILABLE 0
     \value PRE_VELAR_N_ASSIMILABLE 1
+  \end
+
+
+  \beg option numeral_system PENTADIC_SYSTEM
+    \value QUINARY_SYSTEM   0
+    \value PENTADIC_SYSTEM  1
   \end
 
   \** ---------- Styling options ---------- **\
@@ -317,6 +323,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     \rxsubstitute "([^\\s])([.,;:!?])" "\\1 \\2"
     \rxsubstitute "([.,;:!?])([^\\s])" "\\1 \\2"
   \endif
+
+  \if "numeral_system == QUINARY_SYSTEM"
+    \elvish_numbers 5 false
+  \endif
 \end
 
 \beg processor
@@ -412,8 +422,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
     {AA_FRONT}        === {A_FRONT}ː    \** long front a probably does not exist **\
     {AA_BACK}         === {A_BACK}ː
-    {EE_FRONT}        === {E_FRONT}ː
-    {EE_BACK}         === {E_BACK}ː     \** long back e probably does not exist when not rhotic **\
+    {EE_FRONT}        === {E_FRONT}ː    \** long front e probably does not exist **\
+    {EE_BACK}         === {E_BACK}ː     \** long back  e probably does not exist when not rhotic **\
     {EE_BACK_RHOTIC}  === {E_BACK_RHOTIC}ː
     {II}              === {I}ː
     {OO}              === {O}ː
@@ -448,11 +458,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     \** we reuse the same cirth without risking a clash. **\
     \** Long back e is probably not possible **\
 
+    \** Cirth 47 is used twice, but long front E is not present in english **\
+
     {LVOWELS}       === {AA_BACK} * {AA_FRONT}    * {EE_FRONT}    * {EE_BACK}               * {EE_BACK_RHOTIC}    * {II}               * {OO}     * {UU}
-    {_LVOWELS_}     === CIRTH_49  * CIRTH_48      * CIRTH_47      * {_REDUCIBLE_SCHWA_}     * {_REDUCIBLE_SCHWA_} * CIRTH_39 CIRTH_39  * CIRTH_52 * CIRTH_43
+    {_LVOWELS_}     === CIRTH_49  * CIRTH_48      * CIRTH_47      * {_REDUCIBLE_SCHWA_}     * {_REDUCIBLE_SCHWA_} * CIRTH_39 CIRTH_39  * CIRTH_51 * CIRTH_43
 
     {DIPHTHONGS_R}    === {AW}         * {OW}     * {EW}          * {UW}         * {AJ}         * {EJ}              * {OJ}              * {IJ}
-    {_DIPHTHONGS_R_}  === CIRTH_EREB_5 * CIRTH_38 * CIRTH_EREB_1  * CIRTH_45_ALT * CIRTH_EREB_4 * CIRTH_46 CIRTH_59 * CIRTH_50 CIRTH_59 * CIRTH_39 CIRTH_59
+    {_DIPHTHONGS_R_}  === CIRTH_EREB_5 * CIRTH_38 * CIRTH_EREB_1  * CIRTH_45_ALT * CIRTH_EREB_4 * CIRTH_47          * CIRTH_52_ALT      * CIRTH_39 CIRTH_59
 
     {DIPHTHONGS}    === {DIPHTHONGS_R}
     {_DIPHTHONGS_}  === {_DIPHTHONGS_R_}
@@ -516,17 +528,16 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     {L6}       --> {_L6_}
 
     {L6_NASAL}   === nw
-    \if "english_nw == ENGLISH_NW_TREAT_NORMALLY"
-      \if "pre_consonant_n_with_same_articulation_point == PRE_CONSONANT_N_WITH_SAME_ARTICULATION_POINT_MARK"
-        [{L6_NASAL}]  --> [{_L6_}] TEHTA_CIRCUM
-      \endif
-    \else
-      {_L6_NASAL_} === CIRTH_28
-      {L6_NASAL}   --> {_L6_NASAL_}
+    \if "pre_consonant_n_with_same_articulation_point == PRE_CONSONANT_N_WITH_SAME_ARTICULATION_POINT_MARK"
+      [{L6_NASAL}]  --> [{_L6_}] TEHTA_CIRCUM
     \endif
 
     {L6_NN}   === (j,J)
-    {_L6_NN_} === CIRTH_40 \** TODO : DOCUMENT and ADD OPTION WITH alternative CIRTH_39 **\
+    \if "certh_for_y == USE_CERTH_39"
+      {_L6_NN_} === CIRTH_39
+    \else
+      {_L6_NN_} === CIRTH_40
+    \endif
     {L6_NN}   --> {_L6_NN_}
 
     \** ------------- **\
@@ -539,7 +550,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
     \** ------------- **\
 
-    \if "cirth_for_s == USE_CIRTH_34"
+    \if "certh_for_s == USE_CERTH_34"
       {_S_} === CIRTH_34
     \else
       {_S_} === CIRTH_35
@@ -633,16 +644,30 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
   \beg rules numbers
     \** Completely invented pentimal system based on the number of strokes **\
-    0 --> CIRTH_31 TEHTA_SUB_DOT
-    6 --> CIRTH_8 TEHTA_SUB_DOT
-    7 --> CIRTH_1 TEHTA_SUB_DOT
-    8 --> CIRTH_2 TEHTA_SUB_DOT
-    9 --> CIRTH_6 TEHTA_SUB_DOT
-    5 --> CIRTH_39 TEHTA_SUB_DOT
-    1 --> CIRTH_10 TEHTA_SUB_DOT
-    2 --> CIRTH_3 TEHTA_SUB_DOT
-    3 --> CIRTH_4 TEHTA_SUB_DOT
-    4 --> CIRTH_7 TEHTA_SUB_DOT
+
+    \if "numeral_system == QUINARY_SYSTEM"
+      0 --> CIRTH_37 TEHTA_SUB_DOT
+
+      1 --> CIRTH_NUMERAL_1 TEHTA_SUB_DOT
+      2 --> CIRTH_NUMERAL_2 TEHTA_SUB_DOT
+      3 --> CIRTH_NUMERAL_3 TEHTA_SUB_DOT
+      4 --> CIRTH_NUMERAL_4 TEHTA_SUB_DOT
+      5 --> CIRTH_NUMERAL_5 TEHTA_SUB_DOT
+    \else
+      0 --> CIRTH_31 TEHTA_SUB_DOT
+
+      1 --> CIRTH_10 TEHTA_SUB_DOT
+      2 --> CIRTH_3 TEHTA_SUB_DOT
+      3 --> CIRTH_4 TEHTA_SUB_DOT
+      4 --> CIRTH_7 TEHTA_SUB_DOT
+
+      5 --> CIRTH_39 TEHTA_SUB_DOT
+
+      6 --> CIRTH_8 TEHTA_SUB_DOT
+      7 --> CIRTH_1 TEHTA_SUB_DOT
+      8 --> CIRTH_2 TEHTA_SUB_DOT
+      9 --> CIRTH_6 TEHTA_SUB_DOT
+    \endif
   \end
 
 \end
