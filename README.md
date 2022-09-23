@@ -46,7 +46,7 @@ Here is [**_the installation and integration documentation_**](http://bentalagan
 TTS Egine
 ---------
 
-**_Glaemscribe_** uses [**_eSpeakNG_**](https://github.com/espeak-ng/espeak-ng) for english phonemic modes, as a back layer to transcribe from english to IPA. [**_Glaemscribe's fork of eSpeakNG_](https://github.com/BenTalagan/espeak-ng) as a certain number of modifications that are necessary to handle features that were important to Tolkien.
+**_Glaemscribe_** uses [**_eSpeakNG_**](https://github.com/espeak-ng/espeak-ng) for english phonemic modes, as a back layer to transcribe from english to IPA. [**_Glaemscribe's fork of eSpeakNG_**](https://github.com/BenTalagan/espeak-ng) as a certain number of modifications that are necessary to handle features that were important to Tolkien.
 
 Changelog
 ---------
