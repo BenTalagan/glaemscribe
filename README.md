@@ -16,7 +16,7 @@ Features
 --------
 
 * Handles a large variety of writings (Tengwar, Cirth, Sarati, Runes and more).
-* Offers modes for a large variety of fictional languages (Quenya, Sindarin, Khuzdul, Black Speech, Adûnaic, Telerin, Noldorin, Valarin, Westron), and non-fictional languages (Old English, Old Norse, Japanese).
+* Offers modes for a large variety of fictional languages (Quenya, Sindarin, Khuzdul, Black Speech, Adûnaic, Telerin, Noldorin, Valarin, Westron), and non-fictional languages (English, Old English, Old Norse, Japanese).
 * Extensible through a custom programming language dedicated to the writing of modes.
 * Allow modes to be designed and programmed to have conditional behaviors depending on independent, custom options.
 * Separates the handling of modes and charsets, making the mode files purely 'logical' and compliant with all fonts, and pushing back font issues to charset files.
@@ -25,10 +25,11 @@ Features
 * Has support for inlined, spelled tengwar (or any other writing, respectively) for complete control on the output.
 * Has an official graphical, friendly integration (see above).
 * Has a graphical IDE for helping users to write mode files.
+* Uses a modified version of the eSpeakNG TTS Engine to handle english phonemic modes
 * Has a command-line tool implementation (in ruby).
 
-Language
---------
+Programming Language
+--------------------
 
 **_Glaemscribe_** has two separate implementations : a javascript library and a ruby library.
 
@@ -42,11 +43,17 @@ Installation and integration
 
 Here is [**_the installation and integration documentation_**](http://bentalagan.github.io/glaemscribe), for advanced users.
 
+TTS Egine
+---------
+
+**_Glaemscribe_** uses [**_eSpeakNG_**](https://github.com/espeak-ng/espeak-ng) for english phonemic modes, as a back layer to transcribe from english to IPA. [**_Glaemscribe's fork of eSpeakNG_](https://github.com/BenTalagan/espeak-ng) as a certain number of modifications that are necessary to handle features that were important to Tolkien.
+
 Changelog
 ---------
 
 | Version | Date | Comment |
 |---------|------|---------|
+| 1.3.0 | 09/23/2022 | Text-To-Speak engine based on eSpeakNG / emscripten<br> [English] Phonemic tengwar mode<br>[English] Phonemic cirth mode |
 | 1.2.1 | Unreleased | [Japanese] Corrected 億 to 10^8, added support for セィ and ゼィ. Thanks to Roman Rausch for his feedback!<br> Refactored JS array functions to prevent interactions with other libraries. Thanks to Troy Alford for the fix!<br> Refactored charset virtual chars in a more git friendly format.<br>[Lang Belta] Added Tengwar mode by Da Def (exotic experiment!) |
 | 1.2.0 | 08/04/2019 | Added support for hybrid unicode 'GlaemUnicode' fonts (see the font directory for details).<br>Added support for the Free Tengwar Font project fonts (experimental).<br>Added support for {UNI_XXX} unicode entry variables in rule source member.<br>Added "sequence" type for virtual chars.<br>Added "pointer" (dynamic) variable type using the '<=>' syntax.<br>Added macro/deploy directives for declaring and using macros and avoid code repetition.<br>Cross rules can now use a variable as cross schema.<br>[Khuzdul] : Added missing long o.<br>[Sindarin][All Modes] Reworked and uniformized phonology disambiguation (median dot, hyphen, ng, ngw).<br>[Japanese] Added japanese tengwar mode.<br>Bug fixes. |
 | 1.1.14 | 12/17/2017 | Minor bug fix on 1.1.13 |
@@ -74,7 +81,6 @@ Prior todos
 -----------
 
 * Deeper integration/design of full-featured OpenType Tengwar fonts.
-* Rewrite the charset editor which is now obsolete since the introduction of virtual chars (will probably be dropped : to much hassle for something which can be done easily and once with a text editor).
 
 License
 -------
