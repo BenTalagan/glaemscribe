@@ -43,11 +43,6 @@ Installation and integration
 
 Here is [**_the installation and integration documentation_**](http://bentalagan.github.io/glaemscribe), for advanced users.
 
-TTS Egine
----------
-
-**_Glaemscribe_** uses [**_eSpeakNG_**](https://github.com/espeak-ng/espeak-ng) for english phonemic modes, as a back layer to transcribe from english to IPA. [**_Glaemscribe's fork of eSpeakNG_**](https://github.com/BenTalagan/espeak-ng) as a certain number of modifications that are necessary to handle features that were important to Tolkien.
-
 Changelog
 ---------
 
@@ -123,7 +118,12 @@ Contributions, acknowledgments and thanks
 * Many thanks to ***Leonard Wickmark*** for his suggestions during his integration of **_Glǽmscribe_**'s engine into the [**_elfdict_**](http://elfict.com) project!.
 * **_Glǽmscribe_** would never have come to be without the ceaseless and continuously renewed work of the great family of Internet Tolkienists, both on technologies (with several generations of transcribers and typefaces) and on knowledge shared and gathered on websites and forums. Neither would it exist without the devoted labour of all those that make the publication of Tolkien's linguistic works possible. A very big thank you to them all!
 
-Third party components acknowledgements
+TTS Engine
+---------
+
+**_Glaemscribe_** uses [**_eSpeakNG_**](https://github.com/espeak-ng/espeak-ng) for english phonemic modes, as a back layer to transcribe from english to IPA. [**_Glaemscribe's fork of eSpeakNG_**](https://github.com/BenTalagan/espeak-ng) as a certain number of modifications that are necessary to handle features that were important to Tolkien. Thanks a lot to all contributors of the eSpeak and eSpeakNG projects !
+
+Other third party components acknowledgements
 ---------------------------------------
 
 * **_Glǽmscribe_**'s IDE uses [**_CodeMirror_**](https://codemirror.net/) for its code writing widgets.
