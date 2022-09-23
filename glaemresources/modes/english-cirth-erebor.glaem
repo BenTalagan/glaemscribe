@@ -1,0 +1,317 @@
+\**
+
+Glǽmscribe (also written Glaemscribe) is a software dedicated to
+the transcription of texts between writing systems, and more 
+specifically dedicated to the transcription of J.R.R. Tolkien's 
+invented languages to some of his devised writing systems.
+
+Copyright (C) 2015 Benjamin Babut (Talagan).
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU Affero General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Affero General Public License for more details.
+
+You should have received a copy of the GNU Affero General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+**\
+
+\beg changelog
+  \entry "0.0.1", "Adapted to an English instead of Khuzdul mode from khuzdul-cirth-moria.glaem"
+\end
+
+\beg options
+  \option dots_for_spaces false
+\end
+
+\** This is the version of the Cirth used in the Title page of the Lord of the Rings **\
+\** See https://ring-lord.tripod.com/cirth/angerthaserebor.htm for a good reference **\
+\language "English"
+\writing  "Cirth"
+\mode     "English Cirth - Angerthas Erebor"
+\version  "0.0.1"
+\authors  "J.R.R. Tolkien, impl. David Fraser based on work of Talagan (Benjamin Babut)"
+
+\world      primary_related_to_arda
+\invention  jrrt
+
+\charset  cirth_ds true
+
+\beg      options
+	\option use_underbar_for_double_vowels false
+	\option use_circumflex_for_double_consonants false
+	\option use_underdot_for_numeric false
+  \option use_g_29 false
+  \beg option use_ou_variant DAEG
+    \value DAEG 0
+    \value MAN 1
+  \end
+  \option use_oo_alt false
+	\option use_o_diaresis_alt false
+	\option use_n_53 false
+	\option use_k_for_c false
+	\option use_j_for_soft_g false
+\end
+
+\beg      preprocessor
+  \** Work exclusively downcase **\
+  \downcase
+  
+  \** Simplify trema vowels **\
+  \substitute "ä" "a"
+  \substitute "ë" "e"
+  \substitute "ï" "i"
+  \** but not for "ö" because we actually use this to differentiate 52 **\
+  \substitute "ü" "u"
+  \substitute "ÿ" "y"
+	
+	\** English letters that aren't in Tolkien's tables but need a sensible representation **\
+	\substitute "qu" "kw"
+	\substitute "q" "k"
+	\substitute "x" "ks"
+	\if use_k_for_c
+	  \substitute "c" "k"
+	\else
+	  \** See https://en.wikipedia.org/wiki/Hard_and_soft_C#General_overview **\
+	  \rxsubstitute "cc([eiy])" "ks\\1" \** accident **\
+	  \rxsubstitute "c([eiy])" "s\\1"
+	  \rxsubstitute "\\bct" "t" \** Remove silent c before t at the start of the word **\
+	  \substitute "c" "k"
+	\endif
+  \substitute "ç" "s"
+	\if use_j_for_soft_g
+	  \** See https://en.wikipedia.org/wiki/Hard_and_soft_G#English **\
+	  \rxsubstitute "g([eiy])" "j\\1"
+	\endif
+  
+  \** Dis-ambiguate long vowels **\
+  \rxsubstitute "(ā|â|aa)" "â"
+  \rxsubstitute "(ē|ê|ee)" "ê"
+  \rxsubstitute "(ī|î|ii)" "î"
+  \rxsubstitute "(ō|ô|oo)" "ô"
+  \rxsubstitute "(ū|û|uu)" "û"
+  \rxsubstitute "(ȳ|ŷ|yy)" "ŷ"
+\end
+
+\beg      processor
+
+  \beg    rules litteral
+    
+
+    \** Note that several of these sequences are not expected to be used in English e.g. ghw **\
+    p   --> CIRTH_1
+    b   --> CIRTH_2
+    f   --> CIRTH_3
+    v   --> CIRTH_4
+    hw  --> CIRTH_5
+    m   --> CIRTH_6
+    mb  --> CIRTH_7
+    t   --> CIRTH_8
+    d   --> CIRTH_9
+    th  --> CIRTH_10
+    dh  --> CIRTH_11
+    r   --> CIRTH_12
+    ch  --> CIRTH_13
+    j   --> CIRTH_14
+    sh  --> CIRTH_15
+    zh  --> CIRTH_16
+    ks  --> CIRTH_17
+    k   --> CIRTH_18
+    \if use_g_29
+      g   --> CIRTH_29
+      gh  --> CIRTH_30
+    \else
+      g   --> CIRTH_19
+      gh  --> CIRTH_21
+    \endif
+    kh  --> CIRTH_20
+		\if use_n_53
+		  n   --> CIRTH_53
+		\else
+      n   --> CIRTH_22
+		\endif
+    kw  --> CIRTH_23
+    gw  --> CIRTH_24
+    khw --> CIRTH_25
+    ghw --> CIRTH_26
+    ngw --> CIRTH_27
+    nw  --> CIRTH_28
+    l   --> CIRTH_31
+    nd  --> CIRTH_33
+    s   --> CIRTH_35
+    ŋ   --> CIRTH_36  \** This is a pure velar nasal ŋ **\
+    ng  --> CIRTH_37  \** This represents ŋ followed by g which is common in English too **\
+		\if "use_ou_variant == DAEG"
+      ou  --> CIRTH_38
+      ow  --> CIRTH_38
+		\elsif "use_ou_variant == MAN"
+      ou  --> CIRTH_38_ALT
+      ow  --> CIRTH_38_ALT
+		\endif
+    i   --> CIRTH_39
+    y   --> CIRTH_40
+    hy  --> CIRTH_41
+    u   --> CIRTH_42
+    z   --> CIRTH_43
+    w   --> CIRTH_44
+    ü   --> CIRTH_45
+    e   --> CIRTH_46
+    a   --> CIRTH_48
+    o   --> CIRTH_50
+		\if use_underbar_for_double_vowels
+		  â   --> CIRTH_49 TEHTA_UNDERLINE
+			ê   --> CIRTH_47 TEHTA_UNDERLINE
+		  î   --> CIRTH_39 TEHTA_UNDERLINE
+  		\if use_oo_alt
+	  	  ô   --> CIRTH_51_ALT TEHTA_UNDERLINE
+		  \else
+        ô   --> CIRTH_51 TEHTA_UNDERLINE
+  		\endif
+			û   --> CIRTH_42 TEHTA_UNDERLINE
+		\else
+		  â   --> CIRTH_49
+			ê   --> CIRTH_47
+      î   --> CIRTH_39 CIRTH_39
+  		\if use_oo_alt
+	  	  ô   --> CIRTH_51_ALT
+		  \else
+        ô   --> CIRTH_51
+  		\endif
+			û   --> CIRTH_42
+		\endif
+    \if use_o_diaresis_alt
+		  ö   --> CIRTH_52_ALT
+		\else
+      ö   --> CIRTH_52
+		\endif
+		\if use_circumflex_for_double_consonants
+		  pp  --> CIRTH_1 TEHTA_CIRCUM
+		  bb  --> CIRTH_2 TEHTA_CIRCUM
+      ff  --> CIRTH_3 TEHTA_CIRCUM
+      vv  --> CIRTH_4 TEHTA_CIRCUM
+      mm  --> CIRTH_6 TEHTA_CIRCUM
+      tt  --> CIRTH_8 TEHTA_CIRCUM
+      dd  --> CIRTH_9 TEHTA_CIRCUM
+      rr  --> CIRTH_12 TEHTA_CIRCUM
+      jj  --> CIRTH_14 TEHTA_CIRCUM
+      kk  --> CIRTH_18 TEHTA_CIRCUM
+      \if use_g_29
+        gg  --> CIRTH_29 TEHTA_CIRCUM
+      \else
+        gg  --> CIRTH_19 TEHTA_CIRCUM
+      \endif
+  		\if use_n_53
+  		  nn  --> CIRTH_53 TEHTA_CIRCUM
+  		\else
+        nn  --> CIRTH_22 TEHTA_CIRCUM
+  		\endif
+      ll  --> CIRTH_31 TEHTA_CIRCUM
+      ss  --> CIRTH_35 TEHTA_CIRCUM
+      zz  --> CIRTH_43 TEHTA_CIRCUM
+      ww  --> CIRTH_44 TEHTA_CIRCUM \** though in English ww usually occurs after o, which will render the vowel sound and not use this **\
+		\endif
+    h   --> CIRTH_54
+    ə   --> CIRTH_55 \** This is a silent-e or schwa ə sound which occurs in English unstressed syllables **\
+    ʌ   --> CIRTH_56 \** This is the equivalent of a schwa for a stressed syllabel **\
+    \** These are short forms of the above that may need to be selected deliberately **\
+    +ə   --> CIRTH_55_ALT
+    +ʌ   --> CIRTH_56_ALT
+    ps  --> CIRTH_57
+    ts  --> CIRTH_58
+    +h  --> CIRTH_59
+    _&_ --> CIRTH_60
+    \** These are additional letters used as variations which don't have representation in the standard character set **\
+    eu  --> CIRTH_38
+    ew  --> CIRTH_38
+    ai  --> CIRTH_EREB_4
+    ay  --> CIRTH_EREB_4
+    au  --> CIRTH_EREB_5
+    aw  --> CIRTH_EREB_5
+    ea  --> CIRTH_EREB_6
+    oa  --> CIRTH_EREB_7		
+
+    \** Rules for particular common words **\
+    _the_ --> CIRTH_11 CIRTH_55
+    _of_  --> CIRTH_50 CIRTH_4
+  \end
+  
+  \beg    rules punctuation
+    . --> CIRTH_PUNCT_THREE_DOTS
+    .. --> CIRTH_PUNCT_THREE_DOTS
+    ... --> CIRTH_PUNCT_THREE_DOTS
+    …   --> CIRTH_PUNCT_THREE_DOTS
+    .... --> CIRTH_PUNCT_THREE_DOTS
+    ..... --> CIRTH_PUNCT_THREE_DOTS
+    ...... --> CIRTH_PUNCT_THREE_DOTS
+    ....... --> CIRTH_PUNCT_THREE_DOTS
+
+    , --> CIRTH_PUNCT_MID_DOT
+    : --> CIRTH_PUNCT_TWO_DOTS
+    ; --> CIRTH_PUNCT_TWO_DOTS
+    ! --> CIRTH_PUNCT_THREE_DOTS
+    ? --> CIRTH_PUNCT_THREE_DOTS
+    · --> CIRTH_PUNCT_MID_DOT
+
+    - --> CIRTH_PUNCT_MID_DOT
+    – --> CIRTH_PUNCT_TWO_DOTS  
+    — --> CIRTH_PUNCT_TWO_DOTS
+
+    \** Apostrophe **\
+
+    ' --> {NULL}
+    ’ --> {NULL}
+
+    \** Quotes **\
+
+    “ --> {NULL}
+    ” --> {NULL}
+    « --> {NULL} 
+    » --> {NULL} 
+
+    [ --> CIRTH_PUNCT_THREE_DOTS_L
+    ] --> CIRTH_PUNCT_THREE_DOTS_L
+    ( --> CIRTH_PUNCT_THREE_DOTS_L
+    ) --> CIRTH_PUNCT_THREE_DOTS_L
+    { --> CIRTH_PUNCT_THREE_DOTS_L
+    } --> CIRTH_PUNCT_THREE_DOTS_L
+    < --> CIRTH_PUNCT_THREE_DOTS_L
+    > --> CIRTH_PUNCT_THREE_DOTS_L
+
+    / --> CIRTH_PUNCT_FOUR_DOTS
+  \end
+
+  \beg    rules numeric
+	  \if use_underdot_for_numeric
+      1 --> CIRTH_39 TEHTA_SUB_DOT
+      2 --> CIRTH_50 TEHTA_SUB_DOT
+      3 --> CIRTH_52 TEHTA_SUB_DOT
+      4 --> CIRTH_NUMERAL_4 TEHTA_SUB_DOT
+      5 --> CIRTH_22 TEHTA_SUB_DOT
+      6 --> CIRTH_39 CIRTH_39 CIRTH_39 CIRTH_39 TEHTA_SUB_DOT_S CIRTH_39 CIRTH_39
+		\else
+		  1 --> CIRTH_39
+      2 --> CIRTH_50
+      3 --> CIRTH_52
+      4 --> CIRTH_NUMERAL_4
+      5 --> CIRTH_22
+      6 --> CIRTH_39 CIRTH_39 CIRTH_39 CIRTH_39 CIRTH_39 CIRTH_39 
+		\endif
+  \end
+
+\end
+
+\beg      postprocessor
+  \if dots_for_spaces
+    \outspace CIRTH_PUNCT_MID_DOT
+  \else
+    \** We redefine the output space to have something beautiful, especially with erebor1 and erebor2 **\ 
+    \outspace CIRTH_SPACE_BIG
+  \endif
+	\resolve_virtuals
+\end
