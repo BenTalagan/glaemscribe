@@ -1,8 +1,8 @@
 \**
 
 Glǽmscribe (also written Glaemscribe) is a software dedicated to
-the transcription of texts between writing systems, and more 
-specifically dedicated to the transcription of J.R.R. Tolkien's 
+the transcription of texts between writing systems, and more
+specifically dedicated to the transcription of J.R.R. Tolkien's
 invented languages to some of his devised writing systems.
 
 Copyright (C) 2015 Benjamin Babut (Talagan).
@@ -22,7 +22,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 **\
 
-\** Charset specially customized for Tengwar Annatar (Glaemscrafu patched version) **\ 
+\** Charset specially customized for Tengwar Annatar (Glaemscrafu patched version) **\
 
 \version 0.2.0
 
@@ -44,10 +44,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 \char 2018 SQUOT_OPEN
 \char 2019 SQUOT_CLOSE
 
-\char 28 PUNCT_PAREN_L 
-\char 29 PUNCT_PAREN_R 
-\char 5B PUNCT_PAREN_L_ALT 
-\char 5D PUNCT_PAREN_R_ALT 
+\char 28 PUNCT_PAREN_L
+\char 29 PUNCT_PAREN_R
+\char 5B PUNCT_PAREN_L_ALT
+\char 5D PUNCT_PAREN_R_ALT
 
 \** PUSTAR, take them in unicode not in personnal use (deprecation) **\
 \char 2e31 PUNCT_DOT
@@ -58,24 +58,24 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 \char 2E2C PUSTA_4_SQUARED
 \char 2E2D PUSTA_5
 
-\char e000  TW_11 TINCO     
+\char e000  TW_11 TINCO
 \char e001  TW_12 PARMA
 \char e002  TW_13 CALMA
 \char e003  TW_14 QUESSE
-\char e004  TW_21 ANDO  
+\char e004  TW_21 ANDO
 \char e005  TW_22 UMBAR
-\char e006  TW_23 ANGA  
-\char e007  TW_24 UNGWE   
+\char e006  TW_23 ANGA
+\char e007  TW_24 UNGWE
 \char e008  TW_31 SULE THULE
 \char e009  TW_32 FORMEN
-\char e00A  TW_33 AHA  
+\char e00A  TW_33 AHA
 \char e00B  TW_34 HWESTA
 \char e00C  TW_41 ANTO
 \char e00D  TW_42 AMPA
 \char e00E  TW_43 ANCA
 \char e00F  TW_44 UNQUE
 
-\char e010  TW_51 NUMEN 
+\char e010  TW_51 NUMEN
 \char e011  TW_52 MALTA
 \char e012  TW_53 NOLDO
 \char e013  TW_54 NWALME
@@ -84,10 +84,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 \char e016  TW_63 ANNA
 \char e017  TW_64 VILYA
 \char e018  TW_EXT_11 TINCO_EXT SULE_EXT THULE_EXT
-\char e019  TW_EXT_12 PARMA_EXT FORMEN_EXT 
+\char e019  TW_EXT_12 PARMA_EXT FORMEN_EXT
 \char e01A  TW_EXT_13 CALMA_EXT AHA_EXT
-\char e01B  TW_EXT_14 QUESSE_EXT HWESTA_EXT   
-\char e01C  TW_EXT_21 ANDO_EXT ANTO_EXT 
+\char e01B  TW_EXT_14 QUESSE_EXT HWESTA_EXT
+\char e01C  TW_EXT_21 ANDO_EXT ANTO_EXT
 \char e01D  TW_EXT_22 UMBAR_EXT AMPA_EXT
 \char e01E  TW_EXT_23 ANGA_EXT ANCA_EXT
 \char e01F  TW_EXT_24 UNGWE_EXT UNQUE_EXT
@@ -95,37 +95,37 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 \char e020  TW_71 ROMEN
 \char e021  TW_72 ARDA
 \char e022  TW_73 LAMBE_NO_LIG \** LAMBE **\
-\char e023  TW_74 ALDA 
-\char e024  TW_81 SILME 
-\char e025  TW_82 SILME_NUQUERNA 
+\char e023  TW_74 ALDA
+\char e024  TW_81 SILME
+\char e025  TW_82 SILME_NUQUERNA
 \char e026  TW_83 ESSE
 \char e027  TW_84 ESSE_NUQUERNA
-\char e028  TW_91 HYARMEN 
-\char e029  TW_92 HWESTA_SINDARINWA 
+\char e028  TW_91 HYARMEN
+\char e029  TW_92 HWESTA_SINDARINWA
 \char e02A  TW_93 YANTA
 \char e02B  TW_94 URE
 \char e02C  ARA
 \char e02D  HALLA
 \char e02E  TELCO
-\**.....**\    
+\**.....**\
 
 \char e030  REVERSED_OSSE
-\char e031  BOMBADIL_W 
+\char e031  BOMBADIL_W
 \char e032  OSSE
-\**.....**\ 
+\**.....**\
 \char e034  LIGATING_SHORT_CARRIER
-\**..D..**\ 
+\**..D..**\
 \char e036  ANNA_OPEN
 \char e037  CHRISTOPHER_QU
-\**..D..**\ 
+\**..D..**\
 \char e039  BOMBADIL_HW
-\char e03A  TW_MH MALTA_W_HOOK 
-\char e03B  TW_MH_BELERIANDIC VALA_W_HOOK 
+\char e03A  TW_MH MALTA_W_HOOK
+\char e03B  TW_MH_BELERIANDIC VALA_W_HOOK
 \char e03C  TW_HW_LOWDHAM HARP_SHAPED
 \char e03D  VAIA WAIA VAIYA
-\**..X..**\ 
-\**..X..**\ 
- 
+\**..X..**\
+\**..X..**\
+
 \char e040  ? \** LEGACY FONT **\
 \char e041  ? \** LEGACY FONT **\
 \char e042  ? \** LEGACY FONT **\
@@ -154,40 +154,40 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 \char e058  ? \** LEGACY FONT **\
 \char e059  ? \** LEGACY FONT **\
 \char e05A  ? \** LEGACY FONT **\
-\**.....**\ 
-\**.....**\ 
-\**.....**\ 
-\**.....**\ 
-\**.....**\ 
+\**.....**\
+\**.....**\
+\**.....**\
+\**.....**\
+\**.....**\
 
-\**..D..**\ 
-\**..D..**\ 
-\**..D..**\ 
-\**..D..**\ 
-\**..D..**\ 
+\**..D..**\
+\**..D..**\
+\**..D..**\
+\**..D..**\
+\**..D..**\
 \char e065  PUNCT_EXCLAM
 \char e066  PUNCT_INTERR
 \char e067  ELVISH_PAREN BOOKMARK_SIGN
-\char e068  PUNCT_TILD 
+\char e068  PUNCT_TILD
 \char e069  PUNCT_DTILD
 \char e06A  DQUOT_OPEN
 \char e06B  DQUOT_CLOSE
 \char e06C  THORIN_EXCLAMATION
-\**.....**\ 
-\**..X..**\ 
-\**..X..**\ 
+\**.....**\
+\**..X..**\
+\**..X..**\
 
 
-\char e070 NUM_0 
-\char e071 NUM_1 
-\char e072 NUM_2 
-\char e073 NUM_3 
-\char e074 NUM_4 
-\char e075 NUM_5 
-\char e076 NUM_6 
-\char e077 NUM_7 
-\char e078 NUM_8 
-\char e079 NUM_9 
+\char e070 NUM_0
+\char e071 NUM_1
+\char e072 NUM_2
+\char e073 NUM_3
+\char e074 NUM_4
+\char e075 NUM_5
+\char e076 NUM_6
+\char e077 NUM_7
+\char e078 NUM_8
+\char e079 NUM_9
 \char e07A NUM_10
 \char e07B NUM_11
 \char e07C NUM_12
@@ -196,7 +196,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 \char 204A OLD_ENGLISH_AND
 
 \char e03e SILME_NUQUERNA_ALT
-\char e06e RING_MARK_L 
+\char e06e RING_MARK_L
 \char e06f RING_MARK_R
 
 \** LEGACY SARINCE **\
@@ -222,166 +222,166 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 \** Consonant modifiers **\
 
 \char EC00 DASH_INF_XS
-\char EC01 DASH_INF_S   
-\char EC02 DASH_INF_L    
-\char EC0F LAMBE_MARK_DASH 
+\char EC01 DASH_INF_S
+\char EC02 DASH_INF_L
+\char EC0F LAMBE_MARK_DASH
 
 \char EC10 TILD_INF_XS
-\char EC11 TILD_INF_S   
-\char EC12 TILD_INF_L            
-\char EC1F LAMBE_MARK_TILD   
+\char EC11 TILD_INF_S
+\char EC12 TILD_INF_L
+\char EC1F LAMBE_MARK_TILD
 
 \char EC20 DASH_SUP_XS
-\char EC21 DASH_SUP_S                      
-\char EC22 DASH_SUP_L  
+\char EC21 DASH_SUP_S
+\char EC22 DASH_SUP_L
 
 \char EC30 TILD_SUP_XS
-\char EC31 TILD_SUP_S  
-\char EC32 TILD_SUP_L                       
+\char EC31 TILD_SUP_S
+\char EC32 TILD_SUP_L
 
 \** Base tehtar **\
 
-\char EC40 A_TEHTA_XS  
-\char EC41 A_TEHTA_S 
-\char EC42 A_TEHTA_L 
-\char EC43 A_TEHTA_XL       
+\char EC40 A_TEHTA_XS
+\char EC41 A_TEHTA_S
+\char EC42 A_TEHTA_L
+\char EC43 A_TEHTA_XL
 
-\char EC50 E_TEHTA_XS         
+\char EC50 E_TEHTA_XS
 \char EC51 E_TEHTA_S
-\char EC52 E_TEHTA_L 
-\char EC53 E_TEHTA_XL  
+\char EC52 E_TEHTA_L
+\char EC53 E_TEHTA_XL
 
-\char EC60 I_TEHTA_XS   
-\char EC61 I_TEHTA_S  
-\char EC62 I_TEHTA_L   
-\char EC63 I_TEHTA_XL   
-      
-\char EC70 O_TEHTA_XS              
-\char EC71 O_TEHTA_S    
-\char EC72 O_TEHTA_L   
-\char EC73 O_TEHTA_XL 
-      
-\char EC80 U_TEHTA_XS 
-\char EC81 U_TEHTA_S 
-\char EC82 U_TEHTA_L    
-\char EC83 U_TEHTA_XL  
+\char EC60 I_TEHTA_XS
+\char EC61 I_TEHTA_S
+\char EC62 I_TEHTA_L
+\char EC63 I_TEHTA_XL
+
+\char EC70 O_TEHTA_XS
+\char EC71 O_TEHTA_S
+\char EC72 O_TEHTA_L
+\char EC73 O_TEHTA_XL
+
+\char EC80 U_TEHTA_XS
+\char EC81 U_TEHTA_S
+\char EC82 U_TEHTA_L
+\char EC83 U_TEHTA_XL
 
 \** Inf tehtar **\
 
-\char EC90 THINF_TDOT_XS       
-\char EC91 THINF_TDOT_L           
-\char EC92 THINF_TDOT_S           
+\char EC90 THINF_TDOT_XS
+\char EC91 THINF_TDOT_L
+\char EC92 THINF_TDOT_S
 \char EC93 THINF_TDOT_XL
 
-\char ECA0 THINF_ACCENT_XS    
-\char ECA1 THINF_ACCENT_S       
-\char ECA2 THINF_ACCENT_L                                                         
-\char ECA3 THINF_ACCENT_XL 
+\char ECA0 THINF_ACCENT_XS
+\char ECA1 THINF_ACCENT_S
+\char ECA2 THINF_ACCENT_L
+\char ECA3 THINF_ACCENT_XL
 
-\char ECB0 THINF_DOT_XS        
-\char ECB1 THINF_DOT_S           
-\char ECB2 THINF_DOT_L           
+\char ECB0 THINF_DOT_XS
+\char ECB1 THINF_DOT_S
+\char ECB2 THINF_DOT_L
 \char ECB3 THINF_DOT_XL
-\char ECBF LAMBE_MARK_DOT  
+\char ECBF LAMBE_MARK_DOT
 
-\char ECC0 THINF_CURL_XS          
-\char ECC1 THINF_CURL_S           
-\char ECC2 THINF_CURL_L           
-\char ECC3 THINF_CURL_XL     
- 
-\char ECD0 THINF_CURL_INV_XS                                
-\char ECD1 THINF_CURL_INV_S                                                            
-\char ECD2 THINF_CURL_INV_L                                
-\char ECD3 THINF_CURL_INV_XL 
+\char ECC0 THINF_CURL_XS
+\char ECC1 THINF_CURL_S
+\char ECC2 THINF_CURL_L
+\char ECC3 THINF_CURL_XL
+
+\char ECD0 THINF_CURL_INV_XS
+\char ECD1 THINF_CURL_INV_S
+\char ECD2 THINF_CURL_INV_L
+\char ECD3 THINF_CURL_INV_XL
 
 \** Double tehtar **\
 
 \char ECE0 A_TEHTA_DOUBLE_XS
-\char ECE1 A_TEHTA_DOUBLE_S 
-\char ECE2 A_TEHTA_DOUBLE_L 
+\char ECE1 A_TEHTA_DOUBLE_S
+\char ECE2 A_TEHTA_DOUBLE_L
 \char ECE3 A_TEHTA_DOUBLE_XL
 
 \char ECF0 E_TEHTA_DOUBLE_XS
-\char ECF1 E_TEHTA_DOUBLE_S 
-\char ECF2 E_TEHTA_DOUBLE_L 
+\char ECF1 E_TEHTA_DOUBLE_S
+\char ECF2 E_TEHTA_DOUBLE_L
 \char ECF3 E_TEHTA_DOUBLE_XL
 
-\char ED00 THSUP_DDOT_XS    Y_TEHTA_XS    I_TEHTA_DOUBLE_XS         
-\char ED01 THSUP_DDOT_S     Y_TEHTA_S     I_TEHTA_DOUBLE_S       
-\char ED02 THSUP_DDOT_L     Y_TEHTA_L     I_TEHTA_DOUBLE_L          
-\char ED03 THSUP_DDOT_XL    Y_TEHTA_XL    I_TEHTA_DOUBLE_XL     
+\char ED00 THSUP_DDOT_XS    Y_TEHTA_XS    I_TEHTA_DOUBLE_XS
+\char ED01 THSUP_DDOT_S     Y_TEHTA_S     I_TEHTA_DOUBLE_S
+\char ED02 THSUP_DDOT_L     Y_TEHTA_L     I_TEHTA_DOUBLE_L
+\char ED03 THSUP_DDOT_XL    Y_TEHTA_XL    I_TEHTA_DOUBLE_XL
 
 \char ED10 O_TEHTA_DOUBLE_XS
-\char ED11 O_TEHTA_DOUBLE_S 
-\char ED12 O_TEHTA_DOUBLE_L 
-\char ED13 O_TEHTA_DOUBLE_XL 
+\char ED11 O_TEHTA_DOUBLE_S
+\char ED12 O_TEHTA_DOUBLE_L
+\char ED13 O_TEHTA_DOUBLE_XL
 
 \char ED20 U_TEHTA_DOUBLE_XS
-\char ED21 U_TEHTA_DOUBLE_S 
-\char ED22 U_TEHTA_DOUBLE_L 
+\char ED21 U_TEHTA_DOUBLE_S
+\char ED22 U_TEHTA_DOUBLE_L
 \char ED23 U_TEHTA_DOUBLE_XL
 
 \** Double inf tehtar **\
 
-\char ED30 THINF_DSTROKE_XS                               
-\char ED31 THINF_DSTROKE_S       
-\char ED32 THINF_DSTROKE_L                         
-\char ED33 THINF_DSTROKE_XL 
-\char ED3F LAMBE_MARK_DSTROKE 
+\char ED30 THINF_DSTROKE_XS
+\char ED31 THINF_DSTROKE_S
+\char ED32 THINF_DSTROKE_L
+\char ED33 THINF_DSTROKE_XL
+\char ED3F LAMBE_MARK_DSTROKE
 
-\char ED40 THINF_DDOT_XS          
-\char ED41 THINF_DDOT_S           
-\char ED42 THINF_DDOT_L           
-\char ED43 THINF_DDOT_XL 
-\char ED4F LAMBE_MARK_DDOT    
+\char ED40 THINF_DDOT_XS
+\char ED41 THINF_DDOT_S
+\char ED42 THINF_DDOT_L
+\char ED43 THINF_DDOT_XL
+\char ED4F LAMBE_MARK_DDOT
 
 \** Labializer **\
 
-\char ED50 WA_TEHTA_XS           
-\char ED51 WA_TEHTA_S           
-\char ED52 WA_TEHTA_L           
-\char ED53 WA_TEHTA_XL  
+\char ED50 WA_TEHTA_XS
+\char ED51 WA_TEHTA_S
+\char ED52 WA_TEHTA_L
+\char ED53 WA_TEHTA_XL
 
 \** Thinnas **\
 
-\char ED60 THINF_STROKE_XS                                 
-\char ED61 THINF_STROKE_S                                 
-\char ED62 THINF_STROKE_L                                 
-\char ED63 THINF_STROKE_XL    
+\char ED60 THINF_STROKE_XS
+\char ED61 THINF_STROKE_S
+\char ED62 THINF_STROKE_L
+\char ED63 THINF_STROKE_XL
 
 \** MSB Marker **\
 
-\char ED70 TH_SUB_CIRC_XS         
-\char ED71 TH_SUB_CIRC_S           
-\char ED72 TH_SUB_CIRC_L                                  
-\char ED73 TH_SUB_CIRC_XL  
+\char ED70 TH_SUB_CIRC_XS
+\char ED71 TH_SUB_CIRC_S
+\char ED72 TH_SUB_CIRC_L
+\char ED73 TH_SUB_CIRC_XL
 
 \** Other UP Tehtar **\
 
-\char ED80 A_TEHTA_INV_XS 
-\char ED81 A_TEHTA_INV_S         
-\char ED82 A_TEHTA_INV_L         
-\char ED83 A_TEHTA_INV_XL    
+\char ED80 A_TEHTA_INV_XS
+\char ED81 A_TEHTA_INV_S
+\char ED82 A_TEHTA_INV_L
+\char ED83 A_TEHTA_INV_XL
 
-\char ED90 THSUP_TICK_INV_XS    A_TEHTA_CIRCUM_XS       
-\char ED91 THSUP_TICK_INV_S     A_TEHTA_CIRCUM_S        
-\char ED92 THSUP_TICK_INV_L     A_TEHTA_CIRCUM_L         
-\char ED93 THSUP_TICK_INV_XL    A_TEHTA_CIRCUM_XL   
+\char ED90 THSUP_TICK_INV_XS    A_TEHTA_CIRCUM_XS
+\char ED91 THSUP_TICK_INV_S     A_TEHTA_CIRCUM_S
+\char ED92 THSUP_TICK_INV_L     A_TEHTA_CIRCUM_L
+\char ED93 THSUP_TICK_INV_XL    A_TEHTA_CIRCUM_XL
 
-\char EDA0 THSUP_TICK_XS          
-\char EDA1 THSUP_TICK_S           
-\char EDA2 THSUP_TICK_L           
-\char EDA3 THSUP_TICK_XL     
-                                                          
-\char EDB0 THSUP_LAMBDA_XS         
-\char EDB1 THSUP_LAMBDA_S          
-\char EDB2 THSUP_LAMBDA_L          
-\char EDB3 THSUP_LAMBDA_XL  
+\char EDA0 THSUP_TICK_XS
+\char EDA1 THSUP_TICK_S
+\char EDA2 THSUP_TICK_L
+\char EDA3 THSUP_TICK_XL
+
+\char EDB0 THSUP_LAMBDA_XS
+\char EDB1 THSUP_LAMBDA_S
+\char EDB2 THSUP_LAMBDA_L
+\char EDB3 THSUP_LAMBDA_XL
 
 \char EDC0 E_TEHTA_GRAVE_XS
-\char EDC1 E_TEHTA_GRAVE_S 
-\char EDC2 E_TEHTA_GRAVE_L 
-\char EDC3 E_TEHTA_GRAVE_XL 
+\char EDC1 E_TEHTA_GRAVE_S
+\char EDC2 E_TEHTA_GRAVE_L
+\char EDC3 E_TEHTA_GRAVE_XL
 
 \char EDD0 BREVE_TEHTA_XS
 \char EDD1 BREVE_TEHTA_S
@@ -2866,6 +2866,85 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   \end
 \end
 
+\beg virtual SARINCE_ENDING_LONG
+  \beg class SHOOK_LEFT_L
+    CALMA
+    QUESSE
+    ANGA
+    UNGWE
+    AHA
+    HWESTA
+    ANCA
+    UNQUE
+    NOLDO
+    NWALME
+    ANNA
+    VILYA
+    TW_EXT_13
+    TW_EXT_14
+    TW_EXT_23
+    TW_EXT_24
+    SILME
+    HWESTA_SINDARINWA
+    OSSE
+    VALA_W_HOOK
+    ANCA_CLOSED
+  \end
+  \beg class SHOOK_RIGHT_L
+    TELCO
+    ARA
+    HALLA
+    TINCO
+    PARMA
+    ANDO
+    UMBAR
+    SULE
+    FORMEN
+    ANTO
+    AMPA
+    NUMEN
+    MALTA
+    ORE
+    VALA
+    TW_EXT_11
+    TW_EXT_12
+    TW_EXT_21
+    TW_EXT_22
+    ROMEN
+    ARDA
+    LAMBE
+    LAMBE_LIG
+    LAMBE_NO_LIG
+    ALDA
+    SILME_NUQUERNA
+    SILME_NUQUERNA_ALT
+    ESSE
+    ESSE_NUQUERNA
+    HYARMEN
+    YANTA
+    URE
+    VAIA
+    MALTA_W_HOOK
+    SHOOK_BEAUTIFUL
+    HARP_SHAPED
+    AHA_TINCO
+    HWESTA_TINCO
+    NUM_0
+    NUM_1
+    NUM_2
+    NUM_3
+    NUM_4
+    NUM_5
+    NUM_6
+    NUM_7
+    NUM_8
+    NUM_9
+    NUM_10
+    NUM_11
+  \end
+\end
+
+
 \beg virtual LAMBE
   \reversed
   \default LAMBE_NO_LIG
@@ -2946,3 +3025,29 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   \end
 \end
 
+\beg swap SARINCE
+  A_TEHTA
+  A_TEHTA_CIRCUM
+  A_TEHTA_CIRCUM_REVERSED
+  A_TEHTA_DOUBLE
+  A_TEHTA_INF
+  A_TEHTA_REVERSED
+  CIRC_TEHTA_INF
+  E_TEHTA
+  E_TEHTA_DOUBLE
+  E_TEHTA_DOUBLE_INF
+  E_TEHTA_GRAVE
+  E_TEHTA_GRAVE_INF
+  E_TEHTA_INF
+  I_TEHTA
+  I_TEHTA_DOUBLE
+  O_TEHTA
+  O_TEHTA_DOUBLE
+  O_TEHTA_INF
+  THINNAS
+  UNUTIXE
+  U_TEHTA
+  U_TEHTA_DOUBLE
+  U_TEHTA_INF
+  WA_TEHTA
+\end
