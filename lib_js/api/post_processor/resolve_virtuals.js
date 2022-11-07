@@ -1,8 +1,8 @@
 /*
 
 Glǽmscribe (also written Glaemscribe) is a software dedicated to
-the transcription of texts between writing systems, and more 
-specifically dedicated to the transcription of J.R.R. Tolkien's 
+the transcription of texts between writing systems, and more
+specifically dedicated to the transcription of J.R.R. Tolkien's
 invented languages to some of his devised writing systems.
 
 Copyright (C) 2015 Benjamin Babut (Talagan).
@@ -27,15 +27,15 @@ Glaemscribe.ResolveVirtualsPostProcessorOperator = function(mode, glaeml_element
 {
   Glaemscribe.PostProcessorOperator.call(this, mode, glaeml_element); //super
   return this;
-} 
-Glaemscribe.ResolveVirtualsPostProcessorOperator.inheritsFrom( Glaemscribe.PostProcessorOperator );  
+}
+Glaemscribe.ResolveVirtualsPostProcessorOperator.inheritsFrom( Glaemscribe.PostProcessorOperator );
 
 
 Glaemscribe.ResolveVirtualsPostProcessorOperator.prototype.finalize = function(trans_options)
 {
   Glaemscribe.PostProcessorOperator.prototype.finalize.call(this, trans_options); // super
   this.last_triggers = {}; // Allocate here to optimize
-}  
+}
 
 Glaemscribe.ResolveVirtualsPostProcessorOperator.prototype.reset_trigger_states = function(charset) {
   var op = this;
@@ -55,9 +55,8 @@ Glaemscribe.ResolveVirtualsPostProcessorOperator.prototype.apply_loop = function
 
   if(c == null)
     return;
-  
+
   if(c.is_virtual() && (reversed == c.reversed)) {
-    
     // Try to replace
     var last_trigger = op.last_triggers[c.object_reference];
     if(last_trigger != null) {
@@ -87,25 +86,44 @@ Glaemscribe.ResolveVirtualsPostProcessorOperator.prototype.apply_sequences = fun
   return ret;
 }
 
-Glaemscribe.ResolveVirtualsPostProcessorOperator.prototype.apply = function(tokens, charset) {   
+Glaemscribe.ResolveVirtualsPostProcessorOperator.prototype.apply_swaps = function(charset, tokens) {
+  for(var idx = 0 ; idx<tokens.length - 1 ; idx++) {
+    var tok   = tokens[idx];
+    var tgt   = tokens[idx+1];
+    var trig  = charset.swap_for_trigger(tok);
+
+    if(trig && trig.has_target(tgt)) {
+      tokens[idx+1] = tok
+      tokens[idx]   = tgt
+    }
+  }
+  return tokens;
+}
+
+Glaemscribe.ResolveVirtualsPostProcessorOperator.prototype.apply = function(tokens, charset) {
   var op = this;
-  
+
+  // Apply sequences first
   tokens = op.apply_sequences(charset, tokens);
-  
+
+  tokens = op.apply_swaps(charset, tokens);
+
   // Clone the array so that we can perform diacritics and ligatures without interfering
   var new_tokens = tokens.slice(0);
-  
+
+  // Resolve virtuals
   op.reset_trigger_states(charset);
   glaemEach(tokens, function(idx,token) {
     op.apply_loop(charset,tokens,new_tokens,false,token,idx);
   });
-  
+
+  // Resolve reversed virtuals
   op.reset_trigger_states(charset);
   glaemEachReversed(tokens, function(idx,token) {
-    op.apply_loop(charset,tokens,new_tokens,true,token,idx);    
+    op.apply_loop(charset,tokens,new_tokens,true,token,idx);
   });
   return new_tokens;
-}  
+}
 
-Glaemscribe.resource_manager.register_post_processor_class("resolve_virtuals", Glaemscribe.ResolveVirtualsPostProcessorOperator);    
+Glaemscribe.resource_manager.register_post_processor_class("resolve_virtuals", Glaemscribe.ResolveVirtualsPostProcessorOperator);
 

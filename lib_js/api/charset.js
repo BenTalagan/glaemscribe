@@ -1,8 +1,8 @@
 /*
 
 Glǽmscribe (also written Glaemscribe) is a software dedicated to
-the transcription of texts between writing systems, and more 
-specifically dedicated to the transcription of J.R.R. Tolkien's 
+the transcription of texts between writing systems, and more
+specifically dedicated to the transcription of J.R.R. Tolkien's
 invented languages to some of his devised writing systems.
 
 Copyright (C) 2015 Benjamin Babut (Talagan).
@@ -40,6 +40,45 @@ Glaemscribe.Char.prototype.is_sequence = function()
 Glaemscribe.Char.prototype.output = function()
 {
   return this.str;
+}
+
+
+Glaemscribe.Swap = function(trigger, target_list) {
+  this.trigger = trigger;
+  this.targets = {};
+  this.target_list = target_list;
+}
+
+
+Glaemscribe.Swap.prototype.finalize = function(charset) {
+  var sw = this;
+
+  sw.lookup_table = {};
+
+  var trig = charset.n2c(sw.trigger);
+  if(!trig) {
+    charset.errors.push(new Glaemscribe.Glaeml.Error(sw.line, " Swap operator triggers " + sw.trigger + " which does not exist in charset."));
+  }
+
+  glaemEach(sw.target_list, function(i) {
+    var target_id = sw.target_list[i];
+    var c = charset.n2c(target_id);
+    if(!c) {
+      charset.errors.push(new Glaemscribe.Glaeml.Error(sw.line, " Swap operator targets " + target_id + " which does not exist in charset."));
+    } else {
+      for(var i = 0; i<c.names.length; i++) {
+        var n = c.names[i];
+        sw.targets[n]  = c;
+      }
+    }
+  });
+
+  return trig;
+}
+
+Glaemscribe.Swap.prototype.has_target = function(tname) {
+  var t = this.targets[tname];
+  return (t !== undefined && t !== null);
 }
 
 // ======================
@@ -81,12 +120,12 @@ Glaemscribe.VirtualChar.prototype.output = function()
 Glaemscribe.VirtualChar.prototype.finalize = function()
 {
   var vc = this;
-  
+
   vc.lookup_table = {};
   glaemEach(vc.classes, function(_, vclass) {
     var result_char   = vclass.target;
     var trigger_chars = vclass.triggers;
-    
+
     glaemEach(trigger_chars, function(_,trigger_char) {
       var found = vc.lookup_table[trigger_char];
       if(found != null)
@@ -97,7 +136,7 @@ Glaemscribe.VirtualChar.prototype.finalize = function()
       {
         var rc = vc.charset.n2c(result_char);
         var tc = vc.charset.n2c(trigger_char);
-        
+
         if(rc == null) {
           vc.charset.errors.push(new Glaemscribe.Glaeml.Error(vc.line, "Trigger char " + trigger_char + " points to unknown result char " + result_char + "."));
         }
@@ -105,7 +144,7 @@ Glaemscribe.VirtualChar.prototype.finalize = function()
           vc.charset.errors.push(new Glaemscribe.Glaeml.Error(vc.line, "Unknown trigger char " + trigger_char + "."));
         }
         else if(rc instanceof Glaemscribe.VirtualChar) {
-          vc.charset.errors.push(new Glaemscribe.Glaeml.Error(vc.line, "Trigger char " + trigger_char + " points to another virtual char " + result_char + ". This is not supported!"));          
+          vc.charset.errors.push(new Glaemscribe.Glaeml.Error(vc.line, "Trigger char " + trigger_char + " points to another virtual char " + result_char + ". This is not supported!"));
         }
         else {
           glaemEach(tc.names, function(_,trigger_char_name) {
@@ -152,7 +191,7 @@ Glaemscribe.SequenceChar.prototype.str = function()
   // A sequence char should never arrive unreplaced
   return Glaemscribe.VIRTUAL_CHAR_OUTPUT;
 }
-  
+
 Glaemscribe.SequenceChar.prototype.finalize = function()
 {
   var sq = this;
@@ -162,17 +201,18 @@ Glaemscribe.SequenceChar.prototype.finalize = function()
   }
   glaemEach(sq.sequence, function(_,symbol) {
     if(!sq.charset.n2c(symbol))
-      sq.charset.errors.push(new Glaemscribe.Glaeml.Error(sq.line, "Sequence char " + symbol + "cannot be found in the charset."));     
+      sq.charset.errors.push(new Glaemscribe.Glaeml.Error(sq.line, "Sequence char " + symbol + "cannot be found in the charset."));
   });
 }
-    
+
 // =========================
 
 Glaemscribe.Charset = function(charset_name) {
-  
+
   this.name         = charset_name;
   this.chars        = [];
   this.errors       = [];
+  this.swaps        = [];
   return this;
 }
 
@@ -180,11 +220,11 @@ Glaemscribe.Charset.prototype.add_char = function(line, code, names)
 {
   if(names == undefined || names.length == 0 || names.indexOf("?") != -1) // Ignore characters with '?'
     return;
-  
-  var c     = new Glaemscribe.Char();    
+
+  var c     = new Glaemscribe.Char();
   c.line    = line;
   c.code    = code;
-  c.names   = names;    
+  c.names   = names;
   c.str     = String.fromCodePoint(code);
   c.charset = this;
   this.chars.push(c);
@@ -194,38 +234,48 @@ Glaemscribe.Charset.prototype.add_virtual_char = function(line, classes, names, 
 {
   if(names == undefined || names.length == 0 || names.indexOf("?") != -1) // Ignore characters with '?'
     return;
- 
-  var c      = new Glaemscribe.VirtualChar();    
+
+  var c      = new Glaemscribe.VirtualChar();
   c.line     = line;
   c.names    = names;
   c.classes  = classes; // We'll check errors in finalize
   c.charset  = this;
   c.default  = deflt;
   c.reversed = reversed;
-  this.chars.push(c);  
+  this.chars.push(c);
 }
 
 Glaemscribe.Charset.prototype.add_sequence_char = function(line, names, seq) {
-  
+
   if(names == undefined || names.length == 0 || names.indexOf("?") != -1) // Ignore characters with '?'
     return;
- 
-  var c         = new Glaemscribe.SequenceChar();    
+
+  var c         = new Glaemscribe.SequenceChar();
   c.line        = line;
   c.names       = names;
   c.sequence    = stringListToCleanArray(seq,/\s/);
   c.charset     = this;
-  this.chars.push(c); 
+  this.chars.push(c);
 }
+
+Glaemscribe.Charset.prototype.add_swap = function(line, target, triggers) {
+  if(target == undefined || target == "" || triggers == undefined || triggers.length == 0)
+    return;
+
+  var s   = new Glaemscribe.Swap(target, triggers);
+  s.line  = line;
+  this.swaps.push(s);
+};
 
 Glaemscribe.Charset.prototype.finalize = function()
 {
   var charset = this;
-  
+
   charset.errors         = [];
   charset.lookup_table   = {};
-  charset.virtual_chars  = []
-  
+  charset.virtual_chars  = [];
+  charset.swap_lookup    = {};
+
   charset.chars = charset.chars.sort(function(c1,c2) {
     if(c1.is_virtual() && c2.is_virtual())
       return c1.names[0].localeCompare(c2.names[0]);
@@ -233,13 +283,13 @@ Glaemscribe.Charset.prototype.finalize = function()
       return 1;
     if(c2.is_virtual())
       return -1;
-    
+
     return (c1.code - c2.code);
   });
-  
+
   for(var i=0;i<charset.chars.length;i++)
   {
-    var c = charset.chars[i];  
+    var c = charset.chars[i];
     for(var j=0;j<c.names.length;j++)
     {
       var cname = c.names[j];
@@ -250,22 +300,37 @@ Glaemscribe.Charset.prototype.finalize = function()
         charset.lookup_table[cname] = c;
     }
   }
-  
+
   glaemEach(charset.chars, function(_,c) {
     if(c.is_virtual()) {
       c.finalize();
       charset.virtual_chars.push(c);
     }
   });
-  
+
   glaemEach(charset.chars, function(_,c) {
      if(c.is_sequence()) {
        c.finalize();
      }
+  });
+
+  glaemEach(charset.swaps, function(_,s) {
+    var trig = s.finalize(charset);
+    if(trig) {
+      for(var i=0;i<trig.names.length;i++) {
+        var n = trig.names[i];
+        charset.swap_lookup[n] = s;
+      }
+    }
   });
 }
 
 Glaemscribe.Charset.prototype.n2c = function(cname)
 {
   return this.lookup_table[cname];
+}
+
+Glaemscribe.Charset.prototype.swap_for_trigger = function(trigger_name)
+{
+  return this.swap_lookup[trigger_name];
 }

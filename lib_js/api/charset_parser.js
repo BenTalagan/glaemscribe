@@ -1,8 +1,8 @@
 /*
 
 Glǽmscribe (also written Glaemscribe) is a software dedicated to
-the transcription of texts between writing systems, and more 
-specifically dedicated to the transcription of J.R.R. Tolkien's 
+the transcription of texts between writing systems, and more
+specifically dedicated to the transcription of J.R.R. Tolkien's
 invented languages to some of his devised writing systems.
 
 Copyright (C) 2015 Benjamin Babut (Talagan).
@@ -37,7 +37,7 @@ Glaemscribe.CharsetParser.prototype.parse_raw = function(charset_name, raw)
     charset.errors = doc.errors;
     return charset;
   }
- 
+
   var chars   = doc.root_node.gpath('char');
 
   for(var c=0;c<chars.length;c++)
@@ -46,15 +46,27 @@ Glaemscribe.CharsetParser.prototype.parse_raw = function(charset_name, raw)
     var code    = parseInt(char.args[0],16);
     var names   = char.args.slice(1);
     charset.add_char(char.line, code, names)
-  }  
-  
+  }
+
   glaemEach(doc.root_node.gpath("seq"), function(_,seq_elemnt) {
     var names       = seq_elemnt.args;
-    var child_node  = seq_elemnt.children[0];   
+    var child_node  = seq_elemnt.children[0];
     var seq         = (child_node && child_node.is_text())?(child_node.args[0]):("")
     charset.add_sequence_char(seq_elemnt.line,names,seq);
   });
-  
+
+  glaemEach(doc.root_node.gpath("swap"), function(_,element) {
+    var trigger_one      = element.args[0];
+
+    var text_lines  = element.children.
+      filter(function(c) { return c.is_text(); }).
+      map(function(c) { return c.args[0]; });
+
+      var second_triggers  = text_lines.join(" ").split(/\s/).filter(function(e) { return e !== '' });
+
+      charset.add_swap(element.line, trigger_one, second_triggers)
+  });
+
   glaemEach(doc.root_node.gpath("virtual"), function(_,virtual_element) {
     var names     = virtual_element.args;
     var classes   = [];
@@ -63,7 +75,7 @@ Glaemscribe.CharsetParser.prototype.parse_raw = function(charset_name, raw)
     glaemEach(virtual_element.gpath("class"), function(_,class_element) {
       var vc        = new Glaemscribe.VirtualChar.VirtualClass();
       vc.target     = class_element.args[0];
-      vc.triggers   = class_element.args.slice(1);   
+      vc.triggers   = class_element.args.slice(1);
 
       // Allow triggers to be defined inside the body of the class element
       var text_lines  = class_element.children.
@@ -83,14 +95,14 @@ Glaemscribe.CharsetParser.prototype.parse_raw = function(charset_name, raw)
     });
     charset.add_virtual_char(virtual_element.line,classes,names,reversed,deflt);
   });
-  
-  charset.finalize(); 
-  return charset;  
+
+  charset.finalize();
+  return charset;
 }
 
 Glaemscribe.CharsetParser.prototype.parse = function(charset_name) {
-  
+
   var raw     = Glaemscribe.resource_manager.raw_charsets[charset_name];
-  
+
   return this.parse_raw(charset_name, raw);
 }

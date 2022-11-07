@@ -189,6 +189,9 @@ Glaemscribe.TranscriptionPostProcessor.prototype.apply = function(tokens, out_ch
 {
   var out_space_str     = " ";
 
+  // Cleanup the output of the chain by removing empty tokens
+  tokens = tokens.filter(function(tok) { return tok !== "" });
+
   for(var i=0;i<this.operators.length;i++)
   {
     var operator  = this.operators[i];
@@ -197,12 +200,12 @@ Glaemscribe.TranscriptionPostProcessor.prototype.apply = function(tokens, out_ch
 
   if(this.out_space != null)
   {
-    out_space_str       = this.out_space.map(function(token) { 
+    out_space_str       = this.out_space.map(function(token) {
       var toktrans      = out_charset.n2c(token);
       if(!toktrans)
         return Glaemscribe.UNKNOWN_CHAR_OUTPUT;
-      
-      return toktrans.output() 
+
+      return toktrans.output()
     }).join("");
   }
 
