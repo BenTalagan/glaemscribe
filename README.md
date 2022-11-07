@@ -48,6 +48,7 @@ Changelog
 
 | Version | Date | Comment |
 |---------|------|---------|
+| 1.3.1 | 11/07/2022 | Better handling of tengwa+sarince+tehta combinations for old fonts |
 | 1.3.0 | 09/23/2022 | Text-To-Speak engine based on eSpeakNG / emscripten<br> [English] Phonemic tengwar mode<br>[English] Phonemic cirth mode |
 | 1.2.1 | Unreleased | [Japanese] Corrected 億 to 10^8, added support for セィ and ゼィ. Thanks to Roman Rausch for his feedback!<br> Refactored JS array functions to prevent interactions with other libraries. Thanks to Troy Alford for the fix!<br> Refactored charset virtual chars in a more git friendly format.<br>[Lang Belta] Added Tengwar mode by Da Def (exotic experiment!) |
 | 1.2.0 | 08/04/2019 | Added support for hybrid unicode 'GlaemUnicode' fonts (see the font directory for details).<br>Added support for the Free Tengwar Font project fonts (experimental).<br>Added support for {UNI_XXX} unicode entry variables in rule source member.<br>Added "sequence" type for virtual chars.<br>Added "pointer" (dynamic) variable type using the '<=>' syntax.<br>Added macro/deploy directives for declaring and using macros and avoid code repetition.<br>Cross rules can now use a variable as cross schema.<br>[Khuzdul] : Added missing long o.<br>[Sindarin][All Modes] Reworked and uniformized phonology disambiguation (median dot, hyphen, ng, ngw).<br>[Japanese] Added japanese tengwar mode.<br>Bug fixes. |
