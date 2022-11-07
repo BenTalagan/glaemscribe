@@ -19,7 +19,7 @@ GNU Affero General Public License for more details.
 You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-Version : 1.3.0
+Version : 1.3.1
 */
 
 "use strict";
@@ -351,6 +351,45 @@ Glaemscribe.Char.prototype.output = function()
   return this.str;
 }
 
+
+Glaemscribe.Swap = function(trigger, target_list) {
+  this.trigger = trigger;
+  this.targets = {};
+  this.target_list = target_list;
+}
+
+
+Glaemscribe.Swap.prototype.finalize = function(charset) {
+  var sw = this;
+
+  sw.lookup_table = {};
+
+  var trig = charset.n2c(sw.trigger);
+  if(!trig) {
+    charset.errors.push(new Glaemscribe.Glaeml.Error(sw.line, " Swap operator triggers " + sw.trigger + " which does not exist in charset."));
+  }
+
+  glaemEach(sw.target_list, function(i) {
+    var target_id = sw.target_list[i];
+    var c = charset.n2c(target_id);
+    if(!c) {
+      charset.errors.push(new Glaemscribe.Glaeml.Error(sw.line, " Swap operator targets " + target_id + " which does not exist in charset."));
+    } else {
+      for(var i = 0; i<c.names.length; i++) {
+        var n = c.names[i];
+        sw.targets[n]  = c;
+      }
+    }
+  });
+
+  return trig;
+}
+
+Glaemscribe.Swap.prototype.has_target = function(tname) {
+  var t = this.targets[tname];
+  return (t !== undefined && t !== null);
+}
+
 // ======================
 
 Glaemscribe.VirtualChar = function()
@@ -390,12 +429,12 @@ Glaemscribe.VirtualChar.prototype.output = function()
 Glaemscribe.VirtualChar.prototype.finalize = function()
 {
   var vc = this;
-  
+
   vc.lookup_table = {};
   glaemEach(vc.classes, function(_, vclass) {
     var result_char   = vclass.target;
     var trigger_chars = vclass.triggers;
-    
+
     glaemEach(trigger_chars, function(_,trigger_char) {
       var found = vc.lookup_table[trigger_char];
       if(found != null)
@@ -406,7 +445,7 @@ Glaemscribe.VirtualChar.prototype.finalize = function()
       {
         var rc = vc.charset.n2c(result_char);
         var tc = vc.charset.n2c(trigger_char);
-        
+
         if(rc == null) {
           vc.charset.errors.push(new Glaemscribe.Glaeml.Error(vc.line, "Trigger char " + trigger_char + " points to unknown result char " + result_char + "."));
         }
@@ -414,7 +453,7 @@ Glaemscribe.VirtualChar.prototype.finalize = function()
           vc.charset.errors.push(new Glaemscribe.Glaeml.Error(vc.line, "Unknown trigger char " + trigger_char + "."));
         }
         else if(rc instanceof Glaemscribe.VirtualChar) {
-          vc.charset.errors.push(new Glaemscribe.Glaeml.Error(vc.line, "Trigger char " + trigger_char + " points to another virtual char " + result_char + ". This is not supported!"));          
+          vc.charset.errors.push(new Glaemscribe.Glaeml.Error(vc.line, "Trigger char " + trigger_char + " points to another virtual char " + result_char + ". This is not supported!"));
         }
         else {
           glaemEach(tc.names, function(_,trigger_char_name) {
@@ -461,7 +500,7 @@ Glaemscribe.SequenceChar.prototype.str = function()
   // A sequence char should never arrive unreplaced
   return Glaemscribe.VIRTUAL_CHAR_OUTPUT;
 }
-  
+
 Glaemscribe.SequenceChar.prototype.finalize = function()
 {
   var sq = this;
@@ -471,17 +510,18 @@ Glaemscribe.SequenceChar.prototype.finalize = function()
   }
   glaemEach(sq.sequence, function(_,symbol) {
     if(!sq.charset.n2c(symbol))
-      sq.charset.errors.push(new Glaemscribe.Glaeml.Error(sq.line, "Sequence char " + symbol + "cannot be found in the charset."));     
+      sq.charset.errors.push(new Glaemscribe.Glaeml.Error(sq.line, "Sequence char " + symbol + "cannot be found in the charset."));
   });
 }
-    
+
 // =========================
 
 Glaemscribe.Charset = function(charset_name) {
-  
+
   this.name         = charset_name;
   this.chars        = [];
   this.errors       = [];
+  this.swaps        = [];
   return this;
 }
 
@@ -489,11 +529,11 @@ Glaemscribe.Charset.prototype.add_char = function(line, code, names)
 {
   if(names == undefined || names.length == 0 || names.indexOf("?") != -1) // Ignore characters with '?'
     return;
-  
-  var c     = new Glaemscribe.Char();    
+
+  var c     = new Glaemscribe.Char();
   c.line    = line;
   c.code    = code;
-  c.names   = names;    
+  c.names   = names;
   c.str     = String.fromCodePoint(code);
   c.charset = this;
   this.chars.push(c);
@@ -503,38 +543,48 @@ Glaemscribe.Charset.prototype.add_virtual_char = function(line, classes, names, 
 {
   if(names == undefined || names.length == 0 || names.indexOf("?") != -1) // Ignore characters with '?'
     return;
- 
-  var c      = new Glaemscribe.VirtualChar();    
+
+  var c      = new Glaemscribe.VirtualChar();
   c.line     = line;
   c.names    = names;
   c.classes  = classes; // We'll check errors in finalize
   c.charset  = this;
   c.default  = deflt;
   c.reversed = reversed;
-  this.chars.push(c);  
+  this.chars.push(c);
 }
 
 Glaemscribe.Charset.prototype.add_sequence_char = function(line, names, seq) {
-  
+
   if(names == undefined || names.length == 0 || names.indexOf("?") != -1) // Ignore characters with '?'
     return;
- 
-  var c         = new Glaemscribe.SequenceChar();    
+
+  var c         = new Glaemscribe.SequenceChar();
   c.line        = line;
   c.names       = names;
   c.sequence    = stringListToCleanArray(seq,/\s/);
   c.charset     = this;
-  this.chars.push(c); 
+  this.chars.push(c);
 }
+
+Glaemscribe.Charset.prototype.add_swap = function(line, target, triggers) {
+  if(target == undefined || target == "" || triggers == undefined || triggers.length == 0)
+    return;
+
+  var s   = new Glaemscribe.Swap(target, triggers);
+  s.line  = line;
+  this.swaps.push(s);
+};
 
 Glaemscribe.Charset.prototype.finalize = function()
 {
   var charset = this;
-  
+
   charset.errors         = [];
   charset.lookup_table   = {};
-  charset.virtual_chars  = []
-  
+  charset.virtual_chars  = [];
+  charset.swap_lookup    = {};
+
   charset.chars = charset.chars.sort(function(c1,c2) {
     if(c1.is_virtual() && c2.is_virtual())
       return c1.names[0].localeCompare(c2.names[0]);
@@ -542,13 +592,13 @@ Glaemscribe.Charset.prototype.finalize = function()
       return 1;
     if(c2.is_virtual())
       return -1;
-    
+
     return (c1.code - c2.code);
   });
-  
+
   for(var i=0;i<charset.chars.length;i++)
   {
-    var c = charset.chars[i];  
+    var c = charset.chars[i];
     for(var j=0;j<c.names.length;j++)
     {
       var cname = c.names[j];
@@ -559,24 +609,39 @@ Glaemscribe.Charset.prototype.finalize = function()
         charset.lookup_table[cname] = c;
     }
   }
-  
+
   glaemEach(charset.chars, function(_,c) {
     if(c.is_virtual()) {
       c.finalize();
       charset.virtual_chars.push(c);
     }
   });
-  
+
   glaemEach(charset.chars, function(_,c) {
      if(c.is_sequence()) {
        c.finalize();
      }
+  });
+
+  glaemEach(charset.swaps, function(_,s) {
+    var trig = s.finalize(charset);
+    if(trig) {
+      for(var i=0;i<trig.names.length;i++) {
+        var n = trig.names[i];
+        charset.swap_lookup[n] = s;
+      }
+    }
   });
 }
 
 Glaemscribe.Charset.prototype.n2c = function(cname)
 {
   return this.lookup_table[cname];
+}
+
+Glaemscribe.Charset.prototype.swap_for_trigger = function(trigger_name)
+{
+  return this.swap_lookup[trigger_name];
 }
 
 
@@ -600,7 +665,7 @@ Glaemscribe.CharsetParser.prototype.parse_raw = function(charset_name, raw)
     charset.errors = doc.errors;
     return charset;
   }
- 
+
   var chars   = doc.root_node.gpath('char');
 
   for(var c=0;c<chars.length;c++)
@@ -609,15 +674,27 @@ Glaemscribe.CharsetParser.prototype.parse_raw = function(charset_name, raw)
     var code    = parseInt(char.args[0],16);
     var names   = char.args.slice(1);
     charset.add_char(char.line, code, names)
-  }  
-  
+  }
+
   glaemEach(doc.root_node.gpath("seq"), function(_,seq_elemnt) {
     var names       = seq_elemnt.args;
-    var child_node  = seq_elemnt.children[0];   
+    var child_node  = seq_elemnt.children[0];
     var seq         = (child_node && child_node.is_text())?(child_node.args[0]):("")
     charset.add_sequence_char(seq_elemnt.line,names,seq);
   });
-  
+
+  glaemEach(doc.root_node.gpath("swap"), function(_,element) {
+    var trigger_one      = element.args[0];
+
+    var text_lines  = element.children.
+      filter(function(c) { return c.is_text(); }).
+      map(function(c) { return c.args[0]; });
+
+      var second_triggers  = text_lines.join(" ").split(/\s/).filter(function(e) { return e !== '' });
+
+      charset.add_swap(element.line, trigger_one, second_triggers)
+  });
+
   glaemEach(doc.root_node.gpath("virtual"), function(_,virtual_element) {
     var names     = virtual_element.args;
     var classes   = [];
@@ -626,7 +703,7 @@ Glaemscribe.CharsetParser.prototype.parse_raw = function(charset_name, raw)
     glaemEach(virtual_element.gpath("class"), function(_,class_element) {
       var vc        = new Glaemscribe.VirtualChar.VirtualClass();
       vc.target     = class_element.args[0];
-      vc.triggers   = class_element.args.slice(1);   
+      vc.triggers   = class_element.args.slice(1);
 
       // Allow triggers to be defined inside the body of the class element
       var text_lines  = class_element.children.
@@ -646,15 +723,15 @@ Glaemscribe.CharsetParser.prototype.parse_raw = function(charset_name, raw)
     });
     charset.add_virtual_char(virtual_element.line,classes,names,reversed,deflt);
   });
-  
-  charset.finalize(); 
-  return charset;  
+
+  charset.finalize();
+  return charset;
 }
 
 Glaemscribe.CharsetParser.prototype.parse = function(charset_name) {
-  
+
   var raw     = Glaemscribe.resource_manager.raw_charsets[charset_name];
-  
+
   return this.parse_raw(charset_name, raw);
 }
 
@@ -3307,6 +3384,9 @@ Glaemscribe.TranscriptionPostProcessor.prototype.apply = function(tokens, out_ch
 {
   var out_space_str     = " ";
 
+  // Cleanup the output of the chain by removing empty tokens
+  tokens = tokens.filter(function(tok) { return tok !== "" });
+
   for(var i=0;i<this.operators.length;i++)
   {
     var operator  = this.operators[i];
@@ -3315,12 +3395,12 @@ Glaemscribe.TranscriptionPostProcessor.prototype.apply = function(tokens, out_ch
 
   if(this.out_space != null)
   {
-    out_space_str       = this.out_space.map(function(token) { 
+    out_space_str       = this.out_space.map(function(token) {
       var toktrans      = out_charset.n2c(token);
       if(!toktrans)
         return Glaemscribe.UNKNOWN_CHAR_OUTPUT;
-      
-      return toktrans.output() 
+
+      return toktrans.output()
     }).join("");
   }
 
@@ -3812,15 +3892,15 @@ Glaemscribe.ResolveVirtualsPostProcessorOperator = function(mode, glaeml_element
 {
   Glaemscribe.PostProcessorOperator.call(this, mode, glaeml_element); //super
   return this;
-} 
-Glaemscribe.ResolveVirtualsPostProcessorOperator.inheritsFrom( Glaemscribe.PostProcessorOperator );  
+}
+Glaemscribe.ResolveVirtualsPostProcessorOperator.inheritsFrom( Glaemscribe.PostProcessorOperator );
 
 
 Glaemscribe.ResolveVirtualsPostProcessorOperator.prototype.finalize = function(trans_options)
 {
   Glaemscribe.PostProcessorOperator.prototype.finalize.call(this, trans_options); // super
   this.last_triggers = {}; // Allocate here to optimize
-}  
+}
 
 Glaemscribe.ResolveVirtualsPostProcessorOperator.prototype.reset_trigger_states = function(charset) {
   var op = this;
@@ -3840,9 +3920,8 @@ Glaemscribe.ResolveVirtualsPostProcessorOperator.prototype.apply_loop = function
 
   if(c == null)
     return;
-  
+
   if(c.is_virtual() && (reversed == c.reversed)) {
-    
     // Try to replace
     var last_trigger = op.last_triggers[c.object_reference];
     if(last_trigger != null) {
@@ -3872,27 +3951,46 @@ Glaemscribe.ResolveVirtualsPostProcessorOperator.prototype.apply_sequences = fun
   return ret;
 }
 
-Glaemscribe.ResolveVirtualsPostProcessorOperator.prototype.apply = function(tokens, charset) {   
+Glaemscribe.ResolveVirtualsPostProcessorOperator.prototype.apply_swaps = function(charset, tokens) {
+  for(var idx = 0 ; idx<tokens.length - 1 ; idx++) {
+    var tok   = tokens[idx];
+    var tgt   = tokens[idx+1];
+    var trig  = charset.swap_for_trigger(tok);
+
+    if(trig && trig.has_target(tgt)) {
+      tokens[idx+1] = tok
+      tokens[idx]   = tgt
+    }
+  }
+  return tokens;
+}
+
+Glaemscribe.ResolveVirtualsPostProcessorOperator.prototype.apply = function(tokens, charset) {
   var op = this;
-  
+
+  // Apply sequences first
   tokens = op.apply_sequences(charset, tokens);
-  
+
+  tokens = op.apply_swaps(charset, tokens);
+
   // Clone the array so that we can perform diacritics and ligatures without interfering
   var new_tokens = tokens.slice(0);
-  
+
+  // Resolve virtuals
   op.reset_trigger_states(charset);
   glaemEach(tokens, function(idx,token) {
     op.apply_loop(charset,tokens,new_tokens,false,token,idx);
   });
-  
+
+  // Resolve reversed virtuals
   op.reset_trigger_states(charset);
   glaemEachReversed(tokens, function(idx,token) {
-    op.apply_loop(charset,tokens,new_tokens,true,token,idx);    
+    op.apply_loop(charset,tokens,new_tokens,true,token,idx);
   });
   return new_tokens;
-}  
+}
 
-Glaemscribe.resource_manager.register_post_processor_class("resolve_virtuals", Glaemscribe.ResolveVirtualsPostProcessorOperator);    
+Glaemscribe.resource_manager.register_post_processor_class("resolve_virtuals", Glaemscribe.ResolveVirtualsPostProcessorOperator);
 
 
 
