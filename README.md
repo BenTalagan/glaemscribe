@@ -3,7 +3,7 @@
 [**_Glǽmscribe_**](https://jrrvf.com/~glaemscrafu/english/glaemscribe.html) (also written **_Glaemscribe_**) is a software dedicated to
 the transcription of texts between writing systems, and more specifically dedicated to the transcription of J.R.R. Tolkien's invented languages to some of his devised writing systems (Tengwar, Sarati, Cirth, ...).
 
-The current stable version is 1.3.0 (September 2022).
+The current stable version is 1.3.1 (November 2022).
 
 Official integration
 --------------------
