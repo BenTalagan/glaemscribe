@@ -18,7 +18,7 @@ See also the [**comparison chart for tengwar fonts**](http://htmlpreview.github.
 
 To summarize, Glǽmscribe relies at the moment on three families of fonts :
 
-1) The **-glaemsrafu** fonts. **_Legacy._**. These are patched versions of the original fonts made by their authors. They are patched to solve a certain amount of problems due to the fact that their mapping overlaps the real alphabets unicode mapping - breaking correct word/line wrap in navigators amonst other problems. Also, the original fonts were sometimes lacking some attested mandatory characters.
+1) The **-glaemscrafu** fonts. **_Legacy._**. These are patched versions of the original fonts made by their authors. They are patched to solve a certain amount of problems due to the fact that their mapping overlaps the real alphabets unicode mapping - breaking correct word/line wrap in navigators amonst other problems. Also, the original fonts were sometimes lacking some attested mandatory characters.
 
 2) The **-glaemunicode** fonts. **_Transitional._** They are generated automatically from the **-glaemscrafu** fonts, but they remap characters to the unicode mapping defined by the Free Tengwar Font project. However, since these are not opentype fonts, they do not handle automatic tehtar placement, ligatures & so on. Instead, they remap somewhere in the private use area the multiple variants of tehtar, consonant modifiers & co that were present in the original fonts. This is hacky, but solves a certain number of rendering problems. 
 
