@@ -1,7 +1,6 @@
 # Glǽmscribe
 
-[**_Glǽmscribe_**](https://jrrvf.com/~glaemscrafu/english/glaemscribe.html) (also written **_Glaemscribe_**) is a software dedicated to
-the transcription of texts between writing systems, and more specifically dedicated to the transcription of J.R.R. Tolkien's invented languages to some of his devised writing systems (Tengwar, Sarati, Cirth, ...).
+[**_Glǽmscribe_**](https://jrrvf.com/~glaemscrafu/english/glaemscribe.html) (also written **_Glaemscribe_**) is a software dedicated to the transcription of texts between writing systems, and more specifically dedicated to the transcription of J.R.R. Tolkien's invented languages to some of his devised writing systems (Tengwar, Sarati, Cirth, ...).
 
 The current stable version is 1.3.1 (November 2022).
 
@@ -20,12 +19,12 @@ Features
 * Extensible through a custom programming language dedicated to the writing of modes.
 * Allow modes to be designed and programmed to have conditional behaviors depending on independent, custom options.
 * Separates the handling of modes and charsets, making the mode files purely 'logical' and compliant with all fonts, and pushing back font issues to charset files.
-* Compliant with opentype and non-opentype fonts, so that we can handle old-gen (Parmaite, Eldamar, Annatar...) fonts as well as new-gen ones (FreeMono, Telcontar, Eldamar Sarati - glaemscribe version with opentype features, ...), so that have a smooth transition between technologies.
+* Compliant with opentype and non-opentype fonts, so that we can handle old-gen (Parmaite, Eldamar, Annatar...) fonts as well as new-gen ones (FreeMono, Telcontar, Eldamar Sarati - glaemscribe version with opentype features, ...), to have a smooth transition between technologies.
 * Offers a mechanism to compensate diacritic and ligature issues for non-opentype fonts through 'virtual characters', allowing mode files to be generic and far more simple to write.
-* Has support for inlined, spelled tengwar (or any other writing, respectively) for complete control on the output.
+* Has support for 'raw' inlined, spelled tengwar (or any other writing, respectively) for complete control on the output.
 * Has an official graphical, friendly integration (see above).
 * Has a graphical IDE for helping users to write mode files.
-* Uses a modified version of the eSpeakNG TTS Engine to handle english phonemic modes
+* Uses a modified version of the eSpeakNG TTS Engine to handle english phonemic modes.
 * Has a command-line tool implementation (in ruby).
 
 Programming Language
@@ -48,6 +47,7 @@ Changelog
 
 | Version | Date | Comment |
 |---------|------|---------|
+| 1.3.2 | Not released | [English] [Espeak] Spelling and transcription for 'of a'. Thanks to Damien Bador for noticing !
 | 1.3.1 | 11/07/2022 | Better handling of tengwa+sarince+tehta combinations for old fonts |
 | 1.3.0 | 09/23/2022 | Text-To-Speak engine based on eSpeakNG / emscripten<br> [English] Phonemic tengwar mode<br>[English] Phonemic cirth mode |
 | 1.2.1 | Unreleased | [Japanese] Corrected 億 to 10^8, added support for セィ and ゼィ. Thanks to Roman Rausch for his feedback!<br> Refactored JS array functions to prevent interactions with other libraries. Thanks to Troy Alford for the fix!<br> Refactored charset virtual chars in a more git friendly format.<br>[Lang Belta] Added Tengwar mode by Da Def (exotic experiment!) |
